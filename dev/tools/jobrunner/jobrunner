@@ -1,0 +1,149 @@
+#!/usr/bin/env python3
+"""Local stand-in for the `jobrunner` command the Plan and loop.toml call.
+
+This is NOT the upstream jobrunner. It is a minimal reimplementation of the only
+behaviour this repo depends on, for machines where the real tool is not installed.
+`environment.sh` puts it on PATH only when no `jobrunner` is already there, so a
+machine with the real tool is unaffected.
+
+  jobrunner submit <jobdir>     run <jobdir>/Jobfile's `submit` scripts
+  jobrunner clean  <jobdir>     delete the paths listed under `clean`
+
+Contract this reproduces, taken from tests/mcfm/Jobfile and from what the archived
+eval runs show agents relying on:
+
+  - each `submit` entry runs with cwd = <jobdir>, so `./test.sh` style paths resolve
+  - stdout and stderr are streamed to the caller *and* written to <jobdir>/job.output,
+    which agents read back with `tail -50 tests/mcfm/job.output`
+  - the exit code is the first failing script's, 0 if all succeed, so
+    `jobrunner submit tests/mcfm` can be used as a pass/fail gate
+  - the correctness line itself ("SUMMARY: pass rate N/M") comes from MCFM's own
+    Bin/bench, not from here; this tool must not synthesize or reformat it
+
+Jobfile parsing covers only the shape this repo uses: a single top-level `job:` key
+whose children are lists of strings. Anything else is rejected rather than guessed at.
+"""
+from __future__ import annotations
+
+import os
+import shutil
+import subprocess
+import sys
+from pathlib import Path
+
+SECTIONS = ("submit", "clean", "archive")
+
+
+def parse_jobfile(path: Path) -> dict[str, list[str]]:
+    """Parse the restricted YAML subset used by this repo's Jobfiles."""
+    if not path.is_file():
+        sys.exit(f"jobrunner: no Jobfile at {path}")
+
+    job: dict[str, list[str]] = {}
+    current: str | None = None
+    seen_job_key = False
+
+    for lineno, raw in enumerate(path.read_text().splitlines(), 1):
+        line = raw.split("#", 1)[0].rstrip()
+        if not line.strip():
+            continue
+        indent = len(line) - len(line.lstrip())
+        text = line.strip()
+
+        if indent == 0:
+            if text != "job:":
+                sys.exit(f"jobrunner: {path}:{lineno}: expected top-level 'job:', got {text!r}")
+            seen_job_key = True
+            current = None
+        elif text.startswith("- "):
+            if current is None:
+                sys.exit(f"jobrunner: {path}:{lineno}: list item outside a section")
+            # Entries may be quoted, e.g. - "*.hdf5"
+            job[current].append(text[2:].strip().strip("'\""))
+        elif text.endswith(":"):
+            current = text[:-1].strip()
+            if current not in SECTIONS:
+                sys.exit(f"jobrunner: {path}:{lineno}: unknown section {current!r}")
+            job.setdefault(current, [])
+        else:
+            sys.exit(f"jobrunner: {path}:{lineno}: cannot parse {text!r}")
+
+    if not seen_job_key:
+        sys.exit(f"jobrunner: {path}: no top-level 'job:' key")
+    return job
+
+
+def submit(jobdir: Path) -> int:
+    job = parse_jobfile(jobdir / "Jobfile")
+    scripts = job.get("submit", [])
+    if not scripts:
+        sys.exit(f"jobrunner: {jobdir}/Jobfile has no submit entries")
+
+    out_path = jobdir / "job.output"
+    rc = 0
+    with out_path.open("w", encoding="utf-8", errors="replace") as out:
+        for script in scripts:
+            target = jobdir / script
+            if not target.is_file():
+                sys.exit(f"jobrunner: submit entry not found: {target}")
+            header = f"=== jobrunner submit: {script} ===\n"
+            out.write(header)
+            sys.stdout.write(header)
+            sys.stdout.flush()
+
+            # bash rather than execing the file directly: test.sh is `set -e` and is not
+            # guaranteed to carry its executable bit through a fresh clone.
+            proc = subprocess.Popen(
+                ["bash", script],
+                cwd=str(jobdir),
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+                text=True,
+                bufsize=1,
+                errors="replace",
+            )
+            assert proc.stdout is not None
+            for line in proc.stdout:
+                sys.stdout.write(line)
+                out.write(line)
+            proc.stdout.close()
+            code = proc.wait()
+            if code != 0 and rc == 0:
+                rc = code
+            if code != 0:
+                # Stop at the first failure so job.output ends on the thing that broke.
+                break
+    return rc
+
+
+def clean(jobdir: Path) -> int:
+    job = parse_jobfile(jobdir / "Jobfile")
+    for pattern in job.get("clean", []):
+        for target in sorted(jobdir.glob(pattern)):
+            if target.is_dir():
+                shutil.rmtree(target, ignore_errors=True)
+            else:
+                target.unlink(missing_ok=True)
+            print(f"removed {target.relative_to(jobdir)}")
+    return 0
+
+
+def main(argv: list[str]) -> int:
+    if len(argv) != 2 or argv[0] not in ("submit", "clean"):
+        print(__doc__.strip().splitlines()[0], file=sys.stderr)
+        print("usage: jobrunner {submit|clean} <jobdir>", file=sys.stderr)
+        return 2
+
+    action, jobdir_arg = argv
+    jobdir = Path(jobdir_arg)
+    if not jobdir.is_absolute():
+        jobdir = Path(os.environ.get("PROJECT_HOME", ".")) / jobdir
+    jobdir = jobdir.resolve()
+    if not jobdir.is_dir():
+        sys.exit(f"jobrunner: no such job directory: {jobdir_arg}")
+
+    return submit(jobdir) if action == "submit" else clean(jobdir)
+
+
+if __name__ == "__main__":
+    raise SystemExit(main(sys.argv[1:]))

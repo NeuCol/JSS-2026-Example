@@ -26,12 +26,18 @@ from approval_log import is_complete, is_open, item_status, load_approved_groups
 
 RISKY_STATUSES = {
     "mcfm-translate": {"FAILED"},
+    "mcfm-miniapp-threejets": {"FAILED"},
     "mcfm-cleanup": {"FAILED", "DELETED_SHIM", "MERGED_CPP"},
     "mcfm-fix-failures": {"FAILED"},
     "pepper-kokkos-port": {"FAILED"},
 }
 BATCH_LIMITS = {
     "mcfm-translate": 3,
+    # Miniapp runs are a fixed, measured file set (ThreeJets is 16 files, about 4 groups).
+    # The batch limit is raised so a routine run never stalls waiting for a human midway:
+    # approval latency would otherwise land inside the wall-clock number the eval records.
+    # A group containing FAILED still blocks, which is the stop that carries information.
+    "mcfm-miniapp-threejets": 8,
     "mcfm-cleanup": 2,
     "mcfm-fix-failures": 3,
     "pepper-kokkos-port": 2,

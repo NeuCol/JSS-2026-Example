@@ -93,7 +93,15 @@ def run_doxygen():
     print(f"wrote {n} XML file(s) to {XML}")
 
 
-def build_roadmap():
+def build_roadmap(scope=None):
+    """Build the readiness map. `scope` is a top-level src/ folder name (e.g. "ThreeJets").
+
+    When scoped, the map describes a miniapp run: only files under that folder are listed,
+    and `deps`/`fanin` count only edges whose other end is *also* in the folder. So
+    `deps == 0` reads as "ready within this miniapp" rather than "ready in all of MCFM".
+    A file whose only remaining untranslated callees sit outside the scope is ready now;
+    the Spec's `extern "C"` rule covers calling them while they are still Fortran.
+    """
     os.makedirs(ASSETS, exist_ok=True)
 
     # ---- source files and their translated state ----
@@ -141,10 +149,13 @@ def build_roadmap():
     def is_blind(r):
         return r.endswith("_inc.f") or r.startswith("gghgg_dep/Inc/")
 
+    def in_scope(r):
+        return scope is None or info[r]["top"] == scope
+
     untranslated = {r for r in info if r not in translated}
     fanin = collections.Counter()
     for r in info:
-        udeps = {g for g in edges.get(r, set()) if g in untranslated and g != r}
+        udeps = {g for g in edges.get(r, set()) if g in untranslated and g != r and in_scope(g)}
         info[r]["deps"] = len(udeps)
         for g in udeps: fanin[g] += 1
     for r in info:
@@ -161,10 +172,13 @@ def build_roadmap():
     with open(ASSETS + "/symbol_index.json", "w") as fh:
         json.dump({"root": SRC, "symbols": symbols}, fh, indent=1, sort_keys=True)
 
+    # A scoped run's work list is exactly the untranslated files inside the miniapp.
+    listed = {r for r in untranslated if in_scope(r)}
+
     cols = ["rel", "top", "deps", "blind", "fanin", "bench"]
     with open(ASSETS + "/roadmap_metrics.tsv", "w") as fh:
         fh.write("\t".join(cols) + "\n")
-        for r in sorted(untranslated, key=lambda x: (info[x]["deps"], -info[x]["fanin"], x)):
+        for r in sorted(listed, key=lambda x: (info[x]["deps"], -info[x]["fanin"], x)):
             fh.write("\t".join(str(info[r][c]) for c in cols) + "\n")
 
     cleanup_cols = [
@@ -180,10 +194,13 @@ def build_roadmap():
     with open(ASSETS + "/cleanup_index.json", "w") as fh:
         json.dump({"root": SRC, "candidates": cleanup}, fh, indent=1, sort_keys=True)
 
-    leaves = sum(1 for r in untranslated if info[r]["deps"] == 0 and not info[r]["blind"])
+    leaves = sum(1 for r in listed if info[r]["deps"] == 0 and not info[r]["blind"])
     cleanup_moves = sum(row["move_candidate"] for row in cleanup)
     cleanup_shims = sum(row["delete_shim_candidate"] for row in cleanup)
     cleanup_merges = sum(row["merge_candidate"] for row in cleanup)
+    if scope:
+        done = sum(1 for r in info if in_scope(r) and r in translated)
+        print(f"scope {scope}: {len(listed)} untranslated, {done} already translated")
     print(f"source {len(info)}  translated {len(translated)}  untranslated {len(untranslated)}")
     print(f"ready leaves (deps=0, non-blind): {leaves}")
     print(f"symbol index: {len(symbols)} symbol(s)")
@@ -191,8 +208,24 @@ def build_roadmap():
     print("wrote roadmap_metrics.tsv, symbol_index.json, cleanup_candidates.tsv, cleanup_index.json")
 
 
+def parse_scope(argv):
+    """--scope <folder> or --scope=<folder>; returns None when absent."""
+    for i, a in enumerate(argv):
+        if a == "--scope":
+            if i + 1 >= len(argv):
+                sys.exit("error: --scope needs a top-level src/ folder name, e.g. --scope ThreeJets")
+            return argv[i + 1]
+        if a.startswith("--scope="):
+            return a.split("=", 1)[1]
+    return None
+
+
 if __name__ == "__main__":
-    if "--doxygen" in sys.argv[1:]:
+    argv = sys.argv[1:]
+    if "--doxygen" in argv:
         run_doxygen()
     else:
-        build_roadmap()
+        scope = parse_scope(argv)
+        if scope and not os.path.isdir(os.path.join(SRC, scope)):
+            sys.exit(f"error: no such top-level source folder: {SRC}/{scope}")
+        build_roadmap(scope)

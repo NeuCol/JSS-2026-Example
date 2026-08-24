@@ -41,7 +41,20 @@ def _read(path):
 
 
 def _agent_log_path(run_dir):
-    return Path(run_dir) / "dev" / "transformations" / "mcfm-translate" / "agent_log.md"
+    """The run's agent_log.md, whichever transformation it ran.
+
+    Runs used to be mcfm-translate only, and this path was hardcoded to it. Miniapp runs
+    (mcfm-miniapp-threejets, and the BDK set after it) write to their own transformation
+    folder, so the name is globbed instead. A run archives exactly one transformation
+    directory, so the sorted-first match is that run's log; the hardcoded name is kept as
+    the tie-break so mixed archives still resolve the way they always did.
+    """
+    base = Path(run_dir) / "dev" / "transformations"
+    default = base / "mcfm-translate" / "agent_log.md"
+    if default.exists():
+        return default
+    found = sorted(base.glob("*/agent_log.md"))
+    return found[0] if found else default
 
 
 def _human_review_path(run_dir):

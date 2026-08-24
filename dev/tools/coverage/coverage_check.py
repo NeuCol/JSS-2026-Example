@@ -7,9 +7,21 @@ restores the file and rebuilds clean. Changed output means `COVERED`; unchanged 
 means `NOT COVERED`.
 
 Mark exactly one output statement with `// @coverage-probe`.
-Needs `MCFM_HOME`. Exit: 0 covered, 1 not covered, 2 usage/setup error.
+Uses `MCFM_HOME`, falling back to `$PROJECT_HOME/software/mcfm` and then to this file's
+own location, so it works in a sandbox that cannot `source environment.sh`.
+Exit: 0 covered, 1 not covered, 2 usage/setup error.
 """
 import os, re, sys, shutil, tempfile, subprocess
+
+# Same fallback chain as dev/tools/index/build_roadmap.py and
+# dev/tools/closure/calltree_closure.py. Without it this tool was the only one in dev/tools
+# that hard-required MCFM_HOME, so a restricted agent shell that cannot export environment
+# variables (no `source`, no `$VAR` expansion) could never run the coverage probe: verify
+# exited 2 every time and every file it touched was stuck at TRANSLATED regardless of
+# whether the C++ was correct.
+ROOT = os.environ.get("PROJECT_HOME") or os.path.dirname(
+    os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+MCFM_DEFAULT = os.path.join(ROOT, "software", "mcfm")
 
 FACTOR = os.environ.get("FACTOR", "1.5")
 
@@ -43,7 +55,9 @@ def main(argv):
     if not process:
         die("no test process given after --")
 
-    mcfm = os.environ.get("MCFM_HOME") or die("set MCFM_HOME first (source environment.sh)")
+    mcfm = os.environ.get("MCFM_HOME") or MCFM_DEFAULT
+    if not os.path.isdir(mcfm):
+        die(f"no MCFM tree at {mcfm} — set MCFM_HOME or PROJECT_HOME")
     if not os.path.isfile(target):
         die("target file not found: " + target)
     text = open(target).read()

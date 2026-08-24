@@ -27,8 +27,15 @@ TOOLS = ROOT / "dev" / "tools"
 ASSETS = ROOT / "dev" / "tmp" / "assets"
 TRANSFORMATIONS = {
     "mcfm-translate": ROOT / "dev" / "transformations" / "mcfm-translate",
+    "mcfm-miniapp-threejets": ROOT / "dev" / "transformations" / "mcfm-miniapp-threejets",
     "mcfm-cleanup": ROOT / "dev" / "transformations" / "mcfm-cleanup",
     "pepper-kokkos-port": ROOT / "dev" / "transformations" / "pepper-kokkos-port",
+}
+
+# Transformations whose scope is one top-level src/ folder (a "miniapp"): the readiness
+# map is rebuilt with `refresh --scope <folder>` so deps/fanin count only in-folder edges.
+TRANSFORMATION_SCOPE = {
+    "mcfm-miniapp-threejets": "ThreeJets",
 }
 COMMON = TOOLS / "common"
 if str(COMMON) not in sys.path:
@@ -54,11 +61,16 @@ def transformation_dir(name: str) -> Path:
         raise SystemExit(f"error: unknown transformation '{name}'")
 
 
-def cmd_refresh(_: argparse.Namespace) -> int:
+def cmd_refresh(args: argparse.Namespace) -> int:
     rc = run([sys.executable, str(TOOLS / "index" / "build_roadmap.py"), "--doxygen"])
     if rc != 0:
         return rc
-    return run([sys.executable, str(TOOLS / "index" / "build_roadmap.py")])
+    cmd = [sys.executable, str(TOOLS / "index" / "build_roadmap.py")]
+    # Doxygen always parses the whole tree, because a miniapp file may call out of scope.
+    # Only the readiness map that comes out of it is narrowed.
+    if getattr(args, "scope", None):
+        cmd += ["--scope", args.scope]
+    return run(cmd)
 
 
 def summarize_groups(tdir: Path) -> str:
@@ -117,12 +129,17 @@ def cmd_status(_: argparse.Namespace) -> int:
 
 
 def cmd_next(args: argparse.Namespace) -> int:
-    if args.transformation == "mcfm-translate":
+    if args.transformation in ("mcfm-translate",) or args.transformation in TRANSFORMATION_SCOPE:
+        scope = TRANSFORMATION_SCOPE.get(args.transformation)
         rows = [r for r in load_roadmap_rows() if r.get("deps") == "0" and r.get("blind") == "0"]
+        if scope:
+            # Guard against a stale unscoped refresh leaking out-of-miniapp candidates.
+            rows = [r for r in rows if r.get("top") == scope]
         if not rows:
-            print("no ready translation files found; run `python3 dev/workflow.py refresh`")
+            hint = f"refresh --scope {scope}" if scope else "refresh"
+            print(f"no ready translation files found; run `python3 dev/workflow.py {hint}`")
             return 0
-        print("# next translation candidates")
+        print("# next translation candidates" + (f" (scope: {scope})" if scope else ""))
         for row in rows[:10]:
             print(f"- {row['rel']}  (fanin={row['fanin']}, bench={row['bench']})")
         return 0
@@ -253,6 +270,12 @@ def build_parser() -> argparse.ArgumentParser:
     sub = parser.add_subparsers(dest="command", required=True)
 
     p = sub.add_parser("refresh", help="rebuild doxygen-derived roadmap assets")
+    p.add_argument(
+        "--scope",
+        metavar="FOLDER",
+        help="restrict the readiness map to one top-level src/ folder (a miniapp), "
+             "counting deps/fanin only over files inside it, e.g. --scope ThreeJets",
+    )
     p.set_defaults(func=cmd_refresh)
 
     p = sub.add_parser("status", help="summarize workflow assets and transformation state")

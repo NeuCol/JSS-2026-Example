@@ -1,0 +1,29 @@
+# CodeScribe loop for the ThreeJets miniapp (Fortran -> C++).
+#
+# Run from the project root:
+#   code-scribe loop -p dev/transformations/mcfm-miniapp-threejets/loop.toml -m <model>
+#
+# Same contract as mcfm-translate: desired_spec.md here is byte-identical to the one in
+# dev/transformations/mcfm-translate. Only the Plan differs, and only in scope: the work
+# set is fixed to software/mcfm/src/ThreeJets so two harnesses can be compared on exactly
+# the same files. See evals/experiments/README once this run is archived.
+
+[tools]
+bash = ["jobrunner", "python3"]
+
+[[chat.user]]
+content = '''
+Each round, follow the round algorithm in
+dev/transformations/mcfm-miniapp-threejets/current_plan.md and the contract in
+dev/transformations/mcfm-miniapp-threejets/desired_spec.md. Read the plan first, then the
+spec.
+
+This run has fixed scope: the ThreeJets miniapp, software/mcfm/src/ThreeJets. Translate
+every remaining file in that folder and nothing outside it. Refresh readiness with
+`python3 dev/workflow.py refresh --scope ThreeJets`. The run is finished when every file
+in the miniapp is settled.
+
+Authority: current_plan.md and desired_spec.md are human-owned — read, do not modify.
+agent_log.md is the only file in dev/transformations/mcfm-miniapp-threejets/ that the AI
+may modify. On conflict, the Spec governs.
+'''

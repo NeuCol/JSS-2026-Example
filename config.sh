@@ -1,2 +1,2 @@
 # Per-machine site selector. Points environment.sh at sites/$SiteName/environment.sh.
-export SiteName="supercomp01a"
+export SiteName="pmachado"

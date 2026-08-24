@@ -110,10 +110,35 @@ lab-notebook/
         │   ├── agent_log.md        the Log     (agent-writable)
         │   ├── approvals.toml      the gate    (human-only)
         │   └── loop.toml           orchestrator configuration
+        ├── mcfm-miniapp-threejets/ same Spec, scope fixed to one folder
         ├── mcfm-cleanup/
         ├── mcfm-fix-failures/
         └── pepper-kokkos-port/
 ```
+
+### Miniapp transformations
+
+An ordinary `mcfm-translate` run picks its own files: it reads the readiness map and takes
+whatever is ready, so two runs rarely translate the same set. That makes cost and time hard to
+compare across orchestrators.
+
+A *miniapp* transformation fixes the work set to one self-contained `src/` folder, so different
+orchestrators can be measured on exactly the same files. It reuses `mcfm-translate`'s
+`desired_spec.md` byte for byte — the correctness contract does not change — and differs only in
+the Plan, which is the policy that selects work. The readiness map is narrowed to match:
+
+```bash
+python3 dev/workflow.py refresh --scope ThreeJets
+```
+
+With `--scope`, `deps` and `fanin` count only edges whose other end is inside the folder, so
+`deps == 0` means "ready within this miniapp". A file whose remaining untranslated callees are
+all outside the folder is ready now, and the Spec's `extern "C"` rule covers calling them while
+they are still Fortran. Unlike an open-ended run, a miniapp is not restricted to leaves, so the
+ordering inside the folder is real work.
+
+`mcfm-miniapp-threejets` is the first of these: 16 untranslated files in
+`software/mcfm/src/ThreeJets`, one benchmark process (`g g g g g`), one `CMakeLists.txt`.
 
 The agentic center of the notebook is `dev/`, where the modernization work lives. A project
 may carry several transformations at once, each a work package under `dev/transformations`
@@ -369,6 +394,7 @@ scripts live under `dev/tools/`.
 
 ```bash
 python3 dev/workflow.py refresh                        # rebuild the dependency roadmap
+python3 dev/workflow.py refresh --scope ThreeJets      # ... narrowed to one miniapp folder
 python3 dev/workflow.py status                         # overall progress
 python3 dev/workflow.py next mcfm-translate            # rank ready candidates
 python3 dev/workflow.py draft   software/mcfm/src/.../file.f

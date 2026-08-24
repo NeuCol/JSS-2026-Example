@@ -31,6 +31,14 @@ export PEPPER_HOME="$PROJECT_HOME/software/pepper"   # C++ -> Kokkos (stage 2)
 # texact kernels link against. Pepper is built with -DPEPPER_QCDLOOP_DIR=$QCDLOOP_HOME.
 export QCDLOOP_HOME="$PROJECT_HOME/software/qcdloop"
 
+# The Plan and every loop.toml bash allowlist call `jobrunner` as a bare command. On a
+# machine without the real tool installed, fall back to the minimal reimplementation in
+# dev/tools/jobrunner (submit/clean only — see its docstring). Machines that already have
+# jobrunner on PATH keep theirs; this never shadows an existing install.
+if ! command -v jobrunner >/dev/null 2>&1; then
+  export PATH="$PROJECT_HOME/dev/tools/jobrunner:$PATH"
+fi
+
 echo "---------------------------------------------------------------------------------------"
 echo "Lab-notebook environment:"
 echo "  PROJECT_HOME=$PROJECT_HOME"
