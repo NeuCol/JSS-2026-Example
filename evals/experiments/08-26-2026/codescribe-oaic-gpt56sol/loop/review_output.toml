@@ -1,0 +1,18 @@
+loop = 3
+summary = "The agent resolved the prior review item by restoring software/mcfm/src/ThreeJets/deprecated/A51mmppp5g.f, refreshed readiness, and confirmed that the new-group gate was open. It then started three additional ThreeJets translations (A5qbmgmqpgpgp, A5qbmgpqpgpgm, and A5qbmqpgpgpgm), adding headers, C++ sources, Fortran shims, and CMake wiring. However, no Group 2 was added to agent_log.md, the original Fortran files remain wired/present rather than moved to deprecated/, and no build, regression, or per-file verification was run. The run ended while editing the third C++ source, so these new translations remain incomplete and unvalidated; no unsupported successful-build or verification claim was recorded."
+blocker = "The three newly wired translations have not been built or verified, so their correctness and interoperability are unknown."
+
+[[pending]]
+item = "Add an open Group 2 to agent_log.md listing A5qbmgmqpgpgp.f, A5qbmgpqpgpgm.f, and A5qbmqpgpgpgm.f."
+
+[[pending]]
+item = "Finish line-by-line comparison of all three C++ translations and Fortran shims against their original Fortran sources, correcting signatures, formulas, and output-shape issues."
+
+[[pending]]
+item = "Move the three converted original .f files into software/mcfm/src/ThreeJets/deprecated/ and ensure CMakeLists.txt references only each replacement .cpp and shim."
+
+[[pending]]
+item = "Run the full MCFM build/regression suite and fix any compile, link, or numerical failures."
+
+[[pending]]
+item = "Run workflow verification for each of the three C++ files with process `g g g g g`, then record the resulting VERIFIED, TRANSLATED, or FAILED statuses in agent_log.md."

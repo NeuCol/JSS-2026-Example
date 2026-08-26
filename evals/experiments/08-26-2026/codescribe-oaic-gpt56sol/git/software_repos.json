@@ -1,0 +1,20 @@
+[
+  {
+    "path": "software/mcfm",
+    "head": "1abdcddaad89582552edc41de68e4a6e1ac75f1d",
+    "branch": "HEAD",
+    "status": "## HEAD (no branch)\nD  src/ThreeJets/A51mmppp5g.f\nAM src/ThreeJets/A5qbmgmqpgpgp.cpp\n D src/ThreeJets/A5qbmgmqpgpgp.f\nA  src/ThreeJets/A5qbmgmqpgpgp_fi.f90\nAM src/ThreeJets/A5qbmgpqpgpgm.cpp\n D src/ThreeJets/A5qbmgpqpgpgm.f\nA  src/ThreeJets/A5qbmgpqpgpgm_fi.f90\nAM src/ThreeJets/A5qbmqpgpgpgm.cpp\n D src/ThreeJets/A5qbmqpgpgpgm.f\nA  src/ThreeJets/A5qbmqpgpgpgm_fi.f90\n M src/ThreeJets/CMakeLists.txt\nR  src/ThreeJets/A51mpmpp5g.f -> src/ThreeJets/deprecated/A51mpmpp5g.f\n?? Bin/lib/\n?? Bin/test\n?? doxygen_dep/\n?? install/\n?? src/ThreeJets/A51mmppp5g.cpp\n?? src/ThreeJets/A51mmppp5g.hpp\n?? src/ThreeJets/A51mmppp5g_fi.F90\n?? src/ThreeJets/A51mpmpp5g.cpp\n?? src/ThreeJets/A51mpmpp5g.hpp\n?? src/ThreeJets/A51mpmpp5g_fi.F90\n?? src/ThreeJets/A5qbmgmqpgpgp.hpp\n?? src/ThreeJets/A5qbmgpqpgpgm.hpp\n?? src/ThreeJets/A5qbmqpgpgpgm.hpp\n?? src/ThreeJets/deprecated/A5qbmgmqpgpgp.f\n?? src/ThreeJets/deprecated/A5qbmgpqpgpgm.f\n?? src/ThreeJets/deprecated/A5qbmqpgpgpgm.f\n"
+  },
+  {
+    "path": "software/pepper",
+    "head": "67f3acc8756fe6ec4fcc9ea360be08f0bb644711",
+    "branch": "43-add-kokkos-mcfm-interface",
+    "status": "## 43-add-kokkos-mcfm-interface...origin/43-add-kokkos-mcfm-interface\n"
+  },
+  {
+    "path": "software/qcdloop",
+    "head": "c8a05202351ca2e803158e99ae8a1c5c05f1437d",
+    "branch": "master",
+    "status": "## master...origin/master\n"
+  }
+]
