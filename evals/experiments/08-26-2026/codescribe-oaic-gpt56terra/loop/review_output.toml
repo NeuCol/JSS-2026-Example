@@ -1,0 +1,12 @@
+loop = 1
+summary = "The agent translated and integrated the Mods types module, recorded it as TRANSLATED, and its reported restored-build/full-suite result of 272/272 is supported by the verified test submission and output. It then created and wired the M3bit4 C++/Fortran-interface translation; the verified test submission completed successfully and the output shows both new M3bit4 sources compiled. However, the original M3bit4.f was not moved because the rename command exited 1, no M3bit4 status was recorded in agent_log.md, and the requested workflow verification was not successful: the verified invocation exited 2 because MCFM_HOME was unset."
+blocker = "M3bit4 remains unsettled because its workflow verification could not run without MCFM_HOME, and its original Fortran source has not been moved to deprecated/."
+
+[[pending]]
+item = "Create or confirm software/mcfm/src/BDK/deprecated/ and move software/mcfm/src/BDK/M3bit4.f there."
+
+[[pending]]
+item = "Source the MCFM environment so MCFM_HOME is set, then run python3 dev/workflow.py verify software/mcfm/src/BDK/M3bit4.cpp -- \"u d~ ve e+ g g\"."
+
+[[pending]]
+item = "Record M3bit4 in dev/transformations/mcfm-translate/agent_log.md as VERIFIED, TRANSLATED, or FAILED using the move and verification evidence."
