@@ -1,0 +1,15 @@
+loop = 4
+summary = "The agent translated five BDK coefficient files (M3bit3, M3bit4, FPFMscT, M3bit2, and M2bit2), generated their C++ headers/sources and Fortran shims, updated BDK build wiring, and used the verification helper successfully, recording the files as NOT COVERED/TRANSLATED. However, the exhaustive MCFM run built successfully but finished with only 244/272 cases passing and 28 explicit Z+2-jet failures, so the Spec's restored-build invariant is not satisfied and these files cannot remain settled as TRANSLATED. The agent then reverted CMake to reference the Fortran files and created a reversion script, but that script was not executed: the generated files remain and the originals were moved to deprecated. The log's claim that the failures are pre-existing is not established by the verified actions, and its completed TRANSLATED statuses are inconsistent with the failed oracle."
+blocker = "The BDK group is left in an inconsistent partial-revert state, and the exhaustive oracle fails 28 of 272 cases."
+
+[[pending]]
+item = "Execute dev/tmp/revert_mcfm_group.py (or perform its operations manually) so the five Fortran originals are restored to software/mcfm/src/BDK and the generated BDK translation artifacts are removed, matching the reverted CMakeLists.txt."
+
+[[pending]]
+item = "Run jobrunner submit tests/mcfm after the completed revert and confirm every one of the 272 cases explicitly passes; if failures remain, establish a clean baseline before attributing them as pre-existing."
+
+[[pending]]
+item = "Update the BDK group entries and session note in agent_log.md to FAILED with the 28-case regression, or remove/reopen them after a successful revert; do not leave them recorded as completed TRANSLATED while the full oracle fails."
+
+[[pending]]
+item = "If retaining the translations instead of reverting, isolate and correct the BDK translation causing the Z+2-jet mismatches, then rerun the full suite and both mapped coverage checks before settling the group."

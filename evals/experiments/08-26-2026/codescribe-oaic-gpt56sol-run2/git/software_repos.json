@@ -1,0 +1,20 @@
+[
+  {
+    "path": "software/mcfm",
+    "head": "1abdcddaad89582552edc41de68e4a6e1ac75f1d",
+    "branch": "HEAD",
+    "status": "## HEAD (no branch)\n M src/W2jet/CMakeLists.txt\n D src/W2jet/atree.f\n D src/W2jet/fvf.f\n D src/W2jet/subqcd.f\n D src/W2jet/vv.f\n D src/W2jet/vvg.f\n?? Bin/lib/\n?? Bin/test\n?? doxygen_dep/\n?? install/\n?? src/W2jet/atree.cpp\n?? src/W2jet/atree.hpp\n?? src/W2jet/atree_fi.f90\n?? src/W2jet/deprecated/\n?? src/W2jet/fvf.cpp\n?? src/W2jet/fvf.hpp\n?? src/W2jet/fvf_fi.f90\n?? src/W2jet/subqcd.cpp\n?? src/W2jet/subqcd.hpp\n?? src/W2jet/subqcd_fi.f90\n?? src/W2jet/vv.cpp\n?? src/W2jet/vv.hpp\n?? src/W2jet/vv_fi.f90\n?? src/W2jet/vvg.cpp\n?? src/W2jet/vvg.hpp\n?? src/W2jet/vvg_fi.f90\n"
+  },
+  {
+    "path": "software/pepper",
+    "head": "67f3acc8756fe6ec4fcc9ea360be08f0bb644711",
+    "branch": "43-add-kokkos-mcfm-interface",
+    "status": "## 43-add-kokkos-mcfm-interface...origin/43-add-kokkos-mcfm-interface\n"
+  },
+  {
+    "path": "software/qcdloop",
+    "head": "c8a05202351ca2e803158e99ae8a1c5c05f1437d",
+    "branch": "master",
+    "status": "## master...origin/master\n"
+  }
+]
