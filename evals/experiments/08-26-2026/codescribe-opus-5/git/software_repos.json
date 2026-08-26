@@ -1,0 +1,20 @@
+[
+  {
+    "path": "software/mcfm",
+    "head": "1abdcddaad89582552edc41de68e4a6e1ac75f1d",
+    "branch": "HEAD",
+    "status": "## HEAD (no branch)\n D src/W2jet/Acalc.f\n M src/W2jet/CMakeLists.txt\n D src/W2jet/LRcalc.f\n D src/W2jet/Ltfunctions.f\n D src/W2jet/ZZbox1LL.f\n D src/W2jet/a6treeg.f\n D src/W2jet/atrLLL.f\n D src/W2jet/atrLRL.f\n D src/W2jet/atree.f\n D src/W2jet/faxsl.f\n D src/W2jet/fpp.f\n D src/W2jet/fvf.f\n D src/W2jet/qqbZggtree.f\n D src/W2jet/subqcd.f\n D src/W2jet/vv.f\n D src/W2jet/w2jetsq.f\n?? Bin/lib/\n?? Bin/test\n?? doxygen_dep/\n?? install/\n?? src/W2jet/Acalc.cpp\n?? src/W2jet/Acalc.hpp\n?? src/W2jet/Acalc_fi.f90\n?? src/W2jet/LRcalc.cpp\n?? src/W2jet/LRcalc.hpp\n?? src/W2jet/LRcalc_fi.f90\n?? src/W2jet/Ltfunctions.cpp\n?? src/W2jet/Ltfunctions.hpp\n?? src/W2jet/Ltfunctions_fi.f90\n?? src/W2jet/ZZbox1LL.cpp\n?? src/W2jet/ZZbox1LL.hpp\n?? src/W2jet/ZZbox1LL_fi.f90\n?? src/W2jet/a6treeg.cpp\n?? src/W2jet/a6treeg.hpp\n?? src/W2jet/a6treeg_fi.f90\n?? src/W2jet/atrLLL.cpp\n?? src/W2jet/atrLLL.hpp\n?? src/W2jet/atrLLL_fi.f90\n?? src/W2jet/atrLRL.cpp\n?? src/W2jet/atrLRL.hpp\n?? src/W2jet/atrLRL_fi.f90\n?? src/W2jet/atree.cpp\n?? src/W2jet/atree.hpp\n?? src/W2jet/atree_fi.f90\n?? src/W2jet/deprecated/\n?? src/W2jet/faxsl.cpp\n?? src/W2jet/faxsl.hpp\n?? src/W2jet/faxsl_fi.f90\n?? src/W2jet/fpp.cpp\n?? src/W2jet/fpp.hpp\n?? src/W2jet/fpp_fi.f90\n?? src/W2jet/fvf.cpp\n?? src/W2jet/fvf.hpp\n?? src/W2jet/fvf_fi.f90\n?? src/W2jet/qqbZggtree.cpp\n?? src/W2jet/qqbZggtree.hpp\n?? src/W2jet/qqbZggtree_fi.f90\n?? src/W2jet/subqcd.cpp\n?? src/W2jet/subqcd.hpp\n?? src/W2jet/subqcd_fi.f90\n?? src/W2jet/vv.cpp\n?? src/W2jet/vv.hpp\n?? src/W2jet/vv_fi.f90\n?? src/W2jet/w2jetsq.cpp\n?? src/W2jet/w2jetsq.hpp\n?? src/W2jet/w2jetsq_fi.f90\n"
+  },
+  {
+    "path": "software/pepper",
+    "head": "67f3acc8756fe6ec4fcc9ea360be08f0bb644711",
+    "branch": "43-add-kokkos-mcfm-interface",
+    "status": "## 43-add-kokkos-mcfm-interface...origin/43-add-kokkos-mcfm-interface\n"
+  },
+  {
+    "path": "software/qcdloop",
+    "head": "c8a05202351ca2e803158e99ae8a1c5c05f1437d",
+    "branch": "master",
+    "status": "## master...origin/master\n"
+  }
+]

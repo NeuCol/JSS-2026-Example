@@ -1,0 +1,34 @@
+loop = 4
+summary = """
+Loop 4 did real, working code: the agent refreshed readiness, checked the gate (exit 0), and \
+translated five more W2jet leaves — atrLLL, atrLRL, faxsl, Acalc and LRcalc — each as a \
+hpp/cpp/_fi.f90 triple (verified present in software/mcfm/src/W2jet/). CMakeLists.txt was edited \
+to wire them in, and after `git mv` was blocked (exit 128, no git available in the sandbox) the \
+agent worked around it with dev/tmp/move_deprecated3.py; software/mcfm/src/W2jet/deprecated/ now \
+contains all twelve originals including atrLLL.f, atrLRL.f, faxsl.f, Acalc.f and LRcalc.f. \
+`jobrunner submit tests/mcfm` returned exit 0 and tests/mcfm/job.output shows \
+`SUMMARY: pass rate 272/272` with no FAILED line, so the build is green. Each of the five new \
+.cpp files carries exactly one single-line `// @coverage-probe` marker. However, two required \
+plan steps did NOT happen: no `dev/workflow.py verify` (or dev/tmp/verify_env.py) invocation \
+appears in the verified command list, so none of the five files has an actual COVERED/NOT COVERED \
+result; and agent_log.md was read but never written — it still ends at the Loop 3 notes with no \
+`Group W2jet-3` heading and no per-file status entries. The loop-4 work is therefore complete in \
+code but unrecorded and unverified. Three blocked-shell errors (pipes / alternation in grep) were \
+cosmetic and the agent recovered from all of them.
+"""
+blocker = "Loop 4's five translations are neither coverage-verified nor logged: no `dev/workflow.py verify` run happened, and agent_log.md has no Group W2jet-3 section, so the group cannot be counted as completed."
+
+[[pending]]
+item = "Run the coverage probe for each new file: `python3 dev/tmp/verify_env.py software/mcfm/src/W2jet/atrLLL.cpp -- u d~ ve e+ g g` (and likewise for atrLRL.cpp, faxsl.cpp, Acalc.cpp, LRcalc.cpp) and record the COVERED / NOT COVERED result for each."
+
+[[pending]]
+item = "Add a `## Group W2jet-3` section to dev/transformations/mcfm-translate/agent_log.md listing the five files (atrLLL, atrLRL, faxsl, Acalc, LRcalc) with `- [x] <path> — VERIFIED (worst Δrel ...)` or `— TRANSLATED (not covered by u d~ ve e+ g g)` per the actual probe results."
+
+[[pending]]
+item = "Add a loop-4 session-log note in agent_log.md covering the 272/272 green build, the `git mv` failure (exit 128) and the dev/tmp/move_deprecated3.py workaround used to move the five .f originals into W2jet/deprecated/."
+
+[[pending]]
+item = "Re-run `python3 dev/workflow.py gate mcfm-translate` after Group W2jet-3 is logged as completed — three completed groups will then be pending, so confirm whether human approval is now required before opening Group W2jet-4."
+
+[[pending]]
+item = "Re-run `python3 dev/workflow.py refresh` and re-check dev/tmp/assets/roadmap_metrics.tsv for the next ready leaves (deps=0, blind=0, no .cpp), since the five newly deprecated .f files may have unblocked callers such as a6.f, A6axBDK.f, xwqqgg_v.f and qqbw2j_loop.f."
