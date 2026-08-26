@@ -589,7 +589,7 @@ def draw_files_panel(ax, files_settled, letter=None):
     ax.bar(x, [s or 0 for s in settled], width=0.6, color=colors, edgecolor=SURFACE, linewidth=1)
     ymax, _ = capped_limit(settled, clip_ratio=None)
     _annotate_bars(ax, [s or 0 for s in settled],
-                   [str(s) if s is not None else "n/a (no branch)" for s in settled], ymax)
+                   [str(s) if s is not None else "no branch" for s in settled], ymax)
     _run_xticks(ax)
     ax.set_ylabel("Files settled (git-exact)")
     ax.set_ylim(0, ymax)
@@ -617,7 +617,8 @@ def draw_correctness_panel(ax, coverage, letter=None):
 
     _run_xticks(ax, plot_keys)
     ax.set_ylabel("mcfm test pass rate (%)")
-    ax.set_ylim(0, 122)
+    # Headroom for the vertical n/m labels above bars that are all at ~100%.
+    ax.set_ylim(0, 155)
     ax.set_title(_title("Self-reported correctness", letter))
 
 
@@ -654,25 +655,27 @@ def draw_tool_calls_per_file_panel(ax, tool_calls_per_file, letter=None):
     colors = [harness_color["ccworkflow"] if "ccworkflow" in k[1] else harness_color["csloop"] for k in KEYS]
 
     ymax, clipped = capped_limit(per_file)
-    ax.bar(x, [min(v, ymax) if v is not None else 0 for v in per_file], width=0.5,
-           color=colors, edgecolor=SURFACE, linewidth=1)
+    heights = [min(v, ymax) if v is not None else 0 for v in per_file]
+    ax.bar(x, heights, width=0.5, color=colors, edgecolor=SURFACE, linewidth=1)
     texts = []
     for i, (k, v) in enumerate(zip(KEYS, per_file)):
         if v is None:
-            texts.append("n/a (no files)" if tool_calls_per_file[k]["files_settled"] == 0
-                         else "n/a (no branch)")
+            texts.append("0 files settled" if tool_calls_per_file[k]["files_settled"] == 0
+                         else "no branch")
         else:
             texts.append(f"{v:.0f}" + (" ↑" if i in clipped else ""))
-    _annotate_bars(ax, [min(v, ymax) if v is not None else 0 for v in per_file], texts, ymax)
+    _annotate_bars(ax, heights, texts, ymax, inside=set(clipped))
     _run_xticks(ax)
     ax.set_ylabel("Tool calls per file settled")
-    ax.set_ylim(0, ymax * 1.02)
+    ax.set_ylim(0, ymax)
     ax.set_title(_title("Tool-call cost per file", letter))
     handles = [
         mpatches.Patch(color=harness_color["ccworkflow"], label="ccworkflow"),
         mpatches.Patch(color=harness_color["csloop"], label="csloop"),
     ]
-    ax.legend(handles=handles, loc="upper right", frameon=False, ncol=2)
+    # Upper-left: the clipped R10 bar owns the middle and the gpt56 runs on the
+    # right are tall, so the short early runs are the only clear space left.
+    ax.legend(handles=handles, loc="upper left", frameon=False, ncol=2)
 
 
 # ---------------------------------------------------------------------------
@@ -777,10 +780,10 @@ def _bump_fonts_for_combined(scale=1.15):
 
 
 def make_combined_figure(runs, coverage, files_settled, reasoning_stats, wall_times, tool_calls_per_file):
-    fig = plt.figure(figsize=(11, 14.5))
-    # bottom clears the caption block: six wrapped lines of code→configuration
-    # mapping plus the two standing notes.
-    gs = fig.add_gridspec(4, 2, hspace=0.62, wspace=0.32, top=0.945, bottom=0.105, left=0.09, right=0.98)
+    fig = plt.figure(figsize=(11, 15))
+    # bottom clears the caption block: the wrapped code→configuration mapping
+    # plus the two standing notes, which is eight lines at 16 runs.
+    gs = fig.add_gridspec(4, 2, hspace=0.62, wspace=0.32, top=0.945, bottom=0.145, left=0.09, right=0.98)
 
     draw_cost_panel(fig.add_subplot(gs[0, 0]), runs, letter="(a)")
     draw_cache_panel(fig.add_subplot(gs[0, 1]), runs, letter="(b)")
@@ -797,9 +800,9 @@ def make_combined_figure(runs, coverage, files_settled, reasoning_stats, wall_ti
         y=0.985,
     )
     caption_size = CAPTION_SIZE * 1.35
-    caption = run_code_caption(11, caption_size) + [UNPRICED_NOTE, REASONING_NOTE]
+    caption = run_code_caption(10.4, caption_size) + [UNPRICED_NOTE, REASONING_NOTE]
     for i, line in enumerate(reversed(caption)):
-        fig.text(0.5, 0.006 + i * 0.0125, line, ha="center", fontsize=caption_size, color=INK)
+        fig.text(0.5, 0.008 + i * 0.0135, line, ha="center", fontsize=caption_size, color=INK)
 
     out = FIGURES_DIR / "fig_combined.png"
     fig.savefig(out, dpi=300, bbox_inches="tight")
@@ -982,6 +985,8 @@ TEX_COLORS = [
     ("evalGrid", GRID),
     ("evalAxis", AXIS),
     ("evalInk", INK_SECONDARY),
+    # Used for value labels printed inside a bar, where ink-on-fill would not read.
+    ("evalSurface", SURFACE),
 ]
 
 
@@ -1051,7 +1056,11 @@ def _axis_common(width="0.27\\textwidth", height="3.4cm"):
         # the same reason.
         "  ylabel near ticks,\n"
         "  title style={font=\\scriptsize\\bfseries, yshift=-1pt},\n"
-        "  legend style={font=\\scriptsize, draw=none, fill=none, inner sep=1pt},\n"
+        # \tiny, not \scriptsize: "ccworkflow" set at \scriptsize is nearly half
+        # the width of a 0.27\textwidth panel, so the legend box crowds the bars
+        # it is supposed to explain.
+        "  legend style={font=\\tiny, draw=none, fill=none, inner sep=1pt},\n"
+        "  legend image code/.code={\\draw[##1] (0cm,-0.05cm) rectangle (0.18cm,0.09cm);},\n"
         "  every axis plot/.append style={line width=0.4pt},\n"
         "  xtick style={draw=none}, ytick style={draw=none},\n"
         "  enlarge x limits=0.08, ymin=0,\n"
@@ -1116,10 +1125,29 @@ def _explicit_labels():
     )
 
 
-def _clip_label(value, code, clipped, fmt="{:.0f}"):
-    """Value label, marked with an arrow when its bar is cut off by the axis."""
-    text = fmt.format(value)
-    return f"{text}\\,$\\uparrow$" if code in clipped else text
+def _clip_plot(color, pts):
+    """The clipped bars, as their own series with the label set *inside* the bar.
+
+    A clipped bar runs to the axis maximum, so an above-the-bar node would land
+    outside the axis: pgfplots clips it away and the reader is left with a bar
+    that stops at the top edge for no stated reason. The label is therefore
+    drawn as a plain node at mid-bar, in the surface colour so it reads against
+    the fill. `forget plot` keeps the series out of the panel legend, and
+    `nodes near coords=` empties the automatic label that would otherwise still
+    be emitted from the axis-level style.
+    """
+    if not pts:
+        return ""
+    bars = " ".join(f"({c},{v:.4g})" for c, v, _ in pts)
+    labels = "".join(
+        f"\\node[font=\\tiny, color=evalSurface, rotate=90, anchor=center] "
+        f"at (axis cs:{c},{v / 2:.4g}) {{{lbl}}};\n"
+        for c, v, lbl in pts
+    )
+    return (
+        f"\\addplot[fill={color}, draw=none, bar shift=0pt, forget plot,\n"
+        "  nodes near coords={}] coordinates {" + bars + "};\n" + labels
+    )
 
 
 def _coord_str_meta(pts):
@@ -1150,9 +1178,11 @@ def _panel_files(metrics):
         f"  ylabel={{Files}}, ymax={ymax:.0f},\n"
         "  nodes near coords, nodes near coords style={font=\\tiny, color=evalInk,\n"
         "    rotate=90, anchor=west},\n"
-        # Legend sits over the short right-hand bars, the only free interior
-        # space; north-west would cover R1/R2.
-        "  legend style={at={(0.99,0.97)}, anchor=north east}, legend columns=1,\n"
+        # At 16 runs there is no free interior space left for it — R3 owns the
+        # top, the right-hand runs own the rest — so the harness legend goes
+        # under the axis. It covers panels (d) and (f) too, which use the same
+        # two colours for the same two harnesses.
+        "  legend style={at={(0.5,-0.42)}, anchor=north}, legend columns=2,\n"
         "]\n"
         # The two harness series cover disjoint x values, so bar shift=0pt keeps
         # every bar centred on its own tick instead of offsetting it into a
@@ -1162,7 +1192,7 @@ def _panel_files(metrics):
         "\\legend{ccworkflow, csloop}\n"
         # A run whose archival branch never reached this clone has no ground
         # truth at all; without this it would read as a run that settled zero.
-        + _na_nodes(unmeasured, "n/a (no branch)")
+        + _na_nodes(unmeasured, "no branch")
     )
 
 
@@ -1175,9 +1205,10 @@ def _panel_cost_by_model(metrics):
         "\\nextgroupplot[" + _axis_common() + _symbolic_x() +
         "  ybar stacked, bar width=3pt, title={(b) Total cost by model tier},\n"
         f"  ylabel={{USD}}, ymax={ymax:.0f},\n"
-        # North-west sits on top of the two tall ccworkflow stacks; the csloop
-        # stacks on the right are short enough to clear a legend.
-        "  legend style={at={(0.99,0.97)}, anchor=north east}, legend columns=1,\n"
+        # R1/R2 are the shortest priced stacks, and the right-hand runs carry
+        # the vertical "unpriced" marks, so the top-left corner is the only
+        # interior space left that a legend can occupy without covering data.
+        "  legend style={at={(0.02,0.97)}, anchor=north west}, legend columns=1,\n"
         "]\n"
     ]
     for m in models:
@@ -1229,8 +1260,15 @@ def _panel_frontier(metrics):
     # The csloop points cluster tightly around (2.6-3.5 min, $0.5-1.0), so a
     # single fixed label anchor overprints them. Anchors alternate around the
     # x-ordered points, which pushes each label away from its nearest neighbour.
-    ANCHORS = ["south west", "north east", "north west", "south east"]
-    anchor_of = {code: ANCHORS[i % len(ANCHORS)] for i, (_, _, code, _) in enumerate(on_scale)}
+    # The labels drop the "R" as well: at 16 runs the cluster is dense enough
+    # that a two-character label is the difference between readable and not,
+    # and the panel is captioned as carrying run codes.
+    # Neighbouring cluster points sit ~1mm apart horizontally at the printed
+    # panel width, which is narrower than a label, so the labels alternate
+    # *vertically* (above / below the mark) rather than around it: that is the
+    # only direction with room left.
+    PLACEMENTS = [("south", "3pt"), ("north", "-3pt")]
+    place_of = {code: PLACEMENTS[i % len(PLACEMENTS)] for i, (_, _, code, _) in enumerate(on_scale)}
 
     for harness, color in [("ccworkflow", "evalBlue"), ("csloop", "evalOrange")]:
         pts = [p for p in on_scale if p[3] == harness]
@@ -1240,38 +1278,40 @@ def _panel_frontier(metrics):
             + "};\n"
         )
         for x, y, code, _ in pts:
+            anchor, yshift = place_of[code]
             lines.append(
-                f"\\node[font=\\tiny, color=evalInk, anchor={anchor_of[code]}, inner sep=1.5pt]\n"
-                f"  at (axis cs:{x:.3g},{y:.3g}) {{{code}}};\n"
+                f"\\node[font=\\tiny, color=evalInk, anchor={anchor}, yshift={yshift}, inner sep=0.8pt]\n"
+                f"  at (axis cs:{x:.3g},{y:.3g}) {{{code.lstrip('R')}}};\n"
             )
 
-    # Colour meaning is already established by panel (a)'s legend, so this panel
-    # spends its interior space on the reading direction instead of repeating it.
-    # Bottom-right is the only quadrant with no data in it (the slow-and-cheap
-    # corner nothing landed in), so the reading hint goes there.
-    lines.append(
-        f"\\node[font=\\tiny, color=evalInk, anchor=south east] at (axis cs:{xmax * 0.99:.3g},0.05)\n"
-        "  {lower-left is better};\n"
-    )
+    # Top-left is the one region with no data in it (the fast-and-expensive
+    # corner nothing landed in), and the note is set over two lines because a
+    # single line of it is wider than the panel and gets clipped mid-word. The
+    # "lower-left is better" hint the nine-run version carried is gone: at this
+    # density it printed straight through the csloop cluster, and the two axis
+    # labels already say which direction is which.
     for x, y, code, _ in off_scale:
         lines.append(
-            f"\\node[font=\\tiny, color=evalInk, anchor=north east] at (axis cs:{xmax * 0.99:.3g},{ymax * 0.97:.3g})\n"
-            f"  {{{code}: {x:.0f}\\,min, \\${y:.0f}\\,/file (off scale)}};\n"
+            f"\\node[font=\\tiny, color=evalInk, anchor=north west, align=left]\n"
+            f"  at (axis cs:0.55,{ymax * 0.99:.3g})\n"
+            f"  {{{code} off scale:\\\\{x:.0f}\\,min, \\${y:.0f}/file}};\n"
         )
     return "".join(lines)
 
 
 def _panel_calls_per_file(metrics):
     ymax, clipped = _tex_axis_max([metrics[k]["calls_per_file"] for k in KEYS])
-    cc, cs, missing = [], [], []
+    cc, cs, over, missing = [], [], [], []
     for k in KEYS:
         m = metrics[k]
         v = m["calls_per_file"]
         if v is None:
-            missing.append((m["code"], "n/a (no branch)" if m["files"] is None else "n/a (0 files)"))
+            missing.append((m["code"], "no branch" if m["files"] is None else "0 files"))
             continue
-        point = (m["code"], min(v, ymax), _clip_label(v, m["code"], clipped, "{:.0f}"))
-        (cc if m["harness"] == "ccworkflow" else cs).append(point)
+        if m["code"] in clipped:
+            over.append((m["harness"], (m["code"], ymax, f"{v:.0f}\\,$\\uparrow$")))
+            continue
+        (cc if m["harness"] == "ccworkflow" else cs).append((m["code"], v, f"{v:.0f}"))
     return (
         "\\nextgroupplot[" + _axis_common() + _symbolic_x() + _explicit_labels() +
         "  ybar, bar width=3pt, title={(d) Tool calls per file settled},\n"
@@ -1279,6 +1319,8 @@ def _panel_calls_per_file(metrics):
         "]\n"
         "\\addplot[fill=evalBlue, draw=none, bar shift=0pt] coordinates {" + _coord_str_meta(cc) + "};\n"
         "\\addplot[fill=evalOrange, draw=none, bar shift=0pt] coordinates {" + _coord_str_meta(cs) + "};\n"
+        + _clip_plot("evalBlue", [p for h, p in over if h == "ccworkflow"])
+        + _clip_plot("evalOrange", [p for h, p in over if h == "csloop"])
         + "".join(_na_nodes([c], note) for c, note in missing)
     )
 
@@ -1290,7 +1332,7 @@ def _panel_input_composition(metrics):
     lines = [
         "\\nextgroupplot[" + _axis_common() + _symbolic_x() +
         "  ybar stacked, bar width=3pt, title={(e) Input-side token mix},\n"
-        "  ylabel={Share of input (\\%)}, ymax=104, ytick={0,25,50,75,100},\n"
+        "  ylabel={Input share (\\%)}, ymax=104, ytick={0,25,50,75,100},\n"
         # Every bar is full height here, so there is no interior space at all:
         # the legend has to go under the axis.
         "  legend style={at={(0.5,-0.30)}, anchor=north}, legend columns=3,\n"
@@ -1310,15 +1352,17 @@ def _panel_tokens_per_file(metrics):
     ymax, clipped = _tex_axis_max(
         [(metrics[k]["tokens_per_file"] / 1e6) if metrics[k]["tokens_per_file"] else None for k in KEYS]
     )
-    cc, cs, missing = [], [], []
+    cc, cs, over, missing = [], [], [], []
     for k in KEYS:
         m = metrics[k]
         if m["tokens_per_file"] is None:
-            missing.append((m["code"], "n/a (no branch)" if m["files"] is None else "n/a (0 files)"))
+            missing.append((m["code"], "no branch" if m["files"] is None else "0 files"))
             continue
         v = m["tokens_per_file"] / 1e6
-        point = (m["code"], min(v, ymax), _clip_label(v, m["code"], clipped, "{:.2f}"))
-        (cc if m["harness"] == "ccworkflow" else cs).append(point)
+        if m["code"] in clipped:
+            over.append((m["harness"], (m["code"], ymax, f"{v:.2f}\\,$\\uparrow$")))
+            continue
+        (cc if m["harness"] == "ccworkflow" else cs).append((m["code"], v, f"{v:.2f}"))
     # Linear, not log. Across the runs that are on scale the spread is about
     # 27x, which a linear axis shows honestly; a log axis would both flatten the
     # very gap the panel exists to show and make the value labels read as log10.
@@ -1326,10 +1370,12 @@ def _panel_tokens_per_file(metrics):
         "\\nextgroupplot[" + _axis_common() + _symbolic_x() + _explicit_labels() +
         "  ybar, bar width=3pt,\n"
         "  title={(f) Input tokens per file settled},\n"
-        f"  ylabel={{M tokens / file}}, ymax={ymax:.3g},\n"
+        f"  ylabel={{M tok / file}}, ymax={ymax:.3g},\n"
         "]\n"
         "\\addplot[fill=evalBlue, draw=none, bar shift=0pt] coordinates {" + _coord_str_meta(cc) + "};\n"
         "\\addplot[fill=evalOrange, draw=none, bar shift=0pt] coordinates {" + _coord_str_meta(cs) + "};\n"
+        + _clip_plot("evalBlue", [p for h, p in over if h == "ccworkflow"])
+        + _clip_plot("evalOrange", [p for h, p in over if h == "csloop"])
         + "".join(_na_nodes([c], note) for c, note in missing)
     )
 
@@ -1341,8 +1387,10 @@ def write_tikz_figure(metrics):
         "%% Six-panel evaluation figure. Requires pgfplots + the groupplots\n"
         "%% library and the evalXxx colors, both set up in jss-submission.sty.\n",
         "\\begin{tikzpicture}\n",
-        "\\begin{groupplot}[group style={group size=3 by 2, horizontal sep=1.15cm,\n"
-        "    vertical sep=1.5cm}]\n",
+        # vertical sep has to clear a rotated tick-label column plus, under
+        # panel (a), the harness legend that no longer fits inside its axis.
+        "\\begin{groupplot}[group style={group size=3 by 2, horizontal sep=1.3cm,\n"
+        "    vertical sep=2.1cm}]\n",
         _panel_files(metrics),
         _panel_cost_by_model(metrics),
         _panel_frontier(metrics),

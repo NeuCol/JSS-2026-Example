@@ -4,8 +4,8 @@
 %% Six-panel evaluation figure. Requires pgfplots + the groupplots
 %% library and the evalXxx colors, both set up in jss-submission.sty.
 \begin{tikzpicture}
-\begin{groupplot}[group style={group size=3 by 2, horizontal sep=1.15cm,
-    vertical sep=1.5cm}]
+\begin{groupplot}[group style={group size=3 by 2, horizontal sep=1.3cm,
+    vertical sep=2.1cm}]
 \nextgroupplot[width=0.27\textwidth, height=3.4cm,
   axis lines=left, axis line style={draw=evalAxis, line width=0.4pt},
   ymajorgrids, grid style={draw=evalGrid, line width=0.4pt},
@@ -13,7 +13,8 @@
   label style={font=\scriptsize, color=evalInk},
   ylabel near ticks,
   title style={font=\scriptsize\bfseries, yshift=-1pt},
-  legend style={font=\scriptsize, draw=none, fill=none, inner sep=1pt},
+  legend style={font=\tiny, draw=none, fill=none, inner sep=1pt},
+  legend image code/.code={\draw[##1] (0cm,-0.05cm) rectangle (0.18cm,0.09cm);},
   every axis plot/.append style={line width=0.4pt},
   xtick style={draw=none}, ytick style={draw=none},
   enlarge x limits=0.08, ymin=0,
@@ -23,12 +24,12 @@ symbolic x coords={R1,R2,R3,R4,R5,R6,R7,R8,R9,R10,R11,R12,R13,R14,R15,R16}, xtic
   ylabel={Files}, ymax=53,
   nodes near coords, nodes near coords style={font=\tiny, color=evalInk,
     rotate=90, anchor=west},
-  legend style={at={(0.99,0.97)}, anchor=north east}, legend columns=1,
+  legend style={at={(0.5,-0.42)}, anchor=north}, legend columns=2,
 ]
 \addplot[fill=evalBlue, draw=none, bar shift=0pt] coordinates {(R3,41) (R4,15) (R10,1)};
 \addplot[fill=evalOrange, draw=none, bar shift=0pt] coordinates {(R1,15) (R2,20) (R5,19) (R6,14) (R7,0) (R8,10) (R9,5) (R12,15) (R13,5) (R14,5) (R15,5) (R16,2)};
 \legend{ccworkflow, csloop}
-\node[font=\tiny, color=evalInk, rotate=90, anchor=west] at (axis cs:R11,0) {\,n/a (no branch)};
+\node[font=\tiny, color=evalInk, rotate=90, anchor=west] at (axis cs:R11,0) {\,no branch};
 \nextgroupplot[width=0.27\textwidth, height=3.4cm,
   axis lines=left, axis line style={draw=evalAxis, line width=0.4pt},
   ymajorgrids, grid style={draw=evalGrid, line width=0.4pt},
@@ -36,7 +37,8 @@ symbolic x coords={R1,R2,R3,R4,R5,R6,R7,R8,R9,R10,R11,R12,R13,R14,R15,R16}, xtic
   label style={font=\scriptsize, color=evalInk},
   ylabel near ticks,
   title style={font=\scriptsize\bfseries, yshift=-1pt},
-  legend style={font=\scriptsize, draw=none, fill=none, inner sep=1pt},
+  legend style={font=\tiny, draw=none, fill=none, inner sep=1pt},
+  legend image code/.code={\draw[##1] (0cm,-0.05cm) rectangle (0.18cm,0.09cm);},
   every axis plot/.append style={line width=0.4pt},
   xtick style={draw=none}, ytick style={draw=none},
   enlarge x limits=0.08, ymin=0,
@@ -44,7 +46,7 @@ symbolic x coords={R1,R2,R3,R4,R5,R6,R7,R8,R9,R10,R11,R12,R13,R14,R15,R16}, xtic
   x tick label style={rotate=90, anchor=east, font=\tiny, yshift=1pt},
   ybar stacked, bar width=3pt, title={(b) Total cost by model tier},
   ylabel={USD}, ymax=132,
-  legend style={at={(0.99,0.97)}, anchor=north east}, legend columns=1,
+  legend style={at={(0.02,0.97)}, anchor=north west}, legend columns=1,
 ]
 \addplot[fill=evalBlue, draw=none] coordinates {(R1,0.00) (R2,0.00) (R3,96.92) (R4,45.09) (R5,0.00) (R6,0.00) (R7,5.17) (R8,4.89) (R9,0.00) (R10,0.00) (R11,0.00) (R12,0.00) (R13,5.15) (R14,0.00) (R15,0.00) (R16,0.00)};
 \addplot[fill=evalViolet, draw=none] coordinates {(R1,13.20) (R2,9.91) (R3,17.23) (R4,20.18) (R5,14.76) (R6,13.75) (R7,0.00) (R8,0.00) (R9,0.00) (R10,36.94) (R11,0.00) (R12,13.12) (R13,0.00) (R14,0.00) (R15,0.00) (R16,0.00)};
@@ -61,7 +63,8 @@ symbolic x coords={R1,R2,R3,R4,R5,R6,R7,R8,R9,R10,R11,R12,R13,R14,R15,R16}, xtic
   label style={font=\scriptsize, color=evalInk},
   ylabel near ticks,
   title style={font=\scriptsize\bfseries, yshift=-1pt},
-  legend style={font=\scriptsize, draw=none, fill=none, inner sep=1pt},
+  legend style={font=\tiny, draw=none, fill=none, inner sep=1pt},
+  legend image code/.code={\draw[##1] (0cm,-0.05cm) rectangle (0.18cm,0.09cm);},
   every axis plot/.append style={line width=0.4pt},
   xtick style={draw=none}, ytick style={draw=none},
   enlarge x limits=0.08, ymin=0,
@@ -70,29 +73,28 @@ symbolic x coords={R1,R2,R3,R4,R5,R6,R7,R8,R9,R10,R11,R12,R13,R14,R15,R16}, xtic
   xmin=0.4, xmax=8.88, ymin=0, ymax=4.87, enlarge x limits=false,
 ]
 \addplot[only marks, mark=*, mark size=1.7pt, color=evalBlue] coordinates {(1.26,2.78) (7.06,4.35)};
-\node[font=\tiny, color=evalInk, anchor=south west, inner sep=1.5pt]
-  at (axis cs:1.26,2.78) {R3};
-\node[font=\tiny, color=evalInk, anchor=south east, inner sep=1.5pt]
-  at (axis cs:7.06,4.35) {R4};
+\node[font=\tiny, color=evalInk, anchor=south, yshift=3pt, inner sep=0.8pt]
+  at (axis cs:1.26,2.78) {3};
+\node[font=\tiny, color=evalInk, anchor=north, yshift=-3pt, inner sep=0.8pt]
+  at (axis cs:7.06,4.35) {4};
 \addplot[only marks, mark=*, mark size=1.7pt, color=evalOrange] coordinates {(1.49,0.495) (2.59,0.777) (2.79,0.88) (3.24,0.982) (3.25,0.875) (3.51,0.489) (7.92,1.03)};
-\node[font=\tiny, color=evalInk, anchor=north east, inner sep=1.5pt]
-  at (axis cs:1.49,0.495) {R2};
-\node[font=\tiny, color=evalInk, anchor=north west, inner sep=1.5pt]
-  at (axis cs:2.59,0.777) {R5};
-\node[font=\tiny, color=evalInk, anchor=south east, inner sep=1.5pt]
-  at (axis cs:2.79,0.88) {R1};
-\node[font=\tiny, color=evalInk, anchor=south west, inner sep=1.5pt]
-  at (axis cs:3.24,0.982) {R6};
-\node[font=\tiny, color=evalInk, anchor=north east, inner sep=1.5pt]
-  at (axis cs:3.25,0.875) {R12};
-\node[font=\tiny, color=evalInk, anchor=north west, inner sep=1.5pt]
-  at (axis cs:3.51,0.489) {R8};
-\node[font=\tiny, color=evalInk, anchor=south west, inner sep=1.5pt]
-  at (axis cs:7.92,1.03) {R13};
-\node[font=\tiny, color=evalInk, anchor=south east] at (axis cs:8.79,0.05)
-  {lower-left is better};
-\node[font=\tiny, color=evalInk, anchor=north east] at (axis cs:8.79,4.73)
-  {R10: 29\,min, \$37\,/file (off scale)};
+\node[font=\tiny, color=evalInk, anchor=north, yshift=-3pt, inner sep=0.8pt]
+  at (axis cs:1.49,0.495) {2};
+\node[font=\tiny, color=evalInk, anchor=south, yshift=3pt, inner sep=0.8pt]
+  at (axis cs:2.59,0.777) {5};
+\node[font=\tiny, color=evalInk, anchor=north, yshift=-3pt, inner sep=0.8pt]
+  at (axis cs:2.79,0.88) {1};
+\node[font=\tiny, color=evalInk, anchor=south, yshift=3pt, inner sep=0.8pt]
+  at (axis cs:3.24,0.982) {6};
+\node[font=\tiny, color=evalInk, anchor=north, yshift=-3pt, inner sep=0.8pt]
+  at (axis cs:3.25,0.875) {12};
+\node[font=\tiny, color=evalInk, anchor=south, yshift=3pt, inner sep=0.8pt]
+  at (axis cs:3.51,0.489) {8};
+\node[font=\tiny, color=evalInk, anchor=south, yshift=3pt, inner sep=0.8pt]
+  at (axis cs:7.92,1.03) {13};
+\node[font=\tiny, color=evalInk, anchor=north west, align=left]
+  at (axis cs:0.55,4.83)
+  {R10 off scale:\\29\,min, \$37/file};
 \nextgroupplot[width=0.27\textwidth, height=3.4cm,
   axis lines=left, axis line style={draw=evalAxis, line width=0.4pt},
   ymajorgrids, grid style={draw=evalGrid, line width=0.4pt},
@@ -100,7 +102,8 @@ symbolic x coords={R1,R2,R3,R4,R5,R6,R7,R8,R9,R10,R11,R12,R13,R14,R15,R16}, xtic
   label style={font=\scriptsize, color=evalInk},
   ylabel near ticks,
   title style={font=\scriptsize\bfseries, yshift=-1pt},
-  legend style={font=\scriptsize, draw=none, fill=none, inner sep=1pt},
+  legend style={font=\tiny, draw=none, fill=none, inner sep=1pt},
+  legend image code/.code={\draw[##1] (0cm,-0.05cm) rectangle (0.18cm,0.09cm);},
   every axis plot/.append style={line width=0.4pt},
   xtick style={draw=none}, ytick style={draw=none},
   enlarge x limits=0.08, ymin=0,
@@ -112,10 +115,13 @@ symbolic x coords={R1,R2,R3,R4,R5,R6,R7,R8,R9,R10,R11,R12,R13,R14,R15,R16}, xtic
   ybar, bar width=3pt, title={(d) Tool calls per file settled},
   ylabel={Calls / file}, ymax=141,
 ]
-\addplot[fill=evalBlue, draw=none, bar shift=0pt] coordinates {(R3,48.34) [48] (R4,63.4) [63] (R10,140.9) [238\,$\uparrow$]};
+\addplot[fill=evalBlue, draw=none, bar shift=0pt] coordinates {(R3,48.34) [48] (R4,63.4) [63]};
 \addplot[fill=evalOrange, draw=none, bar shift=0pt] coordinates {(R1,26.73) [27] (R2,15.7) [16] (R5,22.53) [23] (R6,27.43) [27] (R8,35) [35] (R9,68.8) [69] (R12,25.8) [26] (R13,78.6) [79] (R14,66) [66] (R15,97.2) [97] (R16,92) [92]};
-\node[font=\tiny, color=evalInk, rotate=90, anchor=west] at (axis cs:R7,0) {\,n/a (0 files)};
-\node[font=\tiny, color=evalInk, rotate=90, anchor=west] at (axis cs:R11,0) {\,n/a (no branch)};
+\addplot[fill=evalBlue, draw=none, bar shift=0pt, forget plot,
+  nodes near coords={}] coordinates {(R10,140.9)};
+\node[font=\tiny, color=evalSurface, rotate=90, anchor=center] at (axis cs:R10,70.47) {238\,$\uparrow$};
+\node[font=\tiny, color=evalInk, rotate=90, anchor=west] at (axis cs:R7,0) {\,0 files};
+\node[font=\tiny, color=evalInk, rotate=90, anchor=west] at (axis cs:R11,0) {\,no branch};
 \nextgroupplot[width=0.27\textwidth, height=3.4cm,
   axis lines=left, axis line style={draw=evalAxis, line width=0.4pt},
   ymajorgrids, grid style={draw=evalGrid, line width=0.4pt},
@@ -123,14 +129,15 @@ symbolic x coords={R1,R2,R3,R4,R5,R6,R7,R8,R9,R10,R11,R12,R13,R14,R15,R16}, xtic
   label style={font=\scriptsize, color=evalInk},
   ylabel near ticks,
   title style={font=\scriptsize\bfseries, yshift=-1pt},
-  legend style={font=\scriptsize, draw=none, fill=none, inner sep=1pt},
+  legend style={font=\tiny, draw=none, fill=none, inner sep=1pt},
+  legend image code/.code={\draw[##1] (0cm,-0.05cm) rectangle (0.18cm,0.09cm);},
   every axis plot/.append style={line width=0.4pt},
   xtick style={draw=none}, ytick style={draw=none},
   enlarge x limits=0.08, ymin=0,
 symbolic x coords={R1,R2,R3,R4,R5,R6,R7,R8,R9,R10,R11,R12,R13,R14,R15,R16}, xtick={R1,R2,R3,R4,R5,R6,R7,R8,R9,R10,R11,R12,R13,R14,R15,R16},
   x tick label style={rotate=90, anchor=east, font=\tiny, yshift=1pt},
   ybar stacked, bar width=3pt, title={(e) Input-side token mix},
-  ylabel={Share of input (\%)}, ymax=104, ytick={0,25,50,75,100},
+  ylabel={Input share (\%)}, ymax=104, ytick={0,25,50,75,100},
   legend style={at={(0.5,-0.30)}, anchor=north}, legend columns=3,
 ]
 \addplot[fill=evalAqua, draw=none] coordinates {(R1,90.36) (R2,85.89) (R3,95.96) (R4,94.11) (R5,90.89) (R6,88.81) (R7,90.74) (R8,90.17) (R9,92.78) (R10,90.83) (R11,92.94) (R12,90.80) (R13,89.90) (R14,82.03) (R15,80.13) (R16,79.90)};
@@ -144,7 +151,8 @@ symbolic x coords={R1,R2,R3,R4,R5,R6,R7,R8,R9,R10,R11,R12,R13,R14,R15,R16}, xtic
   label style={font=\scriptsize, color=evalInk},
   ylabel near ticks,
   title style={font=\scriptsize\bfseries, yshift=-1pt},
-  legend style={font=\scriptsize, draw=none, fill=none, inner sep=1pt},
+  legend style={font=\tiny, draw=none, fill=none, inner sep=1pt},
+  legend image code/.code={\draw[##1] (0cm,-0.05cm) rectangle (0.18cm,0.09cm);},
   every axis plot/.append style={line width=0.4pt},
   xtick style={draw=none}, ytick style={draw=none},
   enlarge x limits=0.08, ymin=0,
@@ -155,11 +163,14 @@ symbolic x coords={R1,R2,R3,R4,R5,R6,R7,R8,R9,R10,R11,R12,R13,R14,R15,R16}, xtic
   nodes near coords style={font=\tiny, color=evalInk, rotate=90, anchor=west},
   ybar, bar width=3pt,
   title={(f) Input tokens per file settled},
-  ylabel={M tokens / file}, ymax=11.4,
+  ylabel={M tok / file}, ymax=11.4,
 ]
-\addplot[fill=evalBlue, draw=none, bar shift=0pt] coordinates {(R3,6.288) [6.29] (R4,7.884) [7.88] (R10,11.43) [27.48\,$\uparrow$]};
+\addplot[fill=evalBlue, draw=none, bar shift=0pt] coordinates {(R3,6.288) [6.29] (R4,7.884) [7.88]};
 \addplot[fill=evalOrange, draw=none, bar shift=0pt] coordinates {(R1,0.6289) [0.63] (R2,0.2934) [0.29] (R5,0.5818) [0.58] (R6,0.6271) [0.63] (R8,0.8636) [0.86] (R9,1.343) [1.34] (R12,0.6267) [0.63] (R13,1.813) [1.81] (R14,1.137) [1.14] (R15,1.552) [1.55] (R16,1.421) [1.42]};
-\node[font=\tiny, color=evalInk, rotate=90, anchor=west] at (axis cs:R7,0) {\,n/a (0 files)};
-\node[font=\tiny, color=evalInk, rotate=90, anchor=west] at (axis cs:R11,0) {\,n/a (no branch)};
+\addplot[fill=evalBlue, draw=none, bar shift=0pt, forget plot,
+  nodes near coords={}] coordinates {(R10,11.43)};
+\node[font=\tiny, color=evalSurface, rotate=90, anchor=center] at (axis cs:R10,5.716) {27.48\,$\uparrow$};
+\node[font=\tiny, color=evalInk, rotate=90, anchor=west] at (axis cs:R7,0) {\,0 files};
+\node[font=\tiny, color=evalInk, rotate=90, anchor=west] at (axis cs:R11,0) {\,no branch};
 \end{groupplot}
 \end{tikzpicture}
