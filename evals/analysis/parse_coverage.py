@@ -48,6 +48,20 @@ def _human_review_path(run_dir):
     return Path(run_dir) / "human_review"
 
 
+def _run_produced_artifacts(run_dir):
+    """Whether the archive contains engine output for this run at all.
+
+    A run directory can carry a full loop/metadata (or workflow-wf_*) record and
+    still have no agent_log.md, when the log was not copied in at archive time —
+    08-26-2026/codescribe-sonnet-5 is that case. That is a missing *log*, not a
+    run that never happened, and the two must not report the same status.
+    """
+    run_dir = Path(run_dir)
+    return (run_dir / "loop" / "metadata" / "manifest.toml").exists() or any(
+        run_dir.glob("workflow-wf_*")
+    )
+
+
 def coverage_for_run(run_dir):
     run_dir = Path(run_dir)
     agent_log_path = _agent_log_path(run_dir)
@@ -74,7 +88,7 @@ def coverage_for_run(run_dir):
         human_verified = (int(m.group(1)), int(m.group(2)))
 
     if not has_log:
-        status = "not-executed"
+        status = "no agent_log archived" if _run_produced_artifacts(run_dir) else "not-executed"
     elif "manually terminated" in review_text.lower():
         status = "manually-terminated"
     elif review_text.strip():

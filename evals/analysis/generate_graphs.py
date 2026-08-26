@@ -1,12 +1,25 @@
 #!/usr/bin/env python3.10
-"""Generate the paper figures + summary tables for the 08-11/08-12-2026
-evaluation of the mcfm-translate transformation: ccworkflow (sonnet-5 author /
-opus-5 integrate) vs. csloop (opus-5, opus-5 +reasoning x2, and Kimi K3).
+"""Generate the paper figures + summary tables for the 08-11-2026 → 08-26-2026
+evaluation of the mcfm-translate transformation.
+
+Runs covered (see RUNS below for the authoritative list): ccworkflow (sonnet-5
+author / opus-5 integrate, plus a single-session opus-5 run) vs. csloop across
+opus-5, sonnet-5, Kimi K3 and the two oaic-gpt56 variants (sol / terra). Only
+the layouts written from 08-11-2026 onward are parseable — the 07-24/07-25-2026
+run directories use the older on-disk layout and are deliberately out of scope.
 
 "Files settled" throughout is the exact count from git_file_counts.py (the
 software/mcfm submodule branch for each run), not the agent's own in-loop
 checklist in agent_log.md — the two can disagree (see git_file_counts.py's
-docstring), and the submodule diff is ground truth.
+docstring), and the submodule diff is ground truth. Two consequences visible in
+the output, both deliberate:
+  - a run whose archival branch never reached this clone has *no* git-exact
+    count. That is None, not zero, and is drawn as an explicit "n/a (no branch)"
+    everywhere rather than as an empty bar.
+  - a round that adds a .cpp beside a *retained* Fortran original retires no
+    file, so it can settle 4 units by its own checklist and 1 by git. R10 is
+    that case; its per-file metrics are correspondingly extreme, and the
+    per-file panels clip it with its true value printed (see capped_limit).
 
 Run with: python3.10 analysis/generate_graphs.py
 (Needs Python 3.10+ for tomllib, or `pip install tomli` on older Pythons.)
@@ -17,8 +30,7 @@ Reads only from experiments/ (read-only). Writes, under analysis/figures/:
   fig3_coverage.png              - standalone, compact
   fig4_wall_time.png             - standalone, compact
   fig5_tool_calls_per_file.png   - standalone, compact
-  fig6_efficiency.png            - standalone, compact (normalized cost/time)
-  fig_combined.png               - the six panels used as the paper's single figure
+  fig_combined.png               - the eight panels used as the paper's single figure
 and analysis/summary_tables.md (the numeric source of truth behind every panel).
 
 fig_combined.png deliberately does NOT mirror the summary table column-for-
@@ -127,41 +139,78 @@ plt.rcParams.update(
 )
 
 # ---------------------------------------------------------------------------
-# Run identity / labeling — 08-11-2026 and 08-12-2026
+# Run identity / labeling — 08-11-2026 through 08-26-2026
+#
+# One ordered registry of (day, run_dir, code, label); KEYS, RUN_LABELS,
+# RUN_CODES and the figure captions are all derived from it, so adding a run is
+# a one-line change here and nowhere else.
+#
+# The codes are stable identifiers quoted by the paper text: APPEND new runs,
+# never renumber the existing ones. Runs are grouped by day and, within a day,
+# by model family rather than by wall-clock start, so neighbouring bars compare
+# like with like.
 # ---------------------------------------------------------------------------
 DAY = "08-12-2026"  # the day used by the csloop with-reasoning/run2 comparison below
-RUN_LABELS = {
-    ("08-11-2026", "csloop-opus-5"): "csloop opus-5 (08-11)",
-    ("08-11-2026", "csloop-opus-5-with-reasoning"): "csloop opus-5 +reasoning (08-11)",
-    ("08-12-2026", "ccworkflow-sonnet-5-opus-5-integrate"): "ccworkflow (sonnet-5 author, opus-5 integrate)",
-    ("08-12-2026", "ccworkflow-sonnet-5-opus-5-integrate-run2"): "ccworkflow (sonnet-5 author, opus-5 integrate, run2)",
-    ("08-12-2026", "codescribe-opus-5-run2"): "csloop opus-5 (run2, 08-12)",
-    ("08-12-2026", "codescribe-opus-5-with-reasoning"): "csloop opus-5 +reasoning (08-12)",
-    ("08-12-2026", "codescribe-sonnet-5-with-reasoning"): "csloop sonnet-5 +reasoning (08-12)",
-    ("08-12-2026", "codescribe-sonnet-5-with-reasoning-run2"): "csloop sonnet-5 +reasoning (run2, 08-12)",
-    ("08-12-2026", "codescribe-kimi-k3-5"): "csloop Kimi K3",
-}
+RUNS = [
+    ("08-11-2026", "csloop-opus-5", "R1", "csloop opus-5 (08-11)"),
+    ("08-11-2026", "csloop-opus-5-with-reasoning", "R2", "csloop opus-5 +reasoning (08-11)"),
+    ("08-12-2026", "ccworkflow-sonnet-5-opus-5-integrate", "R3",
+     "ccworkflow (sonnet-5 author, opus-5 integrate)"),
+    ("08-12-2026", "ccworkflow-sonnet-5-opus-5-integrate-run2", "R4",
+     "ccworkflow (sonnet-5 author, opus-5 integrate, run2)"),
+    ("08-12-2026", "codescribe-opus-5-run2", "R5", "csloop opus-5 (run2, 08-12)"),
+    ("08-12-2026", "codescribe-opus-5-with-reasoning", "R6", "csloop opus-5 +reasoning (08-12)"),
+    ("08-12-2026", "codescribe-sonnet-5-with-reasoning", "R7", "csloop sonnet-5 +reasoning (08-12)"),
+    ("08-12-2026", "codescribe-sonnet-5-with-reasoning-run2", "R8",
+     "csloop sonnet-5 +reasoning (run2, 08-12)"),
+    ("08-12-2026", "codescribe-kimi-k3-5", "R9", "csloop Kimi K3 (08-12)"),
+    ("08-13-2026", "ccworkflow-opus-5-session", "R10", "ccworkflow opus-5 (single session, 08-13)"),
+    ("08-14-2026", "codescribe-kimi-k3-5", "R11", "csloop Kimi K3 (08-14)"),
+    ("08-26-2026", "codescribe-opus-5", "R12", "csloop opus-5 (08-26)"),
+    ("08-26-2026", "codescribe-sonnet-5", "R13", "csloop sonnet-5 (08-26)"),
+    ("08-26-2026", "codescribe-oaic-gpt56sol", "R14", "csloop oaic-gpt56sol (08-26)"),
+    ("08-26-2026", "codescribe-oaic-gpt56sol-run2", "R15", "csloop oaic-gpt56sol (run2, 08-26)"),
+    ("08-26-2026", "codescribe-oaic-gpt56terra", "R16", "csloop oaic-gpt56terra (08-26)"),
+]
+
+KEYS = [(day, run_name) for day, run_name, _, _ in RUNS]
+RUN_LABELS = {(day, run_name): label for day, run_name, _, label in RUNS}
 # Short x-axis codes — keeps bars legible even in the compact standalone
 # figures; each figure captions the full mapping once, below the plot.
-RUN_CODES = {
-    ("08-11-2026", "csloop-opus-5"): "R1",
-    ("08-11-2026", "csloop-opus-5-with-reasoning"): "R2",
-    ("08-12-2026", "ccworkflow-sonnet-5-opus-5-integrate"): "R3",
-    ("08-12-2026", "ccworkflow-sonnet-5-opus-5-integrate-run2"): "R4",
-    ("08-12-2026", "codescribe-opus-5-run2"): "R5",
-    ("08-12-2026", "codescribe-opus-5-with-reasoning"): "R6",
-    ("08-12-2026", "codescribe-sonnet-5-with-reasoning"): "R7",
-    ("08-12-2026", "codescribe-sonnet-5-with-reasoning-run2"): "R8",
-    ("08-12-2026", "codescribe-kimi-k3-5"): "R9",
-}
-RUN_CODE_CAPTION = (
-    "R1 = csloop opus-5 (08-11)  |  R2 = csloop opus-5 +reasoning (08-11)  |  "
-    "R3 = ccworkflow (sonnet-5 author, opus-5 integrate)  |  R4 = ccworkflow (…, run2)  |  "
-    "R5 = csloop opus-5 (run2, 08-12)  |  R6 = csloop opus-5 +reasoning (08-12)  |  "
-    "R7 = csloop sonnet-5 +reasoning (08-12)  |  R8 = csloop sonnet-5 +reasoning (run2, 08-12)  |  "
-    "R9 = csloop Kimi K3"
+RUN_CODES = {(day, run_name): code for day, run_name, code, _ in RUNS}
+
+
+def run_code_caption(fig_width_in, fontsize=None):
+    """The code→configuration mapping, wrapped to the figure it sits under.
+
+    Returned as a list of lines rather than one string: at 16 runs the mapping
+    is far wider than any figure, and a single un-wrapped line makes
+    `bbox_inches="tight"` grow the saved canvas to the width of the *text*,
+    which strands the panels in the middle of a very wide image.
+    """
+    import textwrap
+
+    fontsize = fontsize or CAPTION_SIZE
+    text = "  |  ".join(f"{code} = {label}" for _, _, code, label in RUNS)
+    # ~0.52 em per character is the measured average for DejaVu Sans at these
+    # sizes; close enough to keep the wrapped text inside the axes width.
+    chars = max(40, int(fig_width_in * 72 / (0.52 * fontsize)))
+    return textwrap.wrap(text, chars)
+
+
+# Every Anthropic csloop run in this table ran with adaptive thinking active:
+# Opus 5 and Sonnet 5 both think by default when the thinking parameter is
+# omitted, so none of these runs is a reasoning-OFF arm. "+reasoning" in a label
+# therefore means only that CODESCRIBE_AGENT_REASONING was set explicitly for
+# that run, and the runs without the suffix are not its control.
+REASONING_NOTE = (
+    "All Anthropic csloop runs think adaptively (on by default); \"+reasoning\" marks runs that "
+    "set the flag explicitly, not an ON/OFF pair."
 )
-KEYS = list(RUN_LABELS.keys())
+UNPRICED_NOTE = (
+    "Kimi K3 and the oaic-gpt56 deployments are not Anthropic models and carry no rate card, so "
+    "they are excluded from every USD figure."
+)
 
 MODEL_COLOR = {
     "claude-sonnet-5": CAT["blue"],
@@ -180,6 +229,63 @@ def run_key(day, run_name):
 
 def _title(text, letter):
     return f"{letter} {text}" if letter else text
+
+
+# ---------------------------------------------------------------------------
+# Shared bar-panel mechanics
+#
+# Sixteen runs no longer fit the "one horizontal label per bar" layout the
+# nine-run version used: both the tick labels and the value annotations are set
+# vertically now, which costs nothing in legibility for three-character codes
+# and keeps every panel readable at the printed size.
+# ---------------------------------------------------------------------------
+def _run_xticks(ax, keys=None):
+    keys = keys if keys is not None else KEYS
+    ax.set_xticks(list(range(len(keys))))
+    ax.set_xticklabels([RUN_CODES[k] for k in keys], rotation=90)
+
+
+def _annotate_bars(ax, values, labels, top, fontsize=None, inside=()):
+    """Vertical value labels sitting just above each bar.
+
+    A bar in `inside` is one the axis clips: it runs to the top of the panel, so
+    there is no room above it and its label is set inside the bar instead.
+    """
+    for xi, (v, text) in enumerate(zip(values, labels)):
+        if text is None:
+            continue
+        if xi in inside:
+            ax.text(xi, top * 0.5, text, ha="center", va="center", rotation=90,
+                    fontsize=fontsize or ANNOT_SIZE, color=SURFACE)
+            continue
+        ax.text(xi, (v or 0) + top * 0.02, text, ha="center", va="bottom", rotation=90,
+                fontsize=fontsize or ANNOT_SIZE, color=INK_SECONDARY)
+
+
+def capped_limit(values, headroom=1.45, clip_ratio=2.0):
+    """Axis maximum for a bar panel, plus the values it deliberately clips.
+
+    A single run (R10) settled one git-exact file, so every per-file metric it
+    appears in is several times the next largest value. Scaling those panels to
+    it would flatten the fifteen bars the panel exists to compare, so when the
+    largest value is more than `clip_ratio` times the second largest, the axis
+    is scaled to the second largest instead and the outlier is drawn clipped
+    with its true value printed above it. Panels of plain per-run totals pass
+    clip_ratio=None and are never clipped.
+
+    Returns (ymax, {index: value}) for the clipped entries.
+    """
+    numeric = [(i, v) for i, v in enumerate(values) if v is not None]
+    if not numeric:
+        return 1.0, {}
+    ordered = sorted(numeric, key=lambda p: -p[1])
+    top = ordered[0][1]
+    if clip_ratio and len(ordered) > 1:
+        second = ordered[1][1]
+        if second > 0 and top > clip_ratio * second:
+            ymax = second * headroom
+            return ymax, {i: v for i, v in numeric if v > ymax}
+    return (top * headroom) or 1.0, {}
 
 
 # ---------------------------------------------------------------------------
@@ -219,6 +325,8 @@ def load_run_aggregates():
                 row["output_tokens"],
                 row["cache_write_tokens"],
                 row["cache_read_tokens"],
+                row.get("cache_write_5m_tokens", 0),
+                row.get("cache_write_1h_tokens", 0),
             )
         except KeyError:
             r["unpriced_models"].add(model)
@@ -369,7 +477,6 @@ def load_tool_calls_per_file(cc_rows, cs_rows, files_settled):
 # Panel A — total cost by model
 # ---------------------------------------------------------------------------
 def draw_cost_panel(ax, runs, letter=None):
-    labels = [RUN_CODES[k] for k in KEYS]
     x = range(len(KEYS))
 
     all_models_seen = []
@@ -385,19 +492,19 @@ def draw_cost_panel(ax, runs, letter=None):
                edgecolor=SURFACE, linewidth=1)
         bottoms = [b + h for b, h in zip(bottoms, heights)]
 
-    for xi, k in zip(x, KEYS):
-        total = bottoms[xi]
-        label = f"${total:.2f}"
-        if runs[k]["unpriced_models"]:
-            label += "\n(+ unpriced tokens)"
-        ax.text(xi, total + max(bottoms) * 0.03, label, ha="center", va="bottom",
-                fontsize=ANNOT_SIZE, color=INK_SECONDARY)
+    # An unpriced run has no rate card at all, so its bar is empty. Labelling it
+    # "$0.00" would read as "this run was free"; it gets an explicit n/a.
+    texts = [
+        "n/a (unpriced)" if runs[k]["unpriced_models"] else f"${bottoms[xi]:.2f}"
+        for xi, k in zip(x, KEYS)
+    ]
+    ymax, _ = capped_limit(bottoms, clip_ratio=None)
+    _annotate_bars(ax, bottoms, texts, ymax)
 
-    ax.set_xticks(list(x))
-    ax.set_xticklabels(labels)
+    _run_xticks(ax)
     ax.set_ylabel("USD (proxy rates)")
     ax.set_title(_title("Total cost by model", letter))
-    ax.set_ylim(0, max(bottoms) * 1.3)
+    ax.set_ylim(0, ymax)
     handles = [mpatches.Patch(color=MODEL_COLOR.get(m, CAT["aqua"]), label=m) for m in all_models_seen]
     ax.legend(handles=handles, loc="upper center", frameon=False)
 
@@ -406,7 +513,6 @@ def draw_cost_panel(ax, runs, letter=None):
 # Panel B — cache-read share of input-side tokens
 # ---------------------------------------------------------------------------
 def draw_cache_panel(ax, runs, letter=None):
-    labels = [RUN_CODES[k] for k in KEYS]
     x = range(len(KEYS))
 
     shares = []
@@ -416,12 +522,10 @@ def draw_cache_panel(ax, runs, letter=None):
         shares.append(100.0 * r["cache_read"] / total_input_side if total_input_side else 0.0)
 
     ax.bar(x, shares, width=0.6, color=CAT["aqua"], edgecolor=SURFACE, linewidth=1)
-    for xi, s in zip(x, shares):
-        ax.text(xi, s + 2, f"{s:.0f}%", ha="center", va="bottom", fontsize=ANNOT_SIZE, color=INK_SECONDARY)
-    ax.set_xticks(list(x))
-    ax.set_xticklabels(labels)
+    _annotate_bars(ax, shares, [f"{s:.0f}%" for s in shares], 100)
+    _run_xticks(ax)
     ax.set_ylabel("Cache-read share (%)")
-    ax.set_ylim(0, 112)
+    ax.set_ylim(0, 118)
     ax.set_title(_title("Cache efficiency", letter))
 
 
@@ -429,7 +533,7 @@ def draw_cache_panel(ax, runs, letter=None):
 # Panel C/D — csloop opus-5: +reasoning vs. run2 tool-call outcomes
 # ---------------------------------------------------------------------------
 def draw_reasoning_counts_panel(ax, stats, letter=None):
-    labels = ["opus-5\n+reasoning", "opus-5\nrun2"]
+    labels = ["R6\nopus-5\n+reasoning", "R5\nopus-5\nrun2"]
     x = [0, 1]
     outcome_colors = {"ok": STATUS["good"], "errors": STATUS["critical"], "rejected": STATUS["warning"]}
     ok_vals = [stats["with_reasoning"]["ok"], stats["run2"]["ok"]]
@@ -448,7 +552,7 @@ def draw_reasoning_counts_panel(ax, stats, letter=None):
 
 
 def draw_reasoning_rate_panel(ax, stats, letter=None):
-    labels = ["opus-5\n+reasoning", "opus-5\nrun2"]
+    labels = ["R6\nopus-5\n+reasoning", "R5\nopus-5\nrun2"]
     x = [0, 1]
     outcome_colors = {"ok": STATUS["good"], "errors": STATUS["critical"], "rejected": STATUS["warning"]}
 
@@ -474,19 +578,21 @@ def draw_reasoning_rate_panel(ax, stats, letter=None):
 # Panel E — files translated
 # ---------------------------------------------------------------------------
 def draw_files_panel(ax, files_settled, letter=None):
-    labels = [RUN_CODES[k] for k in KEYS]
     x = list(range(len(KEYS)))
     harness_color = {"ccworkflow": CAT["blue"], "csloop": CAT["orange"]}
-    settled = [files_settled[k] or 0 for k in KEYS]
+    # None = the run's archival branch is not in this clone, so there is no
+    # ground truth to plot. Zero = the branch is there and retired no file. The
+    # two are opposite outcomes and must not share a bar height.
+    settled = [files_settled[k] for k in KEYS]
     colors = [harness_color["ccworkflow"] if "ccworkflow" in k[1] else harness_color["csloop"] for k in KEYS]
 
-    ax.bar(x, settled, width=0.6, color=colors, edgecolor=SURFACE, linewidth=1)
-    for xi, s in zip(x, settled):
-        ax.text(xi, s + max(settled) * 0.03, str(s), ha="center", fontsize=ANNOT_SIZE, color=INK_SECONDARY)
-    ax.set_xticks(x)
-    ax.set_xticklabels(labels)
+    ax.bar(x, [s or 0 for s in settled], width=0.6, color=colors, edgecolor=SURFACE, linewidth=1)
+    ymax, _ = capped_limit(settled, clip_ratio=None)
+    _annotate_bars(ax, [s or 0 for s in settled],
+                   [str(s) if s is not None else "n/a (no branch)" for s in settled], ymax)
+    _run_xticks(ax)
     ax.set_ylabel("Files settled (git-exact)")
-    ax.set_ylim(0, max(settled) * 1.2)
+    ax.set_ylim(0, ymax)
     ax.set_title(_title("Files translated", letter))
     handles = [
         mpatches.Patch(color=harness_color["ccworkflow"], label="ccworkflow"),
@@ -501,17 +607,15 @@ def draw_files_panel(ax, files_settled, letter=None):
 # ---------------------------------------------------------------------------
 def draw_correctness_panel(ax, coverage, letter=None):
     plot_keys = [k for k in KEYS if coverage[k]["self_reported_pass"]]
-    px = list(range(len(plot_keys)))
 
     for i, k in enumerate(plot_keys):
         sp = coverage[k]["self_reported_pass"]
         pct = 100 * sp[0] / sp[1]
         ax.bar(i, pct, width=0.5, color=CAT["blue"], edgecolor=SURFACE, linewidth=0.5)
-        ax.text(i, pct + 3, f"{sp[0]}/{sp[1]}", ha="center", va="bottom",
+        ax.text(i, pct + 3, f"{sp[0]}/{sp[1]}", ha="center", va="bottom", rotation=90,
                 fontsize=ANNOT_SIZE, color=INK_SECONDARY)
 
-    ax.set_xticks(px)
-    ax.set_xticklabels([RUN_CODES[k] for k in plot_keys])
+    _run_xticks(ax, plot_keys)
     ax.set_ylabel("mcfm test pass rate (%)")
     ax.set_ylim(0, 122)
     ax.set_title(_title("Self-reported correctness", letter))
@@ -521,19 +625,17 @@ def draw_correctness_panel(ax, coverage, letter=None):
 # Panel G — wall-clock time by run
 # ---------------------------------------------------------------------------
 def draw_wall_time_panel(ax, wall_times, letter=None):
-    labels = [RUN_CODES[k] for k in KEYS]
     x = list(range(len(KEYS)))
     minutes = [(wall_times[k] or 0) / 60.0 for k in KEYS]
     harness_color = {"ccworkflow": CAT["blue"], "csloop": CAT["orange"]}
     colors = [harness_color["ccworkflow"] if "ccworkflow" in k[1] else harness_color["csloop"] for k in KEYS]
 
     ax.bar(x, minutes, width=0.5, color=colors, edgecolor=SURFACE, linewidth=1)
-    for xi, m in zip(x, minutes):
-        ax.text(xi, m + max(minutes) * 0.03, f"{m:.0f} min", ha="center", fontsize=ANNOT_SIZE, color=INK_SECONDARY)
-    ax.set_xticks(x)
-    ax.set_xticklabels(labels)
+    ymax, _ = capped_limit(minutes, clip_ratio=None)
+    _annotate_bars(ax, minutes, [f"{m:.0f} min" for m in minutes], ymax)
+    _run_xticks(ax)
     ax.set_ylabel("Wall-clock minutes")
-    ax.set_ylim(0, max(minutes) * 1.25)
+    ax.set_ylim(0, ymax)
     ax.set_title(_title("Wall-clock time", letter))
     handles = [
         mpatches.Patch(color=harness_color["ccworkflow"], label="ccworkflow"),
@@ -546,22 +648,25 @@ def draw_wall_time_panel(ax, wall_times, letter=None):
 # Panel H — tool calls per file settled
 # ---------------------------------------------------------------------------
 def draw_tool_calls_per_file_panel(ax, tool_calls_per_file, letter=None):
-    labels = [RUN_CODES[k] for k in KEYS]
     x = list(range(len(KEYS)))
     harness_color = {"ccworkflow": CAT["blue"], "csloop": CAT["orange"]}
-    per_file = [tool_calls_per_file[k]["per_file"] or 0 for k in KEYS]
+    per_file = [tool_calls_per_file[k]["per_file"] for k in KEYS]
     colors = [harness_color["ccworkflow"] if "ccworkflow" in k[1] else harness_color["csloop"] for k in KEYS]
 
-    ax.bar(x, per_file, width=0.5, color=colors, edgecolor=SURFACE, linewidth=1)
-    for xi, k in zip(x, KEYS):
-        v = tool_calls_per_file[k]
-        label = f"{v['per_file']:.0f}" if v["per_file"] is not None else "n/a\n(0 files)"
-        ax.text(xi, (v["per_file"] or 0) + max(per_file) * 0.03, label,
-                ha="center", fontsize=ANNOT_SIZE, color=INK_SECONDARY)
-    ax.set_xticks(x)
-    ax.set_xticklabels(labels)
+    ymax, clipped = capped_limit(per_file)
+    ax.bar(x, [min(v, ymax) if v is not None else 0 for v in per_file], width=0.5,
+           color=colors, edgecolor=SURFACE, linewidth=1)
+    texts = []
+    for i, (k, v) in enumerate(zip(KEYS, per_file)):
+        if v is None:
+            texts.append("n/a (no files)" if tool_calls_per_file[k]["files_settled"] == 0
+                         else "n/a (no branch)")
+        else:
+            texts.append(f"{v:.0f}" + (" ↑" if i in clipped else ""))
+    _annotate_bars(ax, [min(v, ymax) if v is not None else 0 for v in per_file], texts, ymax)
+    _run_xticks(ax)
     ax.set_ylabel("Tool calls per file settled")
-    ax.set_ylim(0, max(per_file) * 1.25)
+    ax.set_ylim(0, ymax * 1.02)
     ax.set_title(_title("Tool-call cost per file", letter))
     handles = [
         mpatches.Patch(color=harness_color["ccworkflow"], label="ccworkflow"),
@@ -573,70 +678,82 @@ def draw_tool_calls_per_file_panel(ax, tool_calls_per_file, letter=None):
 # ---------------------------------------------------------------------------
 # Standalone compact figures
 # ---------------------------------------------------------------------------
-def save_fig(fig, name, caption_lines):
-    line_gap = 0.05
+def save_fig(fig, name, caption_lines, width_in=None):
+    """Save with the caption block below the axes.
+
+    `tight_layout`'s rect reserves the bottom strip, and the strip has to grow
+    with the caption: the code→configuration mapping is six lines at 16 runs
+    where it was one at nine, and a fixed rect would run the panels straight
+    through it.
+    """
+    line_gap = 0.032
     for i, line in enumerate(reversed(caption_lines)):
-        fig.text(0.5, 0.01 + i * line_gap, line, ha="center", fontsize=CAPTION_SIZE, color=INK, wrap=True)
+        fig.text(0.5, 0.008 + i * line_gap, line, ha="center", fontsize=CAPTION_SIZE, color=INK)
     out = FIGURES_DIR / name
     fig.savefig(out, dpi=170, bbox_inches="tight")
     plt.close(fig)
     print(f"wrote {out}")
 
 
+def _caption_rect(n_lines, top=0.90):
+    """tight_layout rect leaving room for `n_lines` of caption underneath."""
+    return [0, min(0.45, 0.06 + 0.033 * n_lines), 1, top]
+
+
 def make_standalone_figures(runs, coverage, files_settled, reasoning_stats, wall_times, tool_calls_per_file):
     # Fig 1 — cost & cache
-    fig, (a1, a2) = plt.subplots(1, 2, figsize=(8.2, 4.2))
+    fig, (a1, a2) = plt.subplots(1, 2, figsize=(9.4, 4.4))
     fig.suptitle("Token cost & cache efficiency", fontsize=SUPTITLE_SIZE)
     draw_cost_panel(a1, runs)
     draw_cache_panel(a2, runs)
-    fig.tight_layout(rect=[0, 0.20, 1, 0.90])
-    save_fig(fig, "fig1_cost_and_cache.png", [
-        RUN_CODE_CAPTION,
-        "Kimi K3 is not an Anthropic model and is excluded from USD cost (no rate card here on purpose).",
-    ])
+    caption = run_code_caption(9.4) + [UNPRICED_NOTE, REASONING_NOTE]
+    fig.tight_layout(rect=_caption_rect(len(caption)))
+    save_fig(fig, "fig1_cost_and_cache.png", caption)
 
     # Fig 2 — csloop opus-5: +reasoning vs run2
     fig, (a1, a2) = plt.subplots(1, 2, figsize=(7.6, 3.9))
     fig.suptitle("csloop opus-5: +reasoning vs. run2", fontsize=SUPTITLE_SIZE)
     draw_reasoning_counts_panel(a1, reasoning_stats)
     draw_reasoning_rate_panel(a2, reasoning_stats)
-    fig.tight_layout(rect=[0, 0.16, 1, 0.90])
-    save_fig(fig, "fig2_reasoning_tool_calls.png", [
-        "run2 is a plain rerun, not an explicit reasoning-OFF condition — comparison shown as-is.",
-    ])
+    caption = ["run2 is a plain rerun, not an explicit reasoning-OFF condition — comparison shown as-is.",
+               REASONING_NOTE]
+    fig.tight_layout(rect=_caption_rect(len(caption)))
+    save_fig(fig, "fig2_reasoning_tool_calls.png", caption)
 
     # Fig 3 — coverage
-    fig, (a1, a2) = plt.subplots(1, 2, figsize=(7.6, 3.9))
+    fig, (a1, a2) = plt.subplots(1, 2, figsize=(9.4, 4.4))
     fig.suptitle("Coverage & correctness", fontsize=SUPTITLE_SIZE)
     draw_files_panel(a1, files_settled)
     draw_correctness_panel(a2, coverage)
-    fig.tight_layout(rect=[0, 0.16, 1, 0.90])
-    save_fig(fig, "fig3_coverage.png", [
-        RUN_CODE_CAPTION,
-        "No human_review files exist for these runs, so only self-reported pass rates are shown.",
-    ])
+    caption = run_code_caption(9.4) + [
+        "No human_review files exist for these runs, so only self-reported pass rates are shown; "
+        "runs that reported none are omitted from the right-hand panel.",
+    ]
+    fig.tight_layout(rect=_caption_rect(len(caption)))
+    save_fig(fig, "fig3_coverage.png", caption)
 
     # Fig 4 — wall time
-    fig, a1 = plt.subplots(figsize=(5.2, 4.0))
+    fig, a1 = plt.subplots(figsize=(7.2, 4.2))
     fig.suptitle("Wall-clock time", fontsize=SUPTITLE_SIZE)
     draw_wall_time_panel(a1, wall_times)
     a1.set_title("")
-    fig.tight_layout(rect=[0, 0.22, 1, 0.90])
-    save_fig(fig, "fig4_wall_time.png", [
-        RUN_CODE_CAPTION,
+    caption = run_code_caption(7.2) + [
         "ccworkflow: span of first-to-last agent timestamp. csloop: sum of per-loop duration_s.",
-    ])
+    ]
+    fig.tight_layout(rect=_caption_rect(len(caption)))
+    save_fig(fig, "fig4_wall_time.png", caption)
 
     # Fig 5 — tool calls per file
-    fig, a1 = plt.subplots(figsize=(5.2, 4.0))
+    fig, a1 = plt.subplots(figsize=(7.2, 4.2))
     fig.suptitle("Tool-call cost per file", fontsize=SUPTITLE_SIZE)
     draw_tool_calls_per_file_panel(a1, tool_calls_per_file)
     a1.set_title("")
-    fig.tight_layout(rect=[0, 0.22, 1, 0.90])
-    save_fig(fig, "fig5_tool_calls_per_file.png", [
-        RUN_CODE_CAPTION,
+    caption = run_code_caption(7.2) + [
         "Executed tool calls (ok + error) divided by files settled (git-exact count, git_file_counts.py).",
-    ])
+        "↑ marks a bar clipped by the axis; its true value is printed above it.",
+    ]
+    fig.tight_layout(rect=_caption_rect(len(caption)))
+    save_fig(fig, "fig5_tool_calls_per_file.png", caption)
 
 
 # ---------------------------------------------------------------------------
@@ -660,8 +777,10 @@ def _bump_fonts_for_combined(scale=1.15):
 
 
 def make_combined_figure(runs, coverage, files_settled, reasoning_stats, wall_times, tool_calls_per_file):
-    fig = plt.figure(figsize=(11, 13.5))
-    gs = fig.add_gridspec(4, 2, hspace=0.55, wspace=0.32, top=0.94, bottom=0.05, left=0.09, right=0.98)
+    fig = plt.figure(figsize=(11, 14.5))
+    # bottom clears the caption block: six wrapped lines of code→configuration
+    # mapping plus the two standing notes.
+    gs = fig.add_gridspec(4, 2, hspace=0.62, wspace=0.32, top=0.945, bottom=0.105, left=0.09, right=0.98)
 
     draw_cost_panel(fig.add_subplot(gs[0, 0]), runs, letter="(a)")
     draw_cache_panel(fig.add_subplot(gs[0, 1]), runs, letter="(b)")
@@ -673,13 +792,14 @@ def make_combined_figure(runs, coverage, files_settled, reasoning_stats, wall_ti
     draw_correctness_panel(fig.add_subplot(gs[3, 1]), coverage, letter="(h)")
 
     fig.suptitle(
-        "08-11/08-12-2026: ccworkflow vs. csloop on mcfm-translate — cost, cache, tool calls & coverage",
+        "08-11-2026 → 08-26-2026: ccworkflow vs. csloop on mcfm-translate — cost, cache, tool calls & coverage",
         fontsize=SUPTITLE_SIZE + 2,
         y=0.985,
     )
-    fig.text(0.5, 0.025, RUN_CODE_CAPTION, ha="center", fontsize=CAPTION_SIZE * 1.55, color=INK)
-    fig.text(0.5, 0.005, "Kimi K3 tokens are excluded from USD cost (non-Anthropic, no rate card here).",
-              ha="center", fontsize=CAPTION_SIZE * 1.55, color=INK)
+    caption_size = CAPTION_SIZE * 1.35
+    caption = run_code_caption(11, caption_size) + [UNPRICED_NOTE, REASONING_NOTE]
+    for i, line in enumerate(reversed(caption)):
+        fig.text(0.5, 0.006 + i * 0.0125, line, ha="center", fontsize=caption_size, color=INK)
 
     out = FIGURES_DIR / "fig_combined.png"
     fig.savefig(out, dpi=300, bbox_inches="tight")
@@ -690,8 +810,20 @@ def make_combined_figure(runs, coverage, files_settled, reasoning_stats, wall_ti
 # ---------------------------------------------------------------------------
 # Summary tables (markdown) — single source of numeric truth for the write-up
 # ---------------------------------------------------------------------------
+def _row_label(k):
+    """Run code + configuration, so a table row can be matched to a figure bar."""
+    return f"{RUN_CODES[k]} — {RUN_LABELS[k]}".replace(chr(10), " ")
+
+
+def _files_cell(files):
+    """git-exact files settled: 0 and "no archival branch here" are different."""
+    return "n/a (no branch)" if files is None else str(files)
+
+
 def write_summary_tables(runs, coverage, files_settled, translated_units, reasoning_stats, wall_times, tool_calls_per_file):
     lines = ["# Summary tables (generated by analysis/generate_graphs.py — do not hand-edit)\n"]
+    lines.append(f"{UNPRICED_NOTE}\n")
+    lines.append(f"{REASONING_NOTE}\n")
 
     lines.append("## Run comparison: cost, cache, wall time, tool calls & files settled\n")
     lines.append(
@@ -719,8 +851,8 @@ def write_summary_tables(runs, coverage, files_settled, translated_units, reason
         else:
             cost_per_file_str = "—"
         lines.append(
-            f"| {RUN_LABELS[k].replace(chr(10), ' ')} | {cost_str} | {share:.0f}% | {wt_str} | "
-            f"{per_file_str} | {files if files is not None else '—'} | {time_per_file_str} | {cost_per_file_str} |"
+            f"| {_row_label(k)} | {cost_str} | {share:.0f}% | {wt_str} | "
+            f"{per_file_str} | {_files_cell(files)} | {time_per_file_str} | {cost_per_file_str} |"
         )
     lines.append("")
 
@@ -737,7 +869,7 @@ def write_summary_tables(runs, coverage, files_settled, translated_units, reason
         if r["unpriced_models"]:
             cost_str += f" (+ tokens from {', '.join(sorted(r['unpriced_models']))}, not priced)"
         lines.append(
-            f"| {RUN_LABELS[k].replace(chr(10), ' ')} | {r['input']:,} | {r['output']:,} | "
+            f"| {_row_label(k)} | {r['input']:,} | {r['output']:,} | "
             f"{r['cache_write']:,} | {r['cache_read']:,} | {share:.0f}% | {cost_str} | {wt_str} |"
         )
     lines.append("")
@@ -748,7 +880,7 @@ def write_summary_tables(runs, coverage, files_settled, translated_units, reason
     for k in KEYS:
         r = runs[k]
         cells = [f"${r['cost_by_model'].get(m, 0.0):.2f}" for m in sorted(PRICING.keys())]
-        lines.append(f"| {RUN_LABELS[k].replace(chr(10), ' ')} | " + " | ".join(cells) + " |")
+        lines.append(f"| {_row_label(k)} | " + " | ".join(cells) + " |")
     lines.append("")
 
     lines.append("## csloop opus-5: +reasoning vs. run2 tool-call outcomes (08-12-2026)\n")
@@ -763,13 +895,23 @@ def write_summary_tables(runs, coverage, files_settled, translated_units, reason
         )
     lines.append("")
 
-    lines.append("## Status & self-reported correctness\n")
-    lines.append("| Run | Status | Self-reported pass |")
-    lines.append("|---|---|---|")
+    lines.append("## Status, coverage claim & self-reported correctness\n")
+    lines.append(
+        "`Files (git)` is ground truth — originals actually retired on the run's archival branch. "
+        "`Checklist` is the run's own `- [x]` count in agent_log.md. They diverge when a round adds a "
+        "`.cpp` beside a Fortran original it keeps (no file retired, so git counts none of it) or when "
+        "the log was not archived with the run.\n"
+    )
+    lines.append("| Run | Status | Files (git) | Checklist | Open | Self-reported pass |")
+    lines.append("|---|---|---:|---:|---:|---|")
     for k in KEYS:
         c = coverage[k]
         sp = f"{c['self_reported_pass'][0]}/{c['self_reported_pass'][1]}" if c["self_reported_pass"] else "—"
-        lines.append(f"| {RUN_LABELS[k].replace(chr(10), ' ')} | {c['final_status']} | {sp} |")
+        has_log = c["final_status"] != "not-executed" and (c["files_settled"] or c["files_open"] or sp != "—")
+        lines.append(
+            f"| {_row_label(k)} | {c['final_status']} | {_files_cell(files_settled[k])} | "
+            f"{c['files_settled'] if has_log else '—'} | {c['files_open'] if has_log else '—'} | {sp} |"
+        )
     lines.append("")
 
     mods = modules_touched(translated_units)
@@ -782,9 +924,13 @@ def write_summary_tables(runs, coverage, files_settled, translated_units, reason
     lines.append("| Run | " + " | ".join(all_modules) + " | Total |")
     lines.append("|---|" + "---:|" * (len(all_modules) + 1))
     for k in KEYS:
+        if translated_units[k] is None:
+            cells = ["n/a"] * len(all_modules)
+            lines.append(f"| {_row_label(k)} | " + " | ".join(cells) + " | n/a (no branch) |")
+            continue
         counts = mods[k]
         cells = [str(counts.get(m, 0) or "") for m in all_modules]
-        lines.append(f"| {RUN_LABELS[k].replace(chr(10), ' ')} | " + " | ".join(cells) + f" | {sum(counts.values())} |")
+        lines.append(f"| {_row_label(k)} | " + " | ".join(cells) + f" | {sum(counts.values())} |")
     lines.append("")
 
     overlaps = pairwise_file_overlap(translated_units)
@@ -800,7 +946,7 @@ def write_summary_tables(runs, coverage, files_settled, translated_units, reason
     for p in sorted(overlaps, key=lambda p: -p["overlap"]):
         denom = min(p["files_a"], p["files_b"]) or 1
         lines.append(
-            f"| {RUN_LABELS[p['a']].replace(chr(10), ' ')} | {RUN_LABELS[p['b']].replace(chr(10), ' ')} | "
+            f"| {_row_label(p['a'])} | {_row_label(p['b'])} | "
             f"{', '.join(p['shared_modules'])} | {p['files_a']} | {p['files_b']} | {p['overlap']} | "
             f"{100*p['overlap']/denom:.0f}% |"
         )
@@ -854,11 +1000,15 @@ def derived_metrics(runs, files_settled, wall_times, tool_calls_per_file):
     come back as None and are rendered as an explicit n/a rather than a zero
     bar, because "settled nothing" and "settled something cheaply" are opposite
     outcomes that a zero-height bar would conflate.
+
+    `files` itself is None — a third state — when the run's archival branch is
+    absent from this clone: nothing was measured, as opposed to nothing being
+    settled.
     """
     out = {}
     for k in KEYS:
         r = runs[k]
-        files = files_settled[k] or 0
+        files = files_settled[k]
         wt = wall_times.get(k)
         input_side = r["input"] + r["cache_write"] + r["cache_read"]
         priced = not r["unpriced_models"]
@@ -933,9 +1083,48 @@ def _symbolic_x():
     their bars into two harness series covering disjoint subsets of the runs,
     and `xtick=data` then labels only the runs present in one series, silently
     dropping the rest of the tick labels.
+
+    Labels are set vertically: sixteen codes across a 0.27\\textwidth panel give
+    each tick about 2.5mm, which horizontal \\tiny text overruns.
     """
     codes = ",".join(RUN_CODES[k] for k in KEYS)
-    return f"symbolic x coords={{{codes}}}, xtick={{{codes}}},\n"
+    return (
+        f"symbolic x coords={{{codes}}}, xtick={{{codes}}},\n"
+        "  x tick label style={rotate=90, anchor=east, font=\\tiny, yshift=1pt},\n"
+    )
+
+
+def _tex_axis_max(values, clip_ratio=2.0, headroom=1.45):
+    """capped_limit in the units the .tex needs: (ymax, {code: true value})."""
+    ymax, clipped = capped_limit(values, headroom=headroom, clip_ratio=clip_ratio)
+    codes = [RUN_CODES[k] for k in KEYS]
+    return ymax, {codes[i]: v for i, v in clipped.items()}
+
+
+def _explicit_labels():
+    """Print the label carried by each coordinate instead of its plotted value.
+
+    A clipped bar is drawn at the axis maximum, so pgfplots' automatic
+    `nodes near coords` would print the axis maximum and quietly turn a clipped
+    outlier into a false reading. With explicit symbolic point meta the bar can
+    be cut off while the printed number stays the true one.
+    """
+    return (
+        "  point meta=explicit symbolic,\n"
+        "  nodes near coords={\\pgfplotspointmeta},\n"
+        "  nodes near coords style={font=\\tiny, color=evalInk, rotate=90, anchor=west},\n"
+    )
+
+
+def _clip_label(value, code, clipped, fmt="{:.0f}"):
+    """Value label, marked with an arrow when its bar is cut off by the axis."""
+    text = fmt.format(value)
+    return f"{text}\\,$\\uparrow$" if code in clipped else text
+
+
+def _coord_str_meta(pts):
+    """`(code,value) [label]` triples for a plot using explicit symbolic meta."""
+    return " ".join(f"({c},{v:.4g}) [{lbl}]" for c, v, lbl in pts)
 
 
 def _na_nodes(missing, note="n/a"):
@@ -949,13 +1138,18 @@ def _na_nodes(missing, note="n/a"):
 
 
 def _panel_files(metrics):
-    cc = [(metrics[k]["code"], metrics[k]["files"]) for k in KEYS if metrics[k]["harness"] == "ccworkflow"]
-    cs = [(metrics[k]["code"], metrics[k]["files"]) for k in KEYS if metrics[k]["harness"] == "csloop"]
+    cc = [(metrics[k]["code"], metrics[k]["files"]) for k in KEYS
+          if metrics[k]["harness"] == "ccworkflow" and metrics[k]["files"] is not None]
+    cs = [(metrics[k]["code"], metrics[k]["files"]) for k in KEYS
+          if metrics[k]["harness"] == "csloop" and metrics[k]["files"] is not None]
+    ymax, _ = _tex_axis_max([metrics[k]["files"] for k in KEYS], clip_ratio=None, headroom=1.30)
+    unmeasured = [metrics[k]["code"] for k in KEYS if metrics[k]["files"] is None]
     return (
         "\\nextgroupplot[" + _axis_common() + _symbolic_x() +
-        "  ybar, bar width=6pt, title={(a) Files settled (git-exact)},\n"
-        "  ylabel={Files}, ymax=52,\n"
-        "  nodes near coords, nodes near coords style={font=\\tiny, color=evalInk},\n"
+        "  ybar, bar width=3pt, title={(a) Files settled (git-exact)},\n"
+        f"  ylabel={{Files}}, ymax={ymax:.0f},\n"
+        "  nodes near coords, nodes near coords style={font=\\tiny, color=evalInk,\n"
+        "    rotate=90, anchor=west},\n"
         # Legend sits over the short right-hand bars, the only free interior
         # space; north-west would cover R1/R2.
         "  legend style={at={(0.99,0.97)}, anchor=north east}, legend columns=1,\n"
@@ -966,16 +1160,21 @@ def _panel_files(metrics):
         "\\addplot[fill=evalBlue, draw=none, bar shift=0pt] coordinates {" + _coord_str(cc, "{:.0f}") + "};\n"
         "\\addplot[fill=evalOrange, draw=none, bar shift=0pt] coordinates {" + _coord_str(cs, "{:.0f}") + "};\n"
         "\\legend{ccworkflow, csloop}\n"
+        # A run whose archival branch never reached this clone has no ground
+        # truth at all; without this it would read as a run that settled zero.
+        + _na_nodes(unmeasured, "n/a (no branch)")
     )
 
 
 def _panel_cost_by_model(metrics):
     models = ["claude-sonnet-5", "claude-opus-5"]
     colors = {"claude-sonnet-5": "evalBlue", "claude-opus-5": "evalViolet"}
+    totals = [sum(metrics[k]["cost_by_model"].values()) for k in KEYS]
+    ymax, _ = _tex_axis_max(totals, clip_ratio=None, headroom=1.16)
     lines = [
         "\\nextgroupplot[" + _axis_common() + _symbolic_x() +
-        "  ybar stacked, bar width=6pt, title={(b) Total cost by model tier},\n"
-        "  ylabel={USD}, ymax=132,\n"
+        "  ybar stacked, bar width=3pt, title={(b) Total cost by model tier},\n"
+        f"  ylabel={{USD}}, ymax={ymax:.0f},\n"
         # North-west sits on top of the two tall ccworkflow stacks; the csloop
         # stacks on the right are short enough to clear a legend.
         "  legend style={at={(0.99,0.97)}, anchor=north east}, legend columns=1,\n"
@@ -985,27 +1184,16 @@ def _panel_cost_by_model(metrics):
         pts = [(metrics[k]["code"], metrics[k]["cost_by_model"].get(m, 0.0)) for k in KEYS]
         lines.append(f"\\addplot[fill={colors[m]}, draw=none] coordinates {{" + _coord_str(pts, "{:.2f}") + "};\n")
     lines.append("\\legend{sonnet-5, opus-5}\n")
-    # Kimi carries no rate card; mark it so a zero-height stack is not read as free.
-    kimi = [metrics[k]["code"] for k in KEYS if not metrics[k]["priced"]]
-    lines.append(_na_nodes(kimi, "unpriced"))
+    # Kimi and the two gpt56 deployments carry no rate card; mark them so a
+    # zero-height stack is not read as "this run was free".
+    unpriced = [metrics[k]["code"] for k in KEYS if not metrics[k]["priced"]]
+    lines.append(_na_nodes(unpriced, "unpriced"))
     return "".join(lines)
 
 
 def _panel_frontier(metrics):
     """Cost per file against minutes per file — the one panel that shows a
     relationship rather than a per-run value, so it earns space a table cannot."""
-    lines = [
-        "\\nextgroupplot[" + _axis_common() +
-        "  title={(c) Cost--time frontier},\n"
-        "  xlabel={Minutes per file}, ylabel={USD per file},\n"
-        "  xmin=0.4, xmax=8.6, ymin=0, ymax=5.4, enlarge x limits=false,\n"
-        "]\n"
-    ]
-
-    # The csloop points cluster tightly around (2.6-3.5 min, $0.5-1.0), so a
-    # single fixed label anchor overprints them. Anchors alternate around the
-    # x-ordered points, which pushes each label away from its nearest neighbour.
-    ANCHORS = ["south west", "north east", "north west", "south east"]
     ordered = sorted(
         (
             (metrics[k]["min_per_file"], metrics[k]["cost_per_file"],
@@ -1016,10 +1204,36 @@ def _panel_frontier(metrics):
         ),
         key=lambda p: p[0],
     )
-    anchor_of = {code: ANCHORS[i % len(ANCHORS)] for i, (_, _, code, _) in enumerate(ordered)}
+
+    # R10 settled a single git-exact file, which puts it an order of magnitude
+    # out on both axes. Scaling to it would collapse the other points into one
+    # blob in the corner, so the axes are scaled to the rest and it is called
+    # out by name as off-scale instead of being silently clipped away.
+    def _limit(values):
+        ymax, clipped = capped_limit(values, headroom=1.12)
+        return ymax, clipped
+
+    xmax, _ = _limit([p[0] for p in ordered])
+    ymax, _ = _limit([p[1] for p in ordered])
+    on_scale = [p for p in ordered if p[0] <= xmax and p[1] <= ymax]
+    off_scale = [p for p in ordered if p not in on_scale]
+
+    lines = [
+        "\\nextgroupplot[" + _axis_common() +
+        "  title={(c) Cost--time frontier},\n"
+        "  xlabel={Minutes per file}, ylabel={USD per file},\n"
+        f"  xmin=0.4, xmax={xmax:.3g}, ymin=0, ymax={ymax:.3g}, enlarge x limits=false,\n"
+        "]\n"
+    ]
+
+    # The csloop points cluster tightly around (2.6-3.5 min, $0.5-1.0), so a
+    # single fixed label anchor overprints them. Anchors alternate around the
+    # x-ordered points, which pushes each label away from its nearest neighbour.
+    ANCHORS = ["south west", "north east", "north west", "south east"]
+    anchor_of = {code: ANCHORS[i % len(ANCHORS)] for i, (_, _, code, _) in enumerate(on_scale)}
 
     for harness, color in [("ccworkflow", "evalBlue"), ("csloop", "evalOrange")]:
-        pts = [p for p in ordered if p[3] == harness]
+        pts = [p for p in on_scale if p[3] == harness]
         lines.append(
             f"\\addplot[only marks, mark=*, mark size=1.7pt, color={color}] coordinates {{"
             + " ".join(f"({x:.3g},{y:.3g})" for x, y, _, _ in pts)
@@ -1036,32 +1250,36 @@ def _panel_frontier(metrics):
     # Bottom-right is the only quadrant with no data in it (the slow-and-cheap
     # corner nothing landed in), so the reading hint goes there.
     lines.append(
-        "\\node[font=\\tiny, color=evalInk, anchor=south east] at (axis cs:8.5,0.05)\n"
+        f"\\node[font=\\tiny, color=evalInk, anchor=south east] at (axis cs:{xmax * 0.99:.3g},0.05)\n"
         "  {lower-left is better};\n"
     )
+    for x, y, code, _ in off_scale:
+        lines.append(
+            f"\\node[font=\\tiny, color=evalInk, anchor=north east] at (axis cs:{xmax * 0.99:.3g},{ymax * 0.97:.3g})\n"
+            f"  {{{code}: {x:.0f}\\,min, \\${y:.0f}\\,/file (off scale)}};\n"
+        )
     return "".join(lines)
 
 
 def _panel_calls_per_file(metrics):
+    ymax, clipped = _tex_axis_max([metrics[k]["calls_per_file"] for k in KEYS])
     cc, cs, missing = [], [], []
     for k in KEYS:
         m = metrics[k]
-        if m["calls_per_file"] is None:
-            missing.append(m["code"])
-        elif m["harness"] == "ccworkflow":
-            cc.append((m["code"], m["calls_per_file"]))
-        else:
-            cs.append((m["code"], m["calls_per_file"]))
+        v = m["calls_per_file"]
+        if v is None:
+            missing.append((m["code"], "n/a (no branch)" if m["files"] is None else "n/a (0 files)"))
+            continue
+        point = (m["code"], min(v, ymax), _clip_label(v, m["code"], clipped, "{:.0f}"))
+        (cc if m["harness"] == "ccworkflow" else cs).append(point)
     return (
-        "\\nextgroupplot[" + _axis_common() + _symbolic_x() +
-        "  ybar, bar width=6pt, title={(d) Tool calls per file settled},\n"
-        "  ylabel={Calls / file}, ymax=84,\n"
-        "  nodes near coords, nodes near coords style={font=\\tiny, color=evalInk},\n"
-        "  /pgf/number format/fixed, /pgf/number format/precision=0,\n"
+        "\\nextgroupplot[" + _axis_common() + _symbolic_x() + _explicit_labels() +
+        "  ybar, bar width=3pt, title={(d) Tool calls per file settled},\n"
+        f"  ylabel={{Calls / file}}, ymax={ymax:.0f},\n"
         "]\n"
-        "\\addplot[fill=evalBlue, draw=none, bar shift=0pt] coordinates {" + _coord_str(cc, "{:.1f}") + "};\n"
-        "\\addplot[fill=evalOrange, draw=none, bar shift=0pt] coordinates {" + _coord_str(cs, "{:.1f}") + "};\n"
-        + _na_nodes(missing, "n/a (0 files)")
+        "\\addplot[fill=evalBlue, draw=none, bar shift=0pt] coordinates {" + _coord_str_meta(cc) + "};\n"
+        "\\addplot[fill=evalOrange, draw=none, bar shift=0pt] coordinates {" + _coord_str_meta(cs) + "};\n"
+        + "".join(_na_nodes([c], note) for c, note in missing)
     )
 
 
@@ -1071,7 +1289,7 @@ def _panel_input_composition(metrics):
     reach the read share the others do."""
     lines = [
         "\\nextgroupplot[" + _axis_common() + _symbolic_x() +
-        "  ybar stacked, bar width=6pt, title={(e) Input-side token mix},\n"
+        "  ybar stacked, bar width=3pt, title={(e) Input-side token mix},\n"
         "  ylabel={Share of input (\\%)}, ymax=104, ytick={0,25,50,75,100},\n"
         # Every bar is full height here, so there is no interior space at all:
         # the legend has to go under the axis.
@@ -1089,33 +1307,30 @@ def _panel_tokens_per_file(metrics):
     """Input-side tokens per file settled, log scale. A model-agnostic cost
     proxy: it is the only efficiency panel that can include the non-Anthropic
     run, which has no rate card and therefore no USD figure anywhere else."""
+    ymax, clipped = _tex_axis_max(
+        [(metrics[k]["tokens_per_file"] / 1e6) if metrics[k]["tokens_per_file"] else None for k in KEYS]
+    )
     cc, cs, missing = [], [], []
     for k in KEYS:
         m = metrics[k]
         if m["tokens_per_file"] is None:
-            missing.append(m["code"])
-        elif m["harness"] == "ccworkflow":
-            cc.append((m["code"], m["tokens_per_file"] / 1e6))
-        else:
-            cs.append((m["code"], m["tokens_per_file"] / 1e6))
-    # Linear, not log. The spread here is only ~27x, which a linear axis shows
-    # honestly; a log axis would both flatten the very gap the panel exists to
-    # show and make `nodes near coords` print log10 of each value rather than
-    # the value itself.
+            missing.append((m["code"], "n/a (no branch)" if m["files"] is None else "n/a (0 files)"))
+            continue
+        v = m["tokens_per_file"] / 1e6
+        point = (m["code"], min(v, ymax), _clip_label(v, m["code"], clipped, "{:.2f}"))
+        (cc if m["harness"] == "ccworkflow" else cs).append(point)
+    # Linear, not log. Across the runs that are on scale the spread is about
+    # 27x, which a linear axis shows honestly; a log axis would both flatten the
+    # very gap the panel exists to show and make the value labels read as log10.
     return (
-        "\\nextgroupplot[" + _axis_common() + _symbolic_x() +
-        "  ybar, bar width=6pt,\n"
+        "\\nextgroupplot[" + _axis_common() + _symbolic_x() + _explicit_labels() +
+        "  ybar, bar width=3pt,\n"
         "  title={(f) Input tokens per file settled},\n"
-        "  ylabel={M tokens / file}, ymax=13,\n"
-        # Two-decimal labels on adjacent short bars collide horizontally at the
-        # printed panel width, so they are set vertically here.
-        "  nodes near coords, nodes near coords style={font=\\tiny, color=evalInk,\n"
-        "    rotate=90, anchor=west},\n"
-        "  /pgf/number format/fixed, /pgf/number format/precision=2,\n"
+        f"  ylabel={{M tokens / file}}, ymax={ymax:.3g},\n"
         "]\n"
-        "\\addplot[fill=evalBlue, draw=none, bar shift=0pt] coordinates {" + _coord_str(cc, "{:.2f}") + "};\n"
-        "\\addplot[fill=evalOrange, draw=none, bar shift=0pt] coordinates {" + _coord_str(cs, "{:.2f}") + "};\n"
-        + _na_nodes(missing, "n/a (0 files)")
+        "\\addplot[fill=evalBlue, draw=none, bar shift=0pt] coordinates {" + _coord_str_meta(cc) + "};\n"
+        "\\addplot[fill=evalOrange, draw=none, bar shift=0pt] coordinates {" + _coord_str_meta(cs) + "};\n"
+        + "".join(_na_nodes([c], note) for c, note in missing)
     )
 
 
@@ -1163,8 +1378,11 @@ def write_tex_tables(metrics, coverage, translated_units):
         cpf = f"{m['cost_per_file']:.2f}" if m["cost_per_file"] is not None else "--"
         mpf = f"{m['min_per_file']:.1f}" if m["min_per_file"] is not None else "--"
         cpfile = f"{m['calls_per_file']:.1f}" if m["calls_per_file"] is not None else "--"
+        # "--" is a metric that does not exist for this run (it settled nothing);
+        # "n/a" is one that was not measured (no archival branch in this clone).
+        files = m["files"] if m["files"] is not None else "n/a"
         rows.append(
-            f"    {m['code']} & {_tex_escape(m['label'])} & {m['files']} & "
+            f"    {m['code']} & {_tex_escape(m['label'])} & {files} & "
             f"{m['minutes']:.0f} & {cost} & {cpf} & {mpf} & {cpfile} & {m['read_share']:.0f} \\\\\n"
         )
     # Column map: 1 code, 2 configuration, 3-5 run totals (files, minutes, USD),
@@ -1191,6 +1409,10 @@ def write_tex_tables(metrics, coverage, translated_units):
     all_modules = sorted({m for counts in mods.values() for m in counts})
     cov_rows = []
     for k in KEYS:
+        if translated_units[k] is None:
+            cells = " & ".join(["n/a"] * len(all_modules))
+            cov_rows.append(f"    {RUN_CODES[k]} & {cells} & n/a \\\\\n")
+            continue
         counts = mods[k]
         cells = " & ".join(str(counts.get(m, "")) or "--" for m in all_modules)
         cov_rows.append(f"    {RUN_CODES[k]} & {cells} & {sum(counts.values())} \\\\\n")
