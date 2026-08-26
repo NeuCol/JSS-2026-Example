@@ -1,0 +1,20 @@
+[
+  {
+    "path": "software/mcfm",
+    "head": "1abdcddaad89582552edc41de68e4a6e1ac75f1d",
+    "branch": "HEAD",
+    "status": "## HEAD (no branch)\n M CMakeLists.txt\n M src/BDK/CMakeLists.txt\nR  src/BDK/FPFMccTtilde.f -> src/BDK/deprecated/FPFMccTtilde.f\nR  src/BDK/FPFPcc.f -> src/BDK/deprecated/FPFPcc.f\nR  src/BDK/M1bit1.f -> src/BDK/deprecated/M1bit1.f\nR  src/BDK/M3bit4.f -> src/BDK/deprecated/M3bit4.f\nR  src/BDK/fvs.f -> src/BDK/deprecated/fvs.f\n?? Bin/lib/\n?? Bin/test\n?? doxygen_dep/\n?? install/\n?? src/BDK/BDK.hpp\n?? src/BDK/FPFMccTtilde.cpp\n?? src/BDK/FPFMccTtilde_fi.f90\n?? src/BDK/FPFPcc.cpp\n?? src/BDK/FPFPcc_fi.f90\n?? src/BDK/M1bit1.cpp\n?? src/BDK/M1bit1_fi.f90\n?? src/BDK/M3bit4.cpp\n?? src/BDK/M3bit4_fi.f90\n?? src/BDK/deprecated/.keep\n?? src/BDK/fvs.cpp\n?? src/BDK/fvs_fi.f90\n"
+  },
+  {
+    "path": "software/pepper",
+    "head": "67f3acc8756fe6ec4fcc9ea360be08f0bb644711",
+    "branch": "43-add-kokkos-mcfm-interface",
+    "status": "## 43-add-kokkos-mcfm-interface...origin/43-add-kokkos-mcfm-interface\n"
+  },
+  {
+    "path": "software/qcdloop",
+    "head": "c8a05202351ca2e803158e99ae8a1c5c05f1437d",
+    "branch": "master",
+    "status": "## master...origin/master\n"
+  }
+]
