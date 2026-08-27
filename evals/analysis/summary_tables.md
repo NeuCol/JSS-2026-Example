@@ -154,7 +154,7 @@ Runs grouped by the model that made the file-selection decision, not by harness.
 |---|---|---|---|---:|---:|---|
 | opus-5 | R1, R4, R7, R12 | csloop | W2jet (18), loop (9), Z2jet (6) | 33 | 3 | `W2jet/Ltfunctions`, `W2jet/atree`, `W2jet/fvf` |
 | sonnet-5 | R2, R3, R5, R8 | ccworkflow, csloop | BDK (26), ThreeJets (11), loop (9), Z2jet (6), Mods (2), Procdep (1) | 55 | 0 | — |
-| gpt56sol | R9, R10 | csloop | W2jet (5), ThreeJets (5) | 10 | 0 | — |
+| gpt56sol | R9, R10 | csloop | ThreeJets (5), W2jet (5) | 10 | 0 | — |
 | gpt56terra | R11 | csloop | BDK (1), Mods (1) | 2 | 2 | `BDK/M3bit4`, `Mods/types_mod` |
 | Kimi K3 | R6 | csloop | W2jet (5) | 5 | 5 | `W2jet/fpm`, `W2jet/fpp`, `W2jet/fsl`, `W2jet/fvf`, `W2jet/vv` |
 

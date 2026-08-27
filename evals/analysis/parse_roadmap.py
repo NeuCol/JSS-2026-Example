@@ -116,3 +116,36 @@ def recommendation_order(attrs):
 def missing_attrs(attrs):
     """Units settled by some run that no archived map still describes."""
     return sorted(u for u, a in attrs.items() if a is None)
+
+
+def post_run_ready(run_dir):
+    """Ready leaves in a run's OWN archived map, i.e. the state it left behind.
+
+    Paired with the fork-point pool this gives an outcome measure rather than a
+    process one: files that were not ready before the run and are ready after
+    it were unblocked BY that run's work. Returns None when the run archived no
+    map.
+
+    Caveat the caller must respect: for the three earliest runs the archived map
+    was refreshed part-way through rather than at the end, so their "after"
+    state is partial and undercounts. `roadmap_is_post_run` flags them.
+    """
+    rows = _run_roadmap(run_dir)
+    if rows is None:
+        return None
+    return {_unit_of(r["rel"]) for r in rows
+            if int(r["deps"]) == READY_DEPS and int(r["blind"]) == READY_BLIND}
+
+
+def roadmap_is_post_run(run_dir, settled):
+    """True when the archived map post-dates all of the run's work.
+
+    A map written after the run has dropped every file the run settled. One
+    that still lists some of them was refreshed mid-run, so anything derived
+    from it is a lower bound, not a measurement.
+    """
+    rows = _run_roadmap(run_dir)
+    if rows is None:
+        return False
+    listed = {_unit_of(r["rel"]) for r in rows}
+    return not (set(settled or []) & listed)

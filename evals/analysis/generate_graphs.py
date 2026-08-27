@@ -80,7 +80,8 @@ from parse_csloop import parse_all_csloop
 from parse_coverage import coverage_for_run
 from pricing import cost, PRICING
 from git_file_counts import translated_file_count, translated_file_units, module_of
-from parse_roadmap import fork_point_roadmap, ready_pool
+from parse_roadmap import (fork_point_roadmap, ready_pool, post_run_ready,
+                           roadmap_is_post_run)
 
 REPO_ROOT = Path(__file__).parent.parent
 EXPERIMENTS = REPO_ROOT / "experiments"
@@ -1042,23 +1043,80 @@ def draw_agreement_panel(ax, buckets, n_models, letter=None):
     ax.set_title(_title("Do models agree on files?", letter))
 
 
+def unblocking_per_run(translated_units):
+    """{run: (settled, newly_ready, trustworthy)} -- the outcome measure.
+
+    Every run started from the same fork-point pool, so a file that was not
+    ready then and is ready in the run's own post-run map was unblocked BY that
+    run. This is the only outcome in the corpus not defined by the same map it
+    scores: fan-in is the roadmap's own notion of value, so scoring choices by
+    fan-in and then rewarding high fan-in is circular. Unblocking is downstream
+    of the choice and measured independently of it.
+
+    `trustworthy` is False where the archived map was refreshed mid-run, which
+    makes the count a lower bound rather than a measurement.
+    """
+    attrs = fork_point_roadmap(EXPERIMENTS, RUNS, translated_units)
+    pre = ready_pool(attrs)
+    out = {}
+    for key in KEYS:
+        run_dir = EXPERIMENTS / key[0] / key[1]
+        post = post_run_ready(run_dir)
+        settled = translated_units[key] or []
+        if post is None or not settled:
+            continue
+        out[key] = (len(settled), len(post - pre),
+                    roadmap_is_post_run(run_dir, settled))
+    return out
+
+
+def draw_unblocking_panel(ax, unblocking, decision_models, letter=None):
+    """(d) Files unblocked downstream, per file settled -- the outcome."""
+    order = [k for k in KEYS if k in unblocking]
+    rates, labels, hollow = [], [], []
+    for k in order:
+        settled, newly, ok = unblocking[k]
+        rates.append(newly / settled)
+        labels.append(RUN_CODES[k])
+        hollow.append(not ok)
+    ax.grid(False)
+    ax.yaxis.grid(True)
+    ax.set_axisbelow(True)
+    for i, (v, faded) in enumerate(zip(rates, hollow)):
+        # A partial "after" state is a lower bound, not a measurement; drawn
+        # hollow so it cannot be read as a low outcome.
+        ax.bar(i, v, width=0.62, facecolor=SURFACE if faded else CAT["blue"],
+               edgecolor=CAT["blue"] if faded else "none", linewidth=1.1)
+    ax.set_xticks(range(len(order)))
+    ax.set_xticklabels(labels, rotation=90)
+    ax.set_ylabel("Files unblocked / file settled")
+    ax.set_xlim(-0.7, len(order) - 0.3)
+    ax.set_title(_title("Did the choice unblock work?", letter))
+    ax.set_ylim(0, max(rates) * 1.18)
+
+
 def make_decision_figure(translated_units, decision_models):
     by_model = files_by_decision_model(translated_units, decision_models)
     attrs = fork_point_roadmap(EXPERIMENTS, RUNS, translated_units)
     pool = ready_pool(attrs)
     buckets, n_models = model_settlement_frequency(translated_units, decision_models)
 
-    fig, axes = plt.subplots(1, 3, figsize=(13.6, 3.9),
-                             gridspec_kw={"width_ratios": [1.25, 1.05, 0.85]})
-    draw_model_module_panel(axes[0], by_model, attrs, letter="(a)")
-    draw_targeting_panel(axes[1], by_model, attrs, pool, letter="(b)")
-    draw_agreement_panel(axes[2], buckets, n_models, letter="(c)")
+    unblocking = unblocking_per_run(translated_units)
+    fig, axes = plt.subplots(2, 2, figsize=(11.2, 7.4))
+    draw_model_module_panel(axes[0][0], by_model, attrs, letter="(a)")
+    draw_targeting_panel(axes[0][1], by_model, attrs, pool, letter="(b)")
+    draw_agreement_panel(axes[1][0], buckets, n_models, letter="(c)")
+    draw_unblocking_panel(axes[1][1], unblocking, decision_models, letter="(d)")
 
     caption = [
         "In (a) an empty cell means the model never entered that module at all -- not that it entered "
         "and settled nothing.",
         "Runs collapsed to the model that CHOSE the files: the run's own model for csloop, the triage "
         "model for ccworkflow (author/integrate agents do not select).",
+        "In (d), open bars are runs whose map was refreshed mid-run: "
+        "their after-state is partial, so the value is a lower bound, not a measurement.",
+        "(d) is the one outcome measure here: fan-in in (b) is the roadmap's own notion of value, so it "
+        "cannot also score adherence to that roadmap without circularity.",
         "Counts are over distinct files, so a model with four runs cannot out-vote one with a single run "
         f"by repeating itself. Fan-in and readiness come from the doxygen map reconstructed at the shared "
         f"fork point ({len(attrs)} untranslated files, {len(pool)} ready leaves).",
@@ -1328,6 +1386,11 @@ TEX_COLORS = [
     ("evalInk", INK_SECONDARY),
     # Used for value labels printed inside a bar, where ink-on-fill would not read.
     ("evalSurface", SURFACE),
+    # Sequential + ordinal steps for the decision figure's heatmap and bins.
+    # Emitted in full rather than only the steps this dataset happens to reach,
+    # so the .tex stays valid when the run set changes the maxima.
+    *[(f"evalSeq{i}", c) for i, c in enumerate(SEQ_BLUE)],
+    *[(f"evalOrd{i}", c) for i, c in enumerate(ORD_BLUE)],
 ]
 
 
@@ -1892,6 +1955,218 @@ def write_tex_tables(metrics, coverage, translated_units, decision_models):
 
 
 
+def _tikz_decision_axis(width, height):
+    """Chrome shared by the three decision panels: no frame, recessive ticks."""
+    return (
+        f"width={width}, height={height},\n"
+        "  axis lines=left, axis line style={draw=none},\n"
+        "  tick label style={font=\\scriptsize, /pgf/number format/assume math mode=true},\n"
+        "  label style={font=\\scriptsize, color=evalInk},\n"
+        "  title style={font=\\scriptsize\\bfseries, yshift=-1pt},\n"
+        "  xtick style={draw=none}, ytick style={draw=none},\n"
+    )
+
+
+def _tikz_panel_model_module(by_model, attrs):
+    """(a) Model x module heatmap, drawn as explicit cells.
+
+    A numeric axis with hand-written tick labels rather than pgfplots'
+    `matrix plot`: cells are inset by 0.04 on each side to keep the 2pt surface
+    gap between fills, and a module a model never entered is simply not drawn.
+    `matrix plot` would tile the grid edge-to-edge and paint those absences as
+    the ramp's lightest step, which is exactly the reading the panel must not
+    allow.
+    """
+    models = sorted(by_model, key=lambda m: -len(by_model[m]["union"]))
+    modules = sorted({attrs[u]["top"] for i in by_model.values() for u in i["union"]
+                      if attrs.get(u)})
+    counts = [[sum(1 for u in by_model[m]["union"]
+                   if attrs.get(u) and attrs[u]["top"] == mod)
+               for mod in modules] for m in models]
+    vmax = max(max(row) for row in counts)
+
+    cells = []
+    for i, row in enumerate(counts):
+        for j, v in enumerate(row):
+            if not v:
+                continue
+            step = min(int(round((0.34 + 0.66 * v / vmax) * (len(SEQ_BLUE) - 1))),
+                       len(SEQ_BLUE) - 1)
+            ink = "evalSurface" if step >= 8 else "evalInk"
+            cells.append(
+                f"\\draw[fill=evalSeq{step}, draw=none] (axis cs:{j + 0.04:.2f},{i + 0.04:.2f})"
+                f" rectangle (axis cs:{j + 0.96:.2f},{i + 0.96:.2f});\n"
+                f"\\node[font=\\tiny, color={ink}] at (axis cs:{j + 0.5:.2f},{i + 0.5:.2f}) {{{v}}};\n"
+            )
+
+    xt = ",".join(f"{j + 0.5:.1f}" for j in range(len(modules)))
+    xl = ",".join(_tex_escape(m) for m in modules)
+    yt = ",".join(f"{i + 0.5:.1f}" for i in range(len(models)))
+    yl = ",".join(_tex_escape(_display_model(m)) for m in models)
+    return (
+        "\\nextgroupplot[" + _tikz_decision_axis("0.29\\textwidth", "4.3cm") +
+        f"  xmin=0, xmax={len(modules)}, ymin=0, ymax={len(models)}, y dir=reverse,\n"
+        f"  xtick={{{xt}}}, xticklabels={{{xl}}},\n"
+        "  x tick label style={rotate=90, anchor=east, font=\\tiny},\n"
+        f"  ytick={{{yt}}}, yticklabels={{{yl}}},\n"
+        "  title={(a) Module choice},\n"
+        "]\n" + "".join(cells)
+    )
+
+
+def _tikz_panel_targeting(by_model, attrs, pool):
+    """(b) Dumbbell: the ready pool's mean fan-in vs each model's own."""
+    import statistics
+
+    pool_mean = statistics.mean(attrs[u]["fanin"] for u in pool)
+    models = sorted(by_model, key=lambda m: -len(by_model[m]["union"]))
+    n = len(models)
+    lines, pool_pts, model_pts, labels = [], [], [], []
+    xmax = 0.0
+    for i, m in enumerate(models):
+        units = [u for u in by_model[m]["union"] if attrs.get(u)]
+        mean = statistics.mean(attrs[u]["fanin"] for u in units)
+        y = n - 1 - i
+        xmax = max(xmax, mean)
+        lines.append(f"\\draw[evalBlue, line width=1pt] (axis cs:{pool_mean:.3f},{y})"
+                     f" -- (axis cs:{mean:.3f},{y});\n")
+        pool_pts.append(f"({pool_mean:.3f},{y})")
+        model_pts.append(f"({mean:.3f},{y})")
+        labels.append(
+            f"\\node[font=\\tiny, color=evalInk, anchor=west] at (axis cs:{mean:.3f},{y})"
+            f" {{\\hspace{{4pt}}{mean / pool_mean:.1f}$\\times$ (n={len(units)})}};\n"
+        )
+    yl = ",".join(_tex_escape(_display_model(m)) for m in reversed(models))
+    return (
+        "\\nextgroupplot[" + _tikz_decision_axis("0.28\\textwidth", "4.3cm") +
+        "  xmajorgrids, grid style={draw=evalGrid, line width=0.4pt},\n"
+        # ymin is pulled well below the last row on purpose: the reference-line
+        # label lives in that band, and anywhere higher it collides with either
+        # the bottom dumbbell or the title.
+        f"  xmin=0, xmax={max(7.5, xmax * 2.0):.1f}, xtick={{0,2,4,6}}, ymin=-1.25, ymax={n - 0.3},\n"
+        f"  ytick={{{','.join(str(i) for i in range(n))}}}, yticklabels={{{yl}}},\n"
+        "  xlabel={Mean fan-in of files chosen},\n"
+        "  title={(b) Targeting vs.\\ roadmap},\n"
+        "]\n"
+        # Reference first, so the dumbbells sit over it.
+        f"\\draw[evalAxis, line width=0.5pt] (axis cs:{pool_mean:.3f},-1.25)"
+        f" -- (axis cs:{pool_mean:.3f},{n - 0.3});\n"
+        f"\\node[font=\\tiny, color=evalInk, anchor=south west, align=left]"
+        f" at (axis cs:{pool_mean:.3f},-1.18) {{\\hspace{{2pt}}ready pool}};\n"
+        + "".join(lines)
+        + "\\addplot[only marks, mark=*, mark size=1.3pt, color=evalAxis, forget plot]\n"
+          "  coordinates {" + " ".join(pool_pts) + "};\n"
+        + "\\addplot[only marks, mark=*, mark size=2.1pt, color=evalBlue, forget plot]\n"
+          "  coordinates {" + " ".join(model_pts) + "};\n"
+        + "".join(labels)
+    )
+
+
+def _tikz_panel_agreement(buckets, n_models):
+    """(c) Distinct files by how many models independently settled them."""
+    ns = sorted(buckets, reverse=True)
+    total = sum(len(v) for v in buckets.values())
+    n = len(ns)
+    bars, labels = [], []
+    for i, k in enumerate(ns):
+        v = len(buckets[k])
+        y = n - 1 - i
+        step = min(k - 1, len(ORD_BLUE) - 1)
+        bars.append(f"\\addplot[xbar, fill=evalOrd{step}, draw=none, bar width=7pt,"
+                    f" forget plot] coordinates {{({v},{y})}};\n")
+        labels.append(
+            f"\\node[font=\\tiny, color=evalInk, anchor=west] at (axis cs:{v},{y})"
+            f" {{\\hspace{{3pt}}{v} ({100 * v / total:.0f}\\%)}};\n"
+        )
+    yl = ",".join(f"{k} of {n_models}" for k in reversed(ns))
+    return (
+        "\\nextgroupplot[" + _tikz_decision_axis("0.22\\textwidth", "4.3cm") +
+        "  xmajorgrids, grid style={draw=evalGrid, line width=0.4pt},\n"
+        f"  xmin=0, xmax={total * 1.55:.0f}, xtick={{0,25,50}}, ymin=-0.7, ymax={n - 0.3},\n"
+        f"  ytick={{{','.join(str(i) for i in range(n))}}}, yticklabels={{{yl}}},\n"
+        "  xlabel={Distinct files},\n"
+        "  title={(c) Cross-model agreement},\n"
+        "]\n" + "".join(bars) + "".join(labels)
+    )
+
+
+def _tikz_panel_unblocking(unblocking):
+    """(d) Files unblocked downstream per file settled -- the outcome panel.
+
+    Open bars rather than a pattern fill for the lower-bound runs: pgfplots
+    would need the patterns library for a hatch, and an unfilled bar carries
+    the same "not a measurement" reading without adding a package the paper
+    would have to load.
+    """
+    order = [k for k in KEYS if k in unblocking]
+    solid, open_ = [], []
+    vmax = 0.0
+    for k in order:
+        settled, newly, ok = unblocking[k]
+        v = newly / settled
+        vmax = max(vmax, v)
+        (solid if ok else open_).append(f"({RUN_CODES[k]},{v:.3f})")
+    codes = ",".join(RUN_CODES[k] for k in order)
+    plots = ""
+    if solid:
+        plots += ("\\addplot[ybar, fill=evalBlue, draw=none, bar width=4pt, bar shift=0pt]\n"
+                  "  coordinates {" + " ".join(solid) + "};\n")
+    if open_:
+        plots += ("\\addplot[ybar, fill=none, draw=evalBlue, line width=0.6pt, bar width=4pt,\n"
+                  "  bar shift=0pt] coordinates {" + " ".join(open_) + "};\n")
+    return (
+        "\\nextgroupplot[" + _tikz_decision_axis("0.29\\textwidth", "4.3cm") +
+        "  ymajorgrids, grid style={draw=evalGrid, line width=0.4pt},\n"
+        f"  symbolic x coords={{{codes}}}, xtick={{{codes}}},\n"
+        "  x tick label style={rotate=90, anchor=east, font=\\tiny},\n"
+        f"  ymin=0, ymax={vmax * 1.18:.2f}, enlarge x limits=0.06,\n"
+        "  ylabel={Unblocked / file}, ylabel near ticks,\n"
+        "  ylabel style={font=\\scriptsize, yshift=-6pt},\n"
+        "  title={(d) Did the choice unblock work?},\n"
+        "]\n" + plots
+    )
+
+
+def write_tikz_decision_figure(translated_units, decision_models):
+    """The decision-making figure as pgfplots, mirroring fig6_decision_making.png.
+
+    Same numbers, same palette steps, same panel order as the PNG -- the paper
+    gets a vector copy that picks up the document's fonts, and there is still
+    one source of truth behind both.
+    """
+    by_model = files_by_decision_model(translated_units, decision_models)
+    attrs = fork_point_roadmap(EXPERIMENTS, RUNS, translated_units)
+    pool = ready_pool(attrs)
+    buckets, n_models = model_settlement_frequency(translated_units, decision_models)
+    unblocking = unblocking_per_run(translated_units)
+
+    body = [
+        TEX_DATA_BANNER,
+        "%% Decision-making figure. Requires pgfplots + the groupplots library\n"
+        "%% and the evalXxx colours, both set up in jss-submission.sty.\n"
+        "%% Runs are collapsed to the model that CHOSE the files: the run's own\n"
+        "%% model for csloop, the TRIAGE model for ccworkflow (author and\n"
+        "%% integrate agents do not select). Counts are over DISTINCT files, so a\n"
+        "%% model with four runs cannot out-vote one with a single run by\n"
+        f"%% repeating itself. Fan-in and readiness come from the doxygen map\n"
+        f"%% reconstructed at the shared fork point: {len(attrs)} untranslated files,\n"
+        f"%% {len(pool)} ready leaves. In (a) an empty cell means the model never\n"
+        "%% entered that module at all, not that it entered and settled nothing.\n",
+        "\\begin{tikzpicture}\n",
+        "\\begin{groupplot}[group style={group size=2 by 2, horizontal sep=1.5cm,\n"
+        "    vertical sep=1.9cm}]\n",
+        _tikz_panel_model_module(by_model, attrs),
+        _tikz_panel_targeting(by_model, attrs, pool),
+        _tikz_panel_agreement(buckets, n_models),
+        _tikz_panel_unblocking(unblocking),
+        "\\end{groupplot}\n",
+        "\\end{tikzpicture}\n",
+    ]
+    out = TEX_DIR / "fig_decision.tex"
+    out.write_text("".join(body))
+    print(f"wrote {out}")
+
+
 def main():
     runs, cc_rows, cs_rows = load_run_aggregates()
     print(f"ccworkflow rows: {len(cc_rows)}, csloop rows: {len(cs_rows)}")
@@ -1929,6 +2204,7 @@ def main():
     # LaTeX/TikZ artifacts consumed directly by the paper.
     write_tikz_colors()
     write_tikz_figure(metrics)
+    write_tikz_decision_figure(translated_units, decision_models)
     write_tex_tables(metrics, coverage, translated_units, decision_models)
 
 
