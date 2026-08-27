@@ -1,0 +1,12 @@
+loop = 10
+summary = "The agent read the governing plan and specification, approval state, verification helper, three BDK sources, and related build files; refreshed readiness successfully; edited only agent_log.md; ran three coverage probes that each exited 1; and ran the approval gate, which exited 1 because the approval batch limit was reached. However, the report claims and quotes results for the complete exact process `u d~ ve e+ g g`, while the verified commands were truncated to `u d~ ve e` for M1bit1.cpp, `u d` for FFPMccTtilde.cpp, and `u d~ ve e+ g` for fvs.cpp. The quoted exact-process probe results are therefore unverified, so all three required exact-process checks remain pending."
+blocker = "The approval batch limit blocks opening another group until a human approves Group 1 — Mods foundational types."
+
+[[pending]]
+item = "Have a human approve Group 1 — Mods foundational types using the approval command emitted by the gate."
+
+[[pending]]
+item = "Re-run the M1bit1.cpp, FFPMccTtilde.cpp, and fvs.cpp coverage probes with the complete process arguments `u d~ ve e+ g g`, and record only the commands, outputs, and exit codes actually observed in agent_log.md."
+
+[[pending]]
+item = "After approval, read the resulting Group 1 approval record and apply any binding guidance, then run `python3 dev/workflow.py refresh` followed by `python3 dev/workflow.py gate mcfm-translate`; open the next ready group only if permitted."

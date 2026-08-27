@@ -17,6 +17,7 @@ Excluded: csloop opus-5 (08-11) and (run2, 08-12) logged no model reasoning text
 | R5 — csloop sonnet-5 +reasoning (run2, 08-12) | $4.89 | 90% | 35 min | 35.0 | 10 | 3.5 min | $0.49 |
 | R6 — csloop Kimi K3 (08-12) | $0.00 (n/a, non-Anthropic) | 93% | 39 min | 68.8 | 5 | 7.9 min | n/a |
 | R7 — csloop opus-5 (08-26) | $13.12 | 91% | 49 min | 25.8 | 15 | 3.2 min | $0.87 |
+| R12 — csloop opus-5 (run2, 08-26) | $13.00 | 89% | 37 min | 38.8 | 10 | 3.7 min | $1.30 |
 | R8 — csloop sonnet-5 (08-26) | $5.15 | 90% | 40 min | 78.6 | 5 | 7.9 min | $1.03 |
 | R9 — csloop oaic-gpt56sol (08-26) | $0.00 (n/a, non-Anthropic) | 82% | 24 min | 66.0 | 5 | 4.8 min | n/a |
 | R10 — csloop oaic-gpt56sol (run2, 08-26) | $0.00 (n/a, non-Anthropic) | 80% | 32 min | 97.2 | 5 | 6.4 min | n/a |
@@ -33,6 +34,7 @@ Excluded: csloop opus-5 (08-11) and (run2, 08-12) logged no model reasoning text
 | R5 — csloop sonnet-5 +reasoning (run2, 08-12) | 190,507 | 130,816 | 658,644 | 7,786,567 | 90% | $4.89 | 35 min |
 | R6 — csloop Kimi K3 (08-12) | 484,548 | 72,134 | 0 | 6,229,312 | 93% | $0.00 (+ tokens from oaic-moonshotai/Kimi-K3, not priced) | 39 min |
 | R7 — csloop opus-5 (08-26) | 189,857 | 147,597 | 674,615 | 8,536,681 | 91% | $13.12 | 49 min |
+| R12 — csloop opus-5 (run2, 08-26) | 234,141 | 128,539 | 719,763 | 8,106,056 | 89% | $13.00 | 37 min |
 | R8 — csloop sonnet-5 (08-26) | 202,477 | 132,750 | 713,485 | 8,151,143 | 90% | $5.15 | 40 min |
 | R9 — csloop oaic-gpt56sol (08-26) | 378 | 41,854 | 1,021,727 | 4,665,225 | 82% | $0.00 (+ tokens from oaic-gpt56sol, not priced) | 24 min |
 | R10 — csloop oaic-gpt56sol (run2, 08-26) | 474 | 67,459 | 1,541,178 | 6,217,098 | 80% | $0.00 (+ tokens from oaic-gpt56sol, not priced) | 32 min |
@@ -49,6 +51,7 @@ Excluded: csloop opus-5 (08-11) and (run2, 08-12) logged no model reasoning text
 | R5 — csloop sonnet-5 +reasoning (run2, 08-12) | $0.00 | $4.89 |
 | R6 — csloop Kimi K3 (08-12) | $0.00 | $0.00 |
 | R7 — csloop opus-5 (08-26) | $13.12 | $0.00 |
+| R12 — csloop opus-5 (run2, 08-26) | $13.00 | $0.00 |
 | R8 — csloop sonnet-5 (08-26) | $0.00 | $5.15 |
 | R9 — csloop oaic-gpt56sol (08-26) | $0.00 | $0.00 |
 | R10 — csloop oaic-gpt56sol (run2, 08-26) | $0.00 | $0.00 |
@@ -67,6 +70,7 @@ Excluded: csloop opus-5 (08-11) and (run2, 08-12) logged no model reasoning text
 | R5 — csloop sonnet-5 +reasoning (run2, 08-12) | stopped-at-gate | 10 | 10 | 0 | 272/272 |
 | R6 — csloop Kimi K3 (08-12) | stopped-at-gate | 5 | 5 | 0 | — |
 | R7 — csloop opus-5 (08-26) | stopped-at-gate | 15 | 15 | 0 | 272/272 |
+| R12 — csloop opus-5 (run2, 08-26) | stopped-at-gate | 10 | 10 | 0 | 272/272 |
 | R8 — csloop sonnet-5 (08-26) | no agent_log archived | 5 | — | — | — |
 | R9 — csloop oaic-gpt56sol (08-26) | stopped-at-gate | 5 | 5 | 0 | 272/272 |
 | R10 — csloop oaic-gpt56sol (run2, 08-26) | stopped-at-gate | 5 | 5 | 10 | — |
@@ -85,6 +89,7 @@ Which top-level `software/mcfm/src/` directory each run's translated files came 
 | R5 — csloop sonnet-5 +reasoning (run2, 08-12) | 10 |  |  |  |  |  |  | 10 |
 | R6 — csloop Kimi K3 (08-12) |  |  |  |  | 5 |  |  | 5 |
 | R7 — csloop opus-5 (08-26) |  |  |  |  | 15 |  |  | 15 |
+| R12 — csloop opus-5 (run2, 08-26) |  |  |  |  | 10 |  |  | 10 |
 | R8 — csloop sonnet-5 (08-26) | 5 |  |  |  |  |  |  | 5 |
 | R9 — csloop oaic-gpt56sol (08-26) |  |  |  | 5 |  |  |  | 5 |
 | R10 — csloop oaic-gpt56sol (run2, 08-26) |  |  |  |  | 5 |  |  | 5 |
@@ -98,19 +103,24 @@ For every pair of runs that translated files from at least one of the same modul
 |---|---|---|---:|---:|---:|---:|
 | R1 — csloop opus-5 +reasoning (08-11) | R2 — ccworkflow (sonnet-5 author, opus-5 integrate) | Z2jet, loop | 20 | 41 | 14 | 70% |
 | R4 — csloop opus-5 +reasoning (08-12) | R7 — csloop opus-5 (08-26) | W2jet | 14 | 15 | 12 | 86% |
+| R7 — csloop opus-5 (08-26) | R12 — csloop opus-5 (run2, 08-26) | W2jet | 15 | 10 | 10 | 100% |
 | R2 — ccworkflow (sonnet-5 author, opus-5 integrate) | R3 — ccworkflow (sonnet-5 author, opus-5 integrate, run2) | BDK | 41 | 15 | 8 | 53% |
+| R4 — csloop opus-5 +reasoning (08-12) | R12 — csloop opus-5 (run2, 08-26) | W2jet | 14 | 10 | 8 | 80% |
 | R2 — ccworkflow (sonnet-5 author, opus-5 integrate) | R9 — csloop oaic-gpt56sol (08-26) | ThreeJets | 41 | 5 | 5 | 100% |
 | R1 — csloop opus-5 +reasoning (08-11) | R4 — csloop opus-5 +reasoning (08-12) | W2jet | 20 | 14 | 4 | 29% |
 | R2 — ccworkflow (sonnet-5 author, opus-5 integrate) | R8 — csloop sonnet-5 (08-26) | BDK | 41 | 5 | 4 | 80% |
 | R4 — csloop opus-5 +reasoning (08-12) | R10 — csloop oaic-gpt56sol (run2, 08-26) | W2jet | 14 | 5 | 4 | 80% |
 | R7 — csloop opus-5 (08-26) | R10 — csloop oaic-gpt56sol (run2, 08-26) | W2jet | 15 | 5 | 4 | 80% |
 | R1 — csloop opus-5 +reasoning (08-11) | R7 — csloop opus-5 (08-26) | W2jet | 20 | 15 | 3 | 20% |
+| R1 — csloop opus-5 +reasoning (08-11) | R12 — csloop opus-5 (run2, 08-26) | W2jet | 20 | 10 | 3 | 30% |
 | R2 — ccworkflow (sonnet-5 author, opus-5 integrate) | R5 — csloop sonnet-5 +reasoning (run2, 08-12) | BDK | 41 | 10 | 3 | 30% |
 | R3 — ccworkflow (sonnet-5 author, opus-5 integrate, run2) | R8 — csloop sonnet-5 (08-26) | BDK | 15 | 5 | 3 | 60% |
 | R4 — csloop opus-5 +reasoning (08-12) | R6 — csloop Kimi K3 (08-12) | W2jet | 14 | 5 | 3 | 60% |
 | R6 — csloop Kimi K3 (08-12) | R7 — csloop opus-5 (08-26) | W2jet | 5 | 15 | 3 | 60% |
+| R12 — csloop opus-5 (run2, 08-26) | R10 — csloop oaic-gpt56sol (run2, 08-26) | W2jet | 10 | 5 | 3 | 60% |
 | R1 — csloop opus-5 +reasoning (08-11) | R10 — csloop oaic-gpt56sol (run2, 08-26) | W2jet | 20 | 5 | 2 | 40% |
 | R5 — csloop sonnet-5 +reasoning (run2, 08-12) | R8 — csloop sonnet-5 (08-26) | BDK | 10 | 5 | 2 | 40% |
+| R6 — csloop Kimi K3 (08-12) | R12 — csloop opus-5 (run2, 08-26) | W2jet | 5 | 10 | 2 | 40% |
 | R6 — csloop Kimi K3 (08-12) | R10 — csloop oaic-gpt56sol (run2, 08-26) | W2jet | 5 | 5 | 2 | 40% |
 | R1 — csloop opus-5 +reasoning (08-11) | R6 — csloop Kimi K3 (08-12) | W2jet | 20 | 5 | 1 | 20% |
 | R2 — ccworkflow (sonnet-5 author, opus-5 integrate) | R11 — csloop oaic-gpt56terra (08-26) | BDK, Mods | 41 | 2 | 1 | 50% |
@@ -118,3 +128,42 @@ For every pair of runs that translated files from at least one of the same modul
 | R8 — csloop sonnet-5 (08-26) | R11 — csloop oaic-gpt56terra (08-26) | BDK | 5 | 2 | 1 | 50% |
 | R3 — ccworkflow (sonnet-5 author, opus-5 integrate, run2) | R5 — csloop sonnet-5 +reasoning (run2, 08-12) | BDK | 15 | 10 | 0 | 0% |
 | R3 — ccworkflow (sonnet-5 author, opus-5 integrate, run2) | R11 — csloop oaic-gpt56terra (08-26) | BDK | 15 | 2 | 0 | 0% |
+
+## How many runs settled each file (git-exact)
+
+Every distinct file any run retired (77 of them), bucketed by how many of the 12 measured runs retired it. The module table above shows whether runs landed in the same *area*; this shows whether they landed on the same *files*, which is the stricter question.
+
+**No file was settled by all 12 runs — the all-run intersection is empty.** That is a property of the corpus rather than a near-miss: the runs split across top-level modules that do not overlap at all, so most pairs had no opportunity to agree. Read the rows below as levels of partial agreement, not as a ranking against a reachable maximum.
+
+| Runs settling it | Files | Share | Cumulative | Which files |
+|---:|---:|---:|---:|---|
+| 6 | 1 | 1% | 1% | `W2jet/fvf` |
+| 5 | 1 | 1% | 3% | `W2jet/atree` |
+| 4 | 4 | 5% | 8% | `W2jet/Ltfunctions`, `W2jet/fpp`, `W2jet/subqcd`, `W2jet/vv` |
+| 3 | 8 | 10% | 18% | `BDK/FPFMccTtilde`, `BDK/FPFPcc`, `BDK/M1bit1`, `BDK/M3bit4`, `BDK/fvs`, `W2jet/LRcalc`, `W2jet/a6treeg`, `W2jet/faxsl` |
+| 2 | 33 | 43% | 61% | — |
+| 1 | 30 | 39% | 100% | — |
+
+## Which files each *model* chose (git-exact)
+
+Runs grouped by the model that made the file-selection decision, not by harness. For csloop that is the run's only model. For ccworkflow it is the **triage** model — triage reads the plan and picks the round's units, while author agents are handed units already chosen and integrate only lands them. So R2/R3 count as sonnet-5 decisions despite their labels leading with "opus-5 integrate": opus-5 never picked a file in those runs.
+
+`Core` is the set of files settled in *every* run of that model — intra-model reproducibility. Read it against the run count: a model with one run trivially has core = union.
+
+| Decision model | Runs | Harness | Modules entered | Files (union) | Core | Core files |
+|---|---|---|---|---:|---:|---|
+| opus-5 | R1, R4, R7, R12 | csloop | W2jet (18), loop (9), Z2jet (6) | 33 | 3 | `W2jet/Ltfunctions`, `W2jet/atree`, `W2jet/fvf` |
+| sonnet-5 | R2, R3, R5, R8 | ccworkflow, csloop | BDK (26), ThreeJets (11), loop (9), Z2jet (6), Mods (2), Procdep (1) | 55 | 0 | — |
+| gpt56sol | R9, R10 | csloop | W2jet (5), ThreeJets (5) | 10 | 0 | — |
+| gpt56terra | R11 | csloop | BDK (1), Mods (1) | 2 | 2 | `BDK/M3bit4`, `Mods/types_mod` |
+| Kimi K3 | R6 | csloop | W2jet (5) | 5 | 5 | `W2jet/fpm`, `W2jet/fpp`, `W2jet/fsl`, `W2jet/fvf`, `W2jet/vv` |
+
+## How many *models* settled each file (git-exact)
+
+The stricter companion to the run-level table above. A file settled by four runs of one model is that model reproducing itself; a file settled by four models is cross-model agreement. The run-level counts cannot separate those, and with opus-5 supplying four of the twelve runs they will read the first as though it were the second.
+
+| Models settling it | Files | Share | Which files |
+|---:|---:|---:|---|
+| 3 of 5 | 2 | 3% | `W2jet/fvf`, `W2jet/vv` |
+| 2 of 5 | 24 | 31% | — |
+| 1 of 5 | 51 | 66% | — |

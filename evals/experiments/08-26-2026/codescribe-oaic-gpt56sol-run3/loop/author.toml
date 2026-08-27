@@ -1,0 +1,1065 @@
+
+[[event]]
+event = "run_start"
+run_id = "20260826-215403-930fdc"
+mode = "native_tools"
+max_iterations = 30
+ts = "2026-08-27T02:54:03.700443+00:00"
+
+[[event]]
+event = "iteration_start"
+run_id = "20260826-215403-930fdc"
+iteration = 1
+ts = "2026-08-27T02:54:03.700605+00:00"
+
+[[event]]
+event = "model_response"
+run_id = "20260826-215403-930fdc"
+iteration = 1
+duration_ms = 5440.38
+text_chars = 616
+tool_calls = 9
+usage = "{\"prompt_tokens\": 3, \"completion_tokens\": 389, \"total_tokens\": 2866, \"reasoning_tokens\": 39, \"cache_read_input_tokens\": 1185, \"cache_creation_input_tokens\": 1289}"
+model_text = '''
+PLAN
+- Read the authoritative current plan first, then the desired specification, alongside the current log and relevant verification tooling/source state.
+- Run the three required full-process coverage probes and record their exact observed commands, outputs, and exit codes.
+- Refresh workflow state and run the translation gate to determine whether human approval remains the binding blocker.
+- Apply any permitted follow-on work immediately, validating each meaningful change with the closest che'''
+ts = "2026-08-27T02:54:09.141118+00:00"
+
+[[event]]
+event = "tool_start"
+run_id = "20260826-215403-930fdc"
+iteration = 1
+tool = "read"
+args = "{\"path\": \"dev/transformations/mcfm-translate/current_plan.md\"}"
+model_text = '''
+PLAN
+- Read the authoritative current plan first, then the desired specification, alongside the current log and relevant verification tooling/source state.
+- Run the three required full-process coverage probes and record their exact observed commands, outputs, and exit codes.
+- Refresh workflow state and run the translation gate to determine whether human approval remains the binding blocker.
+- Apply any permitted follow-on work immediately, validating each meaningful change with the closest checks.
+- Update only `agent_log.md` under the transformation directory, then report completion or the precise blocker.'''
+ts = "2026-08-27T02:54:09.141483+00:00"
+
+[[event]]
+event = "tool_end"
+run_id = "20260826-215403-930fdc"
+iteration = 1
+tool = "read"
+ok = true
+duration_ms = 0.608
+output_chars = 8710
+output_preview = '''
+# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/current_plan.md
+# lines: 1-182
+0001: # Fortran → C++ plan
+0002: 
+0003: This file says how to run step 1. The rewrite rules and correctness bar are in
+0004: `desired_spec.md`.
+0005: 
+0006: > This Plan is the policy: it selects and orders the work over the ready set (see *When to
+0007: > stop*). The correctness contract — objective `f`, invariants `I`, oracle `V`, and status set
+0008: > `Σ` — lives in `'''
+ts = "2026-08-27T02:54:09.142088+00:00"
+
+[[event]]
+event = "tool_start"
+run_id = "20260826-215403-930fdc"
+iteration = 1
+tool = "read"
+args = "{\"path\": \"dev/transformations/mcfm-translate/desired_spec.md\"}"
+model_text = '''
+PLAN
+- Read the authoritative current plan first, then the desired specification, alongside the current log and relevant verification tooling/source state.
+- Run the three required full-process coverage probes and record their exact observed commands, outputs, and exit codes.
+- Refresh workflow state and run the translation gate to determine whether human approval remains the binding blocker.
+- Apply any permitted follow-on work immediately, validating each meaningful change with the closest checks.
+- Update only `agent_log.md` under the transformation directory, then report completion or the precise blocker.'''
+ts = "2026-08-27T02:54:09.142421+00:00"
+
+[[event]]
+event = "tool_end"
+run_id = "20260826-215403-930fdc"
+iteration = 1
+tool = "read"
+ok = true
+duration_ms = 0.548
+output_chars = 7692
+output_preview = '''
+# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/desired_spec.md
+# lines: 1-144
+0001: # Fortran → C++: target output for one MCFM file
+0002: 
+0003: This file defines the rewrite target and correctness bar for step 1. The workflow lives in
+0004: `current_plan.md`.
+0005: 
+0006: Paths are written as `software/mcfm/src/...`.
+0007: 
+0008: ---
+0009: 
+0010: ## Contract
+0011: 
+0012: This step advances by *settling* source files one at a time: each file is r'''
+ts = "2026-08-27T02:54:09.142968+00:00"
+
+[[event]]
+event = "tool_start"
+run_id = "20260826-215403-930fdc"
+iteration = 1
+tool = "read"
+args = "{\"path\": \"dev/transformations/mcfm-translate/agent_log.md\"}"
+model_text = '''
+PLAN
+- Read the authoritative current plan first, then the desired specification, alongside the current log and relevant verification tooling/source state.
+- Run the three required full-process coverage probes and record their exact observed commands, outputs, and exit codes.
+- Refresh workflow state and run the translation gate to determine whether human approval remains the binding blocker.
+- Apply any permitted follow-on work immediately, validating each meaningful change with the closest checks.
+- Update only `agent_log.md` under the transformation directory, then report completion or the precise blocker.'''
+ts = "2026-08-27T02:54:09.143308+00:00"
+
+[[event]]
+event = "tool_end"
+run_id = "20260826-215403-930fdc"
+iteration = 1
+tool = "read"
+ok = true
+duration_ms = 0.451
+output_chars = 4567
+output_preview = '''
+# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/agent_log.md
+# lines: 1-25
+0001: # MCFM translation worklist
+0002: 
+0003: ## Group 1 — Mods foundational types
+0004: 
+0005: - [x] software/mcfm/src/Mods/types_mod.f — TRANSLATED (infrastructure module; full build and all 272 tests passed)
+0006: 
+0007: ## Group 2 — BDK M2 bit functions
+0008: 
+0009: - [x] software/mcfm/src/BDK/M2bit1.f — TRANSLATED (build passed; coverage probe with `u d~ ve e+ g g` ret'''
+ts = "2026-08-27T02:54:09.143758+00:00"
+
+[[event]]
+event = "tool_start"
+run_id = "20260826-215403-930fdc"
+iteration = 1
+tool = "read"
+args = "{\"path\": \"dev/tmp/run_mcfm_verify.py\"}"
+model_text = '''
+PLAN
+- Read the authoritative current plan first, then the desired specification, alongside the current log and relevant verification tooling/source state.
+- Run the three required full-process coverage probes and record their exact observed commands, outputs, and exit codes.
+- Refresh workflow state and run the translation gate to determine whether human approval remains the binding blocker.
+- Apply any permitted follow-on work immediately, validating each meaningful change with the closest checks.
+- Update only `agent_log.md` under the transformation directory, then report completion or the precise blocker.'''
+ts = "2026-08-27T02:54:09.144032+00:00"
+
+[[event]]
+event = "tool_end"
+run_id = "20260826-215403-930fdc"
+iteration = 1
+tool = "read"
+ok = true
+duration_ms = 0.416
+output_chars = 493
+output_preview = '''
+# path: /home/user/JSS-2026-Example/dev/tmp/run_mcfm_verify.py
+# lines: 1-10
+0001: #!/usr/bin/env python3
+0002: import os
+0003: import subprocess
+0004: import sys
+0005: from pathlib import Path
+0006: 
+0007: root = Path(__file__).resolve().parents[2]
+0008: env = os.environ.copy()
+0009: env["MCFM_HOME"] = str(root / "software" / "mcfm")
+0010: raise SystemExit(subprocess.run([sys.executable, "dev/workflow.py", "verify", *sys.argv[1:]], cwd=root, env=env).returncode)
+'''
+ts = "2026-08-27T02:54:09.144446+00:00"
+
+[[event]]
+event = "tool_start"
+run_id = "20260826-215403-930fdc"
+iteration = 1
+tool = "read"
+args = "{\"path\": \"software/mcfm/src/BDK/M1bit1.cpp\"}"
+model_text = '''
+PLAN
+- Read the authoritative current plan first, then the desired specification, alongside the current log and relevant verification tooling/source state.
+- Run the three required full-process coverage probes and record their exact observed commands, outputs, and exit codes.
+- Refresh workflow state and run the translation gate to determine whether human approval remains the binding blocker.
+- Apply any permitted follow-on work immediately, validating each meaningful change with the closest checks.
+- Update only `agent_log.md` under the transformation directory, then report completion or the precise blocker.'''
+ts = "2026-08-27T02:54:09.144675+00:00"
+
+[[event]]
+event = "tool_end"
+run_id = "20260826-215403-930fdc"
+iteration = 1
+tool = "read"
+ok = true
+duration_ms = 0.433
+output_chars = 1953
+output_preview = '''
+# path: /home/user/JSS-2026-Example/software/mcfm/src/BDK/M1bit1.cpp
+# lines: 1-26
+0001: #include "M1bit1.hpp"
+0002: #include <cmath>
+0003: #include <mxpart_mod.hpp>
+0004: #include <sprods_com_mod.hpp>
+0005: using namespace sprods_com_mod;
+0006: std::complex<double> M1bit1(int j1,int j2,int j3,int j4,int j5,int j6,FArray2D<std::complex<double>>& za,FArray2D<std::complex<double>>& zb) {
+0007:   auto zab2=[&](int a,int b,int c,int d){return za(a,b)*zb(b,d)+za(a,c)*zb(c,d);'''
+ts = "2026-08-27T02:54:09.145108+00:00"
+
+[[event]]
+event = "tool_start"
+run_id = "20260826-215403-930fdc"
+iteration = 1
+tool = "read"
+args = "{\"path\": \"software/mcfm/src/BDK/FFPMccTtilde.cpp\"}"
+model_text = '''
+PLAN
+- Read the authoritative current plan first, then the desired specification, alongside the current log and relevant verification tooling/source state.
+- Run the three required full-process coverage probes and record their exact observed commands, outputs, and exit codes.
+- Refresh workflow state and run the translation gate to determine whether human approval remains the binding blocker.
+- Apply any permitted follow-on work immediately, validating each meaningful change with the closest checks.
+- Update only `agent_log.md` under the transformation directory, then report completion or the precise blocker.'''
+ts = "2026-08-27T02:54:09.145372+00:00"
+
+[[event]]
+event = "tool_end"
+run_id = "20260826-215403-930fdc"
+iteration = 1
+tool = "read"
+ok = true
+duration_ms = 0.425
+output_chars = 1449
+output_preview = '''
+# path: /home/user/JSS-2026-Example/software/mcfm/src/BDK/FFPMccTtilde.cpp
+# lines: 1-19
+0001: #include "FFPMccTtilde.hpp"
+0002: #include <mxpart_mod.hpp>
+0003: #include <sprods_com_mod.hpp>
+0004: using namespace sprods_com_mod;
+0005: std::complex<double> FFPMccTtilde(int j1,int j2,int j3,int j4,int j5,int j6,FArray2D<std::complex<double>>& za,FArray2D<std::complex<double>>& zb) {
+0006:   auto zab2=[&](int a,int b,int c,int d){return za(a,b)*zb(b,d)+za(a,c)*zb(c,d);};
+00'''
+ts = "2026-08-27T02:54:09.145796+00:00"
+
+[[event]]
+event = "tool_start"
+run_id = "20260826-215403-930fdc"
+iteration = 1
+tool = "read"
+args = "{\"path\": \"software/mcfm/src/BDK/fvs.cpp\"}"
+model_text = '''
+PLAN
+- Read the authoritative current plan first, then the desired specification, alongside the current log and relevant verification tooling/source state.
+- Run the three required full-process coverage probes and record their exact observed commands, outputs, and exit codes.
+- Refresh workflow state and run the translation gate to determine whether human approval remains the binding blocker.
+- Apply any permitted follow-on work immediately, validating each meaningful change with the closest checks.
+- Update only `agent_log.md` under the transformation directory, then report completion or the precise blocker.'''
+ts = "2026-08-27T02:54:09.146024+00:00"
+
+[[event]]
+event = "tool_end"
+run_id = "20260826-215403-930fdc"
+iteration = 1
+tool = "read"
+ok = true
+duration_ms = 0.51
+output_chars = 7638
+output_preview = '''
+# path: /home/user/JSS-2026-Example/software/mcfm/src/BDK/fvs.cpp
+# lines: 1-146
+0001: #include "fvs.hpp"
+0002: 
+0003: #include <cmath>
+0004: #include <heldefs_mod.hpp>
+0005: #include <mxpart_mod.hpp>
+0006: #include <Need.hpp>
+0007: #include <sprods_com_mod.hpp>
+0008: 
+0009: using namespace heldefs_mod;
+0010: using namespace sprods_com_mod;
+0011: 
+0012: std::complex<double> Brackpma(int j1, int j2, int j3, int j4, int j5, int j6,
+0013:     FArray2D<std::complex<double>>&'''
+ts = "2026-08-27T02:54:09.146533+00:00"
+
+[[event]]
+event = "tool_start"
+run_id = "20260826-215403-930fdc"
+iteration = 1
+tool = "read"
+args = "{\"path\": \"software/mcfm/src/BDK/CMakeLists.txt\"}"
+model_text = '''
+PLAN
+- Read the authoritative current plan first, then the desired specification, alongside the current log and relevant verification tooling/source state.
+- Run the three required full-process coverage probes and record their exact observed commands, outputs, and exit codes.
+- Refresh workflow state and run the translation gate to determine whether human approval remains the binding blocker.
+- Apply any permitted follow-on work immediately, validating each meaningful change with the closest checks.
+- Update only `agent_log.md` under the transformation directory, then report completion or the precise blocker.'''
+ts = "2026-08-27T02:54:09.146801+00:00"
+
+[[event]]
+event = "tool_end"
+run_id = "20260826-215403-930fdc"
+iteration = 1
+tool = "read"
+ok = true
+duration_ms = 0.467
+output_chars = 961
+output_preview = '''
+# path: /home/user/JSS-2026-Example/software/mcfm/src/BDK/CMakeLists.txt
+# lines: 1-50
+0001: target_sources(objlib PRIVATE
+0002: FFPPsc.f
+0003: M2abit2.f
+0004: FFMPsc.f
+0005: FFPMcc.f
+0006: FMPFsc.f
+0007: CMakeLists.txt
+0008: FFPMscT.f
+0009: M3bit4.f
+0010: FFPMsc.f
+0011: Master3a.f
+0012: FPFMccTtilde.f
+0013: FFMPcc.f
+0014: FFPPcc.f
+0015: M2abit1.f
+0016: AAAREADME.txt
+0017: Master2a.f
+0018: FMPFcc.f
+0019: M3bit3.f
+0020: FFPMscTtilde.f
+0021: M3abit1.f
+0022: FPFMsc.f
+0023: '''
+ts = "2026-08-27T02:54:09.147266+00:00"
+
+[[event]]
+event = "tool_start"
+run_id = "20260826-215403-930fdc"
+iteration = 1
+tool = "bash"
+args = "{\"command\": \"git status --short\"}"
+model_text = '''
+PLAN
+- Read the authoritative current plan first, then the desired specification, alongside the current log and relevant verification tooling/source state.
+- Run the three required full-process coverage probes and record their exact observed commands, outputs, and exit codes.
+- Refresh workflow state and run the translation gate to determine whether human approval remains the binding blocker.
+- Apply any permitted follow-on work immediately, validating each meaningful change with the closest checks.
+- Update only `agent_log.md` under the transformation directory, then report completion or the precise blocker.'''
+ts = "2026-08-27T02:54:09.147506+00:00"
+
+[[event]]
+event = "tool_end"
+run_id = "20260826-215403-930fdc"
+iteration = 1
+tool = "bash"
+ok = true
+duration_ms = 32.085
+output_chars = 2183
+output_preview = '''
+exit_code: 0
+STDOUT:
+ M evals/analysis/figures/fig1_cost_and_cache.png
+ M evals/analysis/figures/fig3_coverage.png
+ M evals/analysis/figures/fig4_wall_time.png
+ M evals/analysis/figures/fig5_tool_calls_per_file.png
+ M evals/analysis/figures/fig_combined.png
+ M evals/analysis/generate_graphs.py
+ M evals/analysis/summary_tables.md
+ M evals/analysis/tex/fig_eval.tex
+ M evals/analysis/tex/tab_coverage.tex
+ M evals/analysis/tex/tab_runs.tex
+ M evals/experiments/08-26-2026/codescribe-opus-5-run2/dev/t'''
+ts = "2026-08-27T02:54:09.179601+00:00"
+
+[[event]]
+event = "iteration_end"
+run_id = "20260826-215403-930fdc"
+iteration = 1
+stop_reason = "tool_calls"
+ts = "2026-08-27T02:54:09.180053+00:00"
+
+[[event]]
+event = "iteration_start"
+run_id = "20260826-215403-930fdc"
+iteration = 2
+ts = "2026-08-27T02:54:09.180218+00:00"
+
+[[event]]
+event = "model_response"
+run_id = "20260826-215403-930fdc"
+iteration = 2
+duration_ms = 5442.73
+text_chars = 596
+tool_calls = 3
+usage = "{\"prompt_tokens\": 3, \"completion_tokens\": 310, \"total_tokens\": 16878, \"reasoning_tokens\": 84, \"cache_read_input_tokens\": 1185, \"cache_creation_input_tokens\": 15380}"
+model_text = '''
+PLAN
+- Refresh readiness and inspect the approval state plus the plan’s stopping rules.
+- Re-run all three Group 3 coverage probes with the exact BDK process and preserve the observed evidence.
+- Check the approval gate; if approval permits, apply its guidance and continue with the next ready group.
+- Update only `agent_log.md` with exact command outcomes and finish with the blocker or validated completion state.
+
+I’ll first establish whether a human approval has appeared and refresh the generat'''
+ts = "2026-08-27T02:54:14.623168+00:00"
+
+[[event]]
+event = "tool_start"
+run_id = "20260826-215403-930fdc"
+iteration = 2
+tool = "read"
+args = "{\"path\": \"dev/transformations/mcfm-translate/current_plan.md\", \"offset\": 164, \"limit\": 30}"
+model_text = '''
+PLAN
+- Refresh readiness and inspect the approval state plus the plan’s stopping rules.
+- Re-run all three Group 3 coverage probes with the exact BDK process and preserve the observed evidence.
+- Check the approval gate; if approval permits, apply its guidance and continue with the next ready group.
+- Update only `agent_log.md` with exact command outcomes and finish with the blocker or validated completion state.
+
+I’ll first establish whether a human approval has appeared and refresh the generated readiness data, since those results determine whether opening any further group is permitted.'''
+ts = "2026-08-27T02:54:14.623545+00:00"
+
+[[event]]
+event = "tool_end"
+run_id = "20260826-215403-930fdc"
+iteration = 2
+tool = "read"
+ok = true
+duration_ms = 0.541
+output_chars = 1053
+output_preview = '''
+# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/current_plan.md
+# lines: 164-182
+0164: ## When to stop
+0165: 
+0166: The *ready set* is the set of ready, not-yet-settled files. Each settled file leaves the
+0167: ready set and the readiness graph is acyclic, so the pass terminates. Stop only when one of
+0168: these is true:
+0169: 
+0170: - a completed group needs human approval before the next group can start
+0171: - the ready set is empty (no ready f'''
+ts = "2026-08-27T02:54:14.624081+00:00"
+
+[[event]]
+event = "tool_start"
+run_id = "20260826-215403-930fdc"
+iteration = 2
+tool = "read"
+args = "{\"path\": \"dev/transformations/mcfm-translate/approvals.toml\"}"
+model_text = '''
+PLAN
+- Refresh readiness and inspect the approval state plus the plan’s stopping rules.
+- Re-run all three Group 3 coverage probes with the exact BDK process and preserve the observed evidence.
+- Check the approval gate; if approval permits, apply its guidance and continue with the next ready group.
+- Update only `agent_log.md` with exact command outcomes and finish with the blocker or validated completion state.
+
+I’ll first establish whether a human approval has appeared and refresh the generated readiness data, since those results determine whether opening any further group is permitted.'''
+ts = "2026-08-27T02:54:14.624330+00:00"
+
+[[event]]
+event = "tool_end"
+run_id = "20260826-215403-930fdc"
+iteration = 2
+tool = "read"
+ok = true
+duration_ms = 0.44
+output_chars = 142
+output_preview = '''
+# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/approvals.toml
+# lines: 1-1
+0001: version = 1
+'''
+ts = "2026-08-27T02:54:14.624769+00:00"
+
+[[event]]
+event = "tool_start"
+run_id = "20260826-215403-930fdc"
+iteration = 2
+tool = "bash"
+args = "{\"command\": \"python3 dev/workflow.py refresh\", \"timeout\": 120}"
+model_text = '''
+PLAN
+- Refresh readiness and inspect the approval state plus the plan’s stopping rules.
+- Re-run all three Group 3 coverage probes with the exact BDK process and preserve the observed evidence.
+- Check the approval gate; if approval permits, apply its guidance and continue with the next ready group.
+- Update only `agent_log.md` with exact command outcomes and finish with the blocker or validated completion state.
+
+I’ll first establish whether a human approval has appeared and refresh the generated readiness data, since those results determine whether opening any further group is permitted.'''
+ts = "2026-08-27T02:54:14.624999+00:00"
+
+[[event]]
+event = "tool_end"
+run_id = "20260826-215403-930fdc"
+iteration = 2
+tool = "bash"
+ok = true
+duration_ms = 890.125
+output_chars = 44339
+output_preview = '''
+exit_code: 0
+STDOUT:
+Generating Doxygen XML for /home/user/JSS-2026-Example/software/mcfm/src -> /home/user/JSS-2026-Example/software/mcfm/doxygen_dep/xml
+wrote 1135 XML file(s) to /home/user/JSS-2026-Example/software/mcfm/doxygen_dep/xml
+source 524  translated 86  untranslated 438
+ready leaves (deps=0, non-blind): 224
+symbol index: 915 symbol(s)
+cleanup candidates: move 74  shim-delete 17  merge 38
+wrote roadmap_metrics.'''
+ts = "2026-08-27T02:54:15.515134+00:00"
+
+[[event]]
+event = "iteration_end"
+run_id = "20260826-215403-930fdc"
+iteration = 2
+stop_reason = "tool_calls"
+ts = "2026-08-27T02:54:15.515852+00:00"
+
+[[event]]
+event = "iteration_start"
+run_id = "20260826-215403-930fdc"
+iteration = 3
+ts = "2026-08-27T02:54:15.516032+00:00"
+
+[[event]]
+event = "model_response"
+run_id = "20260826-215403-930fdc"
+iteration = 3
+duration_ms = 4836.162
+text_chars = 664
+tool_calls = 1
+usage = "{\"prompt_tokens\": 3, \"completion_tokens\": 287, \"total_tokens\": 20116, \"reasoning_tokens\": 83, \"cache_read_input_tokens\": 16565, \"cache_creation_input_tokens\": 3261}"
+model_text = '''
+PLAN:
+- Refresh the readiness/index state and inspect the Group 1 approval record.
+- Re-run all three Group 3 coverage probes with the exact BDK process `u d~ ve e+ g g`.
+- Record only the observed commands, outputs, and exit codes in `agent_log.md`.
+- Check the approval gate and, if approved, apply review guidance and continue with the next ready group; otherwise stop at the mandated human-review blocker.
+- Validate the final log/state with the workflow gate.
+
+The refresh has succeeded and `app'''
+ts = "2026-08-27T02:54:20.352401+00:00"
+
+[[event]]
+event = "tool_start"
+run_id = "20260826-215403-930fdc"
+iteration = 3
+tool = "bash"
+args = "{\"command\": \"python3 dev/tmp/run_mcfm_verify.py software/mcfm/src/BDK/M1bit1.cpp -- u d~ ve e+ g g\", \"timeout\": 120}"
+model_text = '''
+PLAN:
+- Refresh the readiness/index state and inspect the Group 1 approval record.
+- Re-run all three Group 3 coverage probes with the exact BDK process `u d~ ve e+ g g`.
+- Record only the observed commands, outputs, and exit codes in `agent_log.md`.
+- Check the approval gate and, if approved, apply review guidance and continue with the next ready group; otherwise stop at the mandated human-review blocker.
+- Validate the final log/state with the workflow gate.
+
+The refresh has succeeded and `approvals.toml` still contains no approval. I’ll now run each probe serially because coverage instrumentation temporarily modifies and restores the target/build state.'''
+ts = "2026-08-27T02:54:20.352771+00:00"
+
+[[event]]
+event = "tool_end"
+run_id = "20260826-215403-930fdc"
+iteration = 3
+tool = "bash"
+ok = true
+duration_ms = 2266.6
+output_chars = 379
+output_preview = '''
+exit_code: 1
+STDOUT:
+== coverage check: software/mcfm/src/BDK/M1bit1.cpp ==
+process : u d~ ve e+ g g
+factor  : 1.5
+-- baseline build + test --
+-- scaling the marked output by 1.5 --
+-- probed build + test --
+
+RESULT: NOT COVERED — the numbers did not change, so the test never ran this file.
+  Mark it TRANSLATED. Check again after a routine that calls it is rewritten.
+
+STDERR:
+'''
+ts = "2026-08-27T02:54:22.619373+00:00"
+
+[[event]]
+event = "iteration_end"
+run_id = "20260826-215403-930fdc"
+iteration = 3
+stop_reason = "tool_calls"
+ts = "2026-08-27T02:54:22.619638+00:00"
+
+[[event]]
+event = "iteration_start"
+run_id = "20260826-215403-930fdc"
+iteration = 4
+ts = "2026-08-27T02:54:22.619725+00:00"
+
+[[event]]
+event = "model_response"
+run_id = "20260826-215403-930fdc"
+iteration = 4
+duration_ms = 4834.52
+text_chars = 582
+tool_calls = 1
+usage = "{\"prompt_tokens\": 3, \"completion_tokens\": 239, \"total_tokens\": 21270, \"reasoning_tokens\": 56, \"cache_read_input_tokens\": 2474, \"cache_creation_input_tokens\": 18554}"
+model_text = '''
+PLAN
+- Refresh readiness and inspect the human approval record.
+- Re-run all three Group 3 coverage probes with the exact BDK process and capture their actual results.
+- Check the approval gate after verification.
+- Update only `agent_log.md` with this round’s observed evidence and blocker.
+- Stop if the gate still requires human approval; otherwise apply approval guidance and continue with the next ready group.
+
+The first exact probe confirmed M1bit1 remains not covered. I’ll now run the remain'''
+ts = "2026-08-27T02:54:27.454362+00:00"
+
+[[event]]
+event = "tool_start"
+run_id = "20260826-215403-930fdc"
+iteration = 4
+tool = "bash"
+args = "{\"command\": \"python3 dev/tmp/run_mcfm_verify.py software/mcfm/src/BDK/FFPMccTtilde.cpp -- u d~ ve e+ g g\", \"timeout\": 120}"
+model_text = '''
+PLAN
+- Refresh readiness and inspect the human approval record.
+- Re-run all three Group 3 coverage probes with the exact BDK process and capture their actual results.
+- Check the approval gate after verification.
+- Update only `agent_log.md` with this round’s observed evidence and blocker.
+- Stop if the gate still requires human approval; otherwise apply approval guidance and continue with the next ready group.
+
+The first exact probe confirmed M1bit1 remains not covered. I’ll now run the remaining probes serially because each temporarily rebuilds an instrumented source tree.'''
+ts = "2026-08-27T02:54:27.454744+00:00"
+
+[[event]]
+event = "tool_end"
+run_id = "20260826-215403-930fdc"
+iteration = 4
+tool = "bash"
+ok = true
+duration_ms = 2260.762
+output_chars = 385
+output_preview = '''
+exit_code: 1
+STDOUT:
+== coverage check: software/mcfm/src/BDK/FFPMccTtilde.cpp ==
+process : u d~ ve e+ g g
+factor  : 1.5
+-- baseline build + test --
+-- scaling the marked output by 1.5 --
+-- probed build + test --
+
+RESULT: NOT COVERED — the numbers did not change, so the test never ran this file.
+  Mark it TRANSLATED. Check again after a routine that calls it is rewritten.
+
+STDERR:
+'''
+ts = "2026-08-27T02:54:29.715512+00:00"
+
+[[event]]
+event = "iteration_end"
+run_id = "20260826-215403-930fdc"
+iteration = 4
+stop_reason = "tool_calls"
+ts = "2026-08-27T02:54:29.715908+00:00"
+
+[[event]]
+event = "iteration_start"
+run_id = "20260826-215403-930fdc"
+iteration = 5
+ts = "2026-08-27T02:54:29.716083+00:00"
+
+[[event]]
+event = "model_response"
+run_id = "20260826-215403-930fdc"
+iteration = 5
+duration_ms = 4540.758
+text_chars = 376
+tool_calls = 1
+usage = "{\"prompt_tokens\": 3, \"completion_tokens\": 181, \"total_tokens\": 22431, \"reasoning_tokens\": 40, \"cache_read_input_tokens\": 21028, \"cache_creation_input_tokens\": 1219}"
+model_text = '''
+PLAN:
+- Refresh readiness and inspect the approval record.
+- Re-run all three Group 3 coverage probes with the exact BDK process.
+- Check the approval gate after confirming the existing groups remain settled.
+- Record only observed commands, outputs, exit codes, and the human-approval blocker in `agent_log.md`.
+- Stop without opening a new group if the gate remains blocked.'''
+ts = "2026-08-27T02:54:34.257054+00:00"
+
+[[event]]
+event = "tool_start"
+run_id = "20260826-215403-930fdc"
+iteration = 5
+tool = "bash"
+args = "{\"command\": \"python3 dev/tmp/run_mcfm_verify.py software/mcfm/src/BDK/fvs.cpp -- u d~ ve e+ g g\", \"timeout\": 120}"
+model_text = '''
+PLAN:
+- Refresh readiness and inspect the approval record.
+- Re-run all three Group 3 coverage probes with the exact BDK process.
+- Check the approval gate after confirming the existing groups remain settled.
+- Record only observed commands, outputs, exit codes, and the human-approval blocker in `agent_log.md`.
+- Stop without opening a new group if the gate remains blocked.'''
+ts = "2026-08-27T02:54:34.257421+00:00"
+
+[[event]]
+event = "tool_end"
+run_id = "20260826-215403-930fdc"
+iteration = 5
+tool = "bash"
+ok = true
+duration_ms = 3533.465
+output_chars = 376
+output_preview = '''
+exit_code: 1
+STDOUT:
+== coverage check: software/mcfm/src/BDK/fvs.cpp ==
+process : u d~ ve e+ g g
+factor  : 1.5
+-- baseline build + test --
+-- scaling the marked output by 1.5 --
+-- probed build + test --
+
+RESULT: NOT COVERED — the numbers did not change, so the test never ran this file.
+  Mark it TRANSLATED. Check again after a routine that calls it is rewritten.
+
+STDERR:
+'''
+ts = "2026-08-27T02:54:37.790893+00:00"
+
+[[event]]
+event = "iteration_end"
+run_id = "20260826-215403-930fdc"
+iteration = 5
+stop_reason = "tool_calls"
+ts = "2026-08-27T02:54:37.791287+00:00"
+
+[[event]]
+event = "iteration_start"
+run_id = "20260826-215403-930fdc"
+iteration = 6
+ts = "2026-08-27T02:54:37.791455+00:00"
+
+[[event]]
+event = "model_response"
+run_id = "20260826-215403-930fdc"
+iteration = 6
+duration_ms = 15743.938
+text_chars = 341
+tool_calls = 1
+usage = "{\"prompt_tokens\": 3, \"completion_tokens\": 1462, \"total_tokens\": 24910, \"reasoning_tokens\": 98, \"cache_read_input_tokens\": 22247, \"cache_creation_input_tokens\": 1198}"
+model_text = '''
+PLAN
+- Refresh readiness and inspect the human approval state.
+- Re-run all three Group 3 probes with the exact BDK process.
+- Record the commands, verbatim probe outputs, and exit codes in `agent_log.md`.
+- Run the approval gate and stop if it still blocks creation of a new group.
+- Report the hard blocker and concrete continuation steps.'''
+ts = "2026-08-27T02:54:53.535597+00:00"
+
+[[event]]
+event = "tool_start"
+run_id = "20260826-215403-930fdc"
+iteration = 6
+tool = "edit"
+args = "{\"path\": \"dev/transformations/mcfm-translate/agent_log.md\", \"edits\": [{\"oldText\": \"- 2026-08-27: `python3 dev/workflow.py refresh` exited 0 and reported `source 524  translated 86  untranslated 438`, `ready leaves (deps=0, non-blind): 224`, `symbol index: 915 symbol(s)`, and `cleanup candidates: move 74  shim-delete 17  merge 38`. `python3 dev/tmp/run_mcfm_verify.py software/mcfm/src/BDK/M1bit1.cpp -- u d~ ve e+ g g` exited 1 with output `RESULT: NOT COVERED — the numbers did not change, so the test never ran this file.` and `Mark it TRANSLATED. Check again after a routine that calls it is rewritten.` `python3 dev/tmp/run_mcfm_verify.py software/mcfm/src/BDK/FFPMccTtilde.cpp -- u d~ ve e+ g g` exited 1 with the same NOT COVERED result and instruction. `python3 dev/tmp/run_mcfm_verify.py software/mcfm/src/BDK/fvs.cpp -- u d~ ve e+ g g` exited 1 with the same NOT COVERED result and instruction. Group 3 remains correctly recorded as TRANSLATED. `python3 dev/workflow.py gate mcfm-translate` exited 1 with `GATE: BLOCKED — approval batch limit reached before opening a new group.`, naming `Group 1 — Mods foundational types` as the blocking group because 3 completed groups are waiting and the limit is 3. Human approval is required before a new group can be opened.\\n\", \"newText\": \"- 2026-08-27: `python3 dev/workflow.py refresh` exited 0 and reported `source 524  translated 86  untranslated 438`, `ready leaves (deps=0, non-blind): 224`, `symbol index: 915 symbol(s)`, and `cleanup candidates: move 74  shim-delete 17  merge 38`. `python3 dev/tmp/run_mcfm_verify.py software/mcfm/src/BDK/M1bit1.cpp -- u d~ ve e+ g g` exited 1 with output `RESULT: NOT COVERED — the numbers did not change, so the test never ran this file.` and `Mark it TRANSLATED. Check again after a routine that calls it is rewritten.` `python3 dev/tmp/run_mcfm_verify.py software/mcfm/src/BDK/FFPMccTtilde.cpp -- u d~ ve e+ g g` exited 1 with the same NOT COVERED result and instruction. `python3 dev/tmp/run_mcfm_verify.py software/mcfm/src/BDK/fvs.cpp -- u d~ ve e+ g g` exited 1 with the same NOT COVERED result and instruction. Group 3 remains correctly recorded as TRANSLATED. `python3 dev/workflow.py gate mcfm-translate` exited 1 with `GATE: BLOCKED — approval batch limit reached before opening a new group.`, naming `Group 1 — Mods foundational types` as the blocking group because 3 completed groups are waiting and the limit is 3. Human approval is required before a new group can be opened.\\n- 2026-08-27: Repeated the required exact Group 3 probes. Command `python3 dev/tmp/run_mcfm_verify.py software/mcfm/src/BDK/M1bit1.cpp -- u d~ ve e+ g g` exited 1 with stdout:\\n  ```text\\n  == coverage check: software/mcfm/src/BDK/M1bit1.cpp ==\\n  process : u d~ ve e+ g g\\n  factor  : 1.5\\n  -- baseline build + test --\\n  -- scaling the marked output by 1.5 --\\n  -- probed build + test --\\n\\n  RESULT: NOT COVERED — the numbers did not change, so the test never ran this file.\\n    Mark it TRANSLATED. Check again after a routine that calls it is rewritten.\\n  ```\\n  Stderr was empty. Command `python3 dev/tmp/run_mcfm_verify.py software/mcfm/src/BDK/FFPMccTtilde.cpp -- u d~ ve e+ g g` exited 1 with stdout:\\n  ```text\\n  == coverage check: software/mcfm/src/BDK/FFPMccTtilde.cpp ==\\n  process : u d~ ve e+ g g\\n  factor  : 1.5\\n  -- baseline build + test --\\n  -- scaling the marked output by 1.5 --\\n  -- probed build + test --\\n\\n  RESULT: NOT COVERED — the numbers did not change, so the test never ran this file.\\n    Mark it TRANSLATED. Check again after a routine that calls it is rewritten.\\n  ```\\n  Stderr was empty. Command `python3 dev/tmp/run_mcfm_verify.py software/mcfm/src/BDK/fvs.cpp -- u d~ ve e+ g g` exited 1 with stdout:\\n  ```text\\n  == coverage check: software/mcfm/src/BDK/fvs.cpp ==\\n  process : u d~ ve e+ g g\\n  factor  : 1.5\\n  -- baseline build + test --\\n  -- scaling the marked output by 1.5 --\\n  -- probed build + test --\\n\\n  RESULT: NOT COVERED — the numbers did not change, so the test never ran this file.\\n    Mark it TRANSLATED. Check again after a routine that calls it is rewritten.\\n  ```\\n  Stderr was empty. All statuses remain TRANSLATED as required by the oracle.\\n\"}]}"
+model_text = '''
+PLAN
+- Refresh readiness and inspect the human approval state.
+- Re-run all three Group 3 probes with the exact BDK process.
+- Record the commands, verbatim probe outputs, and exit codes in `agent_log.md`.
+- Run the approval gate and stop if it still blocks creation of a new group.
+- Report the hard blocker and concrete continuation steps.'''
+ts = "2026-08-27T02:54:53.536039+00:00"
+
+[[event]]
+event = "tool_end"
+run_id = "20260826-215403-930fdc"
+iteration = 6
+tool = "edit"
+ok = true
+duration_ms = 0.993
+output_chars = 4595
+output_preview = '''
+{
+  "ok": true,
+  "path": "/home/user/JSS-2026-Example/dev/transformations/mcfm-translate/agent_log.md",
+  "applied": 1,
+  "replacements": [
+    {
+      "index": 0,
+      "match_count": 1,
+      "old_len": 1194,
+      "new_len": 2873,
+      "before_snippet": "…`, and exited 1. Human approval is required before another group can be opened.\n- 2026-08-27: `python3 dev/workflow.py refresh` exited 0 and reported `source 524  translated 86  untranslated 438`, `ready leaves (d'''
+ts = "2026-08-27T02:54:53.537024+00:00"
+
+[[event]]
+event = "iteration_end"
+run_id = "20260826-215403-930fdc"
+iteration = 6
+stop_reason = "tool_calls"
+ts = "2026-08-27T02:54:53.537344+00:00"
+
+[[event]]
+event = "iteration_start"
+run_id = "20260826-215403-930fdc"
+iteration = 7
+ts = "2026-08-27T02:54:53.537507+00:00"
+
+[[event]]
+event = "model_response"
+run_id = "20260826-215403-930fdc"
+iteration = 7
+duration_ms = 7367.039
+text_chars = 637
+tool_calls = 1
+usage = "{\"prompt_tokens\": 3, \"completion_tokens\": 423, \"total_tokens\": 27559, \"reasoning_tokens\": 251, \"cache_read_input_tokens\": 19826, \"cache_creation_input_tokens\": 7307}"
+model_text = '''
+PLAN
+- Refresh readiness and inspect the approval record before considering new work.
+- Re-run all three Group 3 coverage probes with the exact BDK process and preserve their observed evidence.
+- Update only `agent_log.md` with the exact commands, outputs, and exit codes.
+- Run the approval gate; proceed only if human approval permits another group.
+- Stop and report the human-approval blocker if the gate remains closed.
+
+The required probes are now recorded. I will run the gate as the final pol'''
+ts = "2026-08-27T02:55:00.904742+00:00"
+
+[[event]]
+event = "tool_start"
+run_id = "20260826-215403-930fdc"
+iteration = 7
+tool = "bash"
+args = "{\"command\": \"python3 dev/workflow.py gate mcfm-translate\", \"timeout\": 120}"
+model_text = '''
+PLAN
+- Refresh readiness and inspect the approval record before considering new work.
+- Re-run all three Group 3 coverage probes with the exact BDK process and preserve their observed evidence.
+- Update only `agent_log.md` with the exact commands, outputs, and exit codes.
+- Run the approval gate; proceed only if human approval permits another group.
+- Stop and report the human-approval blocker if the gate remains closed.
+
+The required probes are now recorded. I will run the gate as the final policy check; because no approval record exists, I will not open or modify another translation group unless it explicitly permits that work.'''
+ts = "2026-08-27T02:55:00.905104+00:00"
+
+[[event]]
+event = "tool_end"
+run_id = "20260826-215403-930fdc"
+iteration = 7
+tool = "bash"
+ok = true
+duration_ms = 89.218
+output_chars = 626
+output_preview = '''
+exit_code: 1
+STDOUT:
+GATE: BLOCKED — approval batch limit reached before opening a new group.
+
+Transformation: mcfm-translate
+Blocking group: Group 1 — Mods foundational types
+Reason: 3 completed group(s) are waiting; limit is 3
+
+Approve with:
+  python3 dev/tools/approve/approve_group.py /home/user/JSS-2026-Example/dev/transformations/mcfm-translate --latest-blocking
+
+Or approve this exact group explicitly:
+  python3 dev/tools/approve/approve_group.py /home/user'''
+ts = "2026-08-27T02:55:00.994329+00:00"
+
+[[event]]
+event = "iteration_end"
+run_id = "20260826-215403-930fdc"
+iteration = 7
+stop_reason = "tool_calls"
+ts = "2026-08-27T02:55:00.994744+00:00"
+
+[[event]]
+event = "iteration_start"
+run_id = "20260826-215403-930fdc"
+iteration = 8
+ts = "2026-08-27T02:55:00.994911+00:00"
+
+[[event]]
+event = "model_response"
+run_id = "20260826-215403-930fdc"
+iteration = 8
+duration_ms = 6657.145
+text_chars = 531
+tool_calls = 1
+usage = "{\"prompt_tokens\": 3, \"completion_tokens\": 332, \"total_tokens\": 28660, \"reasoning_tokens\": 174, \"cache_read_input_tokens\": 23445, \"cache_creation_input_tokens\": 4880}"
+model_text = '''
+PLAN:
+- Refresh readiness and inspect approval state.
+- Re-run all three BDK probes with the exact mapped process and preserve observed evidence.
+- Update only `agent_log.md` with exact commands, outputs, and exit codes.
+- Re-check the approval gate; continue only if permitted, otherwise stop at the mandated human-review blocker.
+
+The probes are now recorded and still classify all three files as TRANSLATED. I’ll append the current gate result to the session log so the handoff precisely reflects '''
+ts = "2026-08-27T02:55:07.652264+00:00"
+
+[[event]]
+event = "tool_start"
+run_id = "20260826-215403-930fdc"
+iteration = 8
+tool = "read"
+args = "{\"path\": \"dev/transformations/mcfm-translate/agent_log.md\", \"offset\": 45, \"limit\": 30}"
+model_text = '''
+PLAN:
+- Refresh readiness and inspect approval state.
+- Re-run all three BDK probes with the exact mapped process and preserve observed evidence.
+- Update only `agent_log.md` with exact commands, outputs, and exit codes.
+- Re-check the approval gate; continue only if permitted, otherwise stop at the mandated human-review blocker.
+
+The probes are now recorded and still classify all three files as TRANSLATED. I’ll append the current gate result to the session log so the handoff precisely reflects why no new group can be opened.'''
+ts = "2026-08-27T02:55:07.652650+00:00"
+
+[[event]]
+event = "tool_end"
+run_id = "20260826-215403-930fdc"
+iteration = 8
+tool = "read"
+ok = true
+duration_ms = 0.5
+output_chars = 1023
+output_preview = '''
+# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/agent_log.md
+# lines: 45-62
+0045:   -- probed build + test --
+0046: 
+0047:   RESULT: NOT COVERED — the numbers did not change, so the test never ran this file.
+0048:     Mark it TRANSLATED. Check again after a routine that calls it is rewritten.
+0049:   ```
+0050:   Stderr was empty. Command `python3 dev/tmp/run_mcfm_verify.py software/mcfm/src/BDK/fvs.cpp -- u d~ ve e+ g g` exited 1 with stdout:
+0051:'''
+ts = "2026-08-27T02:55:07.653143+00:00"
+
+[[event]]
+event = "iteration_end"
+run_id = "20260826-215403-930fdc"
+iteration = 8
+stop_reason = "tool_calls"
+ts = "2026-08-27T02:55:07.653393+00:00"
+
+[[event]]
+event = "iteration_start"
+run_id = "20260826-215403-930fdc"
+iteration = 9
+ts = "2026-08-27T02:55:07.653554+00:00"
+
+[[event]]
+event = "model_response"
+run_id = "20260826-215403-930fdc"
+iteration = 9
+duration_ms = 9391.794
+text_chars = 575
+tool_calls = 1
+usage = "{\"prompt_tokens\": 3, \"completion_tokens\": 655, \"total_tokens\": 30317, \"reasoning_tokens\": 224, \"cache_read_input_tokens\": 28325, \"cache_creation_input_tokens\": 1334}"
+model_text = '''
+PLAN
+- Refresh readiness and inspect approval records before attempting new work.
+- Re-run all three Group 3 coverage probes with the exact BDK process.
+- Record the observed commands, outputs, and exit codes in `agent_log.md`.
+- Run the approval gate and continue only if human approval permits it.
+- Stop at the policy-defined human-approval blocker without opening another group.
+
+The required probes are recorded and retain `TRANSLATED` status. I’m now recording the gate’s exact result so the du'''
+ts = "2026-08-27T02:55:17.045548+00:00"
+
+[[event]]
+event = "tool_start"
+run_id = "20260826-215403-930fdc"
+iteration = 9
+tool = "edit"
+args = "{\"path\": \"dev/transformations/mcfm-translate/agent_log.md\", \"edits\": [{\"oldText\": \"  Stderr was empty. All statuses remain TRANSLATED as required by the oracle.\\n\", \"newText\": \"  Stderr was empty. All statuses remain TRANSLATED as required by the oracle.\\n- 2026-08-27: `python3 dev/workflow.py gate mcfm-translate` exited 1 with stdout:\\n  ```text\\n  GATE: BLOCKED — approval batch limit reached before opening a new group.\\n\\n  Transformation: mcfm-translate\\n  Blocking group: Group 1 — Mods foundational types\\n  Reason: 3 completed group(s) are waiting; limit is 3\\n\\n  Approve with:\\n    python3 dev/tools/approve/approve_group.py /home/user/JSS-2026-Example/dev/transformations/mcfm-translate --latest-blocking\\n\\n  Or approve this exact group explicitly:\\n    python3 dev/tools/approve/approve_group.py /home/user/JSS-2026-Example/dev/transformations/mcfm-translate \\\"Group 1 — Mods foundational types\\\" --by <name>\\n  ```\\n  Stderr was empty. No new group was opened because human approval is required by policy.\\n\"}]}"
+model_text = '''
+PLAN
+- Refresh readiness and inspect approval records before attempting new work.
+- Re-run all three Group 3 coverage probes with the exact BDK process.
+- Record the observed commands, outputs, and exit codes in `agent_log.md`.
+- Run the approval gate and continue only if human approval permits it.
+- Stop at the policy-defined human-approval blocker without opening another group.
+
+The required probes are recorded and retain `TRANSLATED` status. I’m now recording the gate’s exact result so the durable session log clearly identifies the only blocker and approval command.'''
+ts = "2026-08-27T02:55:17.045973+00:00"
+
+[[event]]
+event = "tool_end"
+run_id = "20260826-215403-930fdc"
+iteration = 9
+tool = "edit"
+ok = true
+duration_ms = 0.837
+output_chars = 1463
+output_preview = '''
+{
+  "ok": true,
+  "path": "/home/user/JSS-2026-Example/dev/transformations/mcfm-translate/agent_log.md",
+  "applied": 1,
+  "replacements": [
+    {
+      "index": 0,
+      "match_count": 1,
+      "old_len": 78,
+      "new_len": 878,
+      "before_snippet": "…rk it TRANSLATED. Check again after a routine that calls it is rewritten.\n  ```\n  Stderr was empty. All statuses remain TRANSLATED as required by the oracle.\n",
+      "after_snippet": "…rk it TRANSLATED. Check agai'''
+ts = "2026-08-27T02:55:17.046802+00:00"
+
+[[event]]
+event = "iteration_end"
+run_id = "20260826-215403-930fdc"
+iteration = 9
+stop_reason = "tool_calls"
+ts = "2026-08-27T02:55:17.047070+00:00"
+
+[[event]]
+event = "iteration_start"
+run_id = "20260826-215403-930fdc"
+iteration = 10
+ts = "2026-08-27T02:55:17.047233+00:00"
+
+[[event]]
+event = "model_response"
+run_id = "20260826-215403-930fdc"
+iteration = 10
+duration_ms = 9882.745
+text_chars = 2791
+tool_calls = 0
+usage = "{\"prompt_tokens\": 3, \"completion_tokens\": 929, \"total_tokens\": 32305, \"reasoning_tokens\": 143, \"cache_read_input_tokens\": 29659, \"cache_creation_input_tokens\": 1714}"
+model_text = '''
+STATUS: INCOMPLETE
+
+PLAN:
+- Read the governing plan first, then the specification.
+- Refresh the readiness map and inspect the approval record.
+- Re-run all three Group 3 probes using the exact BDK process.
+- Record the observed commands, outputs, and exit codes in `agent_log.md`.
+- Run the approval gate and stop without opening a group if blocked.
+
+CHECK OUTPUTS:
+
+`python3 dev/tmp/run_mcfm_verify.py software/mcfm/src/BDK/M1bit1.cpp -- u d~ ve e+ g g`  
+Exit code: `1`
+```text
+== coverage check: '''
+ts = "2026-08-27T02:55:26.930172+00:00"
+
+[[event]]
+event = "run_end"
+run_id = "20260826-215403-930fdc"
+iteration = 10
+stop_reason = "final_text"
+total_input_tokens = 30
+total_output_tokens = 5207
+total_reasoning_tokens = 1192
+total_cache_creation_tokens = 56136
+total_cache_read_tokens = 165939
+ts = "2026-08-27T02:55:26.930494+00:00"

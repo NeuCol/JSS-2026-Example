@@ -2,8 +2,8 @@ run_id = "20260826-202850-a9cd32"
 loop_index = 4
 phase = "review"
 model = "anthropic-claude-opus-5"
-task_file = "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/loop.toml"
-workdir = "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example"
+task_file = "/home/user/JSS-2026-Example/dev/transformations/mcfm-translate/loop.toml"
+workdir = "/home/user/JSS-2026-Example"
 stop_reason = "final_text"
 final_text_present = true
 iterations = 10
@@ -13,21 +13,21 @@ created_at = "2026-08-27T01:59:55.293605+00:00"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/loop.toml\n# lines: 1-18\n0001: # CodeScribe loop for Fortran -> C++.\n0002: #\n0003: # Run from the project root:\n0004: #   code-scribe loop -p dev/transformations/mcfm-translate/loop.toml -m <model>\n0005: \n0006: [tools]\n0007: bash = [\"jobrunner\", \"python3\"]\n0008: \n0009: [[chat.user]]\n0010: content = '''\n0011: Each round, follow the round algorithm in dev/transformations/mcfm-translate/current_plan.md an"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/loop.toml\n# lines: 1-18\n0001: # CodeScribe loop for Fortran -> C++.\n0002: #\n0003: # Run from the project root:\n0004: #   code-scribe loop -p dev/transformations/mcfm-translate/loop.toml -m <model>\n0005: \n0006: [tools]\n0007: bash = [\"jobrunner\", \"python3\"]\n0008: \n0009: [[chat.user]]\n0010: content = '''\n0011: Each round, follow the round algorithm in dev/transformations/mcfm-translate/current_plan.md an"
 
 [tools.args]
 path = "dev/transformations/mcfm-translate/loop.toml"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/agent_log.md\n# lines: 1-40\n0001: # Agent worklist — mcfm-translate\n0002: \n0003: Statuses follow `desired_spec.md` (`VERIFIED` / `TRANSLATED` / `FAILED`).\n0004: Coverage process for `src/W2jet` is `u d~ ve e+ g g` (and `u u~ e- e+ g g`).\n0005: \n0006: ## Group W2jet tree/loop helpers\n0007: \n0008: - [x] software/mcfm/src/W2jet/subqcd.cpp — VERIFIED (worst Δrel <= 1e-13)\n0009: - [x] software/mcfm/src/W2je"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/agent_log.md\n# lines: 1-40\n0001: # Agent worklist — mcfm-translate\n0002: \n0003: Statuses follow `desired_spec.md` (`VERIFIED` / `TRANSLATED` / `FAILED`).\n0004: Coverage process for `src/W2jet` is `u d~ ve e+ g g` (and `u u~ e- e+ g g`).\n0005: \n0006: ## Group W2jet tree/loop helpers\n0007: \n0008: - [x] software/mcfm/src/W2jet/subqcd.cpp — VERIFIED (worst Δrel <= 1e-13)\n0009: - [x] software/mcfm/src/W2je"
 
 [tools.args]
 path = "dev/transformations/mcfm-translate/agent_log.md"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/current_plan.md\n# lines: 1-182\n0001: # Fortran → C++ plan\n0002: \n0003: This file says how to run step 1. The rewrite rules and correctness bar are in\n0004: `desired_spec.md`.\n0005: \n0006: > This Plan is the policy: it selects and orders the work over the ready set (see *When to\n0007: > stop*). The correctness contract — objective `f`, invariants `I`, oracle `V`, and status set\n0008: > `Σ` — lives in `"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/current_plan.md\n# lines: 1-182\n0001: # Fortran → C++ plan\n0002: \n0003: This file says how to run step 1. The rewrite rules and correctness bar are in\n0004: `desired_spec.md`.\n0005: \n0006: > This Plan is the policy: it selects and orders the work over the ready set (see *When to\n0007: > stop*). The correctness contract — objective `f`, invariants `I`, oracle `V`, and status set\n0008: > `Σ` — lives in `"
 
 [tools.args]
 path = "dev/transformations/mcfm-translate/current_plan.md"
@@ -76,7 +76,7 @@ command = "grep -rn \"coverage-probe\" software/mcfm/src/W2jet/"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tmp/run_verify.py\n# lines: 1-33\n0001: #!/usr/bin/env python3\n0002: \"\"\"Run the coverage oracle (`dev/tools/coverage/coverage_check.py`) for one file.\n0003: \n0004: The sandboxed shell cannot `source environment.sh` or set env vars inline, so this\n0005: wrapper sets MCFM_HOME exactly as environment.sh does and forwards the arguments.\n0006: \n0007: It also runs the checker with cwd = $MCFM_HOME/Bin, which is what tests/mcfm/test.sh\n0008"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/tmp/run_verify.py\n# lines: 1-33\n0001: #!/usr/bin/env python3\n0002: \"\"\"Run the coverage oracle (`dev/tools/coverage/coverage_check.py`) for one file.\n0003: \n0004: The sandboxed shell cannot `source environment.sh` or set env vars inline, so this\n0005: wrapper sets MCFM_HOME exactly as environment.sh does and forwards the arguments.\n0006: \n0007: It also runs the checker with cwd = $MCFM_HOME/Bin, which is what tests/mcfm/test.sh\n0008"
 
 [tools.args]
 path = "dev/tmp/run_verify.py"
@@ -90,7 +90,7 @@ command = "ls .codescribe/loop/"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/.codescribe/loop/author.toml\n# lines: 1-3066\n0001: \n0002: [[event]]\n0003: event = \"run_start\"\n0004: run_id = \"20260826-205252-346f50\"\n0005: mode = \"native_tools\"\n0006: max_iterations = 30\n0007: ts = \"2026-08-27T01:52:52.901383+00:00\"\n0008: \n0009: [[event]]\n0010: event = \"iteration_start\"\n0011: run_id = \"20260826-205252-346f50\"\n0012: iteration = 1\n0013: ts = \"2026-08-27T01:52:52.901577+00:00\"\n0014: \n0015: [[event]]\n0016: event = \"model_"
+output_preview = "# path: /home/user/JSS-2026-Example/.codescribe/loop/author.toml\n# lines: 1-3066\n0001: \n0002: [[event]]\n0003: event = \"run_start\"\n0004: run_id = \"20260826-205252-346f50\"\n0005: mode = \"native_tools\"\n0006: max_iterations = 30\n0007: ts = \"2026-08-27T01:52:52.901383+00:00\"\n0008: \n0009: [[event]]\n0010: event = \"iteration_start\"\n0011: run_id = \"20260826-205252-346f50\"\n0012: iteration = 1\n0013: ts = \"2026-08-27T01:52:52.901577+00:00\"\n0014: \n0015: [[event]]\n0016: event = \"model_"
 
 [tools.args]
 path = ".codescribe/loop/author.toml"
@@ -126,7 +126,7 @@ command = "grep -n -e \"build_only.py\" -e \"run_verify.py\" -e \"tool = \\\"edi
 [[tools]]
 name = "write"
 ok = true
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/.codescribe/loop/review_output.toml (3131 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/.codescribe/loop/review_output.toml (3131 bytes)"
 
 [tools.args]
 path = ".codescribe/loop/review_output.toml"

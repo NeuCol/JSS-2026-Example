@@ -2,8 +2,8 @@ run_id = "20260826-202850-a9cd32"
 loop_index = 3
 phase = "review"
 model = "anthropic-claude-opus-5"
-task_file = "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/loop.toml"
-workdir = "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example"
+task_file = "/home/user/JSS-2026-Example/dev/transformations/mcfm-translate/loop.toml"
+workdir = "/home/user/JSS-2026-Example"
 stop_reason = "final_text"
 final_text_present = true
 iterations = 7
@@ -13,14 +13,14 @@ created_at = "2026-08-27T01:52:52.897829+00:00"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/loop.toml\n# lines: 1-18\n0001: # CodeScribe loop for Fortran -> C++.\n0002: #\n0003: # Run from the project root:\n0004: #   code-scribe loop -p dev/transformations/mcfm-translate/loop.toml -m <model>\n0005: \n0006: [tools]\n0007: bash = [\"jobrunner\", \"python3\"]\n0008: \n0009: [[chat.user]]\n0010: content = '''\n0011: Each round, follow the round algorithm in dev/transformations/mcfm-translate/current_plan.md an"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/loop.toml\n# lines: 1-18\n0001: # CodeScribe loop for Fortran -> C++.\n0002: #\n0003: # Run from the project root:\n0004: #   code-scribe loop -p dev/transformations/mcfm-translate/loop.toml -m <model>\n0005: \n0006: [tools]\n0007: bash = [\"jobrunner\", \"python3\"]\n0008: \n0009: [[chat.user]]\n0010: content = '''\n0011: Each round, follow the round algorithm in dev/transformations/mcfm-translate/current_plan.md an"
 
 [tools.args]
 path = "dev/transformations/mcfm-translate/loop.toml"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/current_plan.md\n# lines: 1-182\n0001: # Fortran → C++ plan\n0002: \n0003: This file says how to run step 1. The rewrite rules and correctness bar are in\n0004: `desired_spec.md`.\n0005: \n0006: > This Plan is the policy: it selects and orders the work over the ready set (see *When to\n0007: > stop*). The correctness contract — objective `f`, invariants `I`, oracle `V`, and status set\n0008: > `Σ` — lives in `"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/current_plan.md\n# lines: 1-182\n0001: # Fortran → C++ plan\n0002: \n0003: This file says how to run step 1. The rewrite rules and correctness bar are in\n0004: `desired_spec.md`.\n0005: \n0006: > This Plan is the policy: it selects and orders the work over the ready set (see *When to\n0007: > stop*). The correctness contract — objective `f`, invariants `I`, oracle `V`, and status set\n0008: > `Σ` — lives in `"
 
 [tools.args]
 path = "dev/transformations/mcfm-translate/current_plan.md"
@@ -41,28 +41,28 @@ pattern = "dev/transformations/mcfm-translate/*"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/.codescribe/loop/author.toml\n# lines: 1-2228\n0001: \n0002: [[event]]\n0003: event = \"run_start\"\n0004: run_id = \"20260826-204511-eec0d4\"\n0005: mode = \"native_tools\"\n0006: max_iterations = 30\n0007: ts = \"2026-08-27T01:45:11.374707+00:00\"\n0008: \n0009: [[event]]\n0010: event = \"iteration_start\"\n0011: run_id = \"20260826-204511-eec0d4\"\n0012: iteration = 1\n0013: ts = \"2026-08-27T01:45:11.374803+00:00\"\n0014: \n0015: [[event]]\n0016: event = \"model_"
+output_preview = "# path: /home/user/JSS-2026-Example/.codescribe/loop/author.toml\n# lines: 1-2228\n0001: \n0002: [[event]]\n0003: event = \"run_start\"\n0004: run_id = \"20260826-204511-eec0d4\"\n0005: mode = \"native_tools\"\n0006: max_iterations = 30\n0007: ts = \"2026-08-27T01:45:11.374707+00:00\"\n0008: \n0009: [[event]]\n0010: event = \"iteration_start\"\n0011: run_id = \"20260826-204511-eec0d4\"\n0012: iteration = 1\n0013: ts = \"2026-08-27T01:45:11.374803+00:00\"\n0014: \n0015: [[event]]\n0016: event = \"model_"
 
 [tools.args]
 path = ".codescribe/loop/author.toml"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/.codescribe/loop/state.toml\n# lines: 1-6\n0001: run_id = \"20260826-202850-a9cd32\"\n0002: workdir = \"/home/akash/Desktop/Akash/Projects/JSS-Paper-Example\"\n0003: task_file = \"/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/loop.toml\"\n0004: loop_index = 3\n0005: phase = \"review\"\n0006: updated_at = \"2026-08-27T01:51:52.126076+00:00\"\n"
+output_preview = "# path: /home/user/JSS-2026-Example/.codescribe/loop/state.toml\n# lines: 1-6\n0001: run_id = \"20260826-202850-a9cd32\"\n0002: workdir = \"/home/user/JSS-2026-Example\"\n0003: task_file = \"/home/user/JSS-2026-Example/dev/transformations/mcfm-translate/loop.toml\"\n0004: loop_index = 3\n0005: phase = \"review\"\n0006: updated_at = \"2026-08-27T01:51:52.126076+00:00\"\n"
 
 [tools.args]
 path = ".codescribe/loop/state.toml"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/.codescribe/loop/review.toml\n# lines: 1-1689\n0001: \n0002: [[event]]\n0003: event = \"run_start\"\n0004: run_id = \"20260826-203726-8fa369\"\n0005: mode = \"native_tools\"\n0006: max_iterations = 15\n0007: ts = \"2026-08-27T01:37:26.065000+00:00\"\n0008: \n0009: [[event]]\n0010: event = \"iteration_start\"\n0011: run_id = \"20260826-203726-8fa369\"\n0012: iteration = 1\n0013: ts = \"2026-08-27T01:37:26.065116+00:00\"\n0014: \n0015: [[event]]\n0016: event = \"model_"
+output_preview = "# path: /home/user/JSS-2026-Example/.codescribe/loop/review.toml\n# lines: 1-1689\n0001: \n0002: [[event]]\n0003: event = \"run_start\"\n0004: run_id = \"20260826-203726-8fa369\"\n0005: mode = \"native_tools\"\n0006: max_iterations = 15\n0007: ts = \"2026-08-27T01:37:26.065000+00:00\"\n0008: \n0009: [[event]]\n0010: event = \"iteration_start\"\n0011: run_id = \"20260826-203726-8fa369\"\n0012: iteration = 1\n0013: ts = \"2026-08-27T01:37:26.065116+00:00\"\n0014: \n0015: [[event]]\n0016: event = \"model_"
 
 [tools.args]
 path = ".codescribe/loop/review.toml"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/.codescribe/loop/author.toml\n# lines: 1980-2228\n1980: duration_ms = 0.24\n1981: output_chars = 36\n1982: output_preview = \"Error: blocked shell syntax detected\"\n1983: ts = \"2026-08-27T01:51:32.930040+00:00\"\n1984: \n1985: [[event]]\n1986: event = \"iteration_end\"\n1987: run_id = \"20260826-204511-eec0d4\"\n1988: iteration = 27\n1989: stop_reason = \"tool_calls\"\n1990: ts = \"2026-08-27T01:51:32.930287+00:00\"\n1991: \n1992: [[event]]\n1993: event = \"ite"
+output_preview = "# path: /home/user/JSS-2026-Example/.codescribe/loop/author.toml\n# lines: 1980-2228\n1980: duration_ms = 0.24\n1981: output_chars = 36\n1982: output_preview = \"Error: blocked shell syntax detected\"\n1983: ts = \"2026-08-27T01:51:32.930040+00:00\"\n1984: \n1985: [[event]]\n1986: event = \"iteration_end\"\n1987: run_id = \"20260826-204511-eec0d4\"\n1988: iteration = 27\n1989: stop_reason = \"tool_calls\"\n1990: ts = \"2026-08-27T01:51:32.930287+00:00\"\n1991: \n1992: [[event]]\n1993: event = \"ite"
 
 [tools.args]
 path = ".codescribe/loop/author.toml"
@@ -70,7 +70,7 @@ offset = 1980
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/.codescribe/loop/review_output.toml\n# lines: 1-36\n0001: loop = 2\n0002: summary = \"\"\"\n0003: Loop 2 worked inside the W2jet folder. Five Fortran units (atree, a6treeg, fpp, fvf, subqcd) now\n0004: exist as .cpp/.hpp/_fi.f90 triples, are wired into software/mcfm/src/W2jet/CMakeLists.txt, and their\n0005: originals were moved to software/mcfm/src/W2jet/deprecated/ — all confirmed by directory listing.\n0006: The full oracle run (`jobrunner su"
+output_preview = "# path: /home/user/JSS-2026-Example/.codescribe/loop/review_output.toml\n# lines: 1-36\n0001: loop = 2\n0002: summary = \"\"\"\n0003: Loop 2 worked inside the W2jet folder. Five Fortran units (atree, a6treeg, fpp, fvf, subqcd) now\n0004: exist as .cpp/.hpp/_fi.f90 triples, are wired into software/mcfm/src/W2jet/CMakeLists.txt, and their\n0005: originals were moved to software/mcfm/src/W2jet/deprecated/ — all confirmed by directory listing.\n0006: The full oracle run (`jobrunner su"
 
 [tools.args]
 path = ".codescribe/loop/review_output.toml"
@@ -105,7 +105,7 @@ command = "grep -rn -e \"SUMMARY\" tests/mcfm/job.output"
 [[tools]]
 name = "write"
 ok = true
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/.codescribe/loop/review_output.toml (3534 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/.codescribe/loop/review_output.toml (3534 bytes)"
 
 [tools.args]
 path = ".codescribe/loop/review_output.toml"

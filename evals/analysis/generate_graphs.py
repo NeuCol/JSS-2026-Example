@@ -80,6 +80,7 @@ from parse_csloop import parse_all_csloop
 from parse_coverage import coverage_for_run
 from pricing import cost, PRICING
 from git_file_counts import translated_file_count, translated_file_units, module_of
+from parse_roadmap import fork_point_roadmap, ready_pool
 
 REPO_ROOT = Path(__file__).parent.parent
 EXPERIMENTS = REPO_ROOT / "experiments"
@@ -174,6 +175,7 @@ RUNS = [
      "csloop sonnet-5 +reasoning (run2, 08-12)"),
     ("08-12-2026", "codescribe-kimi-k3-5", "R6", "csloop Kimi K3 (08-12)"),
     ("08-26-2026", "codescribe-opus-5", "R7", "csloop opus-5 (08-26)"),
+    ("08-26-2026", "codescribe-opus-5-run2", "R12", "csloop opus-5 (run2, 08-26)"),
     ("08-26-2026", "codescribe-sonnet-5", "R8", "csloop sonnet-5 (08-26)"),
     ("08-26-2026", "codescribe-oaic-gpt56sol", "R9", "csloop oaic-gpt56sol (08-26)"),
     ("08-26-2026", "codescribe-oaic-gpt56sol-run2", "R10", "csloop oaic-gpt56sol (run2, 08-26)"),
@@ -426,6 +428,151 @@ def modules_touched(translated_units):
     run's translated files came from."""
     from collections import Counter
     return {k: Counter(module_of(u) for u in (units or [])) for k, units in translated_units.items()}
+
+
+# The phase whose agent chooses which units a round works on. In ccworkflow
+# that decision is the TRIAGE agent's: its prompt has it read the plan and the
+# worklist and then "decide" the group and its units, while author agents are
+# handed units already chosen and the integrate agent only lands them. So a
+# ccworkflow run's file-selection behaviour belongs to its triage model, NOT to
+# the author model its label leads with, and not to the more expensive
+# integrate model. (There is no separate "dispatch" phase on disk -- triage
+# both triages and dispatches.)
+DECIDING_PHASE = "triage"
+
+MODEL_DISPLAY = {
+    "claude-opus-5": "opus-5",
+    "claude-sonnet-5": "sonnet-5",
+    "oaic-moonshotai/Kimi-K3": "Kimi K3",
+    "oaic-gpt56sol": "gpt56sol",
+    "oaic-gpt56terra": "gpt56terra",
+}
+
+
+def _display_model(model):
+    return MODEL_DISPLAY.get(model, model)
+
+
+def decision_model_per_run(cc_rows, cs_rows):
+    """{run: model} — the model that chose which files the run translated.
+
+    Derived from the archives rather than from the run label, so a new run
+    needs no entry here: csloop drives every phase with one model, so that
+    model is the decider; ccworkflow splits phases across models, so the
+    decider is whichever model ran DECIDING_PHASE.
+
+    This deliberately reattributes the ccworkflow runs. Their labels lead with
+    "sonnet-5 author, opus-5 integrate", but opus-5 never picks a file there --
+    it lands work that triage already selected. Counting those runs as opus-5
+    decisions would credit opus-5 with choices it did not make.
+    """
+    from collections import Counter, defaultdict
+
+    per_run = defaultdict(Counter)
+    triage_per_run = defaultdict(Counter)
+    for row in list(cc_rows) + list(cs_rows):
+        key = run_key(row["day"], row["run_name"])
+        if key not in RUN_CODES:
+            continue
+        model = normalize_model(row["model"])
+        per_run[key][model] += 1
+        if row.get("phase") == DECIDING_PHASE:
+            triage_per_run[key][model] += 1
+
+    deciders = {}
+    for key in KEYS:
+        if triage_per_run[key]:
+            deciders[key] = triage_per_run[key].most_common(1)[0][0]
+        elif per_run[key]:
+            # csloop, or a ccworkflow run whose triage transcript is missing:
+            # the model that ran the most agents is the only sensible stand-in.
+            deciders[key] = per_run[key].most_common(1)[0][0]
+        else:
+            deciders[key] = None
+    return deciders
+
+
+def files_by_decision_model(translated_units, decision_models):
+    """{model: {"runs": [...], "union": set, "core": set, "modules": Counter}}.
+
+    `core` is the set of files EVERY run of that model settled -- intra-model
+    reproducibility. It is only meaningful against `runs`: a model with one run
+    trivially has core == union, so the row count has to be read alongside it.
+    Runs with no archival branch contribute nothing and are dropped from the
+    model's run list, for the same reason they are dropped everywhere else.
+    """
+    from collections import Counter, defaultdict
+
+    grouped = defaultdict(list)
+    for key in KEYS:
+        units = translated_units[key]
+        if units is None:
+            continue
+        grouped[decision_models[key]].append((key, set(units)))
+
+    out = {}
+    for model, entries in grouped.items():
+        sets = [s for _, s in entries]
+        union = set().union(*sets)
+        out[model] = {
+            "runs": [k for k, _ in entries],
+            "union": union,
+            "core": set.intersection(*sets),
+            "modules": Counter(module_of(f) for f in union),
+            "harnesses": sorted({"ccworkflow" if "ccworkflow" in k[1] else "csloop" for k, _ in entries}),
+        }
+    return out
+
+
+def model_settlement_frequency(translated_units, decision_models):
+    """({n_models: sorted[file]}, n_models_total) — like
+    file_settlement_frequency, but counting DISTINCT DECIDING MODELS rather
+    than runs.
+
+    This is the stricter convergence measure of the two. A file settled by four
+    runs of one model is that model reproducing itself; a file settled by four
+    models is agreement across models. The run-level table cannot tell those
+    apart, and with opus-5 contributing four of the twelve runs it will read
+    the first as if it were the second.
+    """
+    from collections import Counter, defaultdict
+
+    by_model = files_by_decision_model(translated_units, decision_models)
+    freq = Counter()
+    for info in by_model.values():
+        freq.update(info["union"])
+    buckets = defaultdict(list)
+    for unit, n in freq.items():
+        buckets[n].append(unit)
+    return {n: sorted(v) for n, v in buckets.items()}, len(by_model)
+
+
+def file_settlement_frequency(translated_units):
+    """({n_runs: sorted[file]}, n_measured) — every distinct file any run
+    retired, grouped by how many runs retired it.
+
+    Runs whose archival branch is absent from this clone contribute no unit
+    list and are left out of the denominator entirely: such a run did not
+    decline to settle these files, it was never measured, and counting it as a
+    non-settler would understate agreement. `n_measured` is therefore the
+    number of runs this distribution is actually over, and the top bucket
+    (n == n_measured) is the set of files every measured run settled.
+
+    Grouping by count rather than listing per-file rows is what makes the shape
+    readable: the interesting quantity is how the 70-odd distinct files
+    *distribute* across levels of agreement, not which run picked what — the
+    module table and the pairwise-overlap table already answer that.
+    """
+    from collections import Counter, defaultdict
+
+    measured = {k: set(u) for k, u in translated_units.items() if u is not None}
+    freq = Counter()
+    for units in measured.values():
+        freq.update(units)
+    by_count = defaultdict(list)
+    for unit, n in freq.items():
+        by_count[n].append(unit)
+    return {n: sorted(units) for n, units in by_count.items()}, len(measured)
 
 
 def pairwise_file_overlap(translated_units):
@@ -755,6 +902,177 @@ def make_combined_figure(runs, coverage, files_settled, wall_times, tool_calls_p
 # ---------------------------------------------------------------------------
 # Summary tables (markdown) — single source of numeric truth for the write-up
 # ---------------------------------------------------------------------------
+# ---------------------------------------------------------------------------
+# Decision-making figure
+#
+# The question these panels answer is not "how much did a run get through"
+# (tab_runs and the cost/throughput panels already do that) but "what did the
+# model CHOOSE, and was the choice a good one". Runs are therefore collapsed to
+# their deciding model -- for ccworkflow that is the triage model, see
+# decision_model_per_run -- and every quantity is over DISTINCT files, so a
+# model with four runs cannot out-vote one with a single run by repeating
+# itself.
+#
+# Sequential blue (one hue, light->dark) for magnitude in (a); one accent hue
+# plus a gray reference in (b); the ordinal ramp for the three ordered bins in
+# (c). Palette steps are the dataviz reference instance, and the (c) ramp was
+# checked with validate_palette.js --ordinal.
+# ---------------------------------------------------------------------------
+SEQ_BLUE = ["#cde2fb", "#b7d3f6", "#9ec5f4", "#86b6ef", "#6da7ec", "#5598e7",
+            "#3987e5", "#2a78d6", "#256abf", "#1c5cab", "#184f95", "#104281", "#0d366b"]
+# Ordinal steps 250/400/550 -- the light end clears the 2:1 floor against the
+# light surface, so the lightest bin is still visible rather than receding.
+ORD_BLUE = ["#86b6ef", "#3987e5", "#1c5cab"]
+
+
+def _seq_color(value, vmax):
+    """Sequential step for `value`. Zero is not a step -- an empty cell means
+    "this model never entered this module", which is categorically different
+    from "entered it and settled nothing" and is drawn as bare surface."""
+    if not value:
+        return None
+    frac = value / vmax if vmax else 0.0
+    # Start a third of the way up the ramp: the palest steps are reserved for
+    # near-zero, and every cell drawn here is a nonzero count.
+    idx = int(round((0.34 + 0.66 * frac) * (len(SEQ_BLUE) - 1)))
+    return SEQ_BLUE[min(idx, len(SEQ_BLUE) - 1)]
+
+
+def draw_model_module_panel(ax, by_model, attrs, letter=None):
+    """(a) Which part of the tree each deciding model chose to work in."""
+    models = sorted(by_model, key=lambda m: -len(by_model[m]["union"]))
+    modules = sorted({attrs[u]["top"] for i in by_model.values() for u in i["union"]
+                      if attrs.get(u)})
+    counts = [[sum(1 for u in by_model[m]["union"] if attrs.get(u) and attrs[u]["top"] == mod)
+               for mod in modules] for m in models]
+    vmax = max(max(row) for row in counts)
+
+    ax.grid(False)
+    ax.set_xlim(0, len(modules))
+    ax.set_ylim(0, len(models))
+    ax.invert_yaxis()
+    for i, row in enumerate(counts):
+        for j, v in enumerate(row):
+            color = _seq_color(v, vmax)
+            if color is None:
+                continue
+            # 2px surface gap between fills: inset each cell rather than tiling.
+            ax.add_patch(mpatches.Rectangle((j + 0.04, i + 0.04), 0.92, 0.92,
+                                            facecolor=color, edgecolor="none"))
+            # Value labels wear ink tokens, not the fill colour -- except where
+            # the fill is dark enough that ink would not read.
+            dark = SEQ_BLUE.index(color) >= 8
+            ax.text(j + 0.5, i + 0.5, str(v), ha="center", va="center",
+                    fontsize=ANNOT_SIZE, color=SURFACE if dark else INK)
+    ax.set_xticks([j + 0.5 for j in range(len(modules))])
+    ax.set_xticklabels(modules, rotation=45, ha="right")
+    ax.set_yticks([i + 0.5 for i in range(len(models))])
+    ax.set_yticklabels([_display_model(m) for m in models])
+    for spine in ax.spines.values():
+        spine.set_visible(False)
+    ax.tick_params(length=0)
+    ax.set_title(_title("Where each model chose to work", letter))
+    return models
+
+
+def draw_targeting_panel(ax, by_model, attrs, pool, letter=None):
+    """(b) Fan-in of the files a model chose, against the pool it chose from.
+
+    Fan-in is how many still-untranslated files depend on this one, so it is
+    the roadmap's own notion of value: `dev/workflow.py next` sorts ready files
+    by it. Each row is a dumbbell from the mean over every ready file available
+    at the fork point (the gray reference every model faced) to the mean over
+    the files that model actually took. Right of the reference means the model
+    picked higher-leverage work than drawing at random from the pool would.
+    """
+    import statistics
+
+    pool_mean = statistics.mean(attrs[u]["fanin"] for u in pool)
+    models = sorted(by_model, key=lambda m: -len(by_model[m]["union"]))
+    ax.grid(False)
+    ax.xaxis.grid(True)
+    ax.set_axisbelow(True)
+    ax.axvline(pool_mean, color=MUTED, lw=0.8, zorder=1)
+
+    for i, m in enumerate(models):
+        units = [u for u in by_model[m]["union"] if attrs.get(u)]
+        mean = statistics.mean(attrs[u]["fanin"] for u in units)
+        y = len(models) - 1 - i
+        ax.plot([pool_mean, mean], [y, y], color=CAT["blue"], lw=1.6, zorder=2,
+                solid_capstyle="round")
+        ax.plot([pool_mean], [y], "o", ms=5, color=MUTED, zorder=3)
+        # 2px surface ring so the accent mark reads where it overlaps the line.
+        ax.plot([mean], [y], "o", ms=8, color=CAT["blue"], zorder=4,
+                markeredgecolor=SURFACE, markeredgewidth=1.4)
+        ax.annotate(f"{mean/pool_mean:.1f}x  (n={len(units)})", (mean, y),
+                    textcoords="offset points", xytext=(11, 0), va="center",
+                    fontsize=ANNOT_SIZE, color=INK_SECONDARY)
+
+    ax.set_yticks(range(len(models)))
+    ax.set_yticklabels([_display_model(m) for m in reversed(models)])
+    ax.set_ylim(-0.7, len(models) - 0.3)
+    ax.set_xlim(0, max(6.2, ax.get_xlim()[1] * 1.5))
+    ax.set_xlabel("Mean fan-in of files chosen")
+    ax.annotate("ready pool\n(all models)", (pool_mean, len(models) - 0.62),
+                textcoords="offset points", xytext=(4, 0), va="center",
+                fontsize=CAPTION_SIZE, color=MUTED)
+    ax.set_title(_title("Was the choice well-targeted?", letter))
+
+
+def draw_agreement_panel(ax, buckets, n_models, letter=None):
+    """(c) How many distinct models independently settled the same file."""
+    ns = sorted(buckets, reverse=True)
+    total = sum(len(v) for v in buckets.values())
+    ax.grid(False)
+    ax.xaxis.grid(True)
+    ax.set_axisbelow(True)
+    for i, n in enumerate(ns):
+        v = len(buckets[n])
+        y = len(ns) - 1 - i
+        ax.barh(y, v, height=0.62, color=ORD_BLUE[min(n - 1, len(ORD_BLUE) - 1)],
+                edgecolor="none")
+        ax.text(v + total * 0.02, y, f"{v}  ({100*v/total:.0f}%)", va="center",
+                fontsize=ANNOT_SIZE, color=INK_SECONDARY)
+    ax.set_yticks(range(len(ns)))
+    ax.set_yticklabels([f"{n} of {n_models}" for n in reversed(ns)])
+    ax.set_ylim(-0.7, len(ns) - 0.3)
+    ax.set_xlim(0, total * 1.22)
+    ax.set_xlabel("Distinct files")
+    ax.set_ylabel("Models settling it")
+    ax.set_title(_title("Do models agree on files?", letter))
+
+
+def make_decision_figure(translated_units, decision_models):
+    by_model = files_by_decision_model(translated_units, decision_models)
+    attrs = fork_point_roadmap(EXPERIMENTS, RUNS, translated_units)
+    pool = ready_pool(attrs)
+    buckets, n_models = model_settlement_frequency(translated_units, decision_models)
+
+    fig, axes = plt.subplots(1, 3, figsize=(13.6, 3.9),
+                             gridspec_kw={"width_ratios": [1.25, 1.05, 0.85]})
+    draw_model_module_panel(axes[0], by_model, attrs, letter="(a)")
+    draw_targeting_panel(axes[1], by_model, attrs, pool, letter="(b)")
+    draw_agreement_panel(axes[2], buckets, n_models, letter="(c)")
+
+    caption = [
+        "In (a) an empty cell means the model never entered that module at all -- not that it entered "
+        "and settled nothing.",
+        "Runs collapsed to the model that CHOSE the files: the run's own model for csloop, the triage "
+        "model for ccworkflow (author/integrate agents do not select).",
+        "Counts are over distinct files, so a model with four runs cannot out-vote one with a single run "
+        f"by repeating itself. Fan-in and readiness come from the doxygen map reconstructed at the shared "
+        f"fork point ({len(attrs)} untranslated files, {len(pool)} ready leaves).",
+    ]
+    line_h = 0.042
+    fig.tight_layout(rect=(0, line_h * len(caption) + 0.02, 1, 1))
+    for i, line in enumerate(reversed(caption)):
+        fig.text(0.5, 0.018 + i * line_h, line, ha="center", fontsize=CAPTION_SIZE, color=INK)
+    out = FIGURES_DIR / "fig6_decision_making.png"
+    fig.savefig(out, dpi=200, bbox_inches="tight", facecolor=SURFACE)
+    plt.close(fig)
+    print(f"wrote {out}")
+
+
 def _row_label(k):
     """Run code + configuration, so a table row can be matched to a figure bar."""
     return f"{RUN_CODES[k]} — {RUN_LABELS[k]}".replace(chr(10), " ")
@@ -765,7 +1083,8 @@ def _files_cell(files):
     return "n/a (no branch)" if files is None else str(files)
 
 
-def write_summary_tables(runs, coverage, files_settled, translated_units, wall_times, tool_calls_per_file):
+def write_summary_tables(runs, coverage, files_settled, translated_units, wall_times, tool_calls_per_file,
+                         decision_models):
     lines = ["# Summary tables (generated by analysis/generate_graphs.py — do not hand-edit)\n"]
     lines.append(f"{UNPRICED_NOTE}\n")
     lines.append(f"{REASONING_NOTE}\n")
@@ -884,6 +1203,88 @@ def write_summary_tables(runs, coverage, files_settled, translated_units, wall_t
             f"{', '.join(p['shared_modules'])} | {p['files_a']} | {p['files_b']} | {p['overlap']} | "
             f"{100*p['overlap']/denom:.0f}% |"
         )
+    lines.append("")
+
+    by_count, n_measured = file_settlement_frequency(translated_units)
+    total_distinct = sum(len(v) for v in by_count.values())
+    universal = by_count.get(n_measured, [])
+    lines.append("## How many runs settled each file (git-exact)\n")
+    lines.append(
+        f"Every distinct file any run retired ({total_distinct} of them), bucketed by how many of the "
+        f"{n_measured} measured runs retired it. The module table above shows whether runs landed in the "
+        "same *area*; this shows whether they landed on the same *files*, which is the stricter question.\n"
+    )
+    if universal:
+        lines.append(
+            f"Settled by all {n_measured} runs: {len(universal)} "
+            f"({', '.join('`' + u + '`' for u in universal)}).\n"
+        )
+    else:
+        lines.append(
+            f"**No file was settled by all {n_measured} runs — the all-run intersection is empty.** That is "
+            "a property of the corpus rather than a near-miss: the runs split across top-level modules that "
+            "do not overlap at all, so most pairs had no opportunity to agree. Read the rows below as "
+            "levels of partial agreement, not as a ranking against a reachable maximum.\n"
+        )
+    # Naming files is only useful while the list is short enough to scan; past
+    # that the cell is a wall of identifiers that hides the distribution the
+    # table exists to show.
+    NAME_LIMIT = 8
+    lines.append("| Runs settling it | Files | Share | Cumulative | Which files |")
+    lines.append("|---:|---:|---:|---:|---|")
+    cumulative = 0
+    for n in sorted(by_count, reverse=True):
+        units = by_count[n]
+        cumulative += len(units)
+        named = ", ".join(f"`{u}`" for u in units) if len(units) <= NAME_LIMIT else "—"
+        lines.append(
+            f"| {n} | {len(units)} | {100*len(units)/total_distinct:.0f}% | "
+            f"{100*cumulative/total_distinct:.0f}% | {named} |"
+        )
+    lines.append("")
+
+    by_model = files_by_decision_model(translated_units, decision_models)
+    lines.append("## Which files each *model* chose (git-exact)\n")
+    lines.append(
+        "Runs grouped by the model that made the file-selection decision, not by harness. For csloop that "
+        "is the run's only model. For ccworkflow it is the **triage** model — triage reads the plan and "
+        f"picks the round's units, while author agents are handed units already chosen and integrate only "
+        "lands them. So R2/R3 count as sonnet-5 decisions despite their labels leading with "
+        "\"opus-5 integrate\": opus-5 never picked a file in those runs.\n"
+    )
+    lines.append(
+        "`Core` is the set of files settled in *every* run of that model — intra-model reproducibility. "
+        "Read it against the run count: a model with one run trivially has core = union.\n"
+    )
+    lines.append("| Decision model | Runs | Harness | Modules entered | Files (union) | Core | Core files |")
+    lines.append("|---|---|---|---|---:|---:|---|")
+    for model, info in sorted(by_model.items(), key=lambda kv: (-len(kv[1]["runs"]), kv[0])):
+        codes = ", ".join(RUN_CODES[k] for k in info["runs"])
+        mods = ", ".join(f"{m} ({n})" for m, n in sorted(info["modules"].items(), key=lambda kv: -kv[1]))
+        core = ", ".join(f"`{f}`" for f in sorted(info["core"])) if info["core"] else "—"
+        if len(info["core"]) > 6:
+            core = f"{len(info['core'])} files"
+        lines.append(
+            f"| {_display_model(model)} | {codes} | {', '.join(info['harnesses'])} | {mods} | "
+            f"{len(info['union'])} | {len(info['core'])} | {core} |"
+        )
+    lines.append("")
+
+    mbuckets, n_models = model_settlement_frequency(translated_units, decision_models)
+    m_total = sum(len(v) for v in mbuckets.values())
+    lines.append("## How many *models* settled each file (git-exact)\n")
+    lines.append(
+        "The stricter companion to the run-level table above. A file settled by four runs of one model is "
+        "that model reproducing itself; a file settled by four models is cross-model agreement. The "
+        "run-level counts cannot separate those, and with opus-5 supplying four of the twelve runs they "
+        "will read the first as though it were the second.\n"
+    )
+    lines.append("| Models settling it | Files | Share | Which files |")
+    lines.append("|---:|---:|---:|---|")
+    for n in sorted(mbuckets, reverse=True):
+        units = mbuckets[n]
+        named = ", ".join(f"`{u}`" for u in units) if len(units) <= NAME_LIMIT else "—"
+        lines.append(f"| {n} of {n_models} | {len(units)} | {100*len(units)/m_total:.0f}% | {named} |")
     lines.append("")
 
     out = Path(__file__).parent / "summary_tables.md"
@@ -1427,7 +1828,7 @@ def write_tikz_colors():
     print(f"wrote {out}")
 
 
-def write_tex_tables(metrics, coverage, translated_units):
+def write_tex_tables(metrics, coverage, translated_units, decision_models):
     TEX_DIR.mkdir(exist_ok=True)
 
     # --- Table 1: the per-run numbers the figure deliberately does not repeat.
@@ -1490,6 +1891,7 @@ def write_tex_tables(metrics, coverage, translated_units):
     print(f"wrote {TEX_DIR / 'tab_coverage.tex'}")
 
 
+
 def main():
     runs, cc_rows, cs_rows = load_run_aggregates()
     print(f"ccworkflow rows: {len(cc_rows)}, csloop rows: {len(cs_rows)}")
@@ -1503,6 +1905,9 @@ def main():
         print(f"{k}: files settled (git-exact) = {f}")
 
     translated_units = load_translated_units()
+    decision_models = decision_model_per_run(cc_rows, cs_rows)
+    for k in KEYS:
+        print(f"{k}: decided by {decision_models[k]}")
 
     wall_times = load_wall_times(cs_rows)
     for k, s in wall_times.items():
@@ -1517,12 +1922,14 @@ def main():
     make_standalone_figures(runs, coverage, files_settled, wall_times, tool_calls_per_file)
     _bump_fonts_for_combined()
     make_combined_figure(runs, coverage, files_settled, wall_times, tool_calls_per_file)
-    write_summary_tables(runs, coverage, files_settled, translated_units, wall_times, tool_calls_per_file)
+    make_decision_figure(translated_units, decision_models)
+    write_summary_tables(runs, coverage, files_settled, translated_units, wall_times, tool_calls_per_file,
+                         decision_models)
 
     # LaTeX/TikZ artifacts consumed directly by the paper.
     write_tikz_colors()
     write_tikz_figure(metrics)
-    write_tex_tables(metrics, coverage, translated_units)
+    write_tex_tables(metrics, coverage, translated_units, decision_models)
 
 
 if __name__ == "__main__":

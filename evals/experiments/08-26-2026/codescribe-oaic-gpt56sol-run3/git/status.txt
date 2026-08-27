@@ -1,0 +1,38 @@
+## main...origin/main [ahead 1]
+ M evals/analysis/figures/fig1_cost_and_cache.png
+ M evals/analysis/figures/fig3_coverage.png
+ M evals/analysis/figures/fig4_wall_time.png
+ M evals/analysis/figures/fig5_tool_calls_per_file.png
+ M evals/analysis/figures/fig_combined.png
+ M evals/analysis/generate_graphs.py
+ M evals/analysis/summary_tables.md
+ M evals/analysis/tex/fig_eval.tex
+ M evals/analysis/tex/tab_coverage.tex
+ M evals/analysis/tex/tab_runs.tex
+ M evals/experiments/08-26-2026/codescribe-opus-5-run2/dev/tmp/assets/cleanup_index.json
+ M evals/experiments/08-26-2026/codescribe-opus-5-run2/dev/tmp/assets/symbol_index.json
+ M evals/experiments/08-26-2026/codescribe-opus-5-run2/git/submodule_status.txt
+ M evals/experiments/08-26-2026/codescribe-opus-5-run2/logs/toolusage.toml
+ M evals/experiments/08-26-2026/codescribe-opus-5-run2/loop/author.toml
+ M evals/experiments/08-26-2026/codescribe-opus-5-run2/loop/metadata/loop_001_author.toml
+ M evals/experiments/08-26-2026/codescribe-opus-5-run2/loop/metadata/loop_001_review.toml
+ M evals/experiments/08-26-2026/codescribe-opus-5-run2/loop/metadata/loop_002_author.toml
+ M evals/experiments/08-26-2026/codescribe-opus-5-run2/loop/metadata/loop_002_review.toml
+ M evals/experiments/08-26-2026/codescribe-opus-5-run2/loop/metadata/loop_003_author.toml
+ M evals/experiments/08-26-2026/codescribe-opus-5-run2/loop/metadata/loop_003_review.toml
+ M evals/experiments/08-26-2026/codescribe-opus-5-run2/loop/metadata/loop_004_author.toml
+ M evals/experiments/08-26-2026/codescribe-opus-5-run2/loop/metadata/loop_004_review.toml
+ M evals/experiments/08-26-2026/codescribe-opus-5-run2/loop/metadata/loop_005_author.toml
+ M evals/experiments/08-26-2026/codescribe-opus-5-run2/loop/metadata/loop_005_review.toml
+ M evals/experiments/08-26-2026/codescribe-opus-5-run2/loop/metadata/manifest.toml
+ M evals/experiments/08-26-2026/codescribe-opus-5-run2/loop/review.toml
+ M evals/experiments/08-26-2026/codescribe-opus-5-run2/loop/run.toml
+ M evals/experiments/08-26-2026/codescribe-opus-5-run2/loop/state.toml
+ m software/mcfm
+?? .codescribe/
+?? dev/tmp/
+?? dev/transformations/mcfm-translate/agent_log.md
+?? evals/analysis/tex/tab_decision_model.tex
+?? evals/analysis/tex/tab_filefreq.tex
+?? evals/analysis/tex/tab_modelfreq.tex
+?? evals/experiments/08-26-2026/codescribe-oaic-gpt56sol-run3/
