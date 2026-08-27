@@ -1,0 +1,6 @@
+## main...origin/main [ahead 2]
+ m software/mcfm
+?? .codescribe/
+?? dev/tmp/
+?? dev/transformations/mcfm-translate/agent_log.md
+?? evals/experiments/08-27-2026/codescribe-sonnet-5-run2/

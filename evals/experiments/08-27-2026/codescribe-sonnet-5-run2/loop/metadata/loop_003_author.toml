@@ -1,0 +1,506 @@
+run_id = "20260827-143518-94e682"
+loop_index = 3
+phase = "author"
+model = "anthropic-claude-sonnet-5"
+task_file = "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/loop.toml"
+workdir = "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example"
+stop_reason = "max_iterations"
+final_text_present = false
+iterations = 30
+duration_s = 340.993
+rejected_calls = []
+created_at = "2026-08-27T19:57:05.903108+00:00"
+[[tools]]
+name = "read"
+ok = true
+output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/current_plan.md\n# lines: 1-210\n0001: # Fortran → C++ plan\n0002: \n0003: This file says how to run step 1. The rewrite rules and correctness bar are in\n0004: `desired_spec.md`.\n0005: \n0006: > This Plan is the policy: it selects and orders the work over the ready set (see *When to\n0007: > stop*). The correctness contract — objective `f`, invariants `I`, oracle `V`, and status set\n0008: > `Σ` — lives in `"
+
+[tools.args]
+path = "dev/transformations/mcfm-translate/current_plan.md"
+[[tools]]
+name = "read"
+ok = true
+output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/desired_spec.md\n# lines: 1-144\n0001: # Fortran → C++: target output for one MCFM file\n0002: \n0003: This file defines the rewrite target and correctness bar for step 1. The workflow lives in\n0004: `current_plan.md`.\n0005: \n0006: Paths are written as `software/mcfm/src/...`.\n0007: \n0008: ---\n0009: \n0010: ## Contract\n0011: \n0012: This step advances by *settling* source files one at a time: each file is r"
+
+[tools.args]
+path = "dev/transformations/mcfm-translate/desired_spec.md"
+[[tools]]
+name = "read"
+ok = true
+output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/current_plan.md\n# lines: 156-210\n0156: 7. After a group is completed, check the gate before opening the next one.\n0157: 8. After any required approval, refresh the roadmap again before picking more work.\n0158: \n0159: The map exists so a file is only rewritten after its callees are already available in C++.\n0160: \n0161: ## Shell notes\n0162: \n0163: CodeScribe bash is restricted to one simple command per"
+
+[tools.args]
+path = "dev/transformations/mcfm-translate/current_plan.md"
+offset = 156
+[[tools]]
+name = "bash"
+ok = true
+output_preview = "exit_code: 0\nSTDOUT:\ndev/transformations/mcfm-translate/current_plan.md\ndev/transformations/mcfm-translate/loop.toml\ndev/transformations/mcfm-translate/approvals.toml\ndev/transformations/mcfm-translate/desired_spec.md\n\nSTDERR:\n"
+
+[tools.args]
+command = "find dev/transformations/mcfm-translate -maxdepth 1 -type f"
+[[tools]]
+name = "bash"
+ok = false
+output_preview = "Error: blocked shell syntax detected"
+
+[tools.args]
+command = "cd /home/akash/Desktop/Akash/Projects/JSS-Paper-Example && python3 dev/workflow.py status"
+[[tools]]
+name = "bash"
+ok = true
+output_preview = "exit_code: 0\nSTDOUT:\n# workflow status\nassets: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tmp/assets\nroadmap metrics: 445 untranslated file rows, 229 ready leaves\ncleanup index: 569 families, move 74, shim-delete 10, merge 31\n\n- mcfm-translate: no agent_log.md yet\n- mcfm-cleanup: groups: 7 total, 0 open, 7 completed, 7 pending approval\n- pepper-kokkos-port: no agent_log.md yet\n\nSTDERR:\n"
+
+[tools.args]
+command = "python3 dev/workflow.py status"
+[[tools]]
+name = "bash"
+ok = true
+output_preview = "exit_code: 0\nSTDOUT:\nGenerating Doxygen XML for /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src -> /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/doxygen_dep/xml\nwrote 1128 XML file(s) to /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/doxygen_dep/xml\nsource 531  translated 91  untranslated 440\nready leaves (deps=0, non-blind): 225\nsymbol index: 915 symbol(s)\ncleanup candidates: move 76  shim-delete 10  merge 33\nwrote roadmap_metrics."
+
+[tools.args]
+command = "python3 dev/workflow.py refresh"
+[[tools]]
+name = "bash"
+ok = true
+output_preview = "exit_code: 0\nSTDOUT:\n# next translation candidates\n- W2jet/atree.f  (fanin=6, bench=u d~ ve e+ g g)\n- W2jet/ggZZcapture.f  (fanin=6, bench=u d~ ve e+ g g)\n- BDK/fvs.f  (fanin=2, bench=)\n- W2jet/ZZbox1LL.f  (fanin=2, bench=u d~ ve e+ g g)\n- W2jet/a6routine.f  (fanin=2, bench=u d~ ve e+ g g)\n- W2jet/a6treeg.f  (fanin=2, bench=u d~ ve e+ g g)\n- W2jet/fvf.f  (fanin=2, bench=u d~ ve e+ g g)\n- W2jet/subqcd.f  (fanin=2, bench=u d~ ve e+ g g)\n- gghgg_dep/gghgg_dep_params.f  (fanin=2, bench=g g h g g)\n- "
+
+[tools.args]
+command = "python3 dev/workflow.py next mcfm-translate"
+[[tools]]
+name = "glob"
+ok = true
+output_preview = "software/mcfm/src/Mods/CMakeLists.txt\nsoftware/mcfm/src/Mods/Cabibbo_mod.cpp\nsoftware/mcfm/src/Mods/Cabibbo_mod.f90\nsoftware/mcfm/src/Mods/Cabibbo_mod.hpp\nsoftware/mcfm/src/Mods/Modules_Interface.f90\nsoftware/mcfm/src/Mods/Modules_Interface.hpp\nsoftware/mcfm/src/Mods/ZZclabels_mod.f90\nsoftware/mcfm/src/Mods/ZZclabels_mod.hpp\nsoftware/mcfm/src/Mods/ZZdlabels_mod.f90\nsoftware/mcfm/src/Mods/ZZdlabels_mod.hpp\nsoftware/mcfm/src/Mods/b0_mod.cpp\nsoftware/mcfm/src/Mods/b0_mod.f90\nsoftware/mcfm/src/Mods/"
+
+[tools.args]
+pattern = "software/mcfm/src/Mods/*"
+[[tools]]
+name = "bash"
+ok = true
+output_preview = "exit_code: 0\nSTDOUT:\nsoftware/mcfm/src/Mods/ppwp2j_mod.hpp\nsoftware/mcfm/src/Mods/mod_qcdloop_c.hpp\nsoftware/mcfm/src/Mods/ppwp2j_mod.cpp\nsoftware/mcfm/src/Mods/types_mod.f\nsoftware/mcfm/src/Mods/deprecated/pp_mod.f90\nsoftware/mcfm/src/Mods/deprecated/ppwp2j_mod.f90\nsoftware/mcfm/src/Mods/pp_mod.f90\nsoftware/mcfm/src/Mods/Modules_Interface.hpp\nsoftware/mcfm/src/Mods/mod_qcdloop_c.f\nsoftware/mcfm/src/Mods/types_mod.hpp\nsoftware/mcfm/src/Mods/pp_mod.cpp\nsoftware/mcfm/src/Mods/pp_mod.hpp\nsoftware/m"
+
+[tools.args]
+command = "find software/mcfm/src/Mods -iname \"*pp_mod*\" -o -iname \"*ppwp2j*\" -o -iname \"*qcdloop*\" -o -iname \"*types_mod*\" -o -iname \"*Modules_Interface*\""
+[[tools]]
+name = "read"
+ok = true
+output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Mods/Cabibbo_mod.f90\n# lines: 1-237\n0001: !! LLM INSTRUCTIONS START\n0002: !! You are a code conversion tool for a scientific computing application.\n0003: !! The application is organized as different source files in a directory structure. \n0004: !! I will give you a C++ file which you will convert to a FORTRAN interface for\n0005: !! interoperability.\n0006: !! \n0007: !! The code you will receive is part of a bigger code"
+
+[tools.args]
+path = "software/mcfm/src/Mods/Cabibbo_mod.f90"
+[[tools]]
+name = "read"
+ok = true
+output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Mods/pp_mod.f90\n# lines: 1-255\n0001: \n0002: module pp_mod\n0003:   use types\n0004:   implicit none\n0005:   \n0006:   public\n0007: \n0008:     include 'ppmax.f'\n0009:     integer, save :: pp(-4:4,-4:4,-4:4,-4:4) = reshape((/ &\n0010:     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, &\n0011:     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, &\n0012:     0,"
+
+[tools.args]
+path = "software/mcfm/src/Mods/pp_mod.f90"
+[[tools]]
+name = "read"
+ok = true
+output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Mods/deprecated/pp_mod.f90\n# lines: 1-255\n0001: \n0002: module pp_mod\n0003:   use types\n0004:   implicit none\n0005:   \n0006:   public\n0007: \n0008:     include 'ppmax.f'\n0009:     integer, save :: pp(-4:4,-4:4,-4:4,-4:4) = reshape((/ &\n0010:     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, &\n0011:     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, &\n0"
+
+[tools.args]
+path = "software/mcfm/src/Mods/deprecated/pp_mod.f90"
+[[tools]]
+name = "read"
+ok = true
+output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Mods/pp_mod.hpp\n# lines: 1-14\n0001: #ifndef PP_MOD\n0002: #define PP_MOD\n0003: \n0004: #include<FArray.hpp>\n0005: \n0006: namespace pp_mod {\n0007:   const int ppmax = 80;\n0008: \n0009:   // Fortran: pp(-4:4,-4:4,-4:4,-4:4), a read-only lookup table mapping\n0010:   // parton flavour combinations to a compressed process index.\n0011:   extern FArray4D<int> pp;\n0012: }\n0013: \n0014: #endif\n"
+
+[tools.args]
+path = "software/mcfm/src/Mods/pp_mod.hpp"
+[[tools]]
+name = "read"
+ok = true
+output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Mods/pp_mod.cpp\n# lines: 1-354\n0001: /*\n0002:  * Translated from pp_mod.f90\n0003:  */\n0004: #include \"pp_mod.hpp\"\n0005: \n0006: namespace pp_mod {\n0007: \n0008:   namespace {\n0009:     const int pp_init_data[6561] = {\n0010:     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n0011:     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n0012:     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"
+
+[tools.args]
+path = "software/mcfm/src/Mods/pp_mod.cpp"
+[[tools]]
+name = "read"
+ok = true
+output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Mods/CMakeLists.txt\n# lines: 1-135\n0001: target_sources(objlib PRIVATE\n0002: mod_qcdloop_c.f\n0003: types_mod.f\n0004: b0_mod.f90\n0005: b0_mod.cpp\n0006: blabels_mod.f90\n0007: blha_mod.f90\n0008: blha_mod.cpp\n0009: breit_mod.f90\n0010: breit_mod.cpp\n0011: Cabibbo_mod.f90\n0012: Cabibbo_mod.cpp\n0013: ckm1_mod.f90\n0014: ckm1_mod.cpp\n0015: ckm_mod.f90\n0016: ckm_mod.cpp\n0017: constants_mod.f90\n0018: couple_mod.f90\n0019: couple_"
+
+[tools.args]
+path = "software/mcfm/src/Mods/CMakeLists.txt"
+[[tools]]
+name = "read"
+ok = true
+output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Mods/ppwp2j_mod.f90\n# lines: 1-255\n0001: \n0002: module ppwp2j_mod\n0003:   use types\n0004:   implicit none\n0005:   \n0006:   public\n0007:     include 'ppmax.f'\n0008:     integer, save:: pp(-4:4,-4:4,-4:4,-4:4) = reshape((/ &\n0009:     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, &\n0010:     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, &\n0011:     0,"
+
+[tools.args]
+path = "software/mcfm/src/Mods/ppwp2j_mod.f90"
+[[tools]]
+name = "read"
+ok = true
+output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Mods/ppwp2j_mod.hpp\n# lines: 1-14\n0001: #ifndef PPWP2J_MOD\n0002: #define PPWP2J_MOD\n0003: \n0004: #include<FArray.hpp>\n0005: \n0006: namespace ppwp2j_mod {\n0007:   const int ppmax = 80;\n0008: \n0009:   // Fortran: pp(-4:4,-4:4,-4:4,-4:4), a read-only lookup table mapping\n0010:   // parton flavour combinations to a compressed process index.\n0011:   extern FArray4D<int> pp;\n0012: }\n0013: \n0014: #endif\n"
+
+[tools.args]
+path = "software/mcfm/src/Mods/ppwp2j_mod.hpp"
+[[tools]]
+name = "read"
+ok = true
+output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Mods/ppwp2j_mod.cpp\n# lines: 1-354\n0001: /*\n0002:  * Translated from ppwp2j_mod.f90\n0003:  */\n0004: #include \"ppwp2j_mod.hpp\"\n0005: \n0006: namespace ppwp2j_mod {\n0007: \n0008:   namespace {\n0009:     const int pp_init_data[6561] = {\n0010:     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n0011:     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n0012:     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, "
+
+[tools.args]
+path = "software/mcfm/src/Mods/ppwp2j_mod.cpp"
+[[tools]]
+name = "read"
+ok = true
+output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Mods/deprecated/ppwp2j_mod.f90\n# lines: 1-255\n0001: \n0002: module ppwp2j_mod\n0003:   use types\n0004:   implicit none\n0005:   \n0006:   public\n0007:     include 'ppmax.f'\n0008:     integer, save:: pp(-4:4,-4:4,-4:4,-4:4) = reshape((/ &\n0009:     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, &\n0010:     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, &\n0"
+
+[tools.args]
+path = "software/mcfm/src/Mods/deprecated/ppwp2j_mod.f90"
+[[tools]]
+name = "read"
+ok = true
+output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Mods/mqq_mod.hpp\n# lines: 1-11\n0001: #ifndef MQQ_MOD\n0002: #define MQQ_MOD\n0003: \n0004: #include <FArray.hpp> // Corrected header file inclusion\n0005: \n0006: namespace mqq_mod {\n0007:   extern FArray3D<double> mqq; // 3D array for mqq\n0008: }\n0009: \n0010: #endif\n0011: \n"
+
+[tools.args]
+path = "software/mcfm/src/Mods/mqq_mod.hpp"
+[[tools]]
+name = "read"
+ok = true
+output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Mods/mqq_mod.f90\n# lines: 1-42\n0001: module mqq_mod\n0002: \n0003:   use, intrinsic :: iso_c_binding\n0004:   use nf_mod\n0005:   implicit none\n0006: \n0007:   private\n0008:     interface\n0009:       function get_mqq() bind(C, name=\"mqq_mod_mqq\")\n0010:         import :: c_ptr\n0011:         type(c_ptr) :: get_mqq\n0012:       end function get_mqq\n0013:     end interface\n0014: \n0015:   public :: mqq, mqq_mod_init, mqq_mod_fin"
+
+[tools.args]
+path = "software/mcfm/src/Mods/mqq_mod.f90"
+[[tools]]
+name = "read"
+ok = true
+output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Mods/mqq_mod.cpp\n# lines: 1-14\n0001: #include <mqq_mod.hpp>\n0002: #include <nf_mod.hpp>\n0003: #include <FArray.hpp> // Corrected header file inclusion\n0004: \n0005: namespace mqq_mod {\n0006:   using namespace nf_mod;\n0007:   FArray3D<double> mqq(3, 2*nf+1, 2*nf+1, 0, -nf, -nf); // 3D array for mqq\n0008: }\n0009: \n0010: extern \"C\" {\n0011:   double* mqq_mod_mqq() { // Function to access mqq\n0012:     return mqq_mod::mqq.d"
+
+[tools.args]
+path = "software/mcfm/src/Mods/mqq_mod.cpp"
+[[tools]]
+name = "bash"
+ok = true
+output_preview = "exit_code: 0\nSTDOUT:\nsoftware/mcfm/src/Inc/FArray.hpp\n\nSTDERR:\n"
+
+[tools.args]
+command = "find software/mcfm -iname \"FArray.hpp\""
+[[tools]]
+name = "bash"
+ok = false
+output_preview = "Error: blocked shell syntax detected"
+
+[tools.args]
+command = "grep -n \"FArray4D\\|FArray3D\\|class FArray\\|struct FArray\" software/mcfm/src/Inc/FArray.hpp"
+[[tools]]
+name = "bash"
+ok = true
+output_preview = "exit_code: 0\nSTDOUT:\n176:class FArray4D {\n187:    FArray4D(size_t ni, size_t nj, size_t nk, size_t nl, int start_i=1, int start_j=1, int start_k=1, int start_l=1)\n191:    FArray4D(T* fortranArray, size_t ni, size_t nj, size_t nk, int start_i=1, int start_j=1, int start_k=1, int start_l=1)\n195:    ~FArray4D() {\n\nSTDERR:\n"
+
+[tools.args]
+command = "grep -n \"FArray4D\" software/mcfm/src/Inc/FArray.hpp"
+[[tools]]
+name = "bash"
+ok = true
+output_preview = "exit_code: 0\nSTDOUT:\n122:class FArray3D {\n133:    FArray3D(size_t ni, size_t nj, size_t nk, int start_i=1, int start_j=1, int start_k=1)\n137:    FArray3D(T* fortranArray, size_t ni, size_t nj, size_t nk, int start_i=1, int start_j=1, int start_k=1)\n141:    ~FArray3D() {\n\nSTDERR:\n"
+
+[tools.args]
+command = "grep -n \"FArray3D\" software/mcfm/src/Inc/FArray.hpp"
+[[tools]]
+name = "bash"
+ok = true
+output_preview = "exit_code: 0\nSTDOUT:\n    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n    0, 0, 0, 0, 0, 0, 0, 0, 0, "
+
+[tools.args]
+command = "tail -40 software/mcfm/src/Mods/pp_mod.cpp"
+[[tools]]
+name = "bash"
+ok = true
+output_preview = "exit_code: 0\nSTDOUT:\n    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n    0, 0, 0, 0, 0, 0, 0, 0, 0, "
+
+[tools.args]
+command = "tail -40 software/mcfm/src/Mods/ppwp2j_mod.cpp"
+[[tools]]
+name = "bash"
+ok = true
+output_preview = "exit_code: 1\nSTDOUT:\n\nSTDERR:\n"
+
+[tools.args]
+command = "grep -n \"extern\" software/mcfm/src/Mods/pp_mod.cpp"
+[[tools]]
+name = "bash"
+ok = true
+output_preview = "exit_code: 1\nSTDOUT:\n\nSTDERR:\n"
+
+[tools.args]
+command = "grep -n \"extern\" software/mcfm/src/Mods/ppwp2j_mod.cpp"
+[[tools]]
+name = "bash"
+ok = false
+output_preview = "Error: blocked shell syntax detected"
+
+[tools.args]
+command = "grep -n \"pp_mod\\|ppwp2j_mod\" software/mcfm/src/Mods/pp_mod.f90"
+[[tools]]
+name = "bash"
+ok = true
+output_preview = "exit_code: 0\nSTDOUT:\nsoftware/mcfm/src/Mods/kpart_mod.f90\nsoftware/mcfm/src/Mods/breit_mod.f90\nsoftware/mcfm/src/Mods/lc_mod.f90\nsoftware/mcfm/src/Mods/mpicommon_mod.f90\nsoftware/mcfm/src/Mods/scalarselect_mod.f90\nsoftware/mcfm/src/Mods/kprocess_mod.f90\nsoftware/mcfm/src/Mods/nproc_mod.f90\nsoftware/mcfm/src/Mods/blha_mod.f90\nsoftware/mcfm/src/Mods/nflav_mod.f90\nsoftware/mcfm/src/Mods/ewinput_mod.f90\nsoftware/mcfm/src/Mods/toploops_mod.f90\nsoftware/mcfm/src/Mods/nwz_mod.f90\nsoftware/mcfm/src/Mods"
+
+[tools.args]
+command = "grep -rl \"integer(c_int), pointer\" software/mcfm/src/Mods/"
+[[tools]]
+name = "bash"
+ok = true
+output_preview = "exit_code: 0\nSTDOUT:\n21:  integer(c_int), pointer :: nqcdjets => null()\n22:  integer(c_int), pointer :: nqcdstart => null()\n\nSTDERR:\n"
+
+[tools.args]
+command = "grep -n \"integer\" software/mcfm/src/Mods/nqcdjets_mod.f90"
+[[tools]]
+name = "read"
+ok = true
+output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Mods/kpart_mod.f90\n# lines: 1-101\n0001: module kpart_mod\n0002:   use, intrinsic :: iso_c_binding\n0003:   use types\n0004:   implicit none\n0005: \n0006:   private\n0007:     interface\n0008:       function get_kpart() bind(C, name=\"kpart_mod_kpart\")\n0009:         import :: c_ptr, c_int\n0010:         type(c_ptr) :: get_kpart\n0011:       end function get_kpart\n0012: \n0013:       function get_ksnlopart() bind(C, name=\"kpart_m"
+
+[tools.args]
+path = "software/mcfm/src/Mods/kpart_mod.f90"
+[[tools]]
+name = "bash"
+ok = true
+output_preview = "exit_code: 0\nSTDOUT:\n      }\n    } pp_initializer_instance;\n  }\n\n}\n\nSTDERR:\n"
+
+[tools.args]
+command = "tail -5 software/mcfm/src/Mods/pp_mod.cpp"
+[[tools]]
+name = "bash"
+ok = true
+output_preview = "exit_code: 0\nSTDOUT:\n      }\n    } pp_initializer_instance;\n  }\n\n}\n\nSTDERR:\n"
+
+[tools.args]
+command = "tail -5 software/mcfm/src/Mods/ppwp2j_mod.cpp"
+[[tools]]
+name = "edit"
+ok = true
+output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Mods/pp_mod.cpp\",\n  \"applied\": 1,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 45,\n      \"new_len\": 114,\n      \"before_snippet\": \"…= 0; idx < 6561; ++idx) {\\n          pp.data[idx] = pp_init_data[idx];\\n        }\\n      }\\n    } pp_initializer_instance;\\n  }\\n\\n}\\n\",\n      \"after_snippet\": \"…= 0; idx < 6561; ++idx) {\\n          pp.data[idx] = pp_init_data[idx]"
+
+[tools.args]
+path = "software/mcfm/src/Mods/pp_mod.cpp"
+[[tools.args.edits]]
+oldText = "      }\n    } pp_initializer_instance;\n  }\n\n}"
+newText = "      }\n    } pp_initializer_instance;\n  }\n\n}\n\nextern \"C\" {\n  int* pp_mod_pp() {\n    return pp_mod::pp.data;\n  }\n}"
+
+[[tools]]
+name = "edit"
+ok = true
+output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Mods/ppwp2j_mod.cpp\",\n  \"applied\": 1,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 45,\n      \"new_len\": 122,\n      \"before_snippet\": \"…= 0; idx < 6561; ++idx) {\\n          pp.data[idx] = pp_init_data[idx];\\n        }\\n      }\\n    } pp_initializer_instance;\\n  }\\n\\n}\\n\",\n      \"after_snippet\": \"…= 0; idx < 6561; ++idx) {\\n          pp.data[idx] = pp_init_data["
+
+[tools.args]
+path = "software/mcfm/src/Mods/ppwp2j_mod.cpp"
+[[tools.args.edits]]
+oldText = "      }\n    } pp_initializer_instance;\n  }\n\n}"
+newText = "      }\n    } pp_initializer_instance;\n  }\n\n}\n\nextern \"C\" {\n  int* ppwp2j_mod_pp() {\n    return ppwp2j_mod::pp.data;\n  }\n}"
+
+[[tools]]
+name = "write"
+ok = true
+output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Mods/pp_mod.f90 (750 bytes)"
+
+[tools.args]
+path = "software/mcfm/src/Mods/pp_mod.f90"
+content = "module pp_mod\n\n  use, intrinsic :: iso_c_binding\n  implicit none\n\n  private\n    interface\n      function get_pp() bind(C, name=\"pp_mod_pp\")\n        import :: c_ptr\n        type(c_ptr) :: get_pp\n      end function get_pp\n    end interface\n\n  public :: ppmax, pp, pp_mod_init, pp_mod_finalize\n\n  integer, parameter :: ppmax = 80\n  integer(c_int), pointer, dimension(:,:,:,:) :: pp => null()\n\ncontains\n  subroutine pp_mod_init()\n    implicit none\n    integer(c_int), pointer, dimension(:,:,:,:) :: fptr\n... [truncated, 750 chars total]"
+[[tools]]
+name = "write"
+ok = true
+output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Mods/ppwp2j_mod.f90 (786 bytes)"
+
+[tools.args]
+path = "software/mcfm/src/Mods/ppwp2j_mod.f90"
+content = "module ppwp2j_mod\n\n  use, intrinsic :: iso_c_binding\n  implicit none\n\n  private\n    interface\n      function get_pp() bind(C, name=\"ppwp2j_mod_pp\")\n        import :: c_ptr\n        type(c_ptr) :: get_pp\n      end function get_pp\n    end interface\n\n  public :: ppmax, pp, ppwp2j_mod_init, ppwp2j_mod_finalize\n\n  integer, parameter :: ppmax = 80\n  integer(c_int), pointer, dimension(:,:,:,:) :: pp => null()\n\ncontains\n  subroutine ppwp2j_mod_init()\n    implicit none\n    integer(c_int), pointer, dimensi... [truncated, 786 chars total]"
+[[tools]]
+name = "bash"
+ok = true
+output_preview = "exit_code: 0\nSTDOUT:\nsoftware/mcfm/src/Inc/ppmax.f\n\nSTDERR:\n"
+
+[tools.args]
+command = "find software/mcfm/src -iname \"ppmax.f\""
+[[tools]]
+name = "read"
+ok = true
+output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Mods/ppmax_mod.f90\n# lines: 1-11\n0001: \n0002: module ppmax_mod\n0003:   use types\n0004:   implicit none\n0005:   \n0006:   public\n0007: \n0008:     integer, parameter:: ppmax=80\n0009: \n0010: \n0011: end module\n"
+
+[tools.args]
+path = "software/mcfm/src/Mods/ppmax_mod.f90"
+[[tools]]
+name = "read"
+ok = true
+output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Mods/ppmax_mod.hpp\n# lines: 1-8\n0001: #ifndef PPMAX_MOD\n0002: #define PPMAX_MOD\n0003: \n0004: namespace ppmax_mod {\n0005:   const int ppmax = 80;\n0006: }\n0007: \n0008: #endif\n"
+
+[tools.args]
+path = "software/mcfm/src/Mods/ppmax_mod.hpp"
+[[tools]]
+name = "read"
+ok = true
+output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Mods/types_mod.f\n# lines: 1-15\n0001: !\n0002: !  SPDX-License-Identifier: GPL-3.0-or-later\n0003: !  Copyright (C) 2019-2022, respective authors of MCFM.\n0004: !\n0005: \n0006:       module types\n0007:           implicit none\n0008: \n0009:           public\n0010: \n0011:           integer, parameter :: sp = selected_real_kind(6)\n0012:           integer, parameter :: dp = selected_real_kind(15)\n0013:           integer, parame"
+
+[tools.args]
+path = "software/mcfm/src/Mods/types_mod.f"
+[[tools]]
+name = "read"
+ok = true
+output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Mods/types_mod.hpp\n# lines: 1-17\n0001: #ifndef TYPES_MOD\n0002: #define TYPES_MOD\n0003: \n0004: // (post-llm) Translated from types_mod.f. The Fortran module only selects\n0005: // numeric kinds (sp/dp/ex/qp); per the rewrite rules real(dp)/complex(dp)\n0006: // are mapped directly to double/std::complex<double> at each call site, so\n0007: // this header simply exposes the kinds as C++ type aliases for any code\n0008: // t"
+
+[tools.args]
+path = "software/mcfm/src/Mods/types_mod.hpp"
+[[tools]]
+name = "read"
+ok = true
+output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Mods/mod_qcdloop_c.f\n# lines: 1-194\n0001: !\n0002: !  SPDX-License-Identifier: GPL-3.0-or-later\n0003: !  Copyright (C) 2019-2022, respective authors of MCFM.\n0004: !\n0005: \n0006:       module mod_qcdloop_c\n0007:         implicit none\n0008: \n0009:       interface\n0010:         subroutine qlcachesize(csize) bind(C,name=\"qlcachesize\")\n0011:             use iso_c_binding\n0012:             integer(c_int), intent(in) :: csiz"
+
+[tools.args]
+path = "software/mcfm/src/Mods/mod_qcdloop_c.f"
+[[tools]]
+name = "read"
+ok = true
+output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Mods/mod_qcdloop_c.hpp\n# lines: 1-78\n0001: #ifndef MOD_QCDLOOP_C\n0002: #define MOD_QCDLOOP_C\n0003: \n0004: #include <complex>\n0005: \n0006: // (post-llm) Translated from mod_qcdloop_c.f. This module in the Fortran\n0007: // source only declares bind(C) interfaces to functions implemented by the\n0008: // external QCDLoop C library; there is no Fortran implementation to\n0009: // translate, so this header simply exposes the"
+
+[tools.args]
+path = "software/mcfm/src/Mods/mod_qcdloop_c.hpp"
+[[tools]]
+name = "edit"
+ok = true
+output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Mods/CMakeLists.txt\",\n  \"applied\": 1,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 55,\n      \"new_len\": 81,\n      \"before_snippet\": \"…nwz_mod.f90\\nnwz_mod.cpp\\npart_mod.f90\\npart_mod.cpp\\nplabel_mod.f90\\nplabel_mod.cpp\\nppmax_mod.f90\\npp_mod.f90\\nppwp2j_mod.f90\\nprocess_mod.f90\\nprocess_mod.cpp\\nqcdcouple_mod.f90\\nqcdcouple_mod.cpp\\nqqbggintnames_mod.f90\\nremo"
+
+[tools.args]
+path = "software/mcfm/src/Mods/CMakeLists.txt"
+[[tools.args.edits]]
+oldText = "ppmax_mod.f90\npp_mod.f90\nppwp2j_mod.f90\nprocess_mod.f90"
+newText = "ppmax_mod.f90\npp_mod.f90\npp_mod.cpp\nppwp2j_mod.f90\nppwp2j_mod.cpp\nprocess_mod.f90"
+
+[[tools]]
+name = "read"
+ok = true
+output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Mods/Modules_Interface.hpp\n# lines: 1-16\n0001: #ifndef MODULES_INTERFACE_MOD\n0002: #define MODULES_INTERFACE_MOD\n0003: \n0004: // (post-llm) Modules_Interface.f90 stays Fortran: it only wires together the\n0005: // still-Fortran-side init/finalize routines of the individual Mods modules\n0006: // (many of which manipulate Fortran POINTER state via c_f_pointer and have\n0007: // no meaningful pure-C++ equivalent yet). This"
+
+[tools.args]
+path = "software/mcfm/src/Mods/Modules_Interface.hpp"
+[[tools]]
+name = "read"
+ok = true
+output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Mods/Modules_Interface.f90\n# lines: 1-241\n0001: ! TODO: Remove this FORTRAN interface subroutines once the trasition to\n0002: ! C++ is complete\n0003: subroutine modules_fi_init() bind(C, name=\"modules_fi_init_\")\n0004:         use ewcharge_mod, only: ewcharge_mod_init\n0005:         use zcouple_mod, only: zcouple_mod_init\n0006:         use b0_mod, only: b0_mod_init\n0007:         use blha_mod, only: blha_mod_init\n0008:  "
+
+[tools.args]
+path = "software/mcfm/src/Mods/Modules_Interface.f90"
+[[tools]]
+name = "read"
+ok = true
+output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Mods/Modules_Interface.f90\n# lines: 160-241\n0160:         use nwz_mod, only: nwz_mod_finalize\n0161:         use scalarselect_mod, only: scalarselect_mod_finalize\n0162:         use zcouple_cms_mod, only: zcouple_cms_mod_finalize\n0163:         use sprods_com_mod, only: sprods_com_mod_finalize\n0164:         use ckm_mod, only: ckm_mod_finalize\n0165:         use kpart_mod, only: kpart_mod_finalize\n0166:         use docheck"
+
+[tools.args]
+path = "software/mcfm/src/Mods/Modules_Interface.f90"
+offset = 160
+[[tools]]
+name = "edit"
+ok = true
+output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Mods/Modules_Interface.f90\",\n  \"applied\": 4,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 119,\n      \"new_len\": 203,\n      \"before_snippet\": \"…use mmsq_cs_mod, only: mmsq_cs_mod_init\\n        use mqq_mod, only: mqq_mod_init\\n        use msq_cs_mod, only: msq_cs_mod_init\\n        use msq_struc_mod, only: msq_struc_mod_init\\n        implicit none\\n        call e"
+
+[tools.args]
+path = "software/mcfm/src/Mods/Modules_Interface.f90"
+[[tools.args.edits]]
+oldText = "        use msq_cs_mod, only: msq_cs_mod_init\n        use msq_struc_mod, only: msq_struc_mod_init\n        implicit none"
+newText = "        use msq_cs_mod, only: msq_cs_mod_init\n        use msq_struc_mod, only: msq_struc_mod_init\n        use pp_mod, only: pp_mod_init\n        use ppwp2j_mod, only: ppwp2j_mod_init\n        implicit none"
+
+[[tools.args.edits]]
+oldText = "        call msq_cs_mod_init()\n        call msq_struc_mod_init()\nend subroutine modules_fi_init"
+newText = "        call msq_cs_mod_init()\n        call msq_struc_mod_init()\n        call pp_mod_init()\n        call ppwp2j_mod_init()\nend subroutine modules_fi_init"
+
+[[tools.args.edits]]
+oldText = "        use msq_cs_mod, only: msq_cs_mod_finalize\n        use msq_struc_mod, only: msq_struc_mod_finalize\n        implicit none"
+newText = "        use msq_cs_mod, only: msq_cs_mod_finalize\n        use msq_struc_mod, only: msq_struc_mod_finalize\n        use pp_mod, only: pp_mod_finalize\n        use ppwp2j_mod, only: ppwp2j_mod_finalize\n        implicit none"
+
+[[tools.args.edits]]
+oldText = "        call msq_cs_mod_finalize()\n        call msq_struc_mod_finalize()\nend subroutine modules_fi_finalize"
+newText = "        call msq_cs_mod_finalize()\n        call msq_struc_mod_finalize()\n        call pp_mod_finalize()\n        call ppwp2j_mod_finalize()\nend subroutine modules_fi_finalize"
+
+[[tools]]
+name = "bash"
+ok = true
+output_preview = "exit_code: 0\nSTDOUT:\nsoftware/mcfm/src/BLHA/CXX_Interface.cxx\n\nSTDERR:\n"
+
+[tools.args]
+command = "find software/mcfm/src/BLHA -iname \"CXX_Interface.cxx\""
+[[tools]]
+name = "bash"
+ok = false
+output_preview = "Error: blocked shell syntax detected"
+
+[tools.args]
+command = "grep -n \"modules_fi_init\\|modules_fi_finalize\\|extern \\\"C\\\"\\|#include\" software/mcfm/src/BLHA/CXX_Interface.cxx"
+[[tools]]
+name = "bash"
+ok = true
+output_preview = "exit_code: 0\nSTDOUT:\n35:  void modules_fi_init_();\n171:  modules_fi_init_();\n\nSTDERR:\n"
+
+[tools.args]
+command = "grep -n \"modules_fi_init\" software/mcfm/src/BLHA/CXX_Interface.cxx"
+[[tools]]
+name = "bash"
+ok = true
+output_preview = "exit_code: 0\nSTDOUT:\n16:#include \"MCFM/CXX_Interface.h\"\n17:#include \"MCFM/CXX_Wrapper.h\"\n20:#include <algorithm>\n21:#include <cstdlib>\n408:#include \"qqb_w.cxx\"\n409:#include \"qqb_w1jet.cxx\"\n410:#include \"qqb_w2jet.cxx\"\n411:// #include \"qqb_wh.cxx\"\n412:// #include \"qqb_wh1jet.cxx\"\n413:#include \"qqb_z.cxx\"\n414:#include \"qqb_z1jet.cxx\"\n415:#include \"qqb_z2jet.cxx\"\n416:// #include \"qqb_zh.cxx\"\n417:// #include \"qqb_zh1jet.cxx\"\n418:// #include \"qqb_dirgam.cxx\"\n419:// #include \"qqb_gam2j.cxx\"\n420:// #in"
+
+[tools.args]
+command = "grep -n \"include\" software/mcfm/src/BLHA/CXX_Interface.cxx"
+[[tools]]
+name = "read"
+ok = true
+output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BLHA/CXX_Interface.cxx\n# lines: 1-45\n0001: // Copyright (C) 2021 John Campbell, Stefan Hoeche, Christian T Preuss.\n0002: //\n0003: //  This program is free software: you can redistribute it and/or modify it under\n0004: //  the terms of the GNU General Public License as published by the Free Software\n0005: //  Foundation, either version 3 of the License, or (at your option) any later\n0006: //  version.\n0007: //\n0008: //"
+
+[tools.args]
+path = "software/mcfm/src/BLHA/CXX_Interface.cxx"
+offset = 1
+limit = 45
+[[tools]]
+name = "edit"
+ok = true
+output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BLHA/CXX_Interface.cxx\",\n  \"applied\": 1,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 467,\n      \"new_len\": 442,\n      \"before_snippet\": \"…ense along with\\n//  this program. If not, see <http://www.gnu.org/licenses/>\\n \\n\\n#include \\\"MCFM/CXX_Interface.h\\\"\\n#include \\\"MCFM/CXX_Wrapper.h\\\"\\n\\n// std headers\\n#include <algorithm>\\n#include <cstdlib>\\n\\n#define P"
+
+[tools.args]
+path = "software/mcfm/src/BLHA/CXX_Interface.cxx"
+[[tools.args.edits]]
+oldText = "#include \"MCFM/CXX_Interface.h\"\n#include \"MCFM/CXX_Wrapper.h\"\n\n// std headers\n#include <algorithm>\n#include <cstdlib>\n\n#define PRINT_VAR(VAR) \\\n  std::cout<<__LINE__<<\":\"<<#VAR<<\"=\"<<VAR<<std::endl\n\n#define DEBUG_VAR(VAR) \\\n  if (CXX_Interface::Verbose()) std::cout<<__LINE__<<\":\"<<#VAR<<\"=\"<<VAR<<std::endl\n\n#define DEBUG_MSG() \\\n  if (CXX_Interface::Verbose()) std::cout\n\nextern \"C\" \n{\n  void chooser_(); \n  void modules_fi_init_();\n  void modules_fi_finalize_();\n}"
+newText = "#include \"MCFM/CXX_Interface.h\"\n#include \"MCFM/CXX_Wrapper.h\"\n#include \"Modules_Interface.hpp\"\n\n// std headers\n#include <algorithm>\n#include <cstdlib>\n\n#define PRINT_VAR(VAR) \\\n  std::cout<<__LINE__<<\":\"<<#VAR<<\"=\"<<VAR<<std::endl\n\n#define DEBUG_VAR(VAR) \\\n  if (CXX_Interface::Verbose()) std::cout<<__LINE__<<\":\"<<#VAR<<\"=\"<<VAR<<std::endl\n\n#define DEBUG_MSG() \\\n  if (CXX_Interface::Verbose()) std::cout\n\nextern \"C\" \n{\n  void chooser_(); \n}"
+
+[[tools]]
+name = "bash"
+ok = true
+output_preview = "exit_code: 1\nSTDOUT:\n\nSTDERR:\n"
+
+[tools.args]
+command = "grep -rn \"include_directories\" software/mcfm/src/CMakeLists.txt"
+[[tools]]
+name = "bash"
+ok = true
+output_preview = "exit_code: 0\nSTDOUT:\nsoftware/mcfm/src/CMakeLists.txt\nsoftware/mcfm/CMakeLists.txt\n\nSTDERR:\n"
+
+[tools.args]
+command = "find software/mcfm -maxdepth 2 -iname \"CMakeLists.txt\""
+[[tools]]
+name = "bash"
+ok = false
+output_preview = "Error: blocked shell syntax detected"
+
+[tools.args]
+command = "grep -n \"target_include_directories\\|Mods\" software/mcfm/src/CMakeLists.txt"
+[[tools]]
+name = "bash"
+ok = true
+output_preview = "exit_code: 0\nSTDOUT:\nx1b[95mROOT:x1b[0m /home/akash/Desktop/Akash/Projects/JSS-Paper-Example\nx1b[95mNODE:x1b[0m <ROOT>/tests/mcfm\n\nx1b[95mSCRIPTS: x1b[0m\n    - <ROOT>/config.sh\n    - <ROOT>/environment.sh\n    - <ROOT>/tests/mcfm/test.sh\n\nx1b[95mEXECUTE:x1b[0m <ROOT>/tests/mcfm/job.submit\nin 1:29.9 \nx1b[92mSUCCESS x1b[0m\n\nx1b[95mOUTPUT:x1b[0m <ROOT>/tests/mcfm/job.output\n\nSTDERR:\n"
+
+[tools.args]
+command = "jobrunner submit tests/mcfm"
+
+[usage]
+input = 40955
+output = 16563
+reasoning = 0
+cache_write = 152337
+cache_read = 2639971
+cache_write_5m = 152337
+cache_write_1h = 0
+
+[tool_calls]
+executed = 63
+rejected = 0
+errors = 5
+ok = 58

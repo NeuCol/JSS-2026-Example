@@ -1,0 +1,18 @@
+loop = 5
+summary = "This loop was purely investigative and produced no code changes: the agent checked workflow status/gate/next, confirmed the next ready-candidate group is W2jet (atree.f, ggZZcapture.f, ZZbox1LL.f, a6routine.f, a6treeg.f per the folder-coherence rule in current_plan.md), ran `dev/workflow.py draft` on atree.f, and read a large set of dependency/reference files (sprods_com_mod, mxpart_mod, W1jet's t.cpp/t_fi.f90/A51.cpp/virt5.cpp as an analogous already-translated pattern, ZZ-related Mods, Need/i3m, Inc/FArray) to understand calling conventions (I3m, Lsm1_2mh/me signatures, extern \"C\" wrappers, FArray usage) needed before writing the W2jet translation. No .cpp/.hpp files were written, no CMakeLists.txt was updated, no Fortran originals were moved to deprecated/, and agent_log.md was not updated with a new 'Group: W2jet ...' heading for this session's work (it still only contains the prior retroactive pp_mod/ppwp2j_mod entry). Several multi-clause find/grep commands were rejected by the bash tool's blocked-shell-syntax policy and had to be retried as simpler single-pattern greps, which succeeded. Two glob() calls were skipped by the harness (iteration_skip) and had no effect on the workspace, so any dependency discovery that would have relied on them did not actually happen."
+blocker = ""
+
+[[pending]]
+item = "Open a new 'Group: W2jet' heading in agent_log.md recording provenance (status ready-leaf count and first five lines of `python3 dev/workflow.py next mcfm-translate`) before any further editing, per current_plan.md's Log file rule."
+
+[[pending]]
+item = "Write the actual C++/.hpp/.f90-shim translations for W2jet/atree.f, ggZZcapture.f, ZZbox1LL.f, a6routine.f, and a6treeg.f using the dependency conventions already gathered (I3m, Lsm1_2mh/me signatures, extern \"C\" accessor pattern from W1jet, FArray usage)."
+
+[[pending]]
+item = "Wire the new W2jet translated sources into software/mcfm/src/W2jet/CMakeLists.txt and move each converted .f/.F original into src/W2jet/deprecated/."
+
+[[pending]]
+item = "Run `jobrunner submit tests/mcfm` to build and verify the new W2jet translations, then record each file's VERIFIED/TRANSLATED/FAILED status in agent_log.md."
+
+[[pending]]
+item = "Redo the dependency discovery that was intended via the two skipped glob() calls using bash find/grep instead, since those glob calls had no actual workspace effect."
