@@ -1,0 +1,20 @@
+[
+  {
+    "path": "software/mcfm",
+    "head": "1abdcddaad89582552edc41de68e4a6e1ac75f1d",
+    "branch": "HEAD",
+    "status": "## HEAD (no branch)\n M CMakeLists.txt\n M src/BDK/CMakeLists.txt\nR  src/BDK/FFMPcc.f -> src/BDK/deprecated/FFMPcc.f\nR  src/BDK/FFPMccT.f -> src/BDK/deprecated/FFPMccT.f\nR  src/BDK/FFPMccTtilde.f -> src/BDK/deprecated/FFPMccTtilde.f\nR  src/BDK/FFPMscT.f -> src/BDK/deprecated/FFPMscT.f\n D src/BDK/fvs.f\n M src/Inc/FArray.hpp\n M src/Mods/CMakeLists.txt\n D src/Mods/Modules_Interface.f90\n M src/Mods/pp_mod.f90\n M src/Mods/ppwp2j_mod.f90\n M src/W2jet/CMakeLists.txt\nA  src/W2jet/a6treeg.cpp\nA  src/W2jet/a6treeg.hpp\nA  src/W2jet/a6treeg_fi.f90\nA  src/W2jet/atree.cpp\nA  src/W2jet/atree.hpp\nA  src/W2jet/atree_fi.f90\nR  src/W2jet/ZZbox1LL.f -> src/W2jet/deprecated/ZZbox1LL.f\nR  src/W2jet/a6treeg.f -> src/W2jet/deprecated/a6treeg.f\nR  src/W2jet/atree.f -> src/W2jet/deprecated/atree.f\nR  src/W2jet/fvf.f -> src/W2jet/deprecated/fvf.f\nR  src/W2jet/ggZZcapture.f -> src/W2jet/deprecated/ggZZcapture.f\n?? Bin/lib/\n?? Bin/test\n?? doxygen_dep/\n?? install/\n?? src/BDK/FFMPcc.cpp\n?? src/BDK/FFMPcc.hpp\n?? src/BDK/FFMPcc_fi.f90\n?? src/BDK/FFPMccT.cpp\n?? src/BDK/FFPMccT.hpp\n?? src/BDK/FFPMccT_fi.f90\n?? src/BDK/FFPMccTtilde.cpp\n?? src/BDK/FFPMccTtilde.hpp\n?? src/BDK/FFPMccTtilde_fi.f90\n?? src/BDK/FFPMscT.cpp\n?? src/BDK/FFPMscT.hpp\n?? src/BDK/FFPMscT_fi.F90\n?? src/BDK/deprecated/fvs.f\n?? src/BDK/fvs.cpp\n?? src/BDK/fvs.hpp\n?? src/BDK/fvs_fi.f90\n?? src/Mods/Modules_Interface.cpp\n?? src/Mods/Modules_Interface.hpp\n?? src/Mods/deprecated/Modules_Interface.f90\n?? src/Mods/mod_qcdloop_c.hpp\n?? src/Mods/pp_mod.cpp\n?? src/Mods/pp_mod.hpp\n?? src/Mods/ppwp2j_mod.cpp\n?? src/Mods/ppwp2j_mod.hpp\n?? src/Mods/types.hpp\n?? src/W2jet/ZZbox1LL.cpp\n?? src/W2jet/ZZbox1LL.hpp\n?? src/W2jet/ZZbox1LL_fi.f90\n?? src/W2jet/fvf.cpp\n?? src/W2jet/fvf.hpp\n?? src/W2jet/fvf_fi.f90\n?? src/W2jet/ggZZcapture.cpp\n?? src/W2jet/ggZZcapture.hpp\n?? src/W2jet/ggZZcapture_fi.F90\n"
+  },
+  {
+    "path": "software/pepper",
+    "head": "67f3acc8756fe6ec4fcc9ea360be08f0bb644711",
+    "branch": "43-add-kokkos-mcfm-interface",
+    "status": "## 43-add-kokkos-mcfm-interface...origin/43-add-kokkos-mcfm-interface\n"
+  },
+  {
+    "path": "software/qcdloop",
+    "head": "c8a05202351ca2e803158e99ae8a1c5c05f1437d",
+    "branch": "master",
+    "status": "## master...origin/master\n"
+  }
+]

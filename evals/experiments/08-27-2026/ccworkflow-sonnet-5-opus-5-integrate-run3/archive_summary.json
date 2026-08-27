@@ -1,0 +1,26 @@
+{
+  "experiment_name": "ccworkflow-sonnet-5-opus-5-integrate-run3",
+  "archive_created_at": "2026-08-27T23:53:10.127400+00:00",
+  "loop_source": ".claude",
+  "transformation_source": "dev/transformations/mcfm-translate",
+  "submodules": [
+    "software/mcfm"
+  ],
+  "archive_branch": "evals/08-27-2026/ccworkflow-sonnet-5-opus-5-integrate-run3",
+  "submodule_results": [
+    {
+      "repo": "software/mcfm",
+      "branch": "evals/08-27-2026/ccworkflow-sonnet-5-opus-5-integrate-run3",
+      "branch_action": "created",
+      "excluded_paths": [
+        "Bin",
+        "install"
+      ],
+      "committed": true,
+      "head": "8a06f9437d3c2d4b0d585a7a2216a9195157c0f3"
+    }
+  ],
+  "session_logs": "/home/user.claude/projects/-home-user-JSS-2026-Example/555f0847-eb08-4948-b8ec-6fd24f2a0e3f",
+  "included_dev_tmp": true,
+  "cleanup_performed": true
+}
