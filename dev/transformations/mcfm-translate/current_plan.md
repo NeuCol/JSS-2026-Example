@@ -25,6 +25,11 @@ Keep the changing worklist in `agent_log.md` in this folder. Create it if missin
 keep it current. Use it for ready files, review groups, and per-file status. Keep durable prose
 notes in the session log at the end of this file.
 
+When you open a group, record its provenance directly under the heading, before any editing:
+the ready-leaf count from `python3 dev/workflow.py status`, and the first five lines of the
+`python3 dev/workflow.py next mcfm-translate` output, verbatim. If the group's files are not
+that list's top entries, add one line saying why.
+
 Record each finished file as:
 
 - `- [x] <file> — VERIFIED (worst Δrel <value>)`
@@ -91,6 +96,8 @@ Run these from the project root. Prefer the unified workflow interface:
 
 - `python3 dev/workflow.py refresh`
   - refresh the readiness map and symbol index
+- `python3 dev/workflow.py next mcfm-translate`
+  - print the ready files, already ranked most-unblocking first — this is the candidate list
 - `python3 dev/workflow.py draft <file.f>`
   - make a rough draft and dependency hints
 - `python3 dev/workflow.py verify <file.cpp> -- <process>`
@@ -116,31 +123,52 @@ The low-level scripts under `dev/tools/` remain available, but `dev/workflow.py`
 
 ## Resolution: which files to do next
 
-1. Only rewrite **ready** files from `dev/tmp/assets/roadmap_metrics.tsv`:
-   - `deps == 0`
-   - `blind == 0`
-   - no generated `.cpp` yet
-2. Optional: limit one run to one top-level `src/` folder.
-3. Group ready files for review:
+1. The candidate list is the output of:
+
+   ```
+   python3 dev/workflow.py next mcfm-translate
+   ```
+
+   It prints the ready files already ranked, most-unblocking first. Treat that output as the
+   candidate list. Do not re-derive readiness by filtering
+   `dev/tmp/assets/roadmap_metrics.tsv` yourself: `next` already applies `deps == 0` and
+   `blind == 0`, and the index only ever lists files that have no generated `.cpp`.
+2. Take the **first** candidate `next` printed, then fill the rest of the group from that
+   file's own top-level `src/` folder. This keeps a group folder-coherent without throwing
+   away the ranking. Below the first few entries the ranking is nearly flat, so folder
+   coherence decides the rest.
+3. To list one folder's remaining ready files, match the folder and both zero columns in a
+   single `grep -P` — no pipe:
+
+   ```
+   grep -P "\tW2jet\t0\t0\t" dev/tmp/assets/roadmap_metrics.tsv
+   ```
+
+4. Group ready files for review:
    - same folder or test topic
    - about 5 files per group
    - headings must start with `Group`
-4. If there is already an open group, keep filling and fixing that group before opening another.
-5. Rewrite the group, wire it into the folder's `CMakeLists.txt`, build, and verify each file.
+5. If there is already an open group, keep filling and fixing that group before opening another.
+6. Rewrite the group, wire it into the folder's `CMakeLists.txt`, build, and verify each file.
    - After converting a Fortran source, move the original `.f`/`.F` into `deprecated/` under the
      same directory.
    - Follow the Spec's Output shape and Header/source structure for the translated files.
-6. After a group is completed, check the gate before opening the next one.
-7. After any required approval, refresh the roadmap again before picking more work.
+7. After a group is completed, check the gate before opening the next one.
+8. After any required approval, refresh the roadmap again before picking more work.
 
 The map exists so a file is only rewritten after its callees are already available in C++.
 
 ## Shell notes
 
-CodeScribe bash is restricted. In practice:
+CodeScribe bash is restricted to one simple command per call. In practice:
 
 - use plain relative paths like `software/mcfm/src/...`
-- no `cd`, pipes, redirects, or `$VARIABLES`
+- no `cd`, pipes (`|`), redirects (`>`, `2>`), `&&`, `;`, or `$VARIABLES`
+- no `test -f X && ...`; check for a file with a plain `ls` or `head`
+- `python3 -c` is accepted only as a single line with no embedded newlines — a multi-line
+  inline script is rejected. To read the roadmap, use the `next` command above or a single
+  `grep -P`, never an inline Python script.
+- `python3 dev/workflow.py ...`, `grep`, `head`, `wc`, and `jobrunner ...` are unaffected
 
 ## Verify
 
