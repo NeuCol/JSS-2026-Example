@@ -1,0 +1,12 @@
+loop = 5
+summary = "The verified record supports the author report: the agent read the governing plan before the specification, inspected the approval records and work log, refreshed readiness successfully, checked the approval gate twice, listed pending approvals twice, and edited only agent_log.md to record the continuing blocker. The gate returned exit code 1 both times, while git diff --check passed. No translation source files were changed and no new group was opened; the reported gate and pending-approval outputs identify three completed groups awaiting approval and Group 1 — Mods type-kind infrastructure as the blocking group."
+blocker = "The mcfm-translate approval batch limit is reached because three completed groups await human approval; Group 1 — Mods type-kind infrastructure is the current blocking group."
+
+[[pending]]
+item = "Have a human approve Group 1 — Mods type-kind infrastructure using python3 dev/workflow.py approve mcfm-translate --latest-blocking."
+
+[[pending]]
+item = "Read the resulting Group 1 approval record and apply any binding review note."
+
+[[pending]]
+item = "Run python3 dev/workflow.py refresh and python3 dev/workflow.py gate mcfm-translate after approval, then open the next ranked folder-coherent group only if the gate permits it."
