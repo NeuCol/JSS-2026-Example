@@ -1,0 +1,26 @@
+{
+  "experiment_name": "codescribe-opus-5-run2",
+  "archive_created_at": "2026-08-27T02:16:28.559235+00:00",
+  "loop_source": ".codescribe",
+  "transformation_source": "dev/transformations/mcfm-translate",
+  "submodules": [
+    "software/mcfm"
+  ],
+  "archive_branch": "evals/08-26-2026/codescribe-opus-5-run2",
+  "submodule_results": [
+    {
+      "repo": "software/mcfm",
+      "branch": "evals/08-26-2026/codescribe-opus-5-run2",
+      "branch_action": "created",
+      "excluded_paths": [
+        "Bin",
+        "install"
+      ],
+      "committed": true,
+      "head": "cab97e53648aaefd7f1ccdf056606439d2611ad5"
+    }
+  ],
+  "session_logs": null,
+  "included_dev_tmp": true,
+  "cleanup_performed": true
+}

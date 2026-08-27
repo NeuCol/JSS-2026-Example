@@ -1,0 +1,39 @@
+loop = 5
+summary = """
+Loop 5 closed the second W2jet group without writing any new translations. The author ran the \
+coverage oracle (dev/tmp/run_verify.py) for the five open files under both W2jet processes: \
+Ltfunctions.cpp and LRcalc.cpp came back COVERED under the Z process (exit 0), while atrLLL.cpp, \
+atrLRL.cpp and faxsl.cpp were NOT COVERED under both processes (exit 1) — consistent with the \
+verified command list. A new helper dev/tmp/strip_probes.py was written and run, removing every \
+'// @coverage-probe' marker from the ten translated W2jet .cpp files; I independently confirmed \
+`grep -rn "@coverage-probe" software/mcfm/src/W2jet/` now returns nothing. The restored build \
+rebuilt cleanly (dev/tmp/build_only.py) and `jobrunner submit tests/mcfm` succeeded; I verified \
+tests/mcfm/job.output line 948 records 'SUMMARY: pass rate 272/272' with 272 PASSED and 0 FAILED, \
+tolerance 1e-13. agent_log.md was edited with the second '## Group W2jet amplitude/loop \
+coefficients' heading, per-file statuses, coverage/benchmark evidence and a Loop-5 session note; \
+I read it back and it matches the report. `python3 dev/workflow.py gate mcfm-translate` returned \
+OK (2 of 3 group slots used) and `refresh` regenerated the roadmap metrics. Scouting reads for the \
+next group (A6texact.f, Ftexact.f, vv.f, vvg.f, Acalc.f, CMakeLists.txt, faxsl reference trio) are \
+in the verified read list, so the proposed next-group shortlist is trustworthy. Three shell calls \
+were blocked by the sandbox (compound grep patterns with '|' and '\\b'), so the claims about \
+Lnrat/loopI2/loopI3 C++ bindings rest on a single successful `grep -rln "Lnrat" ... --include=*.hpp` \
+(exit 1, i.e. no header) — the loopI2/loopI3 binding question is still unresolved. No new files \
+were translated this loop, so the round is INCOMPLETE by the plan's own standard, but nothing is \
+broken.
+"""
+blocker = ""
+
+[[pending]]
+item = "Open the third '## Group' in agent_log.md for the scouted ready W2jet leaves (A6texact.f, Ftexact.f, vv.f, Acalc.f, vvg.f — all deps 0 / blind 0) and translate them to <base>.cpp/.hpp/<base>_fi.f90 following the faxsl pattern."
+
+[[pending]]
+item = "Resolve callee bindings before writing: Lnrat has no .hpp (declare via extern \"C\"); re-check loopI2/loopI3 with separate single-pattern greps (compound '|' patterns are blocked by the sandbox) against scalarselect_mod.hpp, ZZclabels_mod.hpp, ZZdlabels_mod.hpp, ggZZintegrals_mod.hpp."
+
+[[pending]]
+item = "For each new file swap the .f entry in software/mcfm/src/W2jet/CMakeLists.txt, move the original into software/mcfm/src/W2jet/deprecated/, and rebuild with python3 dev/tmp/build_only.py (expect 'build rc = 0')."
+
+[[pending]]
+item = "Probe each new .cpp with python3 dev/tmp/run_verify.py <file.cpp> -- u d~ ve e+ g g and, on NOT COVERED, retry with u u~ e- e+ g g; record COVERED/NOT COVERED per file."
+
+[[pending]]
+item = "Strip probes (python3 dev/tmp/strip_probes.py), rebuild, re-run jobrunner submit tests/mcfm on the restored build, log the group in agent_log.md, then run python3 dev/workflow.py gate mcfm-translate — the third completed group needs python3 dev/workflow.py approve mcfm-translate --latest-blocking before a fourth group starts."
