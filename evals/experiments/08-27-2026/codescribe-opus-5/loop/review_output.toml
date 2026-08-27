@@ -1,0 +1,17 @@
+loop = 5
+summary = """
+Loop 5 opened and did the code work for "Group W2jet batch 2" (ggZZcapture, a6routine, w2jetsq, Acalc, Ftexact, A6texact). Provenance was recorded in agent_log.md before editing (status = 435 untranslated / 228 ready leaves, first lines of `next mcfm-translate`, and the justification for adding A6texact as a sixth file); the gate was checked first and returned OK (2 waiting, limit 3). All six routines were rewritten as `.cpp` + `_fi.F90` pairs, wired into `software/mcfm/src/W2jet/CMakeLists.txt` (verified: lines 16-22, 33-36, 56-57 list all six pairs plus their Fortran interfaces), and the six originals were moved to `software/mcfm/src/W2jet/deprecated/` via `dev/tmp/move_w2jet_deprecated.py` (verified: deprecated/ now holds a6routine.f, A6texact.f, Acalc.f, Ftexact.f, ggZZcapture.f, w2jetsq.f alongside batch 1). The full suite was re-run after the moves: `jobrunner submit tests/mcfm` succeeded with `SUMMARY: pass rate 272/272` (confirmed at tests/mcfm/job.output:956) and zero FAILED lines. Each of the six files was then probed with `python3 dev/tmp/run_verify.py <file>.cpp -- u d~ ve e+ g g`; every run printed `RESULT: NOT COVERED` with inner exit 1, so per the Plan all six are TRANSLATED, not VERIFIED (one Acalc invocation exited 2, a setup error, and was re-run successfully). The run then hit `max_iterations` (30) and stopped mid-bookkeeping: agent_log.md's "Group W2jet batch 2" section still reads "### Files\\n\\n(in progress)" with no per-file status lines and no Loop 5 session note, so the group is recorded as open even though the code work and verification are complete. The two blocked-shell-syntax grep errors were harmless (the agent re-ran them with allowed syntax).
+"""
+blocker = "Group W2jet batch 2 is code-complete and test-green but not closed out in agent_log.md: the Files list is still '(in progress)', so the group counts as open and the approval gate cannot advance."
+
+[[pending]]
+item = "Replace the '(in progress)' placeholder under '## Group W2jet batch 2' in agent_log.md with the six required entries: `- [x] software/mcfm/src/W2jet/<name>.cpp — TRANSLATED (verify -- u d~ ve e+ g g → RESULT: NOT COVERED, inner exit 1; build passes, original moved to W2jet/deprecated/<name>.f)` for ggZZcapture, a6routine, w2jetsq, Acalc, Ftexact, A6texact."
+
+[[pending]]
+item = "Add a Loop 5 bullet to the '## Session notes' section of agent_log.md recording the evidence: jobrunner submit tests/mcfm → SUCCESS, SUMMARY: pass rate 272/272 (job.output line 956), 0 FAILED, all six files NOT COVERED by the u d~ ve e+ g g bench, and the note to re-check coverage once a caller (qqb_w2jet / qqbw2j_loop) is rewritten."
+
+[[pending]]
+item = "Run `python3 dev/workflow.py gate mcfm-translate` after the group is closed in the log and record the verbatim result; if it blocks (3 completed groups pending), stop for human approval instead of opening a new group."
+
+[[pending]]
+item = "Run `python3 dev/workflow.py refresh` and `python3 dev/workflow.py next mcfm-translate` to get the post-batch-2 ready-leaf count and candidate ranking, and record it before selecting the next group."
