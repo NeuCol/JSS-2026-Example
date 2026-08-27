@@ -3,8 +3,8 @@
 evaluation of the mcfm-translate transformation.
 
 Runs covered (see RUNS below for the authoritative list): ccworkflow (sonnet-5
-author / opus-5 integrate, plus a single-session opus-5 run) vs. csloop across
-opus-5, sonnet-5, Kimi K3 and the two oaic-gpt56 variants (sol / terra). Only
+author / opus-5 integrate) vs. csloop across opus-5, sonnet-5, Kimi K3 and the
+two oaic-gpt56 variants (sol / terra). Only
 the layouts written from 08-11-2026 onward are parseable — the 07-24/07-25-2026
 run directories use the older on-disk layout and are deliberately out of scope.
 
@@ -16,6 +16,9 @@ their archives are unreadable:
     against the runs that did.
   - csloop Kimi K3 (08-14) has no archival git branch in this clone, so it has
     no git-exact files-settled count and no per-file metric of any kind.
+  - ccworkflow opus-5 (single session, 08-13) and csloop sonnet-5 +reasoning
+    (08-12) were withdrawn from the comparison. Both archives are intact and
+    still parse; nothing here judges them unusable.
 Dropping the opus-5 run2 arm also retires the "+reasoning vs. run2" figure that
 used to sit at panels (c)/(d): its control condition is one of the excluded
 runs, and no surviving run pairs against the +reasoning arm.
@@ -29,8 +32,8 @@ the output, both deliberate:
     count. That is None, not zero, and is drawn as an explicit "n/a (no branch)"
     everywhere rather than as an empty bar.
   - a round that adds a .cpp beside a *retained* Fortran original retires no
-    file, so it can settle 4 units by its own checklist and 1 by git. R10 is
-    that case; its per-file metrics are correspondingly extreme, and the
+    file, so it can settle 4 units by its own checklist and 1 by git. A run in
+    that position gets correspondingly extreme per-file metrics, and the
     per-file panels clip it with its true value printed (see capped_limit).
 
 Run with: python3.10 analysis/generate_graphs.py
@@ -167,16 +170,14 @@ RUNS = [
     ("08-12-2026", "ccworkflow-sonnet-5-opus-5-integrate-run2", "R3",
      "ccworkflow (sonnet-5 author, opus-5 integrate, run2)"),
     ("08-12-2026", "codescribe-opus-5-with-reasoning", "R4", "csloop opus-5 +reasoning (08-12)"),
-    ("08-12-2026", "codescribe-sonnet-5-with-reasoning", "R5", "csloop sonnet-5 +reasoning (08-12)"),
-    ("08-12-2026", "codescribe-sonnet-5-with-reasoning-run2", "R6",
+    ("08-12-2026", "codescribe-sonnet-5-with-reasoning-run2", "R5",
      "csloop sonnet-5 +reasoning (run2, 08-12)"),
-    ("08-12-2026", "codescribe-kimi-k3-5", "R7", "csloop Kimi K3 (08-12)"),
-    ("08-13-2026", "ccworkflow-opus-5-session", "R8", "ccworkflow opus-5 (single session, 08-13)"),
-    ("08-26-2026", "codescribe-opus-5", "R9", "csloop opus-5 (08-26)"),
-    ("08-26-2026", "codescribe-sonnet-5", "R10", "csloop sonnet-5 (08-26)"),
-    ("08-26-2026", "codescribe-oaic-gpt56sol", "R11", "csloop oaic-gpt56sol (08-26)"),
-    ("08-26-2026", "codescribe-oaic-gpt56sol-run2", "R12", "csloop oaic-gpt56sol (run2, 08-26)"),
-    ("08-26-2026", "codescribe-oaic-gpt56terra", "R13", "csloop oaic-gpt56terra (08-26)"),
+    ("08-12-2026", "codescribe-kimi-k3-5", "R6", "csloop Kimi K3 (08-12)"),
+    ("08-26-2026", "codescribe-opus-5", "R7", "csloop opus-5 (08-26)"),
+    ("08-26-2026", "codescribe-sonnet-5", "R8", "csloop sonnet-5 (08-26)"),
+    ("08-26-2026", "codescribe-oaic-gpt56sol", "R9", "csloop oaic-gpt56sol (08-26)"),
+    ("08-26-2026", "codescribe-oaic-gpt56sol-run2", "R10", "csloop oaic-gpt56sol (run2, 08-26)"),
+    ("08-26-2026", "codescribe-oaic-gpt56terra", "R11", "csloop oaic-gpt56terra (08-26)"),
 ]
 
 KEYS = [(day, run_name) for day, run_name, _, _ in RUNS]
@@ -215,7 +216,8 @@ REASONING_NOTE = (
 )
 EXCLUDED_NOTE = (
     "Excluded: csloop opus-5 (08-11) and (run2, 08-12) logged no model reasoning text; "
-    "csloop Kimi K3 (08-14) has no archival git branch."
+    "csloop Kimi K3 (08-14) has no archival git branch; ccworkflow opus-5 (single session, "
+    "08-13) and csloop sonnet-5 +reasoning (08-12) withdrawn from the comparison."
 )
 UNPRICED_NOTE = (
     "Kimi K3 and the oaic-gpt56 deployments are not Anthropic models and carry no rate card, so "
@@ -908,7 +910,9 @@ TEX_BANNER = (
 # run set to qualify.
 TEX_DATA_BANNER = TEX_BANNER + (
     "%% Excluded runs: csloop opus-5 (08-11) and (run2, 08-12) logged no model\n"
-    "%% reasoning text; csloop Kimi K3 (08-14) has no archival git branch.\n"
+    "%% reasoning text; csloop Kimi K3 (08-14) has no archival git branch;\n"
+    "%% ccworkflow opus-5 (single session, 08-13) and csloop sonnet-5\n"
+    "%% +reasoning (08-12) withdrawn from the comparison.\n"
 )
 
 # Palette mirrored into LaTeX so the figure matches the PNG version exactly.
@@ -978,7 +982,11 @@ def derived_metrics(runs, files_settled, wall_times, tool_calls_per_file):
 # pgfplots counts tick and axis labels inside `width`, so three panels plus the
 # group separations must fit \textwidth of a two-column page: 3 x 0.27 = 0.81
 # \textwidth plus 2 x 1.05cm of separation clears a 17.8cm text block.
-def _axis_common(width="0.27\\textwidth", height="3.4cm"):
+# Panel geometry. Three panels across leave room to spare: at the 469pt text
+# width these render to ~88% of the text block, so the figure can grow a
+# little without the group running into the margin. Both dimensions feed
+# every panel — tools/preview_tikz.sh measures the result.
+def _axis_common(width="0.29\\textwidth", height="3.7cm"):
     return (
         f"width={width}, height={height},\n"
         "  axis lines=left, axis line style={draw=evalAxis, line width=0.4pt},\n"
@@ -991,6 +999,14 @@ def _axis_common(width="0.27\\textwidth", height="3.4cm"):
         # tick extent closes that gap; the labels themselves are kept short for
         # the same reason.
         "  ylabel near ticks,\n"
+        # `ylabel near ticks` redefines `every axis y label` wholesale, which
+        # discards the font `label style` set above — the y label came out at
+        # the document's \normalsize, dwarfing the \scriptsize ticks and title
+        # next to it. Restating the font here, *after* that key, is what makes
+        # it stick. The negative yshift is a rightward nudge: the label node is
+        # rotated 90 degrees, so its local -y points at the axis, and pulling it
+        # in closes the gap `near ticks` still leaves in a group this tight.
+        "  ylabel style={font=\\scriptsize, yshift=-6pt},\n"
         "  title style={font=\\scriptsize\\bfseries, yshift=-1pt},\n"
         # \tiny, not \scriptsize: "ccworkflow" set at \scriptsize is nearly half
         # the width of a 0.27\textwidth panel, so the legend box crowds the bars
@@ -1110,7 +1126,12 @@ def _panel_files(metrics):
     unmeasured = [metrics[k]["code"] for k in KEYS if metrics[k]["files"] is None]
     return (
         "\\nextgroupplot[" + _axis_common() + _symbolic_x() +
-        "  ybar, bar width=3pt, title={(a) Files settled (git-exact)},\n"
+        # `area legend` after `ybar`: a non-stacked ybar plot installs its own
+        # bar-shaped legend image on top of the axis-level one, so each entry
+        # came out with two swatches. The stacked panels are already area-style
+        # and need no such override.
+        "  ybar, bar width=3pt, area legend,\n"
+        "  title={(a) Files settled (git-exact)},\n"
         f"  ylabel={{Files}}, ymax={ymax:.0f},\n"
         "  nodes near coords, nodes near coords style={font=\\tiny, color=evalInk,\n"
         "    rotate=90, anchor=west},\n"
@@ -1141,10 +1162,10 @@ def _panel_cost_by_model(metrics):
         "\\nextgroupplot[" + _axis_common() + _symbolic_x() +
         "  ybar stacked, bar width=3pt, title={(b) Total cost by model tier},\n"
         f"  ylabel={{USD}}, ymax={ymax:.0f},\n"
-        # R1/R2 are the shortest priced stacks, and the right-hand runs carry
-        # the vertical "unpriced" marks, so the top-left corner is the only
-        # interior space left that a legend can occupy without covering data.
-        "  legend style={at={(0.02,0.97)}, anchor=north west}, legend columns=1,\n"
+        # No interior corner survives: R2 is now the tallest stack by a wide
+        # margin, the right-hand runs carry the vertical "unpriced" marks, and
+        # a top-left legend lands on R2's bar. Below the axis, as in (a).
+        "  legend style={at={(0.5,-0.42)}, anchor=north}, legend columns=2,\n"
         "]\n"
     ]
     for m in models:
@@ -1156,6 +1177,19 @@ def _panel_cost_by_model(metrics):
     unpriced = [metrics[k]["code"] for k in KEYS if not metrics[k]["priced"]]
     lines.append(_na_nodes(unpriced, "unpriced"))
     return "".join(lines)
+
+
+def _compact_codes(codes):
+    """["R10", "R11", "R12"] -> "10--12"; non-consecutive stay comma-separated."""
+    nums = sorted(int(c.lstrip("R")) for c in codes)
+    groups, start, prev = [], nums[0], nums[0]
+    for n in nums[1:] + [None]:
+        if n == prev + 1:
+            prev = n
+            continue
+        groups.append(str(start) if start == prev else f"{start}--{prev}")
+        start = prev = n
+    return ", ".join(groups)
 
 
 def _panel_frontier(metrics):
@@ -1204,7 +1238,21 @@ def _panel_frontier(metrics):
     # *vertically* (above / below the mark) rather than around it: that is the
     # only direction with room left.
     PLACEMENTS = [("south", "3pt"), ("north", "-3pt")]
-    place_of = {code: PLACEMENTS[i % len(PLACEMENTS)] for i, (_, _, code, _) in enumerate(on_scale)}
+
+    def _placement(index, y):
+        """Alternate, except against the panel's floor and ceiling.
+
+        A label anchored below its mark falls outside the axis when the mark
+        sits near ymin — the cheapest run per file is exactly that case, and its
+        label was being clipped away, leaving an unidentified dot. Points in the
+        top and bottom bands are therefore forced inward; the rest alternate."""
+        if y <= 0.12 * ymax:
+            return PLACEMENTS[0]
+        if y >= 0.88 * ymax:
+            return PLACEMENTS[1]
+        return PLACEMENTS[index % len(PLACEMENTS)]
+
+    place_of = {code: _placement(i, y) for i, (_, y, code, _) in enumerate(on_scale)}
 
     for harness, color in [("ccworkflow", "evalBlue"), ("csloop", "evalOrange")]:
         pts = [p for p in on_scale if p[3] == harness]
@@ -1226,11 +1274,39 @@ def _panel_frontier(metrics):
     # "lower-left is better" hint the nine-run version carried is gone: at this
     # density it printed straight through the csloop cluster, and the two axis
     # labels already say which direction is which.
-    for x, y, code, _ in off_scale:
+    notes = [
+        f"{code} off scale:\\\\{x:.0f}\\,min, \\${y:.0f}/file" for x, y, code, _ in off_scale
+    ]
+
+    # A run needs both a per-file cost and a per-file time to be a point here,
+    # so runs that settled nothing or carry no rate card cannot appear at all.
+    # Listing them stops a reader from reading absence as "not measured" — or,
+    # worse, as a point hidden under another.
+    absent = {}
+    for k in KEYS:
+        m = metrics[k]
+        if m["min_per_file"] is not None and m["cost_per_file"] is not None:
+            continue
+        if not m["priced"]:
+            reason = "unpriced"
+        elif m["files"] is None:
+            reason = "no branch"
+        else:
+            reason = "0 files"
+        absent.setdefault(reason, []).append(m["code"])
+    if absent:
+        # ~26 characters is all a \tiny line gets inside a panel this narrow
+        # before the text runs past the axis and is clipped mid-word, so the
+        # codes are compacted the same way the point labels are (drop the "R",
+        # collapse runs into ranges) and the heading gets a line to itself.
+        notes.append("not plotted:")
+        notes.extend(f"{_compact_codes(codes)} ({reason})" for reason, codes in absent.items())
+
+    if notes:
         lines.append(
-            f"\\node[font=\\tiny, color=evalInk, anchor=north west, align=left]\n"
+            "\\node[font=\\tiny, color=evalInk, anchor=north west, align=left]\n"
             f"  at (axis cs:0.55,{ymax * 0.99:.3g})\n"
-            f"  {{{code} off scale:\\\\{x:.0f}\\,min, \\${y:.0f}/file}};\n"
+            "  {" + "\\\\".join(notes) + "};\n"
         )
     return "".join(lines)
 

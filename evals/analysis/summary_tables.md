@@ -4,7 +4,7 @@ Kimi K3 and the oaic-gpt56 deployments are not Anthropic models and carry no rat
 
 All Anthropic csloop runs think adaptively (on by default); "+reasoning" marks runs that set the flag explicitly, not an ON/OFF pair.
 
-Excluded: csloop opus-5 (08-11) and (run2, 08-12) logged no model reasoning text; csloop Kimi K3 (08-14) has no archival git branch.
+Excluded: csloop opus-5 (08-11) and (run2, 08-12) logged no model reasoning text; csloop Kimi K3 (08-14) has no archival git branch; ccworkflow opus-5 (single session, 08-13) and csloop sonnet-5 +reasoning (08-12) withdrawn from the comparison.
 
 ## Run comparison: cost, cache, wall time, tool calls & files settled
 
@@ -14,15 +14,13 @@ Excluded: csloop opus-5 (08-11) and (run2, 08-12) logged no model reasoning text
 | R2 — ccworkflow (sonnet-5 author, opus-5 integrate) | $114.15 | 96% | 52 min | 48.3 | 41 | 1.3 min | $2.78 |
 | R3 — ccworkflow (sonnet-5 author, opus-5 integrate, run2) | $65.28 | 94% | 106 min | 63.4 | 15 | 7.1 min | $4.35 |
 | R4 — csloop opus-5 +reasoning (08-12) | $13.75 | 89% | 45 min | 27.4 | 14 | 3.2 min | $0.98 |
-| R5 — csloop sonnet-5 +reasoning (08-12) | $5.17 | 91% | 34 min | — | 0 | — | — |
-| R6 — csloop sonnet-5 +reasoning (run2, 08-12) | $4.89 | 90% | 35 min | 35.0 | 10 | 3.5 min | $0.49 |
-| R7 — csloop Kimi K3 (08-12) | $0.00 (n/a, non-Anthropic) | 93% | 39 min | 68.8 | 5 | 7.9 min | n/a |
-| R8 — ccworkflow opus-5 (single session, 08-13) | $36.94 | 91% | 29 min | 238.0 | 1 | 29.2 min | $36.94 |
-| R9 — csloop opus-5 (08-26) | $13.12 | 91% | 49 min | 25.8 | 15 | 3.2 min | $0.87 |
-| R10 — csloop sonnet-5 (08-26) | $5.15 | 90% | 40 min | 78.6 | 5 | 7.9 min | $1.03 |
-| R11 — csloop oaic-gpt56sol (08-26) | $0.00 (n/a, non-Anthropic) | 82% | 24 min | 66.0 | 5 | 4.8 min | n/a |
-| R12 — csloop oaic-gpt56sol (run2, 08-26) | $0.00 (n/a, non-Anthropic) | 80% | 32 min | 97.2 | 5 | 6.4 min | n/a |
-| R13 — csloop oaic-gpt56terra (08-26) | $0.00 (n/a, non-Anthropic) | 80% | 13 min | 92.0 | 2 | 6.7 min | n/a |
+| R5 — csloop sonnet-5 +reasoning (run2, 08-12) | $4.89 | 90% | 35 min | 35.0 | 10 | 3.5 min | $0.49 |
+| R6 — csloop Kimi K3 (08-12) | $0.00 (n/a, non-Anthropic) | 93% | 39 min | 68.8 | 5 | 7.9 min | n/a |
+| R7 — csloop opus-5 (08-26) | $13.12 | 91% | 49 min | 25.8 | 15 | 3.2 min | $0.87 |
+| R8 — csloop sonnet-5 (08-26) | $5.15 | 90% | 40 min | 78.6 | 5 | 7.9 min | $1.03 |
+| R9 — csloop oaic-gpt56sol (08-26) | $0.00 (n/a, non-Anthropic) | 82% | 24 min | 66.0 | 5 | 4.8 min | n/a |
+| R10 — csloop oaic-gpt56sol (run2, 08-26) | $0.00 (n/a, non-Anthropic) | 80% | 32 min | 97.2 | 5 | 6.4 min | n/a |
+| R11 — csloop oaic-gpt56terra (08-26) | $0.00 (n/a, non-Anthropic) | 80% | 13 min | 92.0 | 2 | 6.7 min | n/a |
 
 ## Token usage, cost, cache & wall time detail
 
@@ -32,15 +30,13 @@ Excluded: csloop opus-5 (08-11) and (run2, 08-12) logged no model reasoning text
 | R2 — ccworkflow (sonnet-5 author, opus-5 integrate) | 350,618 | 2,847,669 | 10,062,375 | 247,376,659 | 96% | $114.15 | 52 min |
 | R3 — ccworkflow (sonnet-5 author, opus-5 integrate, run2) | 94,947 | 1,354,040 | 6,870,860 | 111,300,406 | 94% | $65.28 | 106 min |
 | R4 — csloop opus-5 +reasoning (08-12) | 186,152 | 157,626 | 796,443 | 7,796,182 | 89% | $13.75 | 45 min |
-| R5 — csloop sonnet-5 +reasoning (08-12) | 187,693 | 129,013 | 703,545 | 8,733,778 | 91% | $5.17 | 34 min |
-| R6 — csloop sonnet-5 +reasoning (run2, 08-12) | 190,507 | 130,816 | 658,644 | 7,786,567 | 90% | $4.89 | 35 min |
-| R7 — csloop Kimi K3 (08-12) | 484,548 | 72,134 | 0 | 6,229,312 | 93% | $0.00 (+ tokens from oaic-moonshotai/Kimi-K3, not priced) | 39 min |
-| R8 — ccworkflow opus-5 (single session, 08-13) | 161,379 | 356,734 | 2,358,259 | 24,956,017 | 91% | $36.94 | 29 min |
-| R9 — csloop opus-5 (08-26) | 189,857 | 147,597 | 674,615 | 8,536,681 | 91% | $13.12 | 49 min |
-| R10 — csloop sonnet-5 (08-26) | 202,477 | 132,750 | 713,485 | 8,151,143 | 90% | $5.15 | 40 min |
-| R11 — csloop oaic-gpt56sol (08-26) | 378 | 41,854 | 1,021,727 | 4,665,225 | 82% | $0.00 (+ tokens from oaic-gpt56sol, not priced) | 24 min |
-| R12 — csloop oaic-gpt56sol (run2, 08-26) | 474 | 67,459 | 1,541,178 | 6,217,098 | 80% | $0.00 (+ tokens from oaic-gpt56sol, not priced) | 32 min |
-| R13 — csloop oaic-gpt56terra (08-26) | 177 | 26,588 | 570,957 | 2,270,253 | 80% | $0.00 (+ tokens from oaic-gpt56terra, not priced) | 13 min |
+| R5 — csloop sonnet-5 +reasoning (run2, 08-12) | 190,507 | 130,816 | 658,644 | 7,786,567 | 90% | $4.89 | 35 min |
+| R6 — csloop Kimi K3 (08-12) | 484,548 | 72,134 | 0 | 6,229,312 | 93% | $0.00 (+ tokens from oaic-moonshotai/Kimi-K3, not priced) | 39 min |
+| R7 — csloop opus-5 (08-26) | 189,857 | 147,597 | 674,615 | 8,536,681 | 91% | $13.12 | 49 min |
+| R8 — csloop sonnet-5 (08-26) | 202,477 | 132,750 | 713,485 | 8,151,143 | 90% | $5.15 | 40 min |
+| R9 — csloop oaic-gpt56sol (08-26) | 378 | 41,854 | 1,021,727 | 4,665,225 | 82% | $0.00 (+ tokens from oaic-gpt56sol, not priced) | 24 min |
+| R10 — csloop oaic-gpt56sol (run2, 08-26) | 474 | 67,459 | 1,541,178 | 6,217,098 | 80% | $0.00 (+ tokens from oaic-gpt56sol, not priced) | 32 min |
+| R11 — csloop oaic-gpt56terra (08-26) | 177 | 26,588 | 570,957 | 2,270,253 | 80% | $0.00 (+ tokens from oaic-gpt56terra, not priced) | 13 min |
 
 ## Cost by model
 
@@ -50,15 +46,13 @@ Excluded: csloop opus-5 (08-11) and (run2, 08-12) logged no model reasoning text
 | R2 — ccworkflow (sonnet-5 author, opus-5 integrate) | $17.23 | $96.92 |
 | R3 — ccworkflow (sonnet-5 author, opus-5 integrate, run2) | $20.18 | $45.09 |
 | R4 — csloop opus-5 +reasoning (08-12) | $13.75 | $0.00 |
-| R5 — csloop sonnet-5 +reasoning (08-12) | $0.00 | $5.17 |
-| R6 — csloop sonnet-5 +reasoning (run2, 08-12) | $0.00 | $4.89 |
-| R7 — csloop Kimi K3 (08-12) | $0.00 | $0.00 |
-| R8 — ccworkflow opus-5 (single session, 08-13) | $36.94 | $0.00 |
-| R9 — csloop opus-5 (08-26) | $13.12 | $0.00 |
-| R10 — csloop sonnet-5 (08-26) | $0.00 | $5.15 |
-| R11 — csloop oaic-gpt56sol (08-26) | $0.00 | $0.00 |
-| R12 — csloop oaic-gpt56sol (run2, 08-26) | $0.00 | $0.00 |
-| R13 — csloop oaic-gpt56terra (08-26) | $0.00 | $0.00 |
+| R5 — csloop sonnet-5 +reasoning (run2, 08-12) | $0.00 | $4.89 |
+| R6 — csloop Kimi K3 (08-12) | $0.00 | $0.00 |
+| R7 — csloop opus-5 (08-26) | $13.12 | $0.00 |
+| R8 — csloop sonnet-5 (08-26) | $0.00 | $5.15 |
+| R9 — csloop oaic-gpt56sol (08-26) | $0.00 | $0.00 |
+| R10 — csloop oaic-gpt56sol (run2, 08-26) | $0.00 | $0.00 |
+| R11 — csloop oaic-gpt56terra (08-26) | $0.00 | $0.00 |
 
 ## Status, coverage claim & self-reported correctness
 
@@ -70,15 +64,13 @@ Excluded: csloop opus-5 (08-11) and (run2, 08-12) logged no model reasoning text
 | R2 — ccworkflow (sonnet-5 author, opus-5 integrate) | stopped-at-gate | 41 | 38 | 2 | 272/272 |
 | R3 — ccworkflow (sonnet-5 author, opus-5 integrate, run2) | stopped-at-gate | 15 | 15 | 0 | 272/272 |
 | R4 — csloop opus-5 +reasoning (08-12) | stopped-at-gate | 14 | 14 | 0 | 272/272 |
-| R5 — csloop sonnet-5 +reasoning (08-12) | stopped-at-gate | 0 | 6 | 0 | 272/272 |
-| R6 — csloop sonnet-5 +reasoning (run2, 08-12) | stopped-at-gate | 10 | 10 | 0 | 272/272 |
-| R7 — csloop Kimi K3 (08-12) | stopped-at-gate | 5 | 5 | 0 | — |
-| R8 — ccworkflow opus-5 (single session, 08-13) | stopped-at-gate | 1 | 4 | 1 | 272/272 |
-| R9 — csloop opus-5 (08-26) | stopped-at-gate | 15 | 15 | 0 | 272/272 |
-| R10 — csloop sonnet-5 (08-26) | no agent_log archived | 5 | — | — | — |
-| R11 — csloop oaic-gpt56sol (08-26) | stopped-at-gate | 5 | 5 | 0 | 272/272 |
-| R12 — csloop oaic-gpt56sol (run2, 08-26) | stopped-at-gate | 5 | 5 | 10 | — |
-| R13 — csloop oaic-gpt56terra (08-26) | stopped-at-gate | 2 | 2 | 0 | 272/272 |
+| R5 — csloop sonnet-5 +reasoning (run2, 08-12) | stopped-at-gate | 10 | 10 | 0 | 272/272 |
+| R6 — csloop Kimi K3 (08-12) | stopped-at-gate | 5 | 5 | 0 | — |
+| R7 — csloop opus-5 (08-26) | stopped-at-gate | 15 | 15 | 0 | 272/272 |
+| R8 — csloop sonnet-5 (08-26) | no agent_log archived | 5 | — | — | — |
+| R9 — csloop oaic-gpt56sol (08-26) | stopped-at-gate | 5 | 5 | 0 | 272/272 |
+| R10 — csloop oaic-gpt56sol (run2, 08-26) | stopped-at-gate | 5 | 5 | 10 | — |
+| R11 — csloop oaic-gpt56terra (08-26) | stopped-at-gate | 2 | 2 | 0 | 272/272 |
 
 ## Which src/ module each run translated files from (git-exact)
 
@@ -90,15 +82,13 @@ Which top-level `software/mcfm/src/` directory each run's translated files came 
 | R2 — ccworkflow (sonnet-5 author, opus-5 integrate) | 12 | 2 | 1 | 11 |  | 6 | 9 | 41 |
 | R3 — ccworkflow (sonnet-5 author, opus-5 integrate, run2) | 15 |  |  |  |  |  |  | 15 |
 | R4 — csloop opus-5 +reasoning (08-12) |  |  |  |  | 14 |  |  | 14 |
-| R5 — csloop sonnet-5 +reasoning (08-12) |  |  |  |  |  |  |  | 0 |
-| R6 — csloop sonnet-5 +reasoning (run2, 08-12) | 10 |  |  |  |  |  |  | 10 |
-| R7 — csloop Kimi K3 (08-12) |  |  |  |  | 5 |  |  | 5 |
-| R8 — ccworkflow opus-5 (single session, 08-13) |  | 1 |  |  |  |  |  | 1 |
-| R9 — csloop opus-5 (08-26) |  |  |  |  | 15 |  |  | 15 |
-| R10 — csloop sonnet-5 (08-26) | 5 |  |  |  |  |  |  | 5 |
-| R11 — csloop oaic-gpt56sol (08-26) |  |  |  | 5 |  |  |  | 5 |
-| R12 — csloop oaic-gpt56sol (run2, 08-26) |  |  |  |  | 5 |  |  | 5 |
-| R13 — csloop oaic-gpt56terra (08-26) | 1 | 1 |  |  |  |  |  | 2 |
+| R5 — csloop sonnet-5 +reasoning (run2, 08-12) | 10 |  |  |  |  |  |  | 10 |
+| R6 — csloop Kimi K3 (08-12) |  |  |  |  | 5 |  |  | 5 |
+| R7 — csloop opus-5 (08-26) |  |  |  |  | 15 |  |  | 15 |
+| R8 — csloop sonnet-5 (08-26) | 5 |  |  |  |  |  |  | 5 |
+| R9 — csloop oaic-gpt56sol (08-26) |  |  |  | 5 |  |  |  | 5 |
+| R10 — csloop oaic-gpt56sol (run2, 08-26) |  |  |  |  | 5 |  |  | 5 |
+| R11 — csloop oaic-gpt56terra (08-26) | 1 | 1 |  |  |  |  |  | 2 |
 
 ## File-level overlap between runs sharing a module (git-exact)
 
@@ -107,26 +97,24 @@ For every pair of runs that translated files from at least one of the same modul
 | Run A | Run B | Shared module(s) | Files (A) | Files (B) | Overlap | Overlap / min(A,B) |
 |---|---|---|---:|---:|---:|---:|
 | R1 — csloop opus-5 +reasoning (08-11) | R2 — ccworkflow (sonnet-5 author, opus-5 integrate) | Z2jet, loop | 20 | 41 | 14 | 70% |
-| R4 — csloop opus-5 +reasoning (08-12) | R9 — csloop opus-5 (08-26) | W2jet | 14 | 15 | 12 | 86% |
+| R4 — csloop opus-5 +reasoning (08-12) | R7 — csloop opus-5 (08-26) | W2jet | 14 | 15 | 12 | 86% |
 | R2 — ccworkflow (sonnet-5 author, opus-5 integrate) | R3 — ccworkflow (sonnet-5 author, opus-5 integrate, run2) | BDK | 41 | 15 | 8 | 53% |
-| R2 — ccworkflow (sonnet-5 author, opus-5 integrate) | R11 — csloop oaic-gpt56sol (08-26) | ThreeJets | 41 | 5 | 5 | 100% |
+| R2 — ccworkflow (sonnet-5 author, opus-5 integrate) | R9 — csloop oaic-gpt56sol (08-26) | ThreeJets | 41 | 5 | 5 | 100% |
 | R1 — csloop opus-5 +reasoning (08-11) | R4 — csloop opus-5 +reasoning (08-12) | W2jet | 20 | 14 | 4 | 29% |
-| R2 — ccworkflow (sonnet-5 author, opus-5 integrate) | R10 — csloop sonnet-5 (08-26) | BDK | 41 | 5 | 4 | 80% |
-| R4 — csloop opus-5 +reasoning (08-12) | R12 — csloop oaic-gpt56sol (run2, 08-26) | W2jet | 14 | 5 | 4 | 80% |
-| R9 — csloop opus-5 (08-26) | R12 — csloop oaic-gpt56sol (run2, 08-26) | W2jet | 15 | 5 | 4 | 80% |
-| R1 — csloop opus-5 +reasoning (08-11) | R9 — csloop opus-5 (08-26) | W2jet | 20 | 15 | 3 | 20% |
-| R2 — ccworkflow (sonnet-5 author, opus-5 integrate) | R6 — csloop sonnet-5 +reasoning (run2, 08-12) | BDK | 41 | 10 | 3 | 30% |
-| R3 — ccworkflow (sonnet-5 author, opus-5 integrate, run2) | R10 — csloop sonnet-5 (08-26) | BDK | 15 | 5 | 3 | 60% |
-| R4 — csloop opus-5 +reasoning (08-12) | R7 — csloop Kimi K3 (08-12) | W2jet | 14 | 5 | 3 | 60% |
-| R7 — csloop Kimi K3 (08-12) | R9 — csloop opus-5 (08-26) | W2jet | 5 | 15 | 3 | 60% |
-| R1 — csloop opus-5 +reasoning (08-11) | R12 — csloop oaic-gpt56sol (run2, 08-26) | W2jet | 20 | 5 | 2 | 40% |
-| R6 — csloop sonnet-5 +reasoning (run2, 08-12) | R10 — csloop sonnet-5 (08-26) | BDK | 10 | 5 | 2 | 40% |
-| R7 — csloop Kimi K3 (08-12) | R12 — csloop oaic-gpt56sol (run2, 08-26) | W2jet | 5 | 5 | 2 | 40% |
-| R1 — csloop opus-5 +reasoning (08-11) | R7 — csloop Kimi K3 (08-12) | W2jet | 20 | 5 | 1 | 20% |
-| R2 — ccworkflow (sonnet-5 author, opus-5 integrate) | R8 — ccworkflow opus-5 (single session, 08-13) | Mods | 41 | 1 | 1 | 100% |
-| R2 — ccworkflow (sonnet-5 author, opus-5 integrate) | R13 — csloop oaic-gpt56terra (08-26) | BDK, Mods | 41 | 2 | 1 | 50% |
-| R6 — csloop sonnet-5 +reasoning (run2, 08-12) | R13 — csloop oaic-gpt56terra (08-26) | BDK | 10 | 2 | 1 | 50% |
-| R10 — csloop sonnet-5 (08-26) | R13 — csloop oaic-gpt56terra (08-26) | BDK | 5 | 2 | 1 | 50% |
-| R3 — ccworkflow (sonnet-5 author, opus-5 integrate, run2) | R6 — csloop sonnet-5 +reasoning (run2, 08-12) | BDK | 15 | 10 | 0 | 0% |
-| R3 — ccworkflow (sonnet-5 author, opus-5 integrate, run2) | R13 — csloop oaic-gpt56terra (08-26) | BDK | 15 | 2 | 0 | 0% |
-| R8 — ccworkflow opus-5 (single session, 08-13) | R13 — csloop oaic-gpt56terra (08-26) | Mods | 1 | 2 | 0 | 0% |
+| R2 — ccworkflow (sonnet-5 author, opus-5 integrate) | R8 — csloop sonnet-5 (08-26) | BDK | 41 | 5 | 4 | 80% |
+| R4 — csloop opus-5 +reasoning (08-12) | R10 — csloop oaic-gpt56sol (run2, 08-26) | W2jet | 14 | 5 | 4 | 80% |
+| R7 — csloop opus-5 (08-26) | R10 — csloop oaic-gpt56sol (run2, 08-26) | W2jet | 15 | 5 | 4 | 80% |
+| R1 — csloop opus-5 +reasoning (08-11) | R7 — csloop opus-5 (08-26) | W2jet | 20 | 15 | 3 | 20% |
+| R2 — ccworkflow (sonnet-5 author, opus-5 integrate) | R5 — csloop sonnet-5 +reasoning (run2, 08-12) | BDK | 41 | 10 | 3 | 30% |
+| R3 — ccworkflow (sonnet-5 author, opus-5 integrate, run2) | R8 — csloop sonnet-5 (08-26) | BDK | 15 | 5 | 3 | 60% |
+| R4 — csloop opus-5 +reasoning (08-12) | R6 — csloop Kimi K3 (08-12) | W2jet | 14 | 5 | 3 | 60% |
+| R6 — csloop Kimi K3 (08-12) | R7 — csloop opus-5 (08-26) | W2jet | 5 | 15 | 3 | 60% |
+| R1 — csloop opus-5 +reasoning (08-11) | R10 — csloop oaic-gpt56sol (run2, 08-26) | W2jet | 20 | 5 | 2 | 40% |
+| R5 — csloop sonnet-5 +reasoning (run2, 08-12) | R8 — csloop sonnet-5 (08-26) | BDK | 10 | 5 | 2 | 40% |
+| R6 — csloop Kimi K3 (08-12) | R10 — csloop oaic-gpt56sol (run2, 08-26) | W2jet | 5 | 5 | 2 | 40% |
+| R1 — csloop opus-5 +reasoning (08-11) | R6 — csloop Kimi K3 (08-12) | W2jet | 20 | 5 | 1 | 20% |
+| R2 — ccworkflow (sonnet-5 author, opus-5 integrate) | R11 — csloop oaic-gpt56terra (08-26) | BDK, Mods | 41 | 2 | 1 | 50% |
+| R5 — csloop sonnet-5 +reasoning (run2, 08-12) | R11 — csloop oaic-gpt56terra (08-26) | BDK | 10 | 2 | 1 | 50% |
+| R8 — csloop sonnet-5 (08-26) | R11 — csloop oaic-gpt56terra (08-26) | BDK | 5 | 2 | 1 | 50% |
+| R3 — ccworkflow (sonnet-5 author, opus-5 integrate, run2) | R5 — csloop sonnet-5 +reasoning (run2, 08-12) | BDK | 15 | 10 | 0 | 0% |
+| R3 — ccworkflow (sonnet-5 author, opus-5 integrate, run2) | R11 — csloop oaic-gpt56terra (08-26) | BDK | 15 | 2 | 0 | 0% |
