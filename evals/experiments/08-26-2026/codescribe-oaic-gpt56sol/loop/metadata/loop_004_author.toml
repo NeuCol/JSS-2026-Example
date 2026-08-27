@@ -2,8 +2,8 @@ run_id = "20260826-104355-bc6f23"
 loop_index = 4
 phase = "author"
 model = "oaic-gpt56sol"
-task_file = "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/loop.toml"
-workdir = "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example"
+task_file = "/home/user/JSS-2026-Example/dev/transformations/mcfm-translate/loop.toml"
+workdir = "/home/user/JSS-2026-Example"
 stop_reason = "final_text"
 final_text_present = true
 iterations = 24
@@ -12,14 +12,14 @@ created_at = "2026-08-26T16:08:06.627413+00:00"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/current_plan.md\n# lines: 1-182\n0001: # Fortran → C++ plan\n0002: \n0003: This file says how to run step 1. The rewrite rules and correctness bar are in\n0004: `desired_spec.md`.\n0005: \n0006: > This Plan is the policy: it selects and orders the work over the ready set (see *When to\n0007: > stop*). The correctness contract — objective `f`, invariants `I`, oracle `V`, and status set\n0008: > `Σ` — lives in `"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/current_plan.md\n# lines: 1-182\n0001: # Fortran → C++ plan\n0002: \n0003: This file says how to run step 1. The rewrite rules and correctness bar are in\n0004: `desired_spec.md`.\n0005: \n0006: > This Plan is the policy: it selects and orders the work over the ready set (see *When to\n0007: > stop*). The correctness contract — objective `f`, invariants `I`, oracle `V`, and status set\n0008: > `Σ` — lives in `"
 
 [tools.args]
 path = "dev/transformations/mcfm-translate/current_plan.md"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/current_plan.md\n# lines: 165-182\n0165: \n0166: The *ready set* is the set of ready, not-yet-settled files. Each settled file leaves the\n0167: ready set and the readiness graph is acyclic, so the pass terminates. Stop only when one of\n0168: these is true:\n0169: \n0170: - a completed group needs human approval before the next group can start\n0171: - the ready set is empty (no ready file to work on)\n0172: "
+output_preview = "# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/current_plan.md\n# lines: 165-182\n0165: \n0166: The *ready set* is the set of ready, not-yet-settled files. Each settled file leaves the\n0167: ready set and the readiness graph is acyclic, so the pass terminates. Stop only when one of\n0168: these is true:\n0169: \n0170: - a completed group needs human approval before the next group can start\n0171: - the ready set is empty (no ready file to work on)\n0172: "
 
 [tools.args]
 path = "dev/transformations/mcfm-translate/current_plan.md"
@@ -28,105 +28,105 @@ limit = 30
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/desired_spec.md\n# lines: 1-144\n0001: # Fortran → C++: target output for one MCFM file\n0002: \n0003: This file defines the rewrite target and correctness bar for step 1. The workflow lives in\n0004: `current_plan.md`.\n0005: \n0006: Paths are written as `software/mcfm/src/...`.\n0007: \n0008: ---\n0009: \n0010: ## Contract\n0011: \n0012: This step advances by *settling* source files one at a time: each file is r"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/desired_spec.md\n# lines: 1-144\n0001: # Fortran → C++: target output for one MCFM file\n0002: \n0003: This file defines the rewrite target and correctness bar for step 1. The workflow lives in\n0004: `current_plan.md`.\n0005: \n0006: Paths are written as `software/mcfm/src/...`.\n0007: \n0008: ---\n0009: \n0010: ## Contract\n0011: \n0012: This step advances by *settling* source files one at a time: each file is r"
 
 [tools.args]
 path = "dev/transformations/mcfm-translate/desired_spec.md"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/agent_log.md\n# lines: 1-12\n0001: # MCFM translation worklist\n0002: \n0003: ## Group 1 — ThreeJets five-gluon primitive amplitudes\n0004: \n0005: - [x] software/mcfm/src/ThreeJets/A51mpmpp5g.f — TRANSLATED (build passed; coverage process `g g g g g` reported NOT COVERED)\n0006: - [x] software/mcfm/src/ThreeJets/A51mmppp5g.f — TRANSLATED (build passed; coverage process `g g g g g` reported NOT COVERED)\n0007"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/agent_log.md\n# lines: 1-12\n0001: # MCFM translation worklist\n0002: \n0003: ## Group 1 — ThreeJets five-gluon primitive amplitudes\n0004: \n0005: - [x] software/mcfm/src/ThreeJets/A51mpmpp5g.f — TRANSLATED (build passed; coverage process `g g g g g` reported NOT COVERED)\n0006: - [x] software/mcfm/src/ThreeJets/A51mmppp5g.f — TRANSLATED (build passed; coverage process `g g g g g` reported NOT COVERED)\n0007"
 
 [tools.args]
 path = "dev/transformations/mcfm-translate/agent_log.md"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/A5qbmgmqpgpgp.f\n# lines: 1-72\n0001:       subroutine A5qbmgmqpgpgp(j1,j2,j3,j4,j5,za,zb,miA5tree,AL,ASUSY,Af,As)\n0002: ! Amplitudes for 0 -> qb- g- q+ g+ g+ from:\n0003: ! 'One-Loop Corrections to Two-Quark Three-Gluon Amplitudes'\n0004: !  Zvi Bern, Lance Dixon, David A. Kosower\n0005: ! Published in: Nucl.Phys.B 437 (1995) 259-304,\n0006: ! e-Print: hep-ph/9409393 [hep-ph]\n0007:       use types\n0008:       use"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/A5qbmgmqpgpgp.f\n# lines: 1-72\n0001:       subroutine A5qbmgmqpgpgp(j1,j2,j3,j4,j5,za,zb,miA5tree,AL,ASUSY,Af,As)\n0002: ! Amplitudes for 0 -> qb- g- q+ g+ g+ from:\n0003: ! 'One-Loop Corrections to Two-Quark Three-Gluon Amplitudes'\n0004: !  Zvi Bern, Lance Dixon, David A. Kosower\n0005: ! Published in: Nucl.Phys.B 437 (1995) 259-304,\n0006: ! e-Print: hep-ph/9409393 [hep-ph]\n0007:       use types\n0008:       use"
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/A5qbmgmqpgpgp.f"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/A5qbmgpqpgpgm.f\n# lines: 1-77\n0001:       subroutine A5qbmgpqpgpgm(j1,j2,j3,j4,j5,za,zb,miA5tree,AL,ASUSY,Af,As)\n0002: ! Amplitudes for 0 -> qb- g+ q+ g+ g- from:\n0003: ! 'One-Loop Corrections to Two-Quark Three-Gluon Amplitudes'\n0004: !  Zvi Bern, Lance Dixon, David A. Kosower\n0005: ! Published in: Nucl.Phys.B 437 (1995) 259-304,\n0006: ! e-Print: hep-ph/9409393 [hep-ph]\n0007:       use types\n0008:       use"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/A5qbmgpqpgpgm.f\n# lines: 1-77\n0001:       subroutine A5qbmgpqpgpgm(j1,j2,j3,j4,j5,za,zb,miA5tree,AL,ASUSY,Af,As)\n0002: ! Amplitudes for 0 -> qb- g+ q+ g+ g- from:\n0003: ! 'One-Loop Corrections to Two-Quark Three-Gluon Amplitudes'\n0004: !  Zvi Bern, Lance Dixon, David A. Kosower\n0005: ! Published in: Nucl.Phys.B 437 (1995) 259-304,\n0006: ! e-Print: hep-ph/9409393 [hep-ph]\n0007:       use types\n0008:       use"
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/A5qbmgpqpgpgm.f"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/A5qbmqpgpgpgm.f\n# lines: 1-88\n0001:       subroutine A5qbmqpgpgpgm(j1,j2,j3,j4,j5,za,zb,miA5tree,AL,ASUSY,Af,As)\n0002: ! Amplitudes for 0 -> qb- q+ g+ g+ g- from:\n0003: ! 'One-Loop Corrections to Two-Quark Three-Gluon Amplitudes'\n0004: !  Zvi Bern, Lance Dixon, David A. Kosower\n0005: ! Published in: Nucl.Phys.B 437 (1995) 259-304,\n0006: ! e-Print: hep-ph/9409393 [hep-ph]\n0007:       use types\n0008:       use"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/A5qbmqpgpgpgm.f\n# lines: 1-88\n0001:       subroutine A5qbmqpgpgpgm(j1,j2,j3,j4,j5,za,zb,miA5tree,AL,ASUSY,Af,As)\n0002: ! Amplitudes for 0 -> qb- q+ g+ g+ g- from:\n0003: ! 'One-Loop Corrections to Two-Quark Three-Gluon Amplitudes'\n0004: !  Zvi Bern, Lance Dixon, David A. Kosower\n0005: ! Published in: Nucl.Phys.B 437 (1995) 259-304,\n0006: ! e-Print: hep-ph/9409393 [hep-ph]\n0007:       use types\n0008:       use"
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/A5qbmqpgpgpgm.f"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/A5qbmgmqpgpgp.cpp\n# lines: 1-104\n0001: // Amplitudes for 0 -> qb- g- q+ g+ g+ from:\n0002: // 'One-Loop Corrections to Two-Quark Three-Gluon Amplitudes'\n0003: //  Zvi Bern, Lance Dixon, David A. Kosower\n0004: // Published in: Nucl.Phys.B 437 (1995) 259-304,\n0005: // e-Print: hep-ph/9409393 [hep-ph]\n0006: \n0007: #include \"A5qbmgmqpgpgp.hpp\"\n0008: #include <constants_mod.hpp>\n0009: #include <epinv_mod.hpp>\n0010"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/A5qbmgmqpgpgp.cpp\n# lines: 1-104\n0001: // Amplitudes for 0 -> qb- g- q+ g+ g+ from:\n0002: // 'One-Loop Corrections to Two-Quark Three-Gluon Amplitudes'\n0003: //  Zvi Bern, Lance Dixon, David A. Kosower\n0004: // Published in: Nucl.Phys.B 437 (1995) 259-304,\n0005: // e-Print: hep-ph/9409393 [hep-ph]\n0006: \n0007: #include \"A5qbmgmqpgpgp.hpp\"\n0008: #include <constants_mod.hpp>\n0009: #include <epinv_mod.hpp>\n0010"
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/A5qbmgmqpgpgp.cpp"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/A5qbmgpqpgpgm.cpp\n# lines: 1-109\n0001: // Amplitudes for 0 -> qb- g+ q+ g+ g- from:\n0002: // 'One-Loop Corrections to Two-Quark Three-Gluon Amplitudes'\n0003: //  Zvi Bern, Lance Dixon, David A. Kosower\n0004: // Published in: Nucl.Phys.B 437 (1995) 259-304,\n0005: // e-Print: hep-ph/9409393 [hep-ph]\n0006: \n0007: #include \"A5qbmgpqpgpgm.hpp\"\n0008: #include <constants_mod.hpp>\n0009: #include <epinv_mod.hpp>\n0010"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/A5qbmgpqpgpgm.cpp\n# lines: 1-109\n0001: // Amplitudes for 0 -> qb- g+ q+ g+ g- from:\n0002: // 'One-Loop Corrections to Two-Quark Three-Gluon Amplitudes'\n0003: //  Zvi Bern, Lance Dixon, David A. Kosower\n0004: // Published in: Nucl.Phys.B 437 (1995) 259-304,\n0005: // e-Print: hep-ph/9409393 [hep-ph]\n0006: \n0007: #include \"A5qbmgpqpgpgm.hpp\"\n0008: #include <constants_mod.hpp>\n0009: #include <epinv_mod.hpp>\n0010"
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/A5qbmgpqpgpgm.cpp"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/A5qbmqpgpgpgm.cpp\n# lines: 1-104\n0001: #include \"A5qbmqpgpgpgm.hpp\"\n0002: #include <complex>\n0003: #include <constants_mod.hpp>\n0004: #include <epinv2_mod.hpp>\n0005: #include <epinv_mod.hpp>\n0006: #include <mxpart_mod.hpp>\n0007: #include <scale_mod.hpp>\n0008: #include <sprods_com_mod.hpp>\n0009: #include <FArray.hpp>\n0010: #include <Need.hpp>\n0011: \n0012: // Amplitudes for 0 -> qb- q+ g+ g+ g- from:\n0013: // "
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/A5qbmqpgpgpgm.cpp\n# lines: 1-104\n0001: #include \"A5qbmqpgpgpgm.hpp\"\n0002: #include <complex>\n0003: #include <constants_mod.hpp>\n0004: #include <epinv2_mod.hpp>\n0005: #include <epinv_mod.hpp>\n0006: #include <mxpart_mod.hpp>\n0007: #include <scale_mod.hpp>\n0008: #include <sprods_com_mod.hpp>\n0009: #include <FArray.hpp>\n0010: #include <Need.hpp>\n0011: \n0012: // Amplitudes for 0 -> qb- q+ g+ g+ g- from:\n0013: // "
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/A5qbmqpgpgpgm.cpp"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/A5qbmgmqpgpgp.hpp\n# lines: 1-4\n0001: #pragma once\n0002: #include <complex>\n0003: #include <FArray.hpp>\n0004: void A5qbmgmqpgpgp(int,int,int,int,int,FArray2D<std::complex<double>>&,FArray2D<std::complex<double>>&,std::complex<double>&,std::complex<double>&,std::complex<double>&,std::complex<double>&,std::complex<double>&);\n"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/A5qbmgmqpgpgp.hpp\n# lines: 1-4\n0001: #pragma once\n0002: #include <complex>\n0003: #include <FArray.hpp>\n0004: void A5qbmgmqpgpgp(int,int,int,int,int,FArray2D<std::complex<double>>&,FArray2D<std::complex<double>>&,std::complex<double>&,std::complex<double>&,std::complex<double>&,std::complex<double>&,std::complex<double>&);\n"
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/A5qbmgmqpgpgp.hpp"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/A5qbmgpqpgpgm.hpp\n# lines: 1-4\n0001: #pragma once\n0002: #include <complex>\n0003: #include <FArray.hpp>\n0004: void A5qbmgpqpgpgm(int,int,int,int,int,FArray2D<std::complex<double>>&,FArray2D<std::complex<double>>&,std::complex<double>&,std::complex<double>&,std::complex<double>&,std::complex<double>&,std::complex<double>&);\n"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/A5qbmgpqpgpgm.hpp\n# lines: 1-4\n0001: #pragma once\n0002: #include <complex>\n0003: #include <FArray.hpp>\n0004: void A5qbmgpqpgpgm(int,int,int,int,int,FArray2D<std::complex<double>>&,FArray2D<std::complex<double>>&,std::complex<double>&,std::complex<double>&,std::complex<double>&,std::complex<double>&,std::complex<double>&);\n"
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/A5qbmgpqpgpgm.hpp"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/A5qbmqpgpgpgm.hpp\n# lines: 1-4\n0001: #pragma once\n0002: #include <complex>\n0003: #include <FArray.hpp>\n0004: void A5qbmqpgpgpgm(int,int,int,int,int,FArray2D<std::complex<double>>&,FArray2D<std::complex<double>>&,std::complex<double>&,std::complex<double>&,std::complex<double>&,std::complex<double>&,std::complex<double>&);\n"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/A5qbmqpgpgpgm.hpp\n# lines: 1-4\n0001: #pragma once\n0002: #include <complex>\n0003: #include <FArray.hpp>\n0004: void A5qbmqpgpgpgm(int,int,int,int,int,FArray2D<std::complex<double>>&,FArray2D<std::complex<double>>&,std::complex<double>&,std::complex<double>&,std::complex<double>&,std::complex<double>&,std::complex<double>&);\n"
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/A5qbmqpgpgpgm.hpp"
 [[tools]]
 name = "read"
 ok = false
-output_preview = "Error: file not found: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/A5qbmgmqpgpgp_fi.F90"
+output_preview = "Error: file not found: /home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/A5qbmgmqpgpgp_fi.F90"
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/A5qbmgmqpgpgp_fi.F90"
 [[tools]]
 name = "read"
 ok = false
-output_preview = "Error: file not found: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/A5qbmgpqpgpgm_fi.F90"
+output_preview = "Error: file not found: /home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/A5qbmgpqpgpgm_fi.F90"
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/A5qbmgpqpgpgm_fi.F90"
 [[tools]]
 name = "read"
 ok = false
-output_preview = "Error: file not found: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/A5qbmqpgpgpgm_fi.F90"
+output_preview = "Error: file not found: /home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/A5qbmqpgpgpgm_fi.F90"
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/A5qbmqpgpgpgm_fi.F90"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/CMakeLists.txt\n# lines: 1-31\n0001: target_sources(objlib PRIVATE\n0002: A5NLO4qg.f\n0003: fillaij0.f90\n0004: fillaij0.cpp\n0005: fillDij.f\n0006: fillEij.f\n0007: fillRCij.f90\n0008: fillRCij.cpp\n0009: fillSij.f90\n0010: fillSij.cpp\n0011: A5NLOqbqggg.f\n0012: fillamps_qbqggg.f\n0013: A5NLOggggg.f\n0014: A51mmppp5g_fi.F90\n0015: A51mmppp5g.cpp\n0016: A51mpmpp5g_fi.F90\n0017: A51mpmpp5g.cpp\n0018: A5gfill.f\n0019: qqb_thrjet"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/CMakeLists.txt\n# lines: 1-31\n0001: target_sources(objlib PRIVATE\n0002: A5NLO4qg.f\n0003: fillaij0.f90\n0004: fillaij0.cpp\n0005: fillDij.f\n0006: fillEij.f\n0007: fillRCij.f90\n0008: fillRCij.cpp\n0009: fillSij.f90\n0010: fillSij.cpp\n0011: A5NLOqbqggg.f\n0012: fillamps_qbqggg.f\n0013: A5NLOggggg.f\n0014: A51mmppp5g_fi.F90\n0015: A51mmppp5g.cpp\n0016: A51mpmpp5g_fi.F90\n0017: A51mpmpp5g.cpp\n0018: A5gfill.f\n0019: qqb_thrjet"
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/CMakeLists.txt"
@@ -154,7 +154,7 @@ command = "grep -n A5qbm software/mcfm/src/ThreeJets/deprecated/CMakeLists.txt"
 [[tools]]
 name = "bash"
 ok = true
-output_preview = "exit_code: 0\nSTDOUT:\nGenerating Doxygen XML for /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src -> /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/doxygen_dep/xml\nwrote 1133 XML file(s) to /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/doxygen_dep/xml\nsource 529  translated 89  untranslated 440\nready leaves (deps=0, non-blind): 225\nsymbol index: 915 symbol(s)\ncleanup candidates: move 77  shim-delete 15  merge 36\nwrote roadmap_metrics."
+output_preview = "exit_code: 0\nSTDOUT:\nGenerating Doxygen XML for /home/user/JSS-2026-Example/software/mcfm/src -> /home/user/JSS-2026-Example/software/mcfm/doxygen_dep/xml\nwrote 1133 XML file(s) to /home/user/JSS-2026-Example/software/mcfm/doxygen_dep/xml\nsource 529  translated 89  untranslated 440\nready leaves (deps=0, non-blind): 225\nsymbol index: 915 symbol(s)\ncleanup candidates: move 77  shim-delete 15  merge 36\nwrote roadmap_metrics."
 
 [tools.args]
 command = "python3 dev/workflow.py refresh"
@@ -162,21 +162,21 @@ timeout = 120
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/A5qbmgmqpgpgp_fi.f90\n# lines: 1-22\n0001: subroutine A5qbmgmqpgpgp(j1,j2,j3,j4,j5,za,zb,miA5tree,AL,ASUSY,Af,As)\n0002:   use, intrinsic :: iso_c_binding\n0003:   use mxpart_mod\n0004:   implicit none\n0005: \n0006:   integer(c_int), intent(in) :: j1, j2, j3, j4, j5\n0007:   complex(c_double_complex), intent(inout) :: za(mxpart,mxpart), zb(mxpart,mxpart)\n0008:   complex(c_double_complex), intent(inout) :: miA5tree,"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/A5qbmgmqpgpgp_fi.f90\n# lines: 1-22\n0001: subroutine A5qbmgmqpgpgp(j1,j2,j3,j4,j5,za,zb,miA5tree,AL,ASUSY,Af,As)\n0002:   use, intrinsic :: iso_c_binding\n0003:   use mxpart_mod\n0004:   implicit none\n0005: \n0006:   integer(c_int), intent(in) :: j1, j2, j3, j4, j5\n0007:   complex(c_double_complex), intent(inout) :: za(mxpart,mxpart), zb(mxpart,mxpart)\n0008:   complex(c_double_complex), intent(inout) :: miA5tree,"
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/A5qbmgmqpgpgp_fi.f90"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/A5qbmgpqpgpgm_fi.f90\n# lines: 1-22\n0001: subroutine A5qbmgpqpgpgm(j1,j2,j3,j4,j5,za,zb,miA5tree,AL,ASUSY,Af,As)\n0002:   use, intrinsic :: iso_c_binding\n0003:   use mxpart_mod\n0004:   implicit none\n0005: \n0006:   integer(c_int), intent(in) :: j1, j2, j3, j4, j5\n0007:   complex(c_double_complex), intent(inout) :: za(mxpart,mxpart), zb(mxpart,mxpart)\n0008:   complex(c_double_complex), intent(inout) :: miA5tree,"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/A5qbmgpqpgpgm_fi.f90\n# lines: 1-22\n0001: subroutine A5qbmgpqpgpgm(j1,j2,j3,j4,j5,za,zb,miA5tree,AL,ASUSY,Af,As)\n0002:   use, intrinsic :: iso_c_binding\n0003:   use mxpart_mod\n0004:   implicit none\n0005: \n0006:   integer(c_int), intent(in) :: j1, j2, j3, j4, j5\n0007:   complex(c_double_complex), intent(inout) :: za(mxpart,mxpart), zb(mxpart,mxpart)\n0008:   complex(c_double_complex), intent(inout) :: miA5tree,"
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/A5qbmgpqpgpgm_fi.f90"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/A5qbmqpgpgpgm_fi.f90\n# lines: 1-21\n0001: subroutine A5qbmqpgpgpgm(j1,j2,j3,j4,j5,za,zb,miA5tree,AL,ASUSY,Af,As)\n0002:   use, intrinsic :: iso_c_binding\n0003:   use mxpart_mod\n0004:   implicit none\n0005: \n0006:   integer(c_int), intent(in) :: j1,j2,j3,j4,j5\n0007:   complex(c_double_complex), intent(inout) :: za(mxpart,mxpart), zb(mxpart,mxpart)\n0008:   complex(c_double_complex), intent(inout) :: miA5tree, AL,"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/A5qbmqpgpgpgm_fi.f90\n# lines: 1-21\n0001: subroutine A5qbmqpgpgpgm(j1,j2,j3,j4,j5,za,zb,miA5tree,AL,ASUSY,Af,As)\n0002:   use, intrinsic :: iso_c_binding\n0003:   use mxpart_mod\n0004:   implicit none\n0005: \n0006:   integer(c_int), intent(in) :: j1,j2,j3,j4,j5\n0007:   complex(c_double_complex), intent(inout) :: za(mxpart,mxpart), zb(mxpart,mxpart)\n0008:   complex(c_double_complex), intent(inout) :: miA5tree, AL,"
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/A5qbmqpgpgpgm_fi.f90"
@@ -199,7 +199,7 @@ timeout = 120
 [[tools]]
 name = "edit"
 ok = true
-output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/agent_log.md\",\n  \"applied\": 2,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 16,\n      \"new_len\": 224,\n      \"before_snippet\": \"…— TRANSLATED (build passed; coverage process `g g g g g` reported NOT COVERED)\\n\\n## Session log\\n\\n- 2026-08-26: Opened Group 1 after refresh reported 229 ready leaves; translatin…\",\n      \"after_snippet\": \"…— TRANSL"
+output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/user/JSS-2026-Example/dev/transformations/mcfm-translate/agent_log.md\",\n  \"applied\": 2,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 16,\n      \"new_len\": 224,\n      \"before_snippet\": \"…— TRANSLATED (build passed; coverage process `g g g g g` reported NOT COVERED)\\n\\n## Session log\\n\\n- 2026-08-26: Opened Group 1 after refresh reported 229 ready leaves; translatin…\",\n      \"after_snippet\": \"…— TRANSL"
 
 [tools.args]
 path = "dev/transformations/mcfm-translate/agent_log.md"
@@ -242,7 +242,7 @@ command = "python3 -c '__import__(\"shutil\").move(\"software/mcfm/src/ThreeJets
 [[tools]]
 name = "bash"
 ok = true
-output_preview = "exit_code: 0\nSTDOUT:\nx1b[95mROOT:x1b[0m /home/akash/Desktop/Akash/Projects/JSS-Paper-Example\nx1b[95mNODE:x1b[0m <ROOT>/tests/mcfm\n\nx1b[95mSCRIPTS: x1b[0m\n    - <ROOT>/config.sh\n    - <ROOT>/environment.sh\n    - <ROOT>/tests/mcfm/test.sh\n\nx1b[95mEXECUTE:x1b[0m <ROOT>/tests/mcfm/job.submit\nin 1:30.1 \nx1b[92mSUCCESS x1b[0m\n\nx1b[95mOUTPUT:x1b[0m <ROOT>/tests/mcfm/job.output\n\nSTDERR:\n"
+output_preview = "exit_code: 0\nSTDOUT:\nx1b[95mROOT:x1b[0m /home/user/JSS-2026-Example\nx1b[95mNODE:x1b[0m <ROOT>/tests/mcfm\n\nx1b[95mSCRIPTS: x1b[0m\n    - <ROOT>/config.sh\n    - <ROOT>/environment.sh\n    - <ROOT>/tests/mcfm/test.sh\n\nx1b[95mEXECUTE:x1b[0m <ROOT>/tests/mcfm/job.submit\nin 1:30.1 \nx1b[92mSUCCESS x1b[0m\n\nx1b[95mOUTPUT:x1b[0m <ROOT>/tests/mcfm/job.output\n\nSTDERR:\n"
 
 [tools.args]
 command = "jobrunner submit tests/mcfm"
@@ -295,35 +295,35 @@ timeout = 1200
 [[tools]]
 name = "read"
 ok = false
-output_preview = "Error: file not found: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/tests/mcfm-verify/run.sh"
+output_preview = "Error: file not found: /home/user/JSS-2026-Example/tests/mcfm-verify/run.sh"
 
 [tools.args]
 path = "tests/mcfm-verify/run.sh"
 [[tools]]
 name = "read"
 ok = false
-output_preview = "Error: file not found: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/tests/mcfm-verify/Jobfile"
+output_preview = "Error: file not found: /home/user/JSS-2026-Example/tests/mcfm-verify/Jobfile"
 
 [tools.args]
 path = "tests/mcfm-verify/Jobfile"
 [[tools]]
 name = "read"
 ok = false
-output_preview = "Error: file not found: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/tests/mcfm-verify/job.submit"
+output_preview = "Error: file not found: /home/user/JSS-2026-Example/tests/mcfm-verify/job.submit"
 
 [tools.args]
 path = "tests/mcfm-verify/job.submit"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/environment.sh\n# lines: 1-41\n0001: # Shell configuration shared across the lab notebook.\n0002: #\n0003: # Sourcing this file exports the project paths every orchestrator, skill, and\n0004: # tool depends on. It resolves the project root from THIS script's own location\n0005: # (via BASH_SOURCE), not the current working directory, so\n0006: #   source /abs/path/to/environment.sh\n0007: # is correct from any cwd — including inside a subagent "
+output_preview = "# path: /home/user/JSS-2026-Example/environment.sh\n# lines: 1-41\n0001: # Shell configuration shared across the lab notebook.\n0002: #\n0003: # Sourcing this file exports the project paths every orchestrator, skill, and\n0004: # tool depends on. It resolves the project root from THIS script's own location\n0005: # (via BASH_SOURCE), not the current working directory, so\n0006: #   source /abs/path/to/environment.sh\n0007: # is correct from any cwd — including inside a subagent "
 
 [tools.args]
 path = "environment.sh"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/config.sh\n# lines: 1-2\n0001: # Per-machine site selector. Points environment.sh at sites/$SiteName/environment.sh.\n0002: export SiteName=\"supercomp01a\"\n"
+output_preview = "# path: /home/user/JSS-2026-Example/config.sh\n# lines: 1-2\n0001: # Per-machine site selector. Points environment.sh at sites/$SiteName/environment.sh.\n0002: export SiteName=\"supercomp01a\"\n"
 
 [tools.args]
 path = "config.sh"
@@ -360,7 +360,7 @@ timeout = 1200
 [[tools]]
 name = "write"
 ok = true
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/verify_one.py (234 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/verify_one.py (234 bytes)"
 
 [tools.args]
 path = "verify_one.py"
@@ -399,7 +399,7 @@ command = "python3 -c '__import__(\"os\").remove(\"verify_one.py\")'"
 [[tools]]
 name = "edit"
 ok = true
-output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/agent_log.md\",\n  \"applied\": 2,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 149,\n      \"new_len\": 386,\n      \"before_snippet\": \"…reported NOT COVERED)\\n\\n## Group 2 — ThreeJets quark-gluon primitive amplitudes\\n\\n- [ ] software/mcfm/src/ThreeJets/A5qbmgmqpgpgp.f\\n- [ ] software/mcfm/src/ThreeJets/A5qbmgpqpgpgm.f\\n- [ ] software/mcfm/src/ThreeJ"
+output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/user/JSS-2026-Example/dev/transformations/mcfm-translate/agent_log.md\",\n  \"applied\": 2,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 149,\n      \"new_len\": 386,\n      \"before_snippet\": \"…reported NOT COVERED)\\n\\n## Group 2 — ThreeJets quark-gluon primitive amplitudes\\n\\n- [ ] software/mcfm/src/ThreeJets/A5qbmgmqpgpgp.f\\n- [ ] software/mcfm/src/ThreeJets/A5qbmgpqpgpgm.f\\n- [ ] software/mcfm/src/ThreeJ"
 
 [tools.args]
 path = "dev/transformations/mcfm-translate/agent_log.md"
@@ -422,7 +422,7 @@ timeout = 120
 [[tools]]
 name = "bash"
 ok = true
-output_preview = "exit_code: 0\nSTDOUT:\nx1b[95mROOT:x1b[0m /home/akash/Desktop/Akash/Projects/JSS-Paper-Example\nx1b[95mNODE:x1b[0m <ROOT>/tests/mcfm\n\nx1b[95mSCRIPTS: x1b[0m\n    - <ROOT>/config.sh\n    - <ROOT>/environment.sh\n    - <ROOT>/tests/mcfm/test.sh\n\nx1b[95mEXECUTE:x1b[0m <ROOT>/tests/mcfm/job.submit\nin 1:31.8 \nx1b[92mSUCCESS x1b[0m\n\nx1b[95mOUTPUT:x1b[0m <ROOT>/tests/mcfm/job.output\n\nSTDERR:\n"
+output_preview = "exit_code: 0\nSTDOUT:\nx1b[95mROOT:x1b[0m /home/user/JSS-2026-Example\nx1b[95mNODE:x1b[0m <ROOT>/tests/mcfm\n\nx1b[95mSCRIPTS: x1b[0m\n    - <ROOT>/config.sh\n    - <ROOT>/environment.sh\n    - <ROOT>/tests/mcfm/test.sh\n\nx1b[95mEXECUTE:x1b[0m <ROOT>/tests/mcfm/job.submit\nin 1:31.8 \nx1b[92mSUCCESS x1b[0m\n\nx1b[95mOUTPUT:x1b[0m <ROOT>/tests/mcfm/job.output\n\nSTDERR:\n"
 
 [tools.args]
 command = "jobrunner submit tests/mcfm"
@@ -437,7 +437,7 @@ command = "find software/mcfm/src/ThreeJets/deprecated -maxdepth 1 -name A5qbmgm
 [[tools]]
 name = "bash"
 ok = true
-output_preview = "exit_code: 0\nSTDOUT:\n# workflow status\nassets: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tmp/assets\nroadmap metrics: 440 untranslated file rows, 225 ready leaves\ncleanup index: 569 families, move 77, shim-delete 15, merge 36\n\n- mcfm-translate: groups: 2 total, 0 open, 2 completed, 2 pending approval\n- mcfm-cleanup: groups: 7 total, 0 open, 7 completed, 7 pending approval\n- pepper-kokkos-port: no agent_log.md yet\n\nSTDERR:\n"
+output_preview = "exit_code: 0\nSTDOUT:\n# workflow status\nassets: /home/user/JSS-2026-Example/dev/tmp/assets\nroadmap metrics: 440 untranslated file rows, 225 ready leaves\ncleanup index: 569 families, move 77, shim-delete 15, merge 36\n\n- mcfm-translate: groups: 2 total, 0 open, 2 completed, 2 pending approval\n- mcfm-cleanup: groups: 7 total, 0 open, 7 completed, 7 pending approval\n- pepper-kokkos-port: no agent_log.md yet\n\nSTDERR:\n"
 
 [tools.args]
 command = "python3 dev/workflow.py status"
@@ -481,7 +481,7 @@ command = "find software/mcfm/src/ThreeJets/deprecated -maxdepth 1 -name A5qbmgm
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/agent_log.md\n# lines: 1-20\n0001: # MCFM translation worklist\n0002: \n0003: ## Group 1 — ThreeJets five-gluon primitive amplitudes\n0004: \n0005: - [x] software/mcfm/src/ThreeJets/A51mpmpp5g.f — TRANSLATED (build passed; coverage process `g g g g g` reported NOT COVERED)\n0006: - [x] software/mcfm/src/ThreeJets/A51mmppp5g.f — TRANSLATED (build passed; coverage process `g g g g g` reported NOT COVERED)\n0007"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/agent_log.md\n# lines: 1-20\n0001: # MCFM translation worklist\n0002: \n0003: ## Group 1 — ThreeJets five-gluon primitive amplitudes\n0004: \n0005: - [x] software/mcfm/src/ThreeJets/A51mpmpp5g.f — TRANSLATED (build passed; coverage process `g g g g g` reported NOT COVERED)\n0006: - [x] software/mcfm/src/ThreeJets/A51mmppp5g.f — TRANSLATED (build passed; coverage process `g g g g g` reported NOT COVERED)\n0007"
 
 [tools.args]
 path = "dev/transformations/mcfm-translate/agent_log.md"

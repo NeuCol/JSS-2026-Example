@@ -1,3 +1,3 @@
- 1abdcddaad89582552edc41de68e4a6e1ac75f1d software/mcfm (remotes/origin/adhruv/Convert_to_c++)
+ 1abdcddaad89582552edc41de68e4a6e1ac75f1d software/mcfm (remotes/origin/user/Convert_to_c++)
 -67f3acc8756fe6ec4fcc9ea360be08f0bb644711 software/pepper
  c8a05202351ca2e803158e99ae8a1c5c05f1437d software/qcdloop (heads/master)

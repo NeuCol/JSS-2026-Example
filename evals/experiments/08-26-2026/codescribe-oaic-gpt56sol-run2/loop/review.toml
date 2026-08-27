@@ -38,7 +38,7 @@ tool = "read"
 ok = true
 duration_ms = 0.296
 output_chars = 863
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/loop.toml\n# lines: 1-18\n0001: # CodeScribe loop for Fortran -> C++.\n0002: #\n0003: # Run from the project root:\n0004: #   code-scribe loop -p dev/transformations/mcfm-translate/loop.toml -m <model>\n0005: \n0006: [tools]\n0007: bash = [\"jobrunner\", \"python3\"]\n0008: \n0009: [[chat.user]]\n0010: content = '''\n0011: Each round, follow the round algorithm in dev/transformations/mcfm-translate/current_plan.md an"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/loop.toml\n# lines: 1-18\n0001: # CodeScribe loop for Fortran -> C++.\n0002: #\n0003: # Run from the project root:\n0004: #   code-scribe loop -p dev/transformations/mcfm-translate/loop.toml -m <model>\n0005: \n0006: [tools]\n0007: bash = [\"jobrunner\", \"python3\"]\n0008: \n0009: [[chat.user]]\n0010: content = '''\n0011: Each round, follow the round algorithm in dev/transformations/mcfm-translate/current_plan.md an"
 ts = "2026-08-26T21:20:49.789921+00:00"
 
 [[event]]
@@ -58,7 +58,7 @@ ok = true
 duration_ms = 0.375
 output_chars = 8710
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/current_plan.md
+# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/current_plan.md
 # lines: 1-182
 0001: # Fortran → C++ plan
 0002: 
@@ -87,7 +87,7 @@ ok = true
 duration_ms = 0.35
 output_chars = 7692
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/desired_spec.md
+# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/desired_spec.md
 # lines: 1-144
 0001: # Fortran → C++: target output for one MCFM file
 0002: 
@@ -120,7 +120,7 @@ ok = true
 duration_ms = 0.249
 output_chars = 142
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/approvals.toml
+# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/approvals.toml
 # lines: 1-1
 0001: version = 1
 '''
@@ -212,7 +212,7 @@ ok = true
 duration_ms = 4.266
 output_chars = 200058
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/.codescribe/loop/author.toml
+# path: /home/user/JSS-2026-Example/.codescribe/loop/author.toml
 # lines: 1-4266
 0001: 
 0002: [[event]]
@@ -249,7 +249,7 @@ ok = true
 duration_ms = 0.546
 output_chars = 8314
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/.codescribe/loop/review.toml
+# path: /home/user/JSS-2026-Example/.codescribe/loop/review.toml
 # lines: 1-241
 0001: 
 0002: [[event]]
@@ -286,11 +286,11 @@ ok = true
 duration_ms = 0.337
 output_chars = 429
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/.codescribe/loop/state.toml
+# path: /home/user/JSS-2026-Example/.codescribe/loop/state.toml
 # lines: 1-6
 0001: run_id = "20260826-161355-33e834"
-0002: workdir = "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example"
-0003: task_file = "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/loop.toml"
+0002: workdir = "/home/user/JSS-2026-Example"
+0003: task_file = "/home/user/JSS-2026-Example/dev/transformations/mcfm-translate/loop.toml"
 0004: loop_index = 1
 0005: phase = "review"
 0006: updated_at = "2026-08-26T21:20:47.168656+00:00"
@@ -314,7 +314,7 @@ ok = true
 duration_ms = 0.394
 output_chars = 1435
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/W2jet/CMakeLists.txt
+# path: /home/user/JSS-2026-Example/software/mcfm/src/W2jet/CMakeLists.txt
 # lines: 1-74
 0001: target_sources(objlib PRIVATE
 0002: aqqb_zbb.f
@@ -361,7 +361,7 @@ ok = true
 duration_ms = 0.361
 output_chars = 1635
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/W2jet/atree.cpp
+# path: /home/user/JSS-2026-Example/software/mcfm/src/W2jet/atree.cpp
 # lines: 1-34
 0001: // SPDX-License-Identifier: GPL-3.0-or-later
 0002: #include "atree.hpp"
@@ -394,7 +394,7 @@ ok = true
 duration_ms = 0.361
 output_chars = 1997
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/W2jet/fvf.cpp
+# path: /home/user/JSS-2026-Example/software/mcfm/src/W2jet/fvf.cpp
 # lines: 1-34
 0001: // SPDX-License-Identifier: GPL-3.0-or-later
 0002: #include "fvf.hpp"
@@ -428,7 +428,7 @@ ok = true
 duration_ms = 0.35
 output_chars = 1815
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/W2jet/subqcd.cpp
+# path: /home/user/JSS-2026-Example/software/mcfm/src/W2jet/subqcd.cpp
 # lines: 1-18
 0001: // SPDX-License-Identifier: GPL-3.0-or-later
 0002: #include "subqcd.hpp"
@@ -458,7 +458,7 @@ ok = true
 duration_ms = 0.347
 output_chars = 1325
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/W2jet/vv.cpp
+# path: /home/user/JSS-2026-Example/software/mcfm/src/W2jet/vv.cpp
 # lines: 1-24
 0001: // SPDX-License-Identifier: GPL-3.0-or-later
 0002: #include "vv.hpp"
@@ -492,7 +492,7 @@ ok = true
 duration_ms = 0.388
 output_chars = 1888
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/W2jet/vvg.cpp
+# path: /home/user/JSS-2026-Example/software/mcfm/src/W2jet/vvg.cpp
 # lines: 1-33
 0001: // SPDX-License-Identifier: GPL-3.0-or-later
 0002: #include "vvg.hpp"
@@ -526,14 +526,14 @@ ok = true
 duration_ms = 0.544
 output_chars = 19993
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/tests/mcfm/job.output
+# path: /home/user/JSS-2026-Example/tests/mcfm/job.output
 # lines: 1-240
 0001: ---------------------------------------------------------------------------------------
 0002: Lab-notebook environment:
-0003:   PROJECT_HOME=/home/akash/Desktop/Akash/Projects/JSS-Paper-Example
-0004:   SITE_HOME=/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/sites/supercomp01a
-0005:   MCFM_HOME=/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm
-0006:   PEPPER_HOME=/home/a'''
+0003:   PROJECT_HOME=/home/user/JSS-2026-Example
+0004:   SITE_HOME=/home/user/JSS-2026-Example/sites/supercomp01a
+0005:   MCFM_HOME=/home/user/JSS-2026-Example/software/mcfm
+0006:   PEPPER_HOME=/home/u'''
 ts = "2026-08-26T21:20:53.937281+00:00"
 
 [[event]]
@@ -603,7 +603,7 @@ ok = true
 duration_ms = 1.346
 output_chars = 8682
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/.codescribe/loop/author.toml
+# path: /home/user/JSS-2026-Example/.codescribe/loop/author.toml
 # lines: 4070-4266
 4070: PLAN
 4071: - Refresh readiness and enforce the approval gate.
@@ -632,7 +632,7 @@ ok = true
 duration_ms = 0.578
 output_chars = 18200
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/tests/mcfm/job.output
+# path: /home/user/JSS-2026-Example/tests/mcfm/job.output
 # lines: 230-449
 0230: [ 35%] Building Fortran object CMakeFiles/objlib.dir/src/gghgg_dep/pppmC4x123.f.o
 0231: [ 35%] Building Fortran object CMakeFiles/objlib.dir/src/gghgg_dep/pppmD1x23x4.f.o
@@ -722,7 +722,7 @@ tool = "write"
 ok = true
 duration_ms = 0.545
 output_chars = 107
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/.codescribe/loop/review_output.toml (2111 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/.codescribe/loop/review_output.toml (2111 bytes)"
 ts = "2026-08-26T21:21:11.781346+00:00"
 
 [[event]]
@@ -800,7 +800,7 @@ tool = "write"
 ok = true
 duration_ms = 0.575
 output_chars = 107
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/.codescribe/loop/review_output.toml (1400 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/.codescribe/loop/review_output.toml (1400 bytes)"
 ts = "2026-08-26T21:25:54.263110+00:00"
 
 [[event]]
@@ -878,7 +878,7 @@ tool = "read"
 ok = true
 duration_ms = 0.295
 output_chars = 863
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/loop.toml\n# lines: 1-18\n0001: # CodeScribe loop for Fortran -> C++.\n0002: #\n0003: # Run from the project root:\n0004: #   code-scribe loop -p dev/transformations/mcfm-translate/loop.toml -m <model>\n0005: \n0006: [tools]\n0007: bash = [\"jobrunner\", \"python3\"]\n0008: \n0009: [[chat.user]]\n0010: content = '''\n0011: Each round, follow the round algorithm in dev/transformations/mcfm-translate/current_plan.md an"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/loop.toml\n# lines: 1-18\n0001: # CodeScribe loop for Fortran -> C++.\n0002: #\n0003: # Run from the project root:\n0004: #   code-scribe loop -p dev/transformations/mcfm-translate/loop.toml -m <model>\n0005: \n0006: [tools]\n0007: bash = [\"jobrunner\", \"python3\"]\n0008: \n0009: [[chat.user]]\n0010: content = '''\n0011: Each round, follow the round algorithm in dev/transformations/mcfm-translate/current_plan.md an"
 ts = "2026-08-26T21:34:38.707606+00:00"
 
 [[event]]
@@ -898,7 +898,7 @@ ok = true
 duration_ms = 0.28
 output_chars = 1920
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/agent_log.md
+# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/agent_log.md
 # lines: 1-22
 0001: # MCFM translation worklist
 0002: 
@@ -927,7 +927,7 @@ ok = true
 duration_ms = 0.404
 output_chars = 8710
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/current_plan.md
+# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/current_plan.md
 # lines: 1-182
 0001: # Fortran → C++ plan
 0002: 
@@ -956,7 +956,7 @@ ok = true
 duration_ms = 0.444
 output_chars = 7692
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/desired_spec.md
+# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/desired_spec.md
 # lines: 1-144
 0001: # Fortran → C++: target output for one MCFM file
 0002: 
@@ -989,7 +989,7 @@ ok = true
 duration_ms = 0.317
 output_chars = 142
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/approvals.toml
+# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/approvals.toml
 # lines: 1-1
 0001: version = 1
 '''
@@ -1065,14 +1065,14 @@ ok = true
 duration_ms = 1.245
 output_chars = 67168
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/.codescribe/loop/metadata/loop_003_author.toml
+# path: /home/user/JSS-2026-Example/.codescribe/loop/metadata/loop_003_author.toml
 # lines: 1-987
 0001: run_id = "20260826-161355-33e834"
 0002: loop_index = 3
 0003: phase = "author"
 0004: model = "oaic-gpt56sol"
-0005: task_file = "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/loop.toml"
-0006: workdir = "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example"
+0005: task_file = "/home/user/JSS-2026-Example/dev/transformations/mcfm-translate/loop.toml"
+0006: workdir = "/home/user/JSS-2026-Example"
 0007: stop_reason = "max_iterations"
 0008: final_text_present = false
 0009'''
@@ -1095,7 +1095,7 @@ ok = true
 duration_ms = 0.335
 output_chars = 1601
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/.codescribe/loop/review_output.toml
+# path: /home/user/JSS-2026-Example/.codescribe/loop/review_output.toml
 # lines: 1-15
 0001: loop = 2
 0002: summary = "The agent refreshed the workflow, attempted verification of the five-file W2jet group, corrected invalid coverage-probe statements in vv.cpp and vvg.cpp, and then successfully reran verification for those files. All five translations were classified as not covered and recorded as TRANSLATED; the group was completed, the approval gate passed, and the full '''
@@ -1118,14 +1118,14 @@ ok = true
 duration_ms = 0.343
 output_chars = 1655
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/.codescribe/loop/metadata/loop_002_review.toml
+# path: /home/user/JSS-2026-Example/.codescribe/loop/metadata/loop_002_review.toml
 # lines: 1-33
 0001: run_id = "20260826-161355-33e834"
 0002: loop_index = 2
 0003: phase = "review"
 0004: model = "oaic-gpt56sol"
-0005: task_file = "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/loop.toml"
-0006: workdir = "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example"
+0005: task_file = "/home/user/JSS-2026-Example/dev/transformations/mcfm-translate/loop.toml"
+0006: workdir = "/home/user/JSS-2026-Example"
 0007: stop_reason = "final_text"
 0008: final_text_present = true
 0009: iter'''
@@ -1148,7 +1148,7 @@ ok = true
 duration_ms = 1.21
 output_chars = 42841
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/.codescribe/loop/review.toml
+# path: /home/user/JSS-2026-Example/.codescribe/loop/review.toml
 # lines: 1-1140
 0001: 
 0002: [[event]]
@@ -1208,12 +1208,12 @@ ok = true
 duration_ms = 0.708
 output_chars = 10873
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/.codescribe/loop/metadata/loop_003_author.toml
+# path: /home/user/JSS-2026-Example/.codescribe/loop/metadata/loop_003_author.toml
 # lines: 820-987
 0820: [[tools]]
 0821: name = "read"
 0822: ok = true
-0823: output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/W2jet/w2jetsq.cpp\n# lines: 16-26\n0016:  qed(1,1)=qcd1(1,1)+qcd2(1,1); qed(1,-1)=qcd1(1,-1)+qcd2(-1,1);\n0017:  qed(-1,1)=qcd1(-1,1)+qcd2(1,-1); qed(-1,-1)=qcd1(-1,-1)+qcd2(-1,-1);\n0018:  double msq1=std::norm(qcd1(1,1'''
+0823: output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/W2jet/w2jetsq.cpp\n# lines: 16-26\n0016:  qed(1,1)=qcd1(1,1)+qcd2(1,1); qed(1,-1)=qcd1(1,-1)+qcd2(-1,1);\n0017:  qed(-1,1)=qcd1(-1,1)+qcd2(1,-1); qed(-1,-1)=qcd1(-1,-1)+qcd2(-1,-1);\n0018:  double msq1=std::norm(qcd1(1,1'''
 ts = "2026-08-26T21:34:44.073182+00:00"
 
 [[event]]
@@ -1256,7 +1256,7 @@ ok = true
 duration_ms = 0.649
 output_chars = 4290
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/.codescribe/loop/metadata/loop_003_author.toml
+# path: /home/user/JSS-2026-Example/.codescribe/loop/metadata/loop_003_author.toml
 # lines: 900-987
 0900: 
 0901: [tools.args]
@@ -1265,7 +1265,7 @@ output_preview = '''
 0904: [[tools]]
 0905: name = "edit"
 0906: ok = true
-0907: output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/agent_log.md\",\n  \"applied\": 1,\n  \"replacements\": [\n    {\n      \"in'''
+0907: output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/user/JSS-2026-Example/dev/transformations/mcfm-translate/agent_log.md\",\n  \"applied\": 1,\n  \"replacements\": [\n    {\n      \"in'''
 ts = "2026-08-26T21:34:48.615788+00:00"
 
 [[event]]
@@ -1307,7 +1307,7 @@ tool = "write"
 ok = true
 duration_ms = 0.571
 output_chars = 107
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/.codescribe/loop/review_output.toml (1410 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/.codescribe/loop/review_output.toml (1410 bytes)"
 ts = "2026-08-26T21:35:00.706693+00:00"
 
 [[event]]
@@ -1385,7 +1385,7 @@ tool = "read"
 ok = true
 duration_ms = 0.377
 output_chars = 863
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/loop.toml\n# lines: 1-18\n0001: # CodeScribe loop for Fortran -> C++.\n0002: #\n0003: # Run from the project root:\n0004: #   code-scribe loop -p dev/transformations/mcfm-translate/loop.toml -m <model>\n0005: \n0006: [tools]\n0007: bash = [\"jobrunner\", \"python3\"]\n0008: \n0009: [[chat.user]]\n0010: content = '''\n0011: Each round, follow the round algorithm in dev/transformations/mcfm-translate/current_plan.md an"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/loop.toml\n# lines: 1-18\n0001: # CodeScribe loop for Fortran -> C++.\n0002: #\n0003: # Run from the project root:\n0004: #   code-scribe loop -p dev/transformations/mcfm-translate/loop.toml -m <model>\n0005: \n0006: [tools]\n0007: bash = [\"jobrunner\", \"python3\"]\n0008: \n0009: [[chat.user]]\n0010: content = '''\n0011: Each round, follow the round algorithm in dev/transformations/mcfm-translate/current_plan.md an"
 ts = "2026-08-26T21:40:05.406339+00:00"
 
 [[event]]
@@ -1405,7 +1405,7 @@ ok = true
 duration_ms = 0.381
 output_chars = 3006
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/agent_log.md
+# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/agent_log.md
 # lines: 1-31
 0001: # MCFM translation worklist
 0002: 
@@ -1434,7 +1434,7 @@ ok = true
 duration_ms = 0.48
 output_chars = 8710
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/current_plan.md
+# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/current_plan.md
 # lines: 1-182
 0001: # Fortran → C++ plan
 0002: 
@@ -1463,7 +1463,7 @@ ok = true
 duration_ms = 0.444
 output_chars = 7692
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/desired_spec.md
+# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/desired_spec.md
 # lines: 1-144
 0001: # Fortran → C++: target output for one MCFM file
 0002: 
@@ -1496,7 +1496,7 @@ ok = true
 duration_ms = 0.318
 output_chars = 142
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/approvals.toml
+# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/approvals.toml
 # lines: 1-1
 0001: version = 1
 '''
@@ -1519,7 +1519,7 @@ ok = true
 duration_ms = 0.628
 output_chars = 23899
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tmp/assets/roadmap_metrics.tsv
+# path: /home/user/JSS-2026-Example/dev/tmp/assets/roadmap_metrics.tsv
 # lines: 1-436
 0001: rel	top	deps	blind	fanin	bench
 0002: Mods/types_mod.f	Mods	0	0	8	
@@ -1549,14 +1549,14 @@ ok = true
 duration_ms = 0.577
 output_chars = 20885
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/tests/mcfm/job.output
+# path: /home/user/JSS-2026-Example/tests/mcfm/job.output
 # lines: 1-250
 0001: ---------------------------------------------------------------------------------------
 0002: Lab-notebook environment:
-0003:   PROJECT_HOME=/home/akash/Desktop/Akash/Projects/JSS-Paper-Example
-0004:   SITE_HOME=/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/sites/supercomp01a
-0005:   MCFM_HOME=/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm
-0006:   PEPPER_HOME=/home/a'''
+0003:   PROJECT_HOME=/home/user/JSS-2026-Example
+0004:   SITE_HOME=/home/user/JSS-2026-Example/sites/supercomp01a
+0005:   MCFM_HOME=/home/user/JSS-2026-Example/software/mcfm
+0006:   PEPPER_HOME=/home/u'''
 ts = "2026-08-26T21:40:05.410414+00:00"
 
 [[event]]
@@ -1623,7 +1623,7 @@ ok = true
 duration_ms = 3.581
 output_chars = 205345
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/.codescribe/loop/author.toml
+# path: /home/user/JSS-2026-Example/.codescribe/loop/author.toml
 # lines: 1-4578
 0001: 
 0002: [[event]]
@@ -1660,7 +1660,7 @@ ok = true
 duration_ms = 0.275
 output_chars = 1593
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/.codescribe/loop/review_output.toml
+# path: /home/user/JSS-2026-Example/.codescribe/loop/review_output.toml
 # lines: 1-12
 0001: loop = 3
 0002: summary = "The agent opened and completed a second five-file W2jet group, translated and wired ggZZcapture, ZZbox1LL, w2jetsq, a6treeg, and qqbggAxslCoeffs, and recorded all five as TRANSLATED after the group verification helper reported successful not-covered checks with restored builds. The final full MCFM test command and approval gate both succeeded, with the ga'''
@@ -1683,7 +1683,7 @@ ok = true
 duration_ms = 0.47
 output_chars = 20442
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/tests/mcfm/job.output
+# path: /home/user/JSS-2026-Example/tests/mcfm/job.output
 # lines: 250-499
 0250: [ 40%] Building Fortran object CMakeFiles/objlib.dir/src/gghgg_dep/pmcfm_convert.f.o
 0251: [ 40%] Building Fortran object CMakeFiles/objlib.dir/src/gghgg_dep/pppmB341.f.o
@@ -1709,7 +1709,7 @@ ok = true
 duration_ms = 0.445
 output_chars = 21177
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/tests/mcfm/job.output
+# path: /home/user/JSS-2026-Example/tests/mcfm/job.output
 # lines: 500-749
 0500: [ 89%] Building Fortran object CMakeFiles/objlib.dir/src/BDK/FPFMcc.f.o
 0501: [ 89%] Building Fortran object CMakeFiles/objlib.dir/src/BDK/FPMFcc.f.o
@@ -1736,7 +1736,7 @@ ok = true
 duration_ms = 0.419
 output_chars = 8650
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/tests/mcfm/job.output
+# path: /home/user/JSS-2026-Example/tests/mcfm/job.output
 # lines: 750-953
 0750: c~ u~ e- e+ u~ c~: [1;32m PASSED [0m
 0751: g d e- e+ g d: [1;31m FAILED [0m
@@ -1807,7 +1807,7 @@ tool = "read"
 ok = true
 duration_ms = 1.356
 output_chars = 9698
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/.codescribe/loop/author.toml\n# lines: 4400-4577\n4400: \n4401: RESULT: NOT COVERED — the numbers did not change, so the test never ran this file.\n4402:   Mark it TRANSLATED. Check again after a routine that calls it is rewritten.\n4403: verify exit code (M3bit3): 1\n4404: $ python3 dev/wor'''\n4405: ts = \"2026-08-26T21:39:41.570599+00:00\"\n4406: \n4407: [[event]]\n4408: event = \"iteration_end\"\n4409: run_id = \"20260826-163502-6963d4\"\n4410: iter"
+output_preview = "# path: /home/user/JSS-2026-Example/.codescribe/loop/author.toml\n# lines: 4400-4577\n4400: \n4401: RESULT: NOT COVERED — the numbers did not change, so the test never ran this file.\n4402:   Mark it TRANSLATED. Check again after a routine that calls it is rewritten.\n4403: verify exit code (M3bit3): 1\n4404: $ python3 dev/wor'''\n4405: ts = \"2026-08-26T21:39:41.570599+00:00\"\n4406: \n4407: [[event]]\n4408: event = \"iteration_end\"\n4409: run_id = \"20260826-163502-6963d4\"\n4410: iter"
 ts = "2026-08-26T21:40:12.585422+00:00"
 
 [[event]]
@@ -1827,12 +1827,12 @@ ok = true
 duration_ms = 0.511
 output_chars = 5706
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/tests/mcfm/job.output
+# path: /home/user/JSS-2026-Example/tests/mcfm/job.output
 # lines: 650-754
-0650: -- Installing: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/install/include//qqb_w.hpp
-0651: -- Up-to-date: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/install/include//deprecated
-0652: -- Up-to-date: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/install/include/
-0653: -- Up-to-date: /home/akash/Desktop/Akash/Projects/JSS-Pape'''
+0650: -- Installing: /home/user/JSS-2026-Example/software/mcfm/install/include//qqb_w.hpp
+0651: -- Up-to-date: /home/user/JSS-2026-Example/software/mcfm/install/include//deprecated
+0652: -- Up-to-date: /home/user/JSS-2026-Example/software/mcfm/install/include/
+0653: -- Up-to-date: /home/user/JSS-2026-Exa'''
 ts = "2026-08-26T21:40:12.586203+00:00"
 
 [[event]]
@@ -1852,7 +1852,7 @@ ok = true
 duration_ms = 0.436
 output_chars = 1017
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/tests/mcfm/job.output
+# path: /home/user/JSS-2026-Example/tests/mcfm/job.output
 # lines: 930-953
 0930: g g h d d~: [1;32m PASSED [0m
 0931: g g h g g: [1;32m PASSED [0m
@@ -1884,7 +1884,7 @@ ok = true
 duration_ms = 0.382
 output_chars = 1053
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/current_plan.md
+# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/current_plan.md
 # lines: 164-182
 0164: ## When to stop
 0165: 
@@ -1936,7 +1936,7 @@ ok = true
 duration_ms = 0.936
 output_chars = 1924
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/.codescribe/loop/author.toml
+# path: /home/user/JSS-2026-Example/.codescribe/loop/author.toml
 # lines: 4540-4578
 4540: 
 4541: [[event]]
@@ -1986,7 +1986,7 @@ tool = "write"
 ok = true
 duration_ms = 0.57
 output_chars = 107
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/.codescribe/loop/review_output.toml (1996 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/.codescribe/loop/review_output.toml (1996 bytes)"
 ts = "2026-08-26T21:40:26.419457+00:00"
 
 [[event]]

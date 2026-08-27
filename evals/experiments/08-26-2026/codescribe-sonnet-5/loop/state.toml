@@ -1,6 +1,6 @@
 run_id = "20260826-151920-37810c"
-workdir = "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example"
-task_file = "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/loop.toml"
+workdir = "/home/user/JSS-2026-Example"
+task_file = "/home/user/JSS-2026-Example/dev/transformations/mcfm-translate/loop.toml"
 loop_index = 5
 phase = "review"
 updated_at = "2026-08-26T20:58:36.275593+00:00"

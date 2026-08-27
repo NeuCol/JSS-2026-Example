@@ -2,8 +2,8 @@ run_id = "20260814-092938-df4e94"
 loop_index = 2
 phase = "author"
 model = "oaic-moonshotai/Kimi-K3"
-task_file = "/home/adubey/JSS-2026-Example/dev/transformations/mcfm-translate/loop.toml"
-workdir = "/home/adubey/JSS-2026-Example"
+task_file = "/home/user/JSS-2026-Example/dev/transformations/mcfm-translate/loop.toml"
+workdir = "/home/user/JSS-2026-Example"
 stop_reason = "max_iterations"
 final_text_present = false
 iterations = 30
@@ -13,21 +13,21 @@ created_at = "2026-08-14T00:44:29.824229+00:00"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/adubey/JSS-2026-Example/dev/transformations/mcfm-translate/current_plan.md\n# lines: 1-182\n0001: # Fortran → C++ plan\n0002: \n0003: This file says how to run step 1. The rewrite rules and correctness bar are in\n0004: `desired_spec.md`.\n0005: \n0006: > This Plan is the policy: it selects and orders the work over the ready set (see *When to\n0007: > stop*). The correctness contract — objective `f`, invariants `I`, oracle `V`, and status set\n0008: > `Σ` — lives in `desired_spec.md`; on co"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/current_plan.md\n# lines: 1-182\n0001: # Fortran → C++ plan\n0002: \n0003: This file says how to run step 1. The rewrite rules and correctness bar are in\n0004: `desired_spec.md`.\n0005: \n0006: > This Plan is the policy: it selects and orders the work over the ready set (see *When to\n0007: > stop*). The correctness contract — objective `f`, invariants `I`, oracle `V`, and status set\n0008: > `Σ` — lives in `desired_spec.md`; on co"
 
 [tools.args]
 path = "dev/transformations/mcfm-translate/current_plan.md"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/adubey/JSS-2026-Example/dev/transformations/mcfm-translate/desired_spec.md\n# lines: 1-144\n0001: # Fortran → C++: target output for one MCFM file\n0002: \n0003: This file defines the rewrite target and correctness bar for step 1. The workflow lives in\n0004: `current_plan.md`.\n0005: \n0006: Paths are written as `software/mcfm/src/...`.\n0007: \n0008: ---\n0009: \n0010: ## Contract\n0011: \n0012: This step advances by *settling* source files one at a time: each file is rewritten, then\n0013: re"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/desired_spec.md\n# lines: 1-144\n0001: # Fortran → C++: target output for one MCFM file\n0002: \n0003: This file defines the rewrite target and correctness bar for step 1. The workflow lives in\n0004: `current_plan.md`.\n0005: \n0006: Paths are written as `software/mcfm/src/...`.\n0007: \n0008: ---\n0009: \n0010: ## Contract\n0011: \n0012: This step advances by *settling* source files one at a time: each file is rewritten, then\n0013: re"
 
 [tools.args]
 path = "dev/transformations/mcfm-translate/desired_spec.md"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/adubey/JSS-2026-Example/dev/transformations/mcfm-translate/current_plan.md\n# lines: 164-182\n0164: ## When to stop\n0165: \n0166: The *ready set* is the set of ready, not-yet-settled files. Each settled file leaves the\n0167: ready set and the readiness graph is acyclic, so the pass terminates. Stop only when one of\n0168: these is true:\n0169: \n0170: - a completed group needs human approval before the next group can start\n0171: - the ready set is empty (no ready file to work on)\n0172: -"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/current_plan.md\n# lines: 164-182\n0164: ## When to stop\n0165: \n0166: The *ready set* is the set of ready, not-yet-settled files. Each settled file leaves the\n0167: ready set and the readiness graph is acyclic, so the pass terminates. Stop only when one of\n0168: these is true:\n0169: \n0170: - a completed group needs human approval before the next group can start\n0171: - the ready set is empty (no ready file to work on)\n0172: -"
 
 [tools.args]
 path = "dev/transformations/mcfm-translate/current_plan.md"
@@ -35,7 +35,7 @@ offset = 164
 [[tools]]
 name = "read"
 ok = false
-output_preview = "Error: file not found: /home/adubey/JSS-2026-Example/dev/transformations/mcfm-translate/agent_log.md"
+output_preview = "Error: file not found: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/agent_log.md"
 
 [tools.args]
 path = "dev/transformations/mcfm-translate/agent_log.md"
@@ -56,7 +56,7 @@ pattern = "software/mcfm/src/Mods/*"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/adubey/JSS-2026-Example/dev/tmp/analyze_ready.py\n# lines: 1-26\n0001: import csv\n0002: from collections import Counter, defaultdict\n0003: \n0004: rows = []\n0005: with open('dev/tmp/assets/roadmap_metrics.tsv') as f:\n0006:     r = csv.DictReader(f, delimiter='\\t')\n0007:     for x in r:\n0008:         rows.append(x)\n0009: \n0010: ready = [x for x in rows if x['deps'] == '0' and x['blind'] == '0']\n0011: c = Counter(x['top'] for x in ready)\n0012: print(\"ready counts per top-level folder:\")"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/tmp/analyze_ready.py\n# lines: 1-26\n0001: import csv\n0002: from collections import Counter, defaultdict\n0003: \n0004: rows = []\n0005: with open('dev/tmp/assets/roadmap_metrics.tsv') as f:\n0006:     r = csv.DictReader(f, delimiter='\\t')\n0007:     for x in r:\n0008:         rows.append(x)\n0009: \n0010: ready = [x for x in rows if x['deps'] == '0' and x['blind'] == '0']\n0011: c = Counter(x['top'] for x in ready)\n0012: print(\"ready counts per top-level folder:\")"
 
 [tools.args]
 path = "dev/tmp/analyze_ready.py"
@@ -70,98 +70,98 @@ command = "python3 dev/tmp/analyze_ready.py"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/adubey/JSS-2026-Example/software/mcfm/src/Mods/types_mod.f\n# lines: 1-15\n0001: !\n0002: !  SPDX-License-Identifier: GPL-3.0-or-later\n0003: !  Copyright (C) 2019-2022, respective authors of MCFM.\n0004: !\n0005: \n0006:       module types\n0007:           implicit none\n0008: \n0009:           public\n0010: \n0011:           integer, parameter :: sp = selected_real_kind(6)\n0012:           integer, parameter :: dp = selected_real_kind(15)\n0013:           integer, parameter :: ex = selected_re"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/types_mod.f\n# lines: 1-15\n0001: !\n0002: !  SPDX-License-Identifier: GPL-3.0-or-later\n0003: !  Copyright (C) 2019-2022, respective authors of MCFM.\n0004: !\n0005: \n0006:       module types\n0007:           implicit none\n0008: \n0009:           public\n0010: \n0011:           integer, parameter :: sp = selected_real_kind(6)\n0012:           integer, parameter :: dp = selected_real_kind(15)\n0013:           integer, parameter :: ex = selected_re"
 
 [tools.args]
 path = "software/mcfm/src/Mods/types_mod.f"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/adubey/JSS-2026-Example/software/mcfm/src/Mods/pp_mod.f90\n# lines: 1-255\n0001: \n0002: module pp_mod\n0003:   use types\n0004:   implicit none\n0005:   \n0006:   public\n0007: \n0008:     include 'ppmax.f'\n0009:     integer, save :: pp(-4:4,-4:4,-4:4,-4:4) = reshape((/ &\n0010:     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, &\n0011:     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, &\n0012:     0, 0, 0, 0, 0, 0, 0, 0, 0"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/pp_mod.f90\n# lines: 1-255\n0001: \n0002: module pp_mod\n0003:   use types\n0004:   implicit none\n0005:   \n0006:   public\n0007: \n0008:     include 'ppmax.f'\n0009:     integer, save :: pp(-4:4,-4:4,-4:4,-4:4) = reshape((/ &\n0010:     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, &\n0011:     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, &\n0012:     0, 0, 0, 0, 0, 0, 0, 0, 0"
 
 [tools.args]
 path = "software/mcfm/src/Mods/pp_mod.f90"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/adubey/JSS-2026-Example/software/mcfm/src/Mods/ppwp2j_mod.f90\n# lines: 1-255\n0001: \n0002: module ppwp2j_mod\n0003:   use types\n0004:   implicit none\n0005:   \n0006:   public\n0007:     include 'ppmax.f'\n0008:     integer, save:: pp(-4:4,-4:4,-4:4,-4:4) = reshape((/ &\n0009:     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, &\n0010:     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, &\n0011:     0, 0, 0, 0, 0, 0, 0, 0, 0"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/ppwp2j_mod.f90\n# lines: 1-255\n0001: \n0002: module ppwp2j_mod\n0003:   use types\n0004:   implicit none\n0005:   \n0006:   public\n0007:     include 'ppmax.f'\n0008:     integer, save:: pp(-4:4,-4:4,-4:4,-4:4) = reshape((/ &\n0009:     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, &\n0010:     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, &\n0011:     0, 0, 0, 0, 0, 0, 0, 0, 0"
 
 [tools.args]
 path = "software/mcfm/src/Mods/ppwp2j_mod.f90"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/adubey/JSS-2026-Example/software/mcfm/src/Mods/CMakeLists.txt\n# lines: 1-135\n0001: target_sources(objlib PRIVATE\n0002: mod_qcdloop_c.f\n0003: types_mod.f\n0004: b0_mod.f90\n0005: b0_mod.cpp\n0006: blabels_mod.f90\n0007: blha_mod.f90\n0008: blha_mod.cpp\n0009: breit_mod.f90\n0010: breit_mod.cpp\n0011: Cabibbo_mod.f90\n0012: Cabibbo_mod.cpp\n0013: ckm1_mod.f90\n0014: ckm1_mod.cpp\n0015: ckm_mod.f90\n0016: ckm_mod.cpp\n0017: constants_mod.f90\n0018: couple_mod.f90\n0019: couple_mod.cpp\n0020: docheck_m"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/CMakeLists.txt\n# lines: 1-135\n0001: target_sources(objlib PRIVATE\n0002: mod_qcdloop_c.f\n0003: types_mod.f\n0004: b0_mod.f90\n0005: b0_mod.cpp\n0006: blabels_mod.f90\n0007: blha_mod.f90\n0008: blha_mod.cpp\n0009: breit_mod.f90\n0010: breit_mod.cpp\n0011: Cabibbo_mod.f90\n0012: Cabibbo_mod.cpp\n0013: ckm1_mod.f90\n0014: ckm1_mod.cpp\n0015: ckm_mod.f90\n0016: ckm_mod.cpp\n0017: constants_mod.f90\n0018: couple_mod.f90\n0019: couple_mod.cpp\n0020: docheck_m"
 
 [tools.args]
 path = "software/mcfm/src/Mods/CMakeLists.txt"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/adubey/JSS-2026-Example/software/mcfm/src/Mods/masses_mod.hpp\n# lines: 1-83\n0001: /* LLM INSTRUCTIONS START\n0002:  * You are a code conversion tool for a scientific computing application.\n0003:  * The application is organized as different source files in a directory structure. \n0004:  * I will give you a FORTRAN file which you will convert to a C++ source code file.\n0005:  * \n0006:  * The code you will receive is part of a bigger codebase so do not add additional \n0007:  * function"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/masses_mod.hpp\n# lines: 1-83\n0001: /* LLM INSTRUCTIONS START\n0002:  * You are a code conversion tool for a scientific computing application.\n0003:  * The application is organized as different source files in a directory structure. \n0004:  * I will give you a FORTRAN file which you will convert to a C++ source code file.\n0005:  * \n0006:  * The code you will receive is part of a bigger codebase so do not add additional \n0007:  * function"
 
 [tools.args]
 path = "software/mcfm/src/Mods/masses_mod.hpp"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/adubey/JSS-2026-Example/software/mcfm/src/Mods/masses_mod.cpp\n# lines: 1-79\n0001: /*\n0002:  *\n0003:  */\n0004: \n0005: #include<masses_mod.hpp>\n0006: \n0007: namespace masses_mod {\n0008:   double md, mu, ms, mc, mb, mt;\n0009:   double mel, mmu, mtau;\n0010:   double hmass, hwidth;\n0011:   double wmass, wwidth;\n0012:   double zmass, zwidth;\n0013:   double twidth;\n0014:   double tauwidth;\n0015:   double mtausq, mcsq, mbsq;\n0016: }\n0017: \n0018: extern \"C\" {\n0019:   double* masses_mod_md()"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/masses_mod.cpp\n# lines: 1-79\n0001: /*\n0002:  *\n0003:  */\n0004: \n0005: #include<masses_mod.hpp>\n0006: \n0007: namespace masses_mod {\n0008:   double md, mu, ms, mc, mb, mt;\n0009:   double mel, mmu, mtau;\n0010:   double hmass, hwidth;\n0011:   double wmass, wwidth;\n0012:   double zmass, zwidth;\n0013:   double twidth;\n0014:   double tauwidth;\n0015:   double mtausq, mcsq, mbsq;\n0016: }\n0017: \n0018: extern \"C\" {\n0019:   double* masses_mod_md()"
 
 [tools.args]
 path = "software/mcfm/src/Mods/masses_mod.cpp"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/adubey/JSS-2026-Example/software/mcfm/src/Mods/masses_mod.f90\n# lines: 1-224\n0001: !! LLM INSTRUCTIONS START\n0002: !! You are a code conversion tool for a scientific computing application.\n0003: !! The application is organized as different source files in a directory structure. \n0004: !! I will give you a C++ file which you will convert to a FORTRAN interface for\n0005: !! interoperability.\n0006: !! \n0007: !! The code you will receive is part of a bigger codebase so do not add addit"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/masses_mod.f90\n# lines: 1-224\n0001: !! LLM INSTRUCTIONS START\n0002: !! You are a code conversion tool for a scientific computing application.\n0003: !! The application is organized as different source files in a directory structure. \n0004: !! I will give you a C++ file which you will convert to a FORTRAN interface for\n0005: !! interoperability.\n0006: !! \n0007: !! The code you will receive is part of a bigger codebase so do not add addit"
 
 [tools.args]
 path = "software/mcfm/src/Mods/masses_mod.f90"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/adubey/JSS-2026-Example/software/mcfm/src/Mods/constants_mod.hpp\n# lines: 1-95\n0001: /*PROMPT START\n0002: // - You are a code conversion tool for a scientific computing application. The application is organized as different source files in a directory structure.\n0003: // - Convert this file to a C++ source code file. Note that inputs are chunks which belong to same file, do not try to infer around the input or provide any context. Simply convert the source code from FORTRAN to C++."
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/constants_mod.hpp\n# lines: 1-95\n0001: /*PROMPT START\n0002: // - You are a code conversion tool for a scientific computing application. The application is organized as different source files in a directory structure.\n0003: // - Convert this file to a C++ source code file. Note that inputs are chunks which belong to same file, do not try to infer around the input or provide any context. Simply convert the source code from FORTRAN to C++."
 
 [tools.args]
 path = "software/mcfm/src/Mods/constants_mod.hpp"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/adubey/JSS-2026-Example/software/mcfm/src/Mods/constants_mod.f90\n# lines: 1-78\n0001: \n0002: module constants_mod\n0003:   use types\n0004:   implicit none\n0005:   \n0006:   public\n0007: \n0008:     real(dp),parameter:: zip=0._dp\n0009:     real(dp),parameter:: zero=0._dp\n0010:     real(dp),parameter:: one=1._dp\n0011:     real(dp),parameter:: two=2._dp\n0012:     real(dp),parameter:: three=3._dp\n0013:     real(dp),parameter:: four=4._dp\n0014:     real(dp),parameter:: five=5._dp\n0015:     "
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/constants_mod.f90\n# lines: 1-78\n0001: \n0002: module constants_mod\n0003:   use types\n0004:   implicit none\n0005:   \n0006:   public\n0007: \n0008:     real(dp),parameter:: zip=0._dp\n0009:     real(dp),parameter:: zero=0._dp\n0010:     real(dp),parameter:: one=1._dp\n0011:     real(dp),parameter:: two=2._dp\n0012:     real(dp),parameter:: three=3._dp\n0013:     real(dp),parameter:: four=4._dp\n0014:     real(dp),parameter:: five=5._dp\n0015:     "
 
 [tools.args]
 path = "software/mcfm/src/Mods/constants_mod.f90"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/adubey/JSS-2026-Example/software/mcfm/src/Mods/ppmax_mod.f90\n# lines: 1-11\n0001: \n0002: module ppmax_mod\n0003:   use types\n0004:   implicit none\n0005:   \n0006:   public\n0007: \n0008:     integer, parameter:: ppmax=80\n0009: \n0010: \n0011: end module\n"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/ppmax_mod.f90\n# lines: 1-11\n0001: \n0002: module ppmax_mod\n0003:   use types\n0004:   implicit none\n0005:   \n0006:   public\n0007: \n0008:     integer, parameter:: ppmax=80\n0009: \n0010: \n0011: end module\n"
 
 [tools.args]
 path = "software/mcfm/src/Mods/ppmax_mod.f90"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/adubey/JSS-2026-Example/software/mcfm/src/Mods/ppmax_mod.hpp\n# lines: 1-8\n0001: #ifndef PPMAX_MOD\n0002: #define PPMAX_MOD\n0003: \n0004: namespace ppmax_mod {\n0005:   const int ppmax = 80;\n0006: }\n0007: \n0008: #endif\n"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/ppmax_mod.hpp\n# lines: 1-8\n0001: #ifndef PPMAX_MOD\n0002: #define PPMAX_MOD\n0003: \n0004: namespace ppmax_mod {\n0005:   const int ppmax = 80;\n0006: }\n0007: \n0008: #endif\n"
 
 [tools.args]
 path = "software/mcfm/src/Mods/ppmax_mod.hpp"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/adubey/JSS-2026-Example/software/mcfm/src/Inc/ppmax.f\n# lines: 1-3\n0001: \n0002:       integer, parameter:: ppmax=80\n0003: \n"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/Inc/ppmax.f\n# lines: 1-3\n0001: \n0002:       integer, parameter:: ppmax=80\n0003: \n"
 
 [tools.args]
 path = "software/mcfm/src/Inc/ppmax.f"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/adubey/JSS-2026-Example/software/mcfm/src/Mods/Modules_Interface.f90\n# lines: 1-241\n0001: ! TODO: Remove this FORTRAN interface subroutines once the trasition to\n0002: ! C++ is complete\n0003: subroutine modules_fi_init() bind(C, name=\"modules_fi_init_\")\n0004:         use ewcharge_mod, only: ewcharge_mod_init\n0005:         use zcouple_mod, only: zcouple_mod_init\n0006:         use b0_mod, only: b0_mod_init\n0007:         use blha_mod, only: blha_mod_init\n0008:         use Cabibbo_mod,"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/Modules_Interface.f90\n# lines: 1-241\n0001: ! TODO: Remove this FORTRAN interface subroutines once the trasition to\n0002: ! C++ is complete\n0003: subroutine modules_fi_init() bind(C, name=\"modules_fi_init_\")\n0004:         use ewcharge_mod, only: ewcharge_mod_init\n0005:         use zcouple_mod, only: zcouple_mod_init\n0006:         use b0_mod, only: b0_mod_init\n0007:         use blha_mod, only: blha_mod_init\n0008:         use Cabibbo_mod,"
 
 [tools.args]
 path = "software/mcfm/src/Mods/Modules_Interface.f90"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/adubey/JSS-2026-Example/software/mcfm/src/Inc/tri123x4x56coeffs.f\n# lines: 1-314\n0001: !\n0002: !  SPDX-License-Identifier: GPL-3.0-or-later\n0003: !  Copyright (C) 2019-2022, respective authors of MCFM.\n0004: !\n0005: \n0006: \n0007:       coeff2(2,2) = (\n0008:      &   2._dp*za(p3,p4)*zb(p1,p3)*zb(p4,p6)/(s123)*(\n0009:      &      2._dp*za(p1,p2)*za(p2,p5)*zb(p1,p2)\n0010:      &    - za(p1,p5)*za(p2,p4)*zb(p1,p4)\n0011:      &    - za(p2,p4)*za(p3,p5)*zb(p3,p4)\n0012:      &    + 2._dp*"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/Inc/tri123x4x56coeffs.f\n# lines: 1-314\n0001: !\n0002: !  SPDX-License-Identifier: GPL-3.0-or-later\n0003: !  Copyright (C) 2019-2022, respective authors of MCFM.\n0004: !\n0005: \n0006: \n0007:       coeff2(2,2) = (\n0008:      &   2._dp*za(p3,p4)*zb(p1,p3)*zb(p4,p6)/(s123)*(\n0009:      &      2._dp*za(p1,p2)*za(p2,p5)*zb(p1,p2)\n0010:      &    - za(p1,p5)*za(p2,p4)*zb(p1,p4)\n0011:      &    - za(p2,p4)*za(p3,p5)*zb(p3,p4)\n0012:      &    + 2._dp*"
 
 [tools.args]
 path = "software/mcfm/src/Inc/tri123x4x56coeffs.f"
@@ -182,14 +182,14 @@ command = "grep -rln \"ppmax.f\" software/mcfm/src; grep -rln \"tri123x4x56coeff
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/adubey/JSS-2026-Example/software/mcfm/src/Mods/mqq_mod.hpp\n# lines: 1-11\n0001: #ifndef MQQ_MOD\n0002: #define MQQ_MOD\n0003: \n0004: #include <FArray.hpp> // Corrected header file inclusion\n0005: \n0006: namespace mqq_mod {\n0007:   extern FArray3D<double> mqq; // 3D array for mqq\n0008: }\n0009: \n0010: #endif\n0011: \n"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/mqq_mod.hpp\n# lines: 1-11\n0001: #ifndef MQQ_MOD\n0002: #define MQQ_MOD\n0003: \n0004: #include <FArray.hpp> // Corrected header file inclusion\n0005: \n0006: namespace mqq_mod {\n0007:   extern FArray3D<double> mqq; // 3D array for mqq\n0008: }\n0009: \n0010: #endif\n0011: \n"
 
 [tools.args]
 path = "software/mcfm/src/Mods/mqq_mod.hpp"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/adubey/JSS-2026-Example/software/mcfm/src/Mods/mqq_mod.cpp\n# lines: 1-14\n0001: #include <mqq_mod.hpp>\n0002: #include <nf_mod.hpp>\n0003: #include <FArray.hpp> // Corrected header file inclusion\n0004: \n0005: namespace mqq_mod {\n0006:   using namespace nf_mod;\n0007:   FArray3D<double> mqq(3, 2*nf+1, 2*nf+1, 0, -nf, -nf); // 3D array for mqq\n0008: }\n0009: \n0010: extern \"C\" {\n0011:   double* mqq_mod_mqq() { // Function to access mqq\n0012:     return mqq_mod::mqq.data; // Return pointer "
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/mqq_mod.cpp\n# lines: 1-14\n0001: #include <mqq_mod.hpp>\n0002: #include <nf_mod.hpp>\n0003: #include <FArray.hpp> // Corrected header file inclusion\n0004: \n0005: namespace mqq_mod {\n0006:   using namespace nf_mod;\n0007:   FArray3D<double> mqq(3, 2*nf+1, 2*nf+1, 0, -nf, -nf); // 3D array for mqq\n0008: }\n0009: \n0010: extern \"C\" {\n0011:   double* mqq_mod_mqq() { // Function to access mqq\n0012:     return mqq_mod::mqq.data; // Return pointer "
 
 [tools.args]
 path = "software/mcfm/src/Mods/mqq_mod.cpp"
@@ -224,7 +224,7 @@ command = "grep -rln \"tri123x4x56coeffs\" software/mcfm/src"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/adubey/JSS-2026-Example/software/mcfm/src/Mods/masses_mod.f90\n# lines: 190-224\n0190:                              tauwidth, mtausq, mcsq, mbsq\n0191: \n0192: contains\n0193:   subroutine masses_mod_init()\n0194:     implicit none\n0195:     call c_f_pointer(get_md(), md)\n0196:     call c_f_pointer(get_mu(), mu)\n0197:     call c_f_pointer(get_ms(), ms)\n0198:     call c_f_pointer(get_mc(), mc)\n0199:     call c_f_pointer(get_mb(), mb)\n0200:     call c_f_pointer(get_mt(), mt)\n0201:     call"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/masses_mod.f90\n# lines: 190-224\n0190:                              tauwidth, mtausq, mcsq, mbsq\n0191: \n0192: contains\n0193:   subroutine masses_mod_init()\n0194:     implicit none\n0195:     call c_f_pointer(get_md(), md)\n0196:     call c_f_pointer(get_mu(), mu)\n0197:     call c_f_pointer(get_ms(), ms)\n0198:     call c_f_pointer(get_mc(), mc)\n0199:     call c_f_pointer(get_mb(), mb)\n0200:     call c_f_pointer(get_mt(), mt)\n0201:     call"
 
 [tools.args]
 path = "software/mcfm/src/Mods/masses_mod.f90"
@@ -232,7 +232,7 @@ offset = 190
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/adubey/JSS-2026-Example/software/mcfm/src/Mods/mqq_mod.f90\n# lines: 1-42\n0001: module mqq_mod\n0002: \n0003:   use, intrinsic :: iso_c_binding\n0004:   use nf_mod\n0005:   implicit none\n0006: \n0007:   private\n0008:     interface\n0009:       function get_mqq() bind(C, name=\"mqq_mod_mqq\")\n0010:         import :: c_ptr\n0011:         type(c_ptr) :: get_mqq\n0012:       end function get_mqq\n0013:     end interface\n0014: \n0015:   public :: mqq, mqq_mod_init, mqq_mod_finalize\n0016:   real(c_do"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/mqq_mod.f90\n# lines: 1-42\n0001: module mqq_mod\n0002: \n0003:   use, intrinsic :: iso_c_binding\n0004:   use nf_mod\n0005:   implicit none\n0006: \n0007:   private\n0008:     interface\n0009:       function get_mqq() bind(C, name=\"mqq_mod_mqq\")\n0010:         import :: c_ptr\n0011:         type(c_ptr) :: get_mqq\n0012:       end function get_mqq\n0013:     end interface\n0014: \n0015:   public :: mqq, mqq_mod_init, mqq_mod_finalize\n0016:   real(c_do"
 
 [tools.args]
 path = "software/mcfm/src/Mods/mqq_mod.f90"
@@ -267,7 +267,7 @@ pattern = "software/mcfm/src/**/FArray.hpp"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/adubey/JSS-2026-Example/software/mcfm/src/Inc/FArray.hpp\n# lines: 1-219\n0001: #ifndef FARRAY_H\n0002: #define FARRAY_H\n0003: \n0004: #include <cstddef>\n0005: #include <initializer_list>\n0006:  \n0007: template <typename T>\n0008: class FArray1D {\n0009: \n0010:   private:\n0011:     bool ownsData;\n0012:     int start_i;\n0013: \n0014:   public:\n0015:     size_t ni;\n0016:     T* data;\n0017: \n0018:     // Constructor to allocate memory\n0019:     FArray1D(size_t ni, int start_i=1)\n0020:       "
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/Inc/FArray.hpp\n# lines: 1-219\n0001: #ifndef FARRAY_H\n0002: #define FARRAY_H\n0003: \n0004: #include <cstddef>\n0005: #include <initializer_list>\n0006:  \n0007: template <typename T>\n0008: class FArray1D {\n0009: \n0010:   private:\n0011:     bool ownsData;\n0012:     int start_i;\n0013: \n0014:   public:\n0015:     size_t ni;\n0016:     T* data;\n0017: \n0018:     // Constructor to allocate memory\n0019:     FArray1D(size_t ni, int start_i=1)\n0020:       "
 
 [tools.args]
 path = "software/mcfm/src/Inc/FArray.hpp"
@@ -309,7 +309,7 @@ command = "python3 -c \"\na=open('software/mcfm/src/Mods/deprecated/pp_mod.f90')
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/adubey/JSS-2026-Example/software/mcfm/src/Mods/pp_mod.f90\n# lines: 250-255\n0250:     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, &\n0251:     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, &\n0252:     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0/) &\n0253:     , (/ 9,9,9,9 /))\n0254: \n0255: end module\n"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/pp_mod.f90\n# lines: 250-255\n0250:     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, &\n0251:     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, &\n0252:     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0/) &\n0253:     , (/ 9,9,9,9 /))\n0254: \n0255: end module\n"
 
 [tools.args]
 path = "software/mcfm/src/Mods/pp_mod.f90"
@@ -317,7 +317,7 @@ offset = 250
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/adubey/JSS-2026-Example/software/mcfm/src/Mods/ppwp2j_mod.f90\n# lines: 250-255\n0250:     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, &\n0251:     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0/) &\n0252:     , (/ 9,9,9,9 /))\n0253: !!!omp threadprivate(pp)\n0254: \n0255: end module\n"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/ppwp2j_mod.f90\n# lines: 250-255\n0250:     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, &\n0251:     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0/) &\n0252:     , (/ 9,9,9,9 /))\n0253: !!!omp threadprivate(pp)\n0254: \n0255: end module\n"
 
 [tools.args]
 path = "software/mcfm/src/Mods/ppwp2j_mod.f90"
@@ -346,7 +346,7 @@ command = "cmp software/mcfm/src/Mods/deprecated/ppwp2j_mod.f90 software/mcfm/sr
 [[tools]]
 name = "write"
 ok = true
-output_preview = "Wrote /home/adubey/JSS-2026-Example/dev/tmp/gen_group1.py (2600 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/dev/tmp/gen_group1.py (2600 bytes)"
 
 [tools.args]
 path = "dev/tmp/gen_group1.py"
@@ -354,7 +354,7 @@ content = "import re\n\nSRC = 'software/mcfm/src/Mods/'\n\ndef parse_values(path
 [[tools]]
 name = "edit"
 ok = true
-output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/adubey/JSS-2026-Example/dev/tmp/gen_group1.py\",\n  \"applied\": 1,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 69,\n      \"new_len\": 66,\n      \"before_snippet\": \"…pp>\\n#include <FArray.hpp> // Corrected header file inclusion\\n\\nnamespace {ns} {{\\n  FArray4D<int> pp(9 * 9 * 9 * 9, -4, -4, -4, -4); // 4D array for pp\\n}}\\n\\nnamespace {{\\n\\nint pp_init[{ns}::pp.ni * {ns}::pp.nj * {ns}::pp.nk * {ns}::p…\",\n      \"after_snippet\": \"…"
+output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/user/JSS-2026-Example/dev/tmp/gen_group1.py\",\n  \"applied\": 1,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 69,\n      \"new_len\": 66,\n      \"before_snippet\": \"…pp>\\n#include <FArray.hpp> // Corrected header file inclusion\\n\\nnamespace {ns} {{\\n  FArray4D<int> pp(9 * 9 * 9 * 9, -4, -4, -4, -4); // 4D array for pp\\n}}\\n\\nnamespace {{\\n\\nint pp_init[{ns}::pp.ni * {ns}::pp.nj * {ns}::pp.nk * {ns}::p…\",\n      \"after_snippet\": \"…"
 
 [tools.args]
 path = "dev/tmp/gen_group1.py"
@@ -365,7 +365,7 @@ newText = "  FArray4D<int> pp(9, 9, 9, 9, -4, -4, -4, -4); // 4D array for pp"
 [[tools]]
 name = "write"
 ok = true
-output_preview = "Wrote /home/adubey/JSS-2026-Example/dev/tmp/apply_moves.py (1661 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/dev/tmp/apply_moves.py (1661 bytes)"
 
 [tools.args]
 path = "dev/tmp/apply_moves.py"
@@ -380,14 +380,14 @@ command = "python3 dev/tmp/gen_group1.py"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/adubey/JSS-2026-Example/software/mcfm/src/Mods/pp_mod.hpp\n# lines: 1-10\n0001: #ifndef PP_MOD\n0002: #define PP_MOD\n0003: \n0004: #include <FArray.hpp> // Corrected header file inclusion\n0005: \n0006: namespace pp_mod {\n0007:   extern FArray4D<int> pp; // 4D array for pp\n0008: }\n0009: \n0010: #endif\n"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/pp_mod.hpp\n# lines: 1-10\n0001: #ifndef PP_MOD\n0002: #define PP_MOD\n0003: \n0004: #include <FArray.hpp> // Corrected header file inclusion\n0005: \n0006: namespace pp_mod {\n0007:   extern FArray4D<int> pp; // 4D array for pp\n0008: }\n0009: \n0010: #endif\n"
 
 [tools.args]
 path = "software/mcfm/src/Mods/pp_mod.hpp"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/adubey/JSS-2026-Example/software/mcfm/src/Mods/pp_mod.f90\n# lines: 1-30\n0001: module pp_mod\n0002: \n0003:   use, intrinsic :: iso_c_binding\n0004:   use ppmax_mod\n0005:   implicit none\n0006: \n0007:   private\n0008:     interface\n0009:       function get_pp() bind(C, name=\"pp_mod_pp\")\n0010:         import :: c_ptr\n0011:         type(c_ptr) :: get_pp\n0012:       end function get_pp\n0013:     end interface\n0014: \n0015:   public :: pp, pp_mod_init, pp_mod_finalize\n0016:   integer(c_int), "
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/pp_mod.f90\n# lines: 1-30\n0001: module pp_mod\n0002: \n0003:   use, intrinsic :: iso_c_binding\n0004:   use ppmax_mod\n0005:   implicit none\n0006: \n0007:   private\n0008:     interface\n0009:       function get_pp() bind(C, name=\"pp_mod_pp\")\n0010:         import :: c_ptr\n0011:         type(c_ptr) :: get_pp\n0012:       end function get_pp\n0013:     end interface\n0014: \n0015:   public :: pp, pp_mod_init, pp_mod_finalize\n0016:   integer(c_int), "
 
 [tools.args]
 path = "software/mcfm/src/Mods/pp_mod.f90"
@@ -422,7 +422,7 @@ command = "python3 dev/tmp/apply_moves.py"
 [[tools]]
 name = "edit"
 ok = true
-output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/adubey/JSS-2026-Example/software/mcfm/src/Mods/CMakeLists.txt\",\n  \"applied\": 1,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 40,\n      \"new_len\": 66,\n      \"before_snippet\": \"…nwz_mod.f90\\nnwz_mod.cpp\\npart_mod.f90\\npart_mod.cpp\\nplabel_mod.f90\\nplabel_mod.cpp\\nppmax_mod.f90\\npp_mod.f90\\nppwp2j_mod.f90\\nprocess_mod.f90\\nprocess_mod.cpp\\nqcdcouple_mod.f90\\nqcdcouple_mod.cpp\\nqqbggintname…\",\n      \"after_snippet\": \"…nwz_mod.f"
+output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/user/JSS-2026-Example/software/mcfm/src/Mods/CMakeLists.txt\",\n  \"applied\": 1,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 40,\n      \"new_len\": 66,\n      \"before_snippet\": \"…nwz_mod.f90\\nnwz_mod.cpp\\npart_mod.f90\\npart_mod.cpp\\nplabel_mod.f90\\nplabel_mod.cpp\\nppmax_mod.f90\\npp_mod.f90\\nppwp2j_mod.f90\\nprocess_mod.f90\\nprocess_mod.cpp\\nqcdcouple_mod.f90\\nqcdcouple_mod.cpp\\nqqbggintname…\",\n      \"after_snippet\": \"…nwz_mod.f"
 
 [tools.args]
 path = "software/mcfm/src/Mods/CMakeLists.txt"
@@ -433,7 +433,7 @@ newText = "ppmax_mod.f90\npp_mod.f90\npp_mod.cpp\nppwp2j_mod.f90\nppwp2j_mod.cpp
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/adubey/JSS-2026-Example/software/mcfm/src/Mods/Modules_Interface.f90\n# lines: 160-241\n0160:         use nwz_mod, only: nwz_mod_finalize\n0161:         use scalarselect_mod, only: scalarselect_mod_finalize\n0162:         use zcouple_cms_mod, only: zcouple_cms_mod_finalize\n0163:         use sprods_com_mod, only: sprods_com_mod_finalize\n0164:         use ckm_mod, only: ckm_mod_finalize\n0165:         use kpart_mod, only: kpart_mod_finalize\n0166:         use docheck_mod, only: docheck_mod"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/Modules_Interface.f90\n# lines: 160-241\n0160:         use nwz_mod, only: nwz_mod_finalize\n0161:         use scalarselect_mod, only: scalarselect_mod_finalize\n0162:         use zcouple_cms_mod, only: zcouple_cms_mod_finalize\n0163:         use sprods_com_mod, only: sprods_com_mod_finalize\n0164:         use ckm_mod, only: ckm_mod_finalize\n0165:         use kpart_mod, only: kpart_mod_finalize\n0166:         use docheck_mod, only: docheck_mod"
 
 [tools.args]
 path = "software/mcfm/src/Mods/Modules_Interface.f90"
@@ -441,7 +441,7 @@ offset = 160
 [[tools]]
 name = "edit"
 ok = true
-output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/adubey/JSS-2026-Example/software/mcfm/src/Mods/Modules_Interface.f90\",\n  \"applied\": 4,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 73,\n      \"new_len\": 157,\n      \"before_snippet\": \"…  use mqq_mod, only: mqq_mod_init\\n        use msq_cs_mod, only: msq_cs_mod_init\\n        use msq_struc_mod, only: msq_struc_mod_init\\n        implicit none\\n        call ewcharge_mod_init()\\n        call zcouple_mod_init()\\n        call b…\",\n"
+output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/user/JSS-2026-Example/software/mcfm/src/Mods/Modules_Interface.f90\",\n  \"applied\": 4,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 73,\n      \"new_len\": 157,\n      \"before_snippet\": \"…  use mqq_mod, only: mqq_mod_init\\n        use msq_cs_mod, only: msq_cs_mod_init\\n        use msq_struc_mod, only: msq_struc_mod_init\\n        implicit none\\n        call ewcharge_mod_init()\\n        call zcouple_mod_init()\\n        call b…\",\n"
 
 [tools.args]
 path = "software/mcfm/src/Mods/Modules_Interface.f90"
@@ -464,7 +464,7 @@ newText = "        call msq_struc_mod_finalize()\n        call pp_mod_finalize()
 [[tools]]
 name = "write"
 ok = true
-output_preview = "Wrote /home/adubey/JSS-2026-Example/dev/tmp/check_ppvals.py (1672 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/dev/tmp/check_ppvals.py (1672 bytes)"
 
 [tools.args]
 path = "dev/tmp/check_ppvals.py"
@@ -479,7 +479,7 @@ command = "python3 dev/tmp/check_ppvals.py"
 [[tools]]
 name = "bash"
 ok = true
-output_preview = "exit_code: 0\nSTDOUT:\nx1b[95mROOT:x1b[0m /home/adubey/JSS-2026-Example\nx1b[95mNODE:x1b[0m <ROOT>/tests/mcfm\n\nx1b[95mSCRIPTS: x1b[0m\n    - <ROOT>/config.sh\n    - <ROOT>/environment.sh\n    - <ROOT>/tests/mcfm/test.sh\n\nx1b[95mEXECUTE:x1b[0m <ROOT>/tests/mcfm/job.submit\nin 32.0s \n/home/adubey/JSS-2026-Example/software/mcfm/src/Mods/pp_mod.f90:15:14:\n\n   15 |   public :: pp, pp_mod_init, pp_mod_finalize\n      |              1\nError: Array pointer ‘pp’ at (1) must have a deferred shape or assumed rank\nmake[2]: *** [CM"
+output_preview = "exit_code: 0\nSTDOUT:\nx1b[95mROOT:x1b[0m /home/user/JSS-2026-Example\nx1b[95mNODE:x1b[0m <ROOT>/tests/mcfm\n\nx1b[95mSCRIPTS: x1b[0m\n    - <ROOT>/config.sh\n    - <ROOT>/environment.sh\n    - <ROOT>/tests/mcfm/test.sh\n\nx1b[95mEXECUTE:x1b[0m <ROOT>/tests/mcfm/job.submit\nin 32.0s \n/home/user/JSS-2026-Example/software/mcfm/src/Mods/pp_mod.f90:15:14:\n\n   15 |   public :: pp, pp_mod_init, pp_mod_finalize\n      |              1\nError: Array pointer ‘pp’ at (1) must have a deferred shape or assumed rank\nmake[2]: *** [CM"
 
 [tools.args]
 command = "jobrunner submit tests/mcfm"
@@ -487,7 +487,7 @@ timeout = 600
 [[tools]]
 name = "edit"
 ok = true
-output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/adubey/JSS-2026-Example/software/mcfm/src/Mods/pp_mod.f90\",\n  \"applied\": 1,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 304,\n      \"new_len\": 518,\n      \"before_snippet\": \"…_ptr\\n        type(c_ptr) :: get_pp\\n      end function get_pp\\n    end interface\\n\\n  public :: pp, pp_mod_init, pp_mod_finalize\\n  integer(c_int), pointer :: pp(-4:4,-4:4,-4:4,-4:4) => null()  ! Pointer for pp\\n\\ncontains\\n  subroutine pp_mod_init()\\n"
+output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/user/JSS-2026-Example/software/mcfm/src/Mods/pp_mod.f90\",\n  \"applied\": 1,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 304,\n      \"new_len\": 518,\n      \"before_snippet\": \"…_ptr\\n        type(c_ptr) :: get_pp\\n      end function get_pp\\n    end interface\\n\\n  public :: pp, pp_mod_init, pp_mod_finalize\\n  integer(c_int), pointer :: pp(-4:4,-4:4,-4:4,-4:4) => null()  ! Pointer for pp\\n\\ncontains\\n  subroutine pp_mod_init()\\n"
 
 [tools.args]
 path = "software/mcfm/src/Mods/pp_mod.f90"
@@ -498,7 +498,7 @@ newText = "  public :: pp, pp_mod_init, pp_mod_finalize\n  integer(c_int), point
 [[tools]]
 name = "edit"
 ok = true
-output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/adubey/JSS-2026-Example/software/mcfm/src/Mods/ppwp2j_mod.f90\",\n  \"applied\": 1,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 320,\n      \"new_len\": 534,\n      \"before_snippet\": \"…_ptr\\n        type(c_ptr) :: get_pp\\n      end function get_pp\\n    end interface\\n\\n  public :: pp, ppwp2j_mod_init, ppwp2j_mod_finalize\\n  integer(c_int), pointer :: pp(-4:4,-4:4,-4:4,-4:4) => null()  ! Pointer for pp\\n\\ncontains\\n  subroutine ppw"
+output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/user/JSS-2026-Example/software/mcfm/src/Mods/ppwp2j_mod.f90\",\n  \"applied\": 1,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 320,\n      \"new_len\": 534,\n      \"before_snippet\": \"…_ptr\\n        type(c_ptr) :: get_pp\\n      end function get_pp\\n    end interface\\n\\n  public :: pp, ppwp2j_mod_init, ppwp2j_mod_finalize\\n  integer(c_int), pointer :: pp(-4:4,-4:4,-4:4,-4:4) => null()  ! Pointer for pp\\n\\ncontains\\n  subroutine ppw"
 
 [tools.args]
 path = "software/mcfm/src/Mods/ppwp2j_mod.f90"
@@ -509,7 +509,7 @@ newText = "  public :: pp, ppwp2j_mod_init, ppwp2j_mod_finalize\n  integer(c_int
 [[tools]]
 name = "bash"
 ok = true
-output_preview = "exit_code: 0\nSTDOUT:\nx1b[95mROOT:x1b[0m /home/adubey/JSS-2026-Example\nx1b[95mNODE:x1b[0m <ROOT>/tests/mcfm\n\nx1b[95mSCRIPTS: x1b[0m\n    - <ROOT>/config.sh\n    - <ROOT>/environment.sh\n    - <ROOT>/tests/mcfm/test.sh\n\nx1b[95mEXECUTE:x1b[0m <ROOT>/tests/mcfm/job.submit\nin 54.6s \n      | ^\n/home/adubey/JSS-2026-Example/software/mcfm/src/Mods/pp_mod.cpp: In lambda function:\n/home/adubey/JSS-2026-Example/software/mcfm/src/Mods/pp_mod.cpp:743:16: error: ‘class FArray4D<int>’ has no member named ‘fill’\n  743 |     pp_mo"
+output_preview = "exit_code: 0\nSTDOUT:\nx1b[95mROOT:x1b[0m /home/user/JSS-2026-Example\nx1b[95mNODE:x1b[0m <ROOT>/tests/mcfm\n\nx1b[95mSCRIPTS: x1b[0m\n    - <ROOT>/config.sh\n    - <ROOT>/environment.sh\n    - <ROOT>/tests/mcfm/test.sh\n\nx1b[95mEXECUTE:x1b[0m <ROOT>/tests/mcfm/job.submit\nin 54.6s \n      | ^\n/home/user/JSS-2026-Example/software/mcfm/src/Mods/pp_mod.cpp: In lambda function:\n/home/user/JSS-2026-Example/software/mcfm/src/Mods/pp_mod.cpp:743:16: error: ‘class FArray4D<int>’ has no member named ‘fill’\n  743 |     pp_mo"
 
 [tools.args]
 command = "jobrunner submit tests/mcfm"
@@ -517,7 +517,7 @@ timeout = 900
 [[tools]]
 name = "edit"
 ok = true
-output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/adubey/JSS-2026-Example/software/mcfm/src/Mods/pp_mod.cpp\",\n  \"applied\": 1,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 78,\n      \"new_len\": 54,\n      \"before_snippet\": \"…0, 0, 0, 0, 0,\\n    0, 0, 0, 0, 0, 0, 0, 0, 0,\\n    0, 0, 0, 0, 0, 0, 0, 0, 0\\n};\\n\\nbool pp_filled = [] {\\n    pp_mod::pp.fill(0);\\n    int* data = pp_mod::pp.data;\\n    for (size_t i = 0; i < pp_mod::pp.ni * pp_mod::pp.nj * pp_mod::pp.nk * pp_m…\",\n     "
+output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/user/JSS-2026-Example/software/mcfm/src/Mods/pp_mod.cpp\",\n  \"applied\": 1,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 78,\n      \"new_len\": 54,\n      \"before_snippet\": \"…0, 0, 0, 0, 0,\\n    0, 0, 0, 0, 0, 0, 0, 0, 0,\\n    0, 0, 0, 0, 0, 0, 0, 0, 0\\n};\\n\\nbool pp_filled = [] {\\n    pp_mod::pp.fill(0);\\n    int* data = pp_mod::pp.data;\\n    for (size_t i = 0; i < pp_mod::pp.ni * pp_mod::pp.nj * pp_mod::pp.nk * pp_m…\",\n     "
 
 [tools.args]
 path = "software/mcfm/src/Mods/pp_mod.cpp"
@@ -528,7 +528,7 @@ newText = "bool pp_filled = [] {\n    int* data = pp_mod::pp.data;"
 [[tools]]
 name = "edit"
 ok = true
-output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/adubey/JSS-2026-Example/software/mcfm/src/Mods/ppwp2j_mod.cpp\",\n  \"applied\": 1,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 86,\n      \"new_len\": 58,\n      \"before_snippet\": \"…0, 0, 0, 0, 0,\\n    0, 0, 0, 0, 0, 0, 0, 0, 0,\\n    0, 0, 0, 0, 0, 0, 0, 0, 0\\n};\\n\\nbool pp_filled = [] {\\n    ppwp2j_mod::pp.fill(0);\\n    int* data = ppwp2j_mod::pp.data;\\n    for (size_t i = 0; i < ppwp2j_mod::pp.ni * ppwp2j_mod::pp.nj * ppwp2j_mo"
+output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/user/JSS-2026-Example/software/mcfm/src/Mods/ppwp2j_mod.cpp\",\n  \"applied\": 1,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 86,\n      \"new_len\": 58,\n      \"before_snippet\": \"…0, 0, 0, 0, 0,\\n    0, 0, 0, 0, 0, 0, 0, 0, 0,\\n    0, 0, 0, 0, 0, 0, 0, 0, 0\\n};\\n\\nbool pp_filled = [] {\\n    ppwp2j_mod::pp.fill(0);\\n    int* data = ppwp2j_mod::pp.data;\\n    for (size_t i = 0; i < ppwp2j_mod::pp.ni * ppwp2j_mod::pp.nj * ppwp2j_mo"
 
 [tools.args]
 path = "software/mcfm/src/Mods/ppwp2j_mod.cpp"
@@ -539,7 +539,7 @@ newText = "bool pp_filled = [] {\n    int* data = ppwp2j_mod::pp.data;"
 [[tools]]
 name = "bash"
 ok = true
-output_preview = "exit_code: 0\nSTDOUT:\nx1b[95mROOT:x1b[0m /home/adubey/JSS-2026-Example\nx1b[95mNODE:x1b[0m <ROOT>/tests/mcfm\n\nx1b[95mSCRIPTS: x1b[0m\n    - <ROOT>/config.sh\n    - <ROOT>/environment.sh\n    - <ROOT>/tests/mcfm/test.sh\n\nx1b[95mEXECUTE:x1b[0m <ROOT>/tests/mcfm/job.submit\nin 53.8s \n   10 | int pp_init[pp_mod::pp.ni * pp_mod::pp.nj * pp_mod::pp.nk * pp_mod::pp.nl] = {\n      |             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~\n/home/adubey/JSS-2026-Example/software/mcfm/src/Mods/pp_mod.cpp:740:1: "
+output_preview = "exit_code: 0\nSTDOUT:\nx1b[95mROOT:x1b[0m /home/user/JSS-2026-Example\nx1b[95mNODE:x1b[0m <ROOT>/tests/mcfm\n\nx1b[95mSCRIPTS: x1b[0m\n    - <ROOT>/config.sh\n    - <ROOT>/environment.sh\n    - <ROOT>/tests/mcfm/test.sh\n\nx1b[95mEXECUTE:x1b[0m <ROOT>/tests/mcfm/job.submit\nin 53.8s \n   10 | int pp_init[pp_mod::pp.ni * pp_mod::pp.nj * pp_mod::pp.nk * pp_mod::pp.nl] = {\n      |             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~\n/home/user/JSS-2026-Example/software/mcfm/src/Mods/pp_mod.cpp:740:1: "
 
 [tools.args]
 command = "jobrunner submit tests/mcfm"
@@ -547,7 +547,7 @@ timeout = 900
 [[tools]]
 name = "edit"
 ok = true
-output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/adubey/JSS-2026-Example/software/mcfm/src/Mods/pp_mod.cpp\",\n  \"applied\": 2,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 78,\n      \"new_len\": 30,\n      \"before_snippet\": \"…Array4D<int> pp(9, 9, 9, 9, -4, -4, -4, -4); // 4D array for pp\\n}\\n\\nnamespace {\\n\\nint pp_init[pp_mod::pp.ni * pp_mod::pp.nj * pp_mod::pp.nk * pp_mod::pp.nl] = {\\n    0, 0, 0, 0, 0, 0, 0, 0, 0,\\n    0, 0, 0, 0, 0, 0, 0, 0, 0,\\n    0, 0, 0, 0, 0…\",\n     "
+output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/user/JSS-2026-Example/software/mcfm/src/Mods/pp_mod.cpp\",\n  \"applied\": 2,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 78,\n      \"new_len\": 30,\n      \"before_snippet\": \"…Array4D<int> pp(9, 9, 9, 9, -4, -4, -4, -4); // 4D array for pp\\n}\\n\\nnamespace {\\n\\nint pp_init[pp_mod::pp.ni * pp_mod::pp.nj * pp_mod::pp.nk * pp_mod::pp.nl] = {\\n    0, 0, 0, 0, 0, 0, 0, 0, 0,\\n    0, 0, 0, 0, 0, 0, 0, 0, 0,\\n    0, 0, 0, 0, 0…\",\n     "
 
 [tools.args]
 path = "software/mcfm/src/Mods/pp_mod.cpp"
@@ -562,7 +562,7 @@ newText = "    for (size_t i = 0; i < 9 * 9 * 9 * 9; i++) {"
 [[tools]]
 name = "edit"
 ok = true
-output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/adubey/JSS-2026-Example/software/mcfm/src/Mods/ppwp2j_mod.cpp\",\n  \"applied\": 2,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 94,\n      \"new_len\": 30,\n      \"before_snippet\": \"…Array4D<int> pp(9, 9, 9, 9, -4, -4, -4, -4); // 4D array for pp\\n}\\n\\nnamespace {\\n\\nint pp_init[ppwp2j_mod::pp.ni * ppwp2j_mod::pp.nj * ppwp2j_mod::pp.nk * ppwp2j_mod::pp.nl] = {\\n    0, 0, 0, 0, 0, 0, 0, 0, 0,\\n    0, 0, 0, 0, 0, 0, 0, 0, 0,\\n    0,"
+output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/user/JSS-2026-Example/software/mcfm/src/Mods/ppwp2j_mod.cpp\",\n  \"applied\": 2,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 94,\n      \"new_len\": 30,\n      \"before_snippet\": \"…Array4D<int> pp(9, 9, 9, 9, -4, -4, -4, -4); // 4D array for pp\\n}\\n\\nnamespace {\\n\\nint pp_init[ppwp2j_mod::pp.ni * ppwp2j_mod::pp.nj * ppwp2j_mod::pp.nk * ppwp2j_mod::pp.nl] = {\\n    0, 0, 0, 0, 0, 0, 0, 0, 0,\\n    0, 0, 0, 0, 0, 0, 0, 0, 0,\\n    0,"
 
 [tools.args]
 path = "software/mcfm/src/Mods/ppwp2j_mod.cpp"
@@ -577,7 +577,7 @@ newText = "    for (size_t i = 0; i < 9 * 9 * 9 * 9; i++) {"
 [[tools]]
 name = "bash"
 ok = true
-output_preview = "exit_code: 0\nSTDOUT:\nx1b[95mROOT:x1b[0m /home/adubey/JSS-2026-Example\nx1b[95mNODE:x1b[0m <ROOT>/tests/mcfm\n\nx1b[95mSCRIPTS: x1b[0m\n    - <ROOT>/config.sh\n    - <ROOT>/environment.sh\n    - <ROOT>/tests/mcfm/test.sh\n\nx1b[95mEXECUTE:x1b[0m <ROOT>/tests/mcfm/job.submit\nin 1:16.1 \n/home/adubey/JSS-2026-Example/software/mcfm/src/W2jet/qqbggAxtri123x4x56.f:26:0:\n\n   26 |       include 'tri123x4x56coeffs.f'\nFatal Error: Cannot open included file ‘tri123x4x56coeffs.f’\ncompilation terminated.\nmake[2]: *** [CMakeFiles/obj"
+output_preview = "exit_code: 0\nSTDOUT:\nx1b[95mROOT:x1b[0m /home/user/JSS-2026-Example\nx1b[95mNODE:x1b[0m <ROOT>/tests/mcfm\n\nx1b[95mSCRIPTS: x1b[0m\n    - <ROOT>/config.sh\n    - <ROOT>/environment.sh\n    - <ROOT>/tests/mcfm/test.sh\n\nx1b[95mEXECUTE:x1b[0m <ROOT>/tests/mcfm/job.submit\nin 1:16.1 \n/home/user/JSS-2026-Example/software/mcfm/src/W2jet/qqbggAxtri123x4x56.f:26:0:\n\n   26 |       include 'tri123x4x56coeffs.f'\nFatal Error: Cannot open included file ‘tri123x4x56coeffs.f’\ncompilation terminated.\nmake[2]: *** [CMakeFiles/obj"
 
 [tools.args]
 command = "jobrunner submit tests/mcfm"

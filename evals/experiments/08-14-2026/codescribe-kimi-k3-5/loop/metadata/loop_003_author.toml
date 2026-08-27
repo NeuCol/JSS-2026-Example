@@ -2,8 +2,8 @@ run_id = "20260814-092938-df4e94"
 loop_index = 3
 phase = "author"
 model = "oaic-moonshotai/Kimi-K3"
-task_file = "/home/adubey/JSS-2026-Example/dev/transformations/mcfm-translate/loop.toml"
-workdir = "/home/adubey/JSS-2026-Example"
+task_file = "/home/user/JSS-2026-Example/dev/transformations/mcfm-translate/loop.toml"
+workdir = "/home/user/JSS-2026-Example"
 stop_reason = "max_iterations"
 final_text_present = false
 iterations = 30
@@ -13,21 +13,21 @@ created_at = "2026-08-14T00:51:29.882402+00:00"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/adubey/JSS-2026-Example/dev/transformations/mcfm-translate/current_plan.md\n# lines: 1-182\n0001: # Fortran → C++ plan\n0002: \n0003: This file says how to run step 1. The rewrite rules and correctness bar are in\n0004: `desired_spec.md`.\n0005: \n0006: > This Plan is the policy: it selects and orders the work over the ready set (see *When to\n0007: > stop*). The correctness contract — objective `f`, invariants `I`, oracle `V`, and status set\n0008: > `Σ` — lives in `desired_spec.md`; on co"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/current_plan.md\n# lines: 1-182\n0001: # Fortran → C++ plan\n0002: \n0003: This file says how to run step 1. The rewrite rules and correctness bar are in\n0004: `desired_spec.md`.\n0005: \n0006: > This Plan is the policy: it selects and orders the work over the ready set (see *When to\n0007: > stop*). The correctness contract — objective `f`, invariants `I`, oracle `V`, and status set\n0008: > `Σ` — lives in `desired_spec.md`; on co"
 
 [tools.args]
 path = "dev/transformations/mcfm-translate/current_plan.md"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/adubey/JSS-2026-Example/dev/transformations/mcfm-translate/desired_spec.md\n# lines: 1-144\n0001: # Fortran → C++: target output for one MCFM file\n0002: \n0003: This file defines the rewrite target and correctness bar for step 1. The workflow lives in\n0004: `current_plan.md`.\n0005: \n0006: Paths are written as `software/mcfm/src/...`.\n0007: \n0008: ---\n0009: \n0010: ## Contract\n0011: \n0012: This step advances by *settling* source files one at a time: each file is rewritten, then\n0013: re"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/desired_spec.md\n# lines: 1-144\n0001: # Fortran → C++: target output for one MCFM file\n0002: \n0003: This file defines the rewrite target and correctness bar for step 1. The workflow lives in\n0004: `current_plan.md`.\n0005: \n0006: Paths are written as `software/mcfm/src/...`.\n0007: \n0008: ---\n0009: \n0010: ## Contract\n0011: \n0012: This step advances by *settling* source files one at a time: each file is rewritten, then\n0013: re"
 
 [tools.args]
 path = "dev/transformations/mcfm-translate/desired_spec.md"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/adubey/JSS-2026-Example/dev/transformations/mcfm-translate/current_plan.md\n# lines: 165-182\n0165: \n0166: The *ready set* is the set of ready, not-yet-settled files. Each settled file leaves the\n0167: ready set and the readiness graph is acyclic, so the pass terminates. Stop only when one of\n0168: these is true:\n0169: \n0170: - a completed group needs human approval before the next group can start\n0171: - the ready set is empty (no ready file to work on)\n0172: - a real blocker requir"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/current_plan.md\n# lines: 165-182\n0165: \n0166: The *ready set* is the set of ready, not-yet-settled files. Each settled file leaves the\n0167: ready set and the readiness graph is acyclic, so the pass terminates. Stop only when one of\n0168: these is true:\n0169: \n0170: - a completed group needs human approval before the next group can start\n0171: - the ready set is empty (no ready file to work on)\n0172: - a real blocker requir"
 
 [tools.args]
 path = "dev/transformations/mcfm-translate/current_plan.md"
@@ -35,14 +35,14 @@ offset = 165
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/adubey/JSS-2026-Example/software/mcfm/src/W2jet/qqbggAxtri123x4x56.f\n# lines: 1-29\n0001: !\n0002: !  SPDX-License-Identifier: GPL-3.0-or-later\n0003: !  Copyright (C) 2019-2022, respective authors of MCFM.\n0004: !\n0005:       subroutine qqbggAxtri123x4x56(p1,p2,p3,p4,p5,p6,za,zb,\n0006:      & coeff0,coeff2)\n0007:       use types\n0008:       use constants_mod\n0009:       use mxpart_mod\n0010:       use sprods_com_mod\n0011:       implicit none\n0012:       complex(dp):: za(mxpart,mxpart)"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/W2jet/qqbggAxtri123x4x56.f\n# lines: 1-29\n0001: !\n0002: !  SPDX-License-Identifier: GPL-3.0-or-later\n0003: !  Copyright (C) 2019-2022, respective authors of MCFM.\n0004: !\n0005:       subroutine qqbggAxtri123x4x56(p1,p2,p3,p4,p5,p6,za,zb,\n0006:      & coeff0,coeff2)\n0007:       use types\n0008:       use constants_mod\n0009:       use mxpart_mod\n0010:       use sprods_com_mod\n0011:       implicit none\n0012:       complex(dp):: za(mxpart,mxpart)"
 
 [tools.args]
 path = "software/mcfm/src/W2jet/qqbggAxtri123x4x56.f"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/adubey/JSS-2026-Example/software/mcfm/src/Inc/deprecated/tri123x4x56coeffs.f\n# lines: 1-314\n0001: !\n0002: !  SPDX-License-Identifier: GPL-3.0-or-later\n0003: !  Copyright (C) 2019-2022, respective authors of MCFM.\n0004: !\n0005: \n0006: \n0007:       coeff2(2,2) = (\n0008:      &   2._dp*za(p3,p4)*zb(p1,p3)*zb(p4,p6)/(s123)*(\n0009:      &      2._dp*za(p1,p2)*za(p2,p5)*zb(p1,p2)\n0010:      &    - za(p1,p5)*za(p2,p4)*zb(p1,p4)\n0011:      &    - za(p2,p4)*za(p3,p5)*zb(p3,p4)\n0012:      & "
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/Inc/deprecated/tri123x4x56coeffs.f\n# lines: 1-314\n0001: !\n0002: !  SPDX-License-Identifier: GPL-3.0-or-later\n0003: !  Copyright (C) 2019-2022, respective authors of MCFM.\n0004: !\n0005: \n0006: \n0007:       coeff2(2,2) = (\n0008:      &   2._dp*za(p3,p4)*zb(p1,p3)*zb(p4,p6)/(s123)*(\n0009:      &      2._dp*za(p1,p2)*za(p2,p5)*zb(p1,p2)\n0010:      &    - za(p1,p5)*za(p2,p4)*zb(p1,p4)\n0011:      &    - za(p2,p4)*za(p3,p5)*zb(p3,p4)\n0012:      & "
 
 [tools.args]
 path = "software/mcfm/src/Inc/deprecated/tri123x4x56coeffs.f"
@@ -70,14 +70,14 @@ command = "ls software/mcfm/src/Inc software/mcfm/src/Inc/deprecated software/mc
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/adubey/JSS-2026-Example/dev/tmp/apply_moves.py\n# lines: 1-56\n0001: import os\n0002: import shutil\n0003: \n0004: mods = 'software/mcfm/src/Mods'\n0005: inc = 'software/mcfm/src/Inc'\n0006: \n0007: # 1) types_mod: keep original .f (record history), add .hpp, Fortran shim lives in .f\n0008: with open(f'{mods}/types_mod.hpp', 'w') as f:\n0009:     f.write('''#ifndef TYPES_MOD\n0010: #define TYPES_MOD\n0011: \n0012: namespace types {\n0013:   const int sp = 6;  // selected_real_kind(6)\n0014:   con"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/tmp/apply_moves.py\n# lines: 1-56\n0001: import os\n0002: import shutil\n0003: \n0004: mods = 'software/mcfm/src/Mods'\n0005: inc = 'software/mcfm/src/Inc'\n0006: \n0007: # 1) types_mod: keep original .f (record history), add .hpp, Fortran shim lives in .f\n0008: with open(f'{mods}/types_mod.hpp', 'w') as f:\n0009:     f.write('''#ifndef TYPES_MOD\n0010: #define TYPES_MOD\n0011: \n0012: namespace types {\n0013:   const int sp = 6;  // selected_real_kind(6)\n0014:   con"
 
 [tools.args]
 path = "dev/tmp/apply_moves.py"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/adubey/JSS-2026-Example/dev/tmp/check_ppvals.py\n# lines: 1-42\n0001: import re\n0002: \n0003: def parse_f90(path):\n0004:     text = open(path).read()\n0005:     m = re.search(r'reshape\\s*\\(\\(/(.*?)/\\)\\s*&\\s*,\\s*\\(/\\s*9\\s*,\\s*9\\s*,\\s*9\\s*,\\s*9\\s*/\\)\\s*\\)',\n0006:                   text, re.S)\n0007:     vals = [v.strip() for v in m.group(1).replace('&', '').replace('\\n', ' ').split(',')]\n0008:     vals = [int(v) for v in vals if v]\n0009:     return vals\n0010: \n0011: def parse_cpp(path):\n0"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/tmp/check_ppvals.py\n# lines: 1-42\n0001: import re\n0002: \n0003: def parse_f90(path):\n0004:     text = open(path).read()\n0005:     m = re.search(r'reshape\\s*\\(\\(/(.*?)/\\)\\s*&\\s*,\\s*\\(/\\s*9\\s*,\\s*9\\s*,\\s*9\\s*,\\s*9\\s*/\\)\\s*\\)',\n0006:                   text, re.S)\n0007:     vals = [v.strip() for v in m.group(1).replace('&', '').replace('\\n', ' ').split(',')]\n0008:     vals = [int(v) for v in vals if v]\n0009:     return vals\n0010: \n0011: def parse_cpp(path):\n0"
 
 [tools.args]
 path = "dev/tmp/check_ppvals.py"
@@ -98,21 +98,21 @@ command = "grep -rn \"include_directories\\|INC\\|Inc\" software/mcfm/CMakeLists
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/adubey/JSS-2026-Example/software/mcfm/src/Mods/ppmax_mod.f90\n# lines: 1-11\n0001: \n0002: module ppmax_mod\n0003:   use types\n0004:   implicit none\n0005:   \n0006:   public\n0007: \n0008:     integer, parameter:: ppmax=80\n0009: \n0010: \n0011: end module\n"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/ppmax_mod.f90\n# lines: 1-11\n0001: \n0002: module ppmax_mod\n0003:   use types\n0004:   implicit none\n0005:   \n0006:   public\n0007: \n0008:     integer, parameter:: ppmax=80\n0009: \n0010: \n0011: end module\n"
 
 [tools.args]
 path = "software/mcfm/src/Mods/ppmax_mod.f90"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/adubey/JSS-2026-Example/software/mcfm/src/Mods/ppmax_mod.hpp\n# lines: 1-8\n0001: #ifndef PPMAX_MOD\n0002: #define PPMAX_MOD\n0003: \n0004: namespace ppmax_mod {\n0005:   const int ppmax = 80;\n0006: }\n0007: \n0008: #endif\n"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/ppmax_mod.hpp\n# lines: 1-8\n0001: #ifndef PPMAX_MOD\n0002: #define PPMAX_MOD\n0003: \n0004: namespace ppmax_mod {\n0005:   const int ppmax = 80;\n0006: }\n0007: \n0008: #endif\n"
 
 [tools.args]
 path = "software/mcfm/src/Mods/ppmax_mod.hpp"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/adubey/JSS-2026-Example/software/mcfm/src/Mods/CMakeLists.txt\n# lines: 1-137\n0001: target_sources(objlib PRIVATE\n0002: mod_qcdloop_c.f\n0003: types_mod.f\n0004: b0_mod.f90\n0005: b0_mod.cpp\n0006: blabels_mod.f90\n0007: blha_mod.f90\n0008: blha_mod.cpp\n0009: breit_mod.f90\n0010: breit_mod.cpp\n0011: Cabibbo_mod.f90\n0012: Cabibbo_mod.cpp\n0013: ckm1_mod.f90\n0014: ckm1_mod.cpp\n0015: ckm_mod.f90\n0016: ckm_mod.cpp\n0017: constants_mod.f90\n0018: couple_mod.f90\n0019: couple_mod.cpp\n0020: docheck_m"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/CMakeLists.txt\n# lines: 1-137\n0001: target_sources(objlib PRIVATE\n0002: mod_qcdloop_c.f\n0003: types_mod.f\n0004: b0_mod.f90\n0005: b0_mod.cpp\n0006: blabels_mod.f90\n0007: blha_mod.f90\n0008: blha_mod.cpp\n0009: breit_mod.f90\n0010: breit_mod.cpp\n0011: Cabibbo_mod.f90\n0012: Cabibbo_mod.cpp\n0013: ckm1_mod.f90\n0014: ckm1_mod.cpp\n0015: ckm_mod.f90\n0016: ckm_mod.cpp\n0017: constants_mod.f90\n0018: couple_mod.f90\n0019: couple_mod.cpp\n0020: docheck_m"
 
 [tools.args]
 path = "software/mcfm/src/Mods/CMakeLists.txt"
@@ -140,7 +140,7 @@ command = "ls software/mcfm/src/W2jet | head -40"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/adubey/JSS-2026-Example/software/mcfm/src/Inc/deprecated/tri123x4x56coeffs.f\n# lines: 148-314\n0148:      &    - za(p1,p4)*za(p2,p3)*za(p5,p6)*zb(p1,p3)*zb(p4,p6)\n0149:      &    )\n0150:      & + 2._dp*za(p4,p5)/(zab2(p4,p5,p6,p4))*(\n0151:      &      2._dp*za(p2,p3)*za(p2,p4)*zb(p1,p2)*zb(p3,p4)*zb(p4,p6)\n0152:      &    - 2._dp*za(p2,p5)*za(p3,p4)*zb(p1,p4)*zb(p3,p4)*zb(p5,p6)\n0153:      &    - za(p1,p2)*za(p4,p5)*zb(p1,p4)**2*zb(p5,p6)\n0154:      &    - za(p1,p4)*za(p2,p3)*zb(p1,"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/Inc/deprecated/tri123x4x56coeffs.f\n# lines: 148-314\n0148:      &    - za(p1,p4)*za(p2,p3)*za(p5,p6)*zb(p1,p3)*zb(p4,p6)\n0149:      &    )\n0150:      & + 2._dp*za(p4,p5)/(zab2(p4,p5,p6,p4))*(\n0151:      &      2._dp*za(p2,p3)*za(p2,p4)*zb(p1,p2)*zb(p3,p4)*zb(p4,p6)\n0152:      &    - 2._dp*za(p2,p5)*za(p3,p4)*zb(p1,p4)*zb(p3,p4)*zb(p5,p6)\n0153:      &    - za(p1,p2)*za(p4,p5)*zb(p1,p4)**2*zb(p5,p6)\n0154:      &    - za(p1,p4)*za(p2,p3)*zb(p1,"
 
 [tools.args]
 path = "software/mcfm/src/Inc/deprecated/tri123x4x56coeffs.f"
@@ -148,7 +148,7 @@ offset = 148
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/adubey/JSS-2026-Example/software/mcfm/src/Inc/deprecated/tri123x4x56coeffs.f\n# lines: 293-314\n0293:      &    + za(p2,p3)*za(p4,p5)*za(p5,p6)*zb(p4,p6)*zb(p5,p6)\n0294:      &    )\n0295:      & + 2._dp*za(p3,p4)*zb(p1,p4)*zb(p4,p6)/(zab2(p4,p5,p6,p4)*s123)*(\n0296:      &      2._dp*za(p1,p2)*za(p2,p3)*za(p3,p5)*zb(p1,p2)*zb(p3,p4)\n0297:      &    - 2._dp*za(p1,p2)**2*za(p3,p5)*zb(p1,p2)*zb(p1,p4)\n0298:      &    + 5._dp*za(p1,p2)*za(p2,p3)*za(p5,p6)*zb(p1,p2)*zb(p4,p6)\n0299:      & "
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/Inc/deprecated/tri123x4x56coeffs.f\n# lines: 293-314\n0293:      &    + za(p2,p3)*za(p4,p5)*za(p5,p6)*zb(p4,p6)*zb(p5,p6)\n0294:      &    )\n0295:      & + 2._dp*za(p3,p4)*zb(p1,p4)*zb(p4,p6)/(zab2(p4,p5,p6,p4)*s123)*(\n0296:      &      2._dp*za(p1,p2)*za(p2,p3)*za(p3,p5)*zb(p1,p2)*zb(p3,p4)\n0297:      &    - 2._dp*za(p1,p2)**2*za(p3,p5)*zb(p1,p2)*zb(p1,p4)\n0298:      &    + 5._dp*za(p1,p2)*za(p2,p3)*za(p5,p6)*zb(p1,p2)*zb(p4,p6)\n0299:      & "
 
 [tools.args]
 path = "software/mcfm/src/Inc/deprecated/tri123x4x56coeffs.f"
@@ -156,7 +156,7 @@ offset = 293
 [[tools]]
 name = "write"
 ok = true
-output_preview = "Wrote /home/adubey/JSS-2026-Example/dev/tmp/inline_coeffs.py (946 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/dev/tmp/inline_coeffs.py (946 bytes)"
 
 [tools.args]
 path = "dev/tmp/inline_coeffs.py"
@@ -171,7 +171,7 @@ command = "python3 dev/tmp/inline_coeffs.py"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/adubey/JSS-2026-Example/software/mcfm/src/W2jet/qqbggAxtri123x4x56.f\n# lines: 1-45\n0001: !\n0002: !  SPDX-License-Identifier: GPL-3.0-or-later\n0003: !  Copyright (C) 2019-2022, respective authors of MCFM.\n0004: !\n0005:       subroutine qqbggAxtri123x4x56(p1,p2,p3,p4,p5,p6,za,zb,\n0006:      & coeff0,coeff2)\n0007:       use types\n0008:       use constants_mod\n0009:       use mxpart_mod\n0010:       use sprods_com_mod\n0011:       implicit none\n0012:       complex(dp):: za(mxpart,mxpart)"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/W2jet/qqbggAxtri123x4x56.f\n# lines: 1-45\n0001: !\n0002: !  SPDX-License-Identifier: GPL-3.0-or-later\n0003: !  Copyright (C) 2019-2022, respective authors of MCFM.\n0004: !\n0005:       subroutine qqbggAxtri123x4x56(p1,p2,p3,p4,p5,p6,za,zb,\n0006:      & coeff0,coeff2)\n0007:       use types\n0008:       use constants_mod\n0009:       use mxpart_mod\n0010:       use sprods_com_mod\n0011:       implicit none\n0012:       complex(dp):: za(mxpart,mxpart)"
 
 [tools.args]
 path = "software/mcfm/src/W2jet/qqbggAxtri123x4x56.f"
@@ -187,7 +187,7 @@ offset = 530
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/adubey/JSS-2026-Example/software/mcfm/src/W2jet/qqbggAxtri123x4x56.f\n# lines: 320-339\n0320:      &    + 5._dp*za(p1,p2)*za(p2,p3)*za(p5,p6)*zb(p1,p2)*zb(p4,p6)\n0321:      &    + za(p1,p2)*za(p2,p3)*za(p5,p6)*zb(p1,p4)*zb(p2,p6)\n0322:      &    + 2._dp*za(p1,p3)*za(p2,p3)*za(p5,p6)*zb(p1,p4)*zb(p3,p6)\n0323:      &    + za(p1,p4)*za(p2,p3)*za(p5,p6)*zb(p1,p4)*zb(p4,p6)\n0324:      &    + za(p2,p3)**2*za(p5,p6)*zb(p2,p4)*zb(p3,p6)\n0325:      &    - za(p2,p3)*za(p3,p4)*za(p5,p6)*zb(p3,p"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/W2jet/qqbggAxtri123x4x56.f\n# lines: 320-339\n0320:      &    + 5._dp*za(p1,p2)*za(p2,p3)*za(p5,p6)*zb(p1,p2)*zb(p4,p6)\n0321:      &    + za(p1,p2)*za(p2,p3)*za(p5,p6)*zb(p1,p4)*zb(p2,p6)\n0322:      &    + 2._dp*za(p1,p3)*za(p2,p3)*za(p5,p6)*zb(p1,p4)*zb(p3,p6)\n0323:      &    + za(p1,p4)*za(p2,p3)*za(p5,p6)*zb(p1,p4)*zb(p4,p6)\n0324:      &    + za(p2,p3)**2*za(p5,p6)*zb(p2,p4)*zb(p3,p6)\n0325:      &    - za(p2,p3)*za(p3,p4)*za(p5,p6)*zb(p3,p"
 
 [tools.args]
 path = "software/mcfm/src/W2jet/qqbggAxtri123x4x56.f"
@@ -195,7 +195,7 @@ offset = 320
 [[tools]]
 name = "bash"
 ok = true
-output_preview = "exit_code: 0\nSTDOUT:\nx1b[95mROOT:x1b[0m /home/adubey/JSS-2026-Example\nx1b[95mNODE:x1b[0m <ROOT>/tests/mcfm\n\nx1b[95mSCRIPTS: x1b[0m\n    - <ROOT>/config.sh\n    - <ROOT>/environment.sh\n    - <ROOT>/tests/mcfm/test.sh\n\nx1b[95mEXECUTE:x1b[0m <ROOT>/tests/mcfm/job.submit\nin 1:16.5 \n/home/adubey/JSS-2026-Example/software/mcfm/src/W2jet/qqb_wp2jetx_new.f:73:33:\n\n   73 |       real(dp):: ppmsqx(0:2,ppmax),tmpmsqx(0:2,0:ppmax)\n      |                                 1\nError: Symbol ‘ppmax’ at (1) has no IMPLICIT type; di"
+output_preview = "exit_code: 0\nSTDOUT:\nx1b[95mROOT:x1b[0m /home/user/JSS-2026-Example\nx1b[95mNODE:x1b[0m <ROOT>/tests/mcfm\n\nx1b[95mSCRIPTS: x1b[0m\n    - <ROOT>/config.sh\n    - <ROOT>/environment.sh\n    - <ROOT>/tests/mcfm/test.sh\n\nx1b[95mEXECUTE:x1b[0m <ROOT>/tests/mcfm/job.submit\nin 1:16.5 \n/home/user/JSS-2026-Example/software/mcfm/src/W2jet/qqb_wp2jetx_new.f:73:33:\n\n   73 |       real(dp):: ppmsqx(0:2,ppmax),tmpmsqx(0:2,0:ppmax)\n      |                                 1\nError: Symbol ‘ppmax’ at (1) has no IMPLICIT type; di"
 
 [tools.args]
 command = "jobrunner submit tests/mcfm"
@@ -203,7 +203,7 @@ timeout = 600
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/adubey/JSS-2026-Example/software/mcfm/src/Mods/pp_mod.cpp\n# lines: 1-60\n0001: #include <pp_mod.hpp>\n0002: #include <FArray.hpp> // Corrected header file inclusion\n0003: \n0004: namespace pp_mod {\n0005:   FArray4D<int> pp(9, 9, 9, 9, -4, -4, -4, -4); // 4D array for pp\n0006: }\n0007: \n0008: namespace {\n0009: \n0010: int pp_init[9 * 9 * 9 * 9] = {\n0011:     0, 0, 0, 0, 0, 0, 0, 0, 0,\n0012:     0, 0, 0, 0, 0, 0, 0, 0, 0,\n0013:     0, 0, 0, 0, 0, 0, 0, 0, 0,\n0014:     0, 0, 0, 0, 0, 0, 0,"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/pp_mod.cpp\n# lines: 1-60\n0001: #include <pp_mod.hpp>\n0002: #include <FArray.hpp> // Corrected header file inclusion\n0003: \n0004: namespace pp_mod {\n0005:   FArray4D<int> pp(9, 9, 9, 9, -4, -4, -4, -4); // 4D array for pp\n0006: }\n0007: \n0008: namespace {\n0009: \n0010: int pp_init[9 * 9 * 9 * 9] = {\n0011:     0, 0, 0, 0, 0, 0, 0, 0, 0,\n0012:     0, 0, 0, 0, 0, 0, 0, 0, 0,\n0013:     0, 0, 0, 0, 0, 0, 0, 0, 0,\n0014:     0, 0, 0, 0, 0, 0, 0,"
 
 [tools.args]
 path = "software/mcfm/src/Mods/pp_mod.cpp"
@@ -211,7 +211,7 @@ limit = 60
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/adubey/JSS-2026-Example/software/mcfm/src/W2jet/qqb_wp2jetx_new.f\n# lines: 1-60\n0001: !\n0002: !  SPDX-License-Identifier: GPL-3.0-or-later\n0003: !  Copyright (C) 2019-2022, respective authors of MCFM.\n0004: !\n0005: \n0006:       subroutine qqb_wp2jetx_new(p,msq,mqq,ppmsqx,msqx_cs)\n0007:       use types\n0008: c---- wm2jetx and wp2jetx should differ only by the include\n0009: c---- file:  ppwm2j.f  or  ppwp2j.f\n0010: \n0011: c--- matrix element squared and averaged over initial colours "
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/W2jet/qqb_wp2jetx_new.f\n# lines: 1-60\n0001: !\n0002: !  SPDX-License-Identifier: GPL-3.0-or-later\n0003: !  Copyright (C) 2019-2022, respective authors of MCFM.\n0004: !\n0005: \n0006:       subroutine qqb_wp2jetx_new(p,msq,mqq,ppmsqx,msqx_cs)\n0007:       use types\n0008: c---- wm2jetx and wp2jetx should differ only by the include\n0009: c---- file:  ppwm2j.f  or  ppwp2j.f\n0010: \n0011: c--- matrix element squared and averaged over initial colours "
 
 [tools.args]
 path = "software/mcfm/src/W2jet/qqb_wp2jetx_new.f"
@@ -219,7 +219,7 @@ limit = 60
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/adubey/JSS-2026-Example/software/mcfm/src/Z2jet/qqb_z2jetx_new.f\n# lines: 1-60\n0001: !\n0002: !  SPDX-License-Identifier: GPL-3.0-or-later\n0003: !  Copyright (C) 2019-2022, respective authors of MCFM.\n0004: !\n0005: \n0006:       subroutine qqb_z2jetx_new(p,msq,mqq,ppmsqx,msqx_cs)\n0007:       use types\n0008: \n0009: c---Matrix element squared averaged over initial colors and spins\n0010: c     q(-p1)+qbar(-p2) --> Z +g(p5) +g(p6)\n0011: c                          |\n0012: c               "
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/Z2jet/qqb_z2jetx_new.f\n# lines: 1-60\n0001: !\n0002: !  SPDX-License-Identifier: GPL-3.0-or-later\n0003: !  Copyright (C) 2019-2022, respective authors of MCFM.\n0004: !\n0005: \n0006:       subroutine qqb_z2jetx_new(p,msq,mqq,ppmsqx,msqx_cs)\n0007:       use types\n0008: \n0009: c---Matrix element squared averaged over initial colors and spins\n0010: c     q(-p1)+qbar(-p2) --> Z +g(p5) +g(p6)\n0011: c                          |\n0012: c               "
 
 [tools.args]
 path = "software/mcfm/src/Z2jet/qqb_z2jetx_new.f"
@@ -248,7 +248,7 @@ command = "grep -n -e \"use ppmax_mod\" -e \"use pp_mod\" -e \"use ppwp2j_mod\" 
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/adubey/JSS-2026-Example/software/mcfm/src/W2jet/qqb_w2jet_v.f\n# lines: 1-70\n0001: !\n0002: !  SPDX-License-Identifier: GPL-3.0-or-later\n0003: !  Copyright (C) 2019-2022, respective authors of MCFM.\n0004: !\n0005: \n0006:       subroutine qqb_w2jet_v(p,msqv)\n0007:       use types\n0008: \n0009: c***********************************************************************\n0010: c     Author: R.K. Ellis                                               *\n0011: c     January 2001.                   "
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/W2jet/qqb_w2jet_v.f\n# lines: 1-70\n0001: !\n0002: !  SPDX-License-Identifier: GPL-3.0-or-later\n0003: !  Copyright (C) 2019-2022, respective authors of MCFM.\n0004: !\n0005: \n0006:       subroutine qqb_w2jet_v(p,msqv)\n0007:       use types\n0008: \n0009: c***********************************************************************\n0010: c     Author: R.K. Ellis                                               *\n0011: c     January 2001.                   "
 
 [tools.args]
 path = "software/mcfm/src/W2jet/qqb_w2jet_v.f"
@@ -256,7 +256,7 @@ limit = 70
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/adubey/JSS-2026-Example/software/mcfm/src/Z2jet/qqb_z2jet_v.f\n# lines: 1-80\n0001: !\n0002: !  SPDX-License-Identifier: GPL-3.0-or-later\n0003: !  Copyright (C) 2019-2022, respective authors of MCFM.\n0004: !\n0005:       subroutine qqb_z2jet_v(p,msqv)\n0006:       use types\n0007: \n0008: c***********************************************************************\n0009: c     Author: R.K. Ellis                                               *\n0010: c     September 2001.                        "
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/Z2jet/qqb_z2jet_v.f\n# lines: 1-80\n0001: !\n0002: !  SPDX-License-Identifier: GPL-3.0-or-later\n0003: !  Copyright (C) 2019-2022, respective authors of MCFM.\n0004: !\n0005:       subroutine qqb_z2jet_v(p,msqv)\n0006:       use types\n0007: \n0008: c***********************************************************************\n0009: c     Author: R.K. Ellis                                               *\n0010: c     September 2001.                        "
 
 [tools.args]
 path = "software/mcfm/src/Z2jet/qqb_z2jet_v.f"
@@ -264,21 +264,21 @@ limit = 80
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/adubey/JSS-2026-Example/software/mcfm/src/Mods/pp_mod.f90\n# lines: 1-38\n0001: module pp_mod\n0002: \n0003:   use, intrinsic :: iso_c_binding\n0004:   use ppmax_mod\n0005:   implicit none\n0006: \n0007:   private\n0008:     interface\n0009:       function get_pp() bind(C, name=\"pp_mod_pp\")\n0010:         import :: c_ptr\n0011:         type(c_ptr) :: get_pp\n0012:       end function get_pp\n0013:     end interface\n0014: \n0015:   public :: pp, pp_mod_init, pp_mod_finalize\n0016:   integer(c_int), "
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/pp_mod.f90\n# lines: 1-38\n0001: module pp_mod\n0002: \n0003:   use, intrinsic :: iso_c_binding\n0004:   use ppmax_mod\n0005:   implicit none\n0006: \n0007:   private\n0008:     interface\n0009:       function get_pp() bind(C, name=\"pp_mod_pp\")\n0010:         import :: c_ptr\n0011:         type(c_ptr) :: get_pp\n0012:       end function get_pp\n0013:     end interface\n0014: \n0015:   public :: pp, pp_mod_init, pp_mod_finalize\n0016:   integer(c_int), "
 
 [tools.args]
 path = "software/mcfm/src/Mods/pp_mod.f90"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/adubey/JSS-2026-Example/software/mcfm/src/Mods/ppwp2j_mod.f90\n# lines: 1-38\n0001: module ppwp2j_mod\n0002: \n0003:   use, intrinsic :: iso_c_binding\n0004:   use ppmax_mod\n0005:   implicit none\n0006: \n0007:   private\n0008:     interface\n0009:       function get_pp() bind(C, name=\"ppwp2j_mod_pp\")\n0010:         import :: c_ptr\n0011:         type(c_ptr) :: get_pp\n0012:       end function get_pp\n0013:     end interface\n0014: \n0015:   public :: pp, ppwp2j_mod_init, ppwp2j_mod_finalize\n0016"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/ppwp2j_mod.f90\n# lines: 1-38\n0001: module ppwp2j_mod\n0002: \n0003:   use, intrinsic :: iso_c_binding\n0004:   use ppmax_mod\n0005:   implicit none\n0006: \n0007:   private\n0008:     interface\n0009:       function get_pp() bind(C, name=\"ppwp2j_mod_pp\")\n0010:         import :: c_ptr\n0011:         type(c_ptr) :: get_pp\n0012:       end function get_pp\n0013:     end interface\n0014: \n0015:   public :: pp, ppwp2j_mod_init, ppwp2j_mod_finalize\n0016"
 
 [tools.args]
 path = "software/mcfm/src/Mods/ppwp2j_mod.f90"
 [[tools]]
 name = "edit"
 ok = true
-output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/adubey/JSS-2026-Example/software/mcfm/src/W2jet/qqb_wp2jetx_new.f\",\n  \"applied\": 1,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 39,\n      \"new_len\": 59,\n      \"before_snippet\": \"…od\\n      use flags_mod\\n      use lc_mod\\n      use kpart_mod\\n      use first_mod\\n      use ppwp2j_mod\\n      use blha_mod\\n      implicit none\\n      real(dp):: msq(-nf:nf,-nf:nf),p(mxpart,4),\\n     &    …\",\n      \"after_snippet\": \"…od\\n      "
+output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/user/JSS-2026-Example/software/mcfm/src/W2jet/qqb_wp2jetx_new.f\",\n  \"applied\": 1,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 39,\n      \"new_len\": 59,\n      \"before_snippet\": \"…od\\n      use flags_mod\\n      use lc_mod\\n      use kpart_mod\\n      use first_mod\\n      use ppwp2j_mod\\n      use blha_mod\\n      implicit none\\n      real(dp):: msq(-nf:nf,-nf:nf),p(mxpart,4),\\n     &    …\",\n      \"after_snippet\": \"…od\\n      "
 
 [tools.args]
 path = "software/mcfm/src/W2jet/qqb_wp2jetx_new.f"
@@ -289,7 +289,7 @@ newText = "      use ppwp2j_mod\n      use ppmax_mod\n      use blha_mod"
 [[tools]]
 name = "edit"
 ok = true
-output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/adubey/JSS-2026-Example/software/mcfm/src/Z2jet/qqb_z2jetx_new.f\",\n  \"applied\": 1,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 35,\n      \"new_len\": 55,\n      \"before_snippet\": \"…    use zprods_com_mod\\n      use flags_mod\\n      use lc_mod\\n      use kpart_mod\\n      use pp_mod\\n      use blha_mod\\n      use zcouple_cms_mod\\n      implicit none\\n      integer:: i,j,k,f,pq,pl,nqu…\",\n      \"after_snippet\": \"…    use zprods_c"
+output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/user/JSS-2026-Example/software/mcfm/src/Z2jet/qqb_z2jetx_new.f\",\n  \"applied\": 1,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 35,\n      \"new_len\": 55,\n      \"before_snippet\": \"…    use zprods_com_mod\\n      use flags_mod\\n      use lc_mod\\n      use kpart_mod\\n      use pp_mod\\n      use blha_mod\\n      use zcouple_cms_mod\\n      implicit none\\n      integer:: i,j,k,f,pq,pl,nqu…\",\n      \"after_snippet\": \"…    use zprods_c"
 
 [tools.args]
 path = "software/mcfm/src/Z2jet/qqb_z2jetx_new.f"
@@ -300,7 +300,7 @@ newText = "      use pp_mod\n      use ppmax_mod\n      use blha_mod"
 [[tools]]
 name = "bash"
 ok = true
-output_preview = "exit_code: 0\nSTDOUT:\nx1b[95mROOT:x1b[0m /home/adubey/JSS-2026-Example\nx1b[95mNODE:x1b[0m <ROOT>/tests/mcfm\n\nx1b[95mSCRIPTS: x1b[0m\n    - <ROOT>/config.sh\n    - <ROOT>/environment.sh\n    - <ROOT>/tests/mcfm/test.sh\n\nx1b[95mEXECUTE:x1b[0m <ROOT>/tests/mcfm/job.submit\nin 1:55.6 \nx1b[92mSUCCESS x1b[0m\n\nx1b[95mOUTPUT:x1b[0m <ROOT>/tests/mcfm/job.output\n\nSTDERR:\n"
+output_preview = "exit_code: 0\nSTDOUT:\nx1b[95mROOT:x1b[0m /home/user/JSS-2026-Example\nx1b[95mNODE:x1b[0m <ROOT>/tests/mcfm\n\nx1b[95mSCRIPTS: x1b[0m\n    - <ROOT>/config.sh\n    - <ROOT>/environment.sh\n    - <ROOT>/tests/mcfm/test.sh\n\nx1b[95mEXECUTE:x1b[0m <ROOT>/tests/mcfm/job.submit\nin 1:55.6 \nx1b[92mSUCCESS x1b[0m\n\nx1b[95mOUTPUT:x1b[0m <ROOT>/tests/mcfm/job.output\n\nSTDERR:\n"
 
 [tools.args]
 command = "jobrunner submit tests/mcfm"
@@ -329,7 +329,7 @@ command = "python3 dev/tmp/check_ppvals.py"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/adubey/JSS-2026-Example/tests/mcfm/job.output\n# lines: 1-942\n0001: ---------------------------------------------------------------------------------------\n0002: Lab-notebook environment:\n0003:   PROJECT_HOME=/home/adubey/JSS-2026-Example\n0004:   SITE_HOME=/home/adubey/JSS-2026-Example/sites/supercomp01a\n0005:   MCFM_HOME=/home/adubey/JSS-2026-Example/software/mcfm\n0006:   PEPPER_HOME=/home/adubey/JSS-2026-Example/software/pepper\n0007:   QCDLOOP_HOME=/home/adubey/JSS-2026-Example/so"
+output_preview = "# path: /home/user/JSS-2026-Example/tests/mcfm/job.output\n# lines: 1-942\n0001: ---------------------------------------------------------------------------------------\n0002: Lab-notebook environment:\n0003:   PROJECT_HOME=/home/user/JSS-2026-Example\n0004:   SITE_HOME=/home/user/JSS-2026-Example/sites/supercomp01a\n0005:   MCFM_HOME=/home/user/JSS-2026-Example/software/mcfm\n0006:   PEPPER_HOME=/home/user/JSS-2026-Example/software/pepper\n0007:   QCDLOOP_HOME=/home/user/JSS-2026-Example/so"
 
 [tools.args]
 path = "tests/mcfm/job.output"
@@ -358,7 +358,7 @@ timeout = 300
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/adubey/JSS-2026-Example/tests/mcfm/job.output\n# lines: 895-942\n0895: g g ve e+ d u~: x1b[1;32m PASSED x1b[0m\n0896: x1b[1m===> h (EFT) processes <===x1b[0m\n0897: -Pmodel=heft g g h: x1b[1;32m PASSED x1b[0m\n0898: x1b[1m===> h (SM) processes <===x1b[0m\n0899: g g h: x1b[1;32m PASSED x1b[0m\n0900: x1b[1m===> hjj (SM) processes <===x1b[0m\n0901: d d h d d: x1b[1;32m PASSED x1b[0m\n0902: d d~ h d d~: x1b[1;32m PASSED x1b[0m\n0903: d d~ h u u~: x1b[1;32m PASSED x1b[0m\n0904: d d~ h g g: x1b[1;31m FAILED x1b[0m\n0905: d u h d u: x1b[1;32"
+output_preview = "# path: /home/user/JSS-2026-Example/tests/mcfm/job.output\n# lines: 895-942\n0895: g g ve e+ d u~: x1b[1;32m PASSED x1b[0m\n0896: x1b[1m===> h (EFT) processes <===x1b[0m\n0897: -Pmodel=heft g g h: x1b[1;32m PASSED x1b[0m\n0898: x1b[1m===> h (SM) processes <===x1b[0m\n0899: g g h: x1b[1;32m PASSED x1b[0m\n0900: x1b[1m===> hjj (SM) processes <===x1b[0m\n0901: d d h d d: x1b[1;32m PASSED x1b[0m\n0902: d d~ h d d~: x1b[1;32m PASSED x1b[0m\n0903: d d~ h u u~: x1b[1;32m PASSED x1b[0m\n0904: d d~ h g g: x1b[1;31m FAILED x1b[0m\n0905: d u h d u: x1b[1;32"
 
 [tools.args]
 path = "tests/mcfm/job.output"
@@ -385,15 +385,15 @@ ok = false
 output_preview = "Error: command not allowed: 'env'"
 
 [tools.args]
-command = "env MCFM_HOME=/home/adubey/JSS-2026-Example/software/mcfm python3 dev/workflow.py verify software/mcfm/src/Mods/pp_mod.cpp -- none"
+command = "env MCFM_HOME=/home/user/JSS-2026-Example/software/mcfm python3 dev/workflow.py verify software/mcfm/src/Mods/pp_mod.cpp -- none"
 timeout = 300
 [[tools]]
 name = "bash"
 ok = false
-output_preview = "Error: command not allowed: 'MCFM_HOME=/home/adubey/JSS-2026-Example/software/mcfm'"
+output_preview = "Error: command not allowed: 'MCFM_HOME=/home/user/JSS-2026-Example/software/mcfm'"
 
 [tools.args]
-command = "MCFM_HOME=/home/adubey/JSS-2026-Example/software/mcfm python3 dev/workflow.py verify software/mcfm/src/Mods/pp_mod.cpp -- none"
+command = "MCFM_HOME=/home/user/JSS-2026-Example/software/mcfm python3 dev/workflow.py verify software/mcfm/src/Mods/pp_mod.cpp -- none"
 timeout = 300
 [[tools]]
 name = "bash"
@@ -405,7 +405,7 @@ command = "grep -rn \"MCFM_HOME\" environment.sh config.sh"
 [[tools]]
 name = "write"
 ok = true
-output_preview = "Wrote /home/adubey/JSS-2026-Example/dev/tmp/run_verify.py (414 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/dev/tmp/run_verify.py (414 bytes)"
 
 [tools.args]
 path = "dev/tmp/run_verify.py"
@@ -413,7 +413,7 @@ content = "import os\nimport subprocess\nimport sys\n\nroot = os.path.dirname(os
 [[tools]]
 name = "bash"
 ok = true
-output_preview = "exit_code: 2\nSTDOUT:\n\nSTDERR:\npython3: can't open file '/home/adubey/JSS-2026-Example/dev/dev/workflow.py': [Errno 2] No such file or directory\n"
+output_preview = "exit_code: 2\nSTDOUT:\n\nSTDERR:\npython3: can't open file '/home/user/JSS-2026-Example/dev/dev/workflow.py': [Errno 2] No such file or directory\n"
 
 [tools.args]
 command = "python3 dev/tmp/run_verify.py software/mcfm/src/Mods/pp_mod.cpp"
@@ -421,7 +421,7 @@ timeout = 600
 [[tools]]
 name = "write"
 ok = true
-output_preview = "Wrote /home/adubey/JSS-2026-Example/dev/tmp/run_verify.py (431 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/dev/tmp/run_verify.py (431 bytes)"
 
 [tools.args]
 path = "dev/tmp/run_verify.py"

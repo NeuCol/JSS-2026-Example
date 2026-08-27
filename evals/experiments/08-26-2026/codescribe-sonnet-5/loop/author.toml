@@ -40,7 +40,7 @@ ok = true
 duration_ms = 0.627
 output_chars = 8710
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/current_plan.md
+# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/current_plan.md
 # lines: 1-182
 0001: # Fortran → C++ plan
 0002: 
@@ -69,7 +69,7 @@ ok = true
 duration_ms = 0.539
 output_chars = 7692
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/desired_spec.md
+# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/desired_spec.md
 # lines: 1-144
 0001: # Fortran → C++: target output for one MCFM file
 0002: 
@@ -126,7 +126,7 @@ ok = true
 duration_ms = 0.404
 output_chars = 1053
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/current_plan.md
+# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/current_plan.md
 # lines: 164-182
 0164: ## When to stop
 0165: 
@@ -178,7 +178,7 @@ ok = true
 duration_ms = 0.366
 output_chars = 939
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/CMakeLists.txt
+# path: /home/user/JSS-2026-Example/software/mcfm/src/BDK/CMakeLists.txt
 # lines: 1-49
 0001: target_sources(objlib PRIVATE
 0002: FFPPsc.f
@@ -462,8 +462,8 @@ output_chars = 44339
 output_preview = '''
 exit_code: 0
 STDOUT:
-Generating Doxygen XML for /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src -> /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/doxygen_dep/xml
-wrote 1133 XML file(s) to /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/doxygen_dep/xml
+Generating Doxygen XML for /home/user/JSS-2026-Example/software/mcfm/src -> /home/user/JSS-2026-Example/software/mcfm/doxygen_dep/xml
+wrote 1133 XML file(s) to /home/user/JSS-2026-Example/software/mcfm/doxygen_dep/xml
 source 526  translated 86  untranslated 440
 ready leaves (deps=0, non-blind): 225
 symbol index: 915 symbol(s)
@@ -579,7 +579,7 @@ output_chars = 358
 output_preview = '''
 exit_code: 0
 STDOUT:
-[95mROOT:[0m /home/akash/Desktop/Akash/Projects/JSS-Paper-Example
+[95mROOT:[0m /home/user/JSS-2026-Example
 [95mNODE:[0m <ROOT>/tests/mcfm
 
 [95mSCRIPTS: [0m
@@ -792,7 +792,7 @@ ok = true
 duration_ms = 0.457
 output_chars = 2423
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/environment.sh
+# path: /home/user/JSS-2026-Example/environment.sh
 # lines: 1-41
 0001: # Shell configuration shared across the lab notebook.
 0002: #
@@ -967,7 +967,7 @@ event = "tool_start"
 run_id = "20260826-155219-ff2724"
 iteration = 13
 tool = "bash"
-args = "{\"command\": \"MCFM_HOME=/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm python3 dev/workflow.py verify software/mcfm/src/BDK/M1bit1.cpp -- \\\"u d~ ve e+ g g\\\"\", \"timeout\": 300}"
+args = "{\"command\": \"MCFM_HOME=/home/user/JSS-2026-Example/software/mcfm python3 dev/workflow.py verify software/mcfm/src/BDK/M1bit1.cpp -- \\\"u d~ ve e+ g g\\\"\", \"timeout\": 300}"
 ts = "2026-08-26T20:55:28.638994+00:00"
 
 [[event]]
@@ -976,10 +976,10 @@ run_id = "20260826-155219-ff2724"
 iteration = 13
 tool = "bash"
 ok = false
-error = "command not allowed: 'MCFM_HOME=/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm'"
+error = "command not allowed: 'MCFM_HOME=/home/user/JSS-2026-Example/software/mcfm'"
 duration_ms = 0.337
 output_chars = 106
-output_preview = "Error: command not allowed: 'MCFM_HOME=/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm'"
+output_preview = "Error: command not allowed: 'MCFM_HOME=/home/user/JSS-2026-Example/software/mcfm'"
 ts = "2026-08-26T20:55:28.639325+00:00"
 
 [[event]]
@@ -1141,7 +1141,7 @@ ok = true
 duration_ms = 0.565
 output_chars = 4798
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tools/coverage/coverage_check.py
+# path: /home/user/JSS-2026-Example/dev/tools/coverage/coverage_check.py
 # lines: 1-97
 0001: """Coverage check — decide VERIFIED vs TRANSLATED for one rewritten MCFM file.
 0002: 
@@ -1249,7 +1249,7 @@ ok = true
 duration_ms = 0.525
 output_chars = 3656
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/workflow.py
+# path: /home/user/JSS-2026-Example/dev/workflow.py
 # lines: 220-289
 0220:         _print_approval_record(record)
 0221:     return 0
@@ -1350,7 +1350,7 @@ tool = "write"
 ok = true
 duration_ms = 0.484
 output_chars = 92
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tmp/run_verify.py (274 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/dev/tmp/run_verify.py (274 bytes)"
 ts = "2026-08-26T20:56:25.057087+00:00"
 
 [[event]]
@@ -1497,7 +1497,7 @@ ok = true
 duration_ms = 0.493
 output_chars = 2010
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/M1bit1.cpp
+# path: /home/user/JSS-2026-Example/software/mcfm/src/BDK/M1bit1.cpp
 # lines: 1-45
 0001: #include <BDK.hpp>
 0002: #include <cmath>
@@ -1608,7 +1608,7 @@ ok = true
 duration_ms = 0.467
 output_chars = 1456
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/M3bit4.cpp
+# path: /home/user/JSS-2026-Example/software/mcfm/src/BDK/M3bit4.cpp
 # lines: 1-36
 0001: #include <BDK.hpp>
 0002: #include <cmath>
@@ -1776,7 +1776,7 @@ ok = true
 duration_ms = 0.3
 output_chars = 2800
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/FPFMccTtilde.cpp
+# path: /home/user/JSS-2026-Example/software/mcfm/src/BDK/FPFMccTtilde.cpp
 # lines: 1-63
 0001: #include <BDK.hpp>
 0002: #include <cmath>
@@ -1811,7 +1811,7 @@ ok = true
 duration_ms = 0.245
 output_chars = 3859
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/FPFPcc.cpp
+# path: /home/user/JSS-2026-Example/software/mcfm/src/BDK/FPFPcc.cpp
 # lines: 1-90
 0001: #include <BDK.hpp>
 0002: #include <cmath>
@@ -1847,7 +1847,7 @@ ok = true
 duration_ms = 0.274
 output_chars = 8862
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/fvs.cpp
+# path: /home/user/JSS-2026-Example/software/mcfm/src/BDK/fvs.cpp
 # lines: 1-184
 0001: #include <BDK.hpp>
 0002: #include <cmath>
@@ -1910,7 +1910,7 @@ output_chars = 1344
 output_preview = '''
 {
   "ok": true,
-  "path": "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/M1bit1.cpp",
+  "path": "/home/user/JSS-2026-Example/software/mcfm/src/BDK/M1bit1.cpp",
   "applied": 2,
   "replacements": [
     {
@@ -1941,7 +1941,7 @@ output_chars = 1346
 output_preview = '''
 {
   "ok": true,
-  "path": "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/M3bit4.cpp",
+  "path": "/home/user/JSS-2026-Example/software/mcfm/src/BDK/M3bit4.cpp",
   "applied": 2,
   "replacements": [
     {
@@ -1972,7 +1972,7 @@ output_chars = 1391
 output_preview = '''
 {
   "ok": true,
-  "path": "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/FPFMccTtilde.cpp",
+  "path": "/home/user/JSS-2026-Example/software/mcfm/src/BDK/FPFMccTtilde.cpp",
   "applied": 2,
   "replacements": [
     {
@@ -2002,7 +2002,7 @@ output_chars = 1344
 output_preview = '''
 {
   "ok": true,
-  "path": "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/FPFPcc.cpp",
+  "path": "/home/user/JSS-2026-Example/software/mcfm/src/BDK/FPFPcc.cpp",
   "applied": 2,
   "replacements": [
     {
@@ -2033,7 +2033,7 @@ output_chars = 776
 output_preview = '''
 {
   "ok": true,
-  "path": "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/fvs.cpp",
+  "path": "/home/user/JSS-2026-Example/software/mcfm/src/BDK/fvs.cpp",
   "applied": 1,
   "replacements": [
     {

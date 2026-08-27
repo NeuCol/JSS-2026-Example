@@ -2,8 +2,8 @@ run_id = "20260826-151920-37810c"
 loop_index = 3
 phase = "review"
 model = "anthropic-claude-sonnet-5"
-task_file = "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/loop.toml"
-workdir = "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example"
+task_file = "/home/user/JSS-2026-Example/dev/transformations/mcfm-translate/loop.toml"
+workdir = "/home/user/JSS-2026-Example"
 stop_reason = "final_text"
 final_text_present = true
 iterations = 7
@@ -27,7 +27,7 @@ pattern = "dev/tmp/**/*report*"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/.codescribe/loop/author.toml\n# lines: 1-2717\n0001: \n0002: [[event]]\n0003: event = \"run_start\"\n0004: run_id = \"20260826-153344-a6773b\"\n0005: mode = \"native_tools\"\n0006: max_iterations = 30\n0007: ts = \"2026-08-26T20:33:44.287950+00:00\"\n0008: \n0009: [[event]]\n0010: event = \"iteration_start\"\n0011: run_id = \"20260826-153344-a6773b\"\n0012: iteration = 1\n0013: ts = \"2026-08-26T20:33:44.288141+00:00\"\n0014: \n0015: [[event]]\n0016: event = \"model_"
+output_preview = "# path: /home/user/JSS-2026-Example/.codescribe/loop/author.toml\n# lines: 1-2717\n0001: \n0002: [[event]]\n0003: event = \"run_start\"\n0004: run_id = \"20260826-153344-a6773b\"\n0005: mode = \"native_tools\"\n0006: max_iterations = 30\n0007: ts = \"2026-08-26T20:33:44.287950+00:00\"\n0008: \n0009: [[event]]\n0010: event = \"iteration_start\"\n0011: run_id = \"20260826-153344-a6773b\"\n0012: iteration = 1\n0013: ts = \"2026-08-26T20:33:44.288141+00:00\"\n0014: \n0015: [[event]]\n0016: event = \"model_"
 
 [tools.args]
 path = ".codescribe/loop/author.toml"
@@ -41,7 +41,7 @@ command = "wc -l .codescribe/loop/author.toml"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/.codescribe/loop/author.toml\n# lines: 2550-2716\n2550: iteration = 28\n2551: tool = \"bash\"\n2552: ok = false\n2553: error = \"blocked shell syntax detected\"\n2554: duration_ms = 0.131\n2555: output_chars = 36\n2556: output_preview = \"Error: blocked shell syntax detected\"\n2557: ts = \"2026-08-26T20:41:49.730343+00:00\"\n2558: \n2559: [[event]]\n2560: event = \"tool_start\"\n2561: run_id = \"20260826-153344-a6773b\"\n2562: iteration = 28\n2563: tool = \"bash"
+output_preview = "# path: /home/user/JSS-2026-Example/.codescribe/loop/author.toml\n# lines: 2550-2716\n2550: iteration = 28\n2551: tool = \"bash\"\n2552: ok = false\n2553: error = \"blocked shell syntax detected\"\n2554: duration_ms = 0.131\n2555: output_chars = 36\n2556: output_preview = \"Error: blocked shell syntax detected\"\n2557: ts = \"2026-08-26T20:41:49.730343+00:00\"\n2558: \n2559: [[event]]\n2560: event = \"tool_start\"\n2561: run_id = \"20260826-153344-a6773b\"\n2562: iteration = 28\n2563: tool = \"bash"
 
 [tools.args]
 path = ".codescribe/loop/author.toml"
@@ -50,21 +50,21 @@ limit = 167
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/loop.toml\n# lines: 1-18\n0001: # CodeScribe loop for Fortran -> C++.\n0002: #\n0003: # Run from the project root:\n0004: #   code-scribe loop -p dev/transformations/mcfm-translate/loop.toml -m <model>\n0005: \n0006: [tools]\n0007: bash = [\"jobrunner\", \"python3\"]\n0008: \n0009: [[chat.user]]\n0010: content = '''\n0011: Each round, follow the round algorithm in dev/transformations/mcfm-translate/current_plan.md an"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/loop.toml\n# lines: 1-18\n0001: # CodeScribe loop for Fortran -> C++.\n0002: #\n0003: # Run from the project root:\n0004: #   code-scribe loop -p dev/transformations/mcfm-translate/loop.toml -m <model>\n0005: \n0006: [tools]\n0007: bash = [\"jobrunner\", \"python3\"]\n0008: \n0009: [[chat.user]]\n0010: content = '''\n0011: Each round, follow the round algorithm in dev/transformations/mcfm-translate/current_plan.md an"
 
 [tools.args]
 path = "dev/transformations/mcfm-translate/loop.toml"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/desired_spec.md\n# lines: 1-144\n0001: # Fortran → C++: target output for one MCFM file\n0002: \n0003: This file defines the rewrite target and correctness bar for step 1. The workflow lives in\n0004: `current_plan.md`.\n0005: \n0006: Paths are written as `software/mcfm/src/...`.\n0007: \n0008: ---\n0009: \n0010: ## Contract\n0011: \n0012: This step advances by *settling* source files one at a time: each file is r"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/desired_spec.md\n# lines: 1-144\n0001: # Fortran → C++: target output for one MCFM file\n0002: \n0003: This file defines the rewrite target and correctness bar for step 1. The workflow lives in\n0004: `current_plan.md`.\n0005: \n0006: Paths are written as `software/mcfm/src/...`.\n0007: \n0008: ---\n0009: \n0010: ## Contract\n0011: \n0012: This step advances by *settling* source files one at a time: each file is r"
 
 [tools.args]
 path = "dev/transformations/mcfm-translate/desired_spec.md"
 [[tools]]
 name = "write"
 ok = true
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/.codescribe/loop/review_output.toml (2496 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/.codescribe/loop/review_output.toml (2496 bytes)"
 
 [tools.args]
 path = ".codescribe/loop/review_output.toml"

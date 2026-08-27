@@ -2,8 +2,8 @@ run_id = "20260826-104355-bc6f23"
 loop_index = 2
 phase = "author"
 model = "oaic-gpt56sol"
-task_file = "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/loop.toml"
-workdir = "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example"
+task_file = "/home/user/JSS-2026-Example/dev/transformations/mcfm-translate/loop.toml"
+workdir = "/home/user/JSS-2026-Example"
 stop_reason = "final_text"
 final_text_present = true
 iterations = 30
@@ -12,14 +12,14 @@ created_at = "2026-08-26T15:58:40.793984+00:00"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/current_plan.md\n# lines: 1-182\n0001: # Fortran → C++ plan\n0002: \n0003: This file says how to run step 1. The rewrite rules and correctness bar are in\n0004: `desired_spec.md`.\n0005: \n0006: > This Plan is the policy: it selects and orders the work over the ready set (see *When to\n0007: > stop*). The correctness contract — objective `f`, invariants `I`, oracle `V`, and status set\n0008: > `Σ` — lives in `"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/current_plan.md\n# lines: 1-182\n0001: # Fortran → C++ plan\n0002: \n0003: This file says how to run step 1. The rewrite rules and correctness bar are in\n0004: `desired_spec.md`.\n0005: \n0006: > This Plan is the policy: it selects and orders the work over the ready set (see *When to\n0007: > stop*). The correctness contract — objective `f`, invariants `I`, oracle `V`, and status set\n0008: > `Σ` — lives in `"
 
 [tools.args]
 path = "dev/transformations/mcfm-translate/current_plan.md"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/current_plan.md\n# lines: 164-182\n0164: ## When to stop\n0165: \n0166: The *ready set* is the set of ready, not-yet-settled files. Each settled file leaves the\n0167: ready set and the readiness graph is acyclic, so the pass terminates. Stop only when one of\n0168: these is true:\n0169: \n0170: - a completed group needs human approval before the next group can start\n0171: - the ready set is empty (no ready f"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/current_plan.md\n# lines: 164-182\n0164: ## When to stop\n0165: \n0166: The *ready set* is the set of ready, not-yet-settled files. Each settled file leaves the\n0167: ready set and the readiness graph is acyclic, so the pass terminates. Stop only when one of\n0168: these is true:\n0169: \n0170: - a completed group needs human approval before the next group can start\n0171: - the ready set is empty (no ready f"
 
 [tools.args]
 path = "dev/transformations/mcfm-translate/current_plan.md"
@@ -28,14 +28,14 @@ limit = 40
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/desired_spec.md\n# lines: 1-144\n0001: # Fortran → C++: target output for one MCFM file\n0002: \n0003: This file defines the rewrite target and correctness bar for step 1. The workflow lives in\n0004: `current_plan.md`.\n0005: \n0006: Paths are written as `software/mcfm/src/...`.\n0007: \n0008: ---\n0009: \n0010: ## Contract\n0011: \n0012: This step advances by *settling* source files one at a time: each file is r"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/desired_spec.md\n# lines: 1-144\n0001: # Fortran → C++: target output for one MCFM file\n0002: \n0003: This file defines the rewrite target and correctness bar for step 1. The workflow lives in\n0004: `current_plan.md`.\n0005: \n0006: Paths are written as `software/mcfm/src/...`.\n0007: \n0008: ---\n0009: \n0010: ## Contract\n0011: \n0012: This step advances by *settling* source files one at a time: each file is r"
 
 [tools.args]
 path = "dev/transformations/mcfm-translate/desired_spec.md"
 [[tools]]
 name = "bash"
 ok = true
-output_preview = "exit_code: 0\nSTDOUT:\nGenerating Doxygen XML for /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src -> /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/doxygen_dep/xml\nwrote 1130 XML file(s) to /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/doxygen_dep/xml\nsource 531  translated 88  untranslated 443\nready leaves (deps=0, non-blind): 228\nsymbol index: 915 symbol(s)\ncleanup candidates: move 76  shim-delete 12  merge 33\nwrote roadmap_metrics."
+output_preview = "exit_code: 0\nSTDOUT:\nGenerating Doxygen XML for /home/user/JSS-2026-Example/software/mcfm/src -> /home/user/JSS-2026-Example/software/mcfm/doxygen_dep/xml\nwrote 1130 XML file(s) to /home/user/JSS-2026-Example/software/mcfm/doxygen_dep/xml\nsource 531  translated 88  untranslated 443\nready leaves (deps=0, non-blind): 228\nsymbol index: 915 symbol(s)\ncleanup candidates: move 76  shim-delete 12  merge 33\nwrote roadmap_metrics."
 
 [tools.args]
 command = "python3 dev/workflow.py refresh"
@@ -43,63 +43,63 @@ timeout = 120
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/agent_log.md\n# lines: 1-10\n0001: # MCFM translation worklist\n0002: \n0003: ## Group 1 — ThreeJets five-gluon primitive amplitudes (open)\n0004: \n0005: - [ ] software/mcfm/src/ThreeJets/A51mpmpp5g.f\n0006: - [ ] software/mcfm/src/ThreeJets/A51mmppp5g.f\n0007: \n0008: ## Session log\n0009: \n0010: - 2026-08-26: Opened Group 1 after refresh reported 229 ready leaves; translating the two related A51 five-gluon a"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/agent_log.md\n# lines: 1-10\n0001: # MCFM translation worklist\n0002: \n0003: ## Group 1 — ThreeJets five-gluon primitive amplitudes (open)\n0004: \n0005: - [ ] software/mcfm/src/ThreeJets/A51mpmpp5g.f\n0006: - [ ] software/mcfm/src/ThreeJets/A51mmppp5g.f\n0007: \n0008: ## Session log\n0009: \n0010: - 2026-08-26: Opened Group 1 after refresh reported 229 ready leaves; translating the two related A51 five-gluon a"
 
 [tools.args]
 path = "dev/transformations/mcfm-translate/agent_log.md"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/A51mmppp5g.cpp\n# lines: 1-72\n0001: #include \"A51mmppp5g.hpp\"\n0002: \n0003: #include <cmath>\n0004: #include <constants_mod.hpp>\n0005: #include <epinv2_mod.hpp>\n0006: #include <epinv_mod.hpp>\n0007: #include <mxpart_mod.hpp>\n0008: #include <Need.hpp>\n0009: #include <scale_mod.hpp>\n0010: #include <sprods_com_mod.hpp>\n0011: \n0012: void A51mmppp5g(int j1, int j2, int j3, int j4, int j5,\n0013:                  FArra"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/A51mmppp5g.cpp\n# lines: 1-72\n0001: #include \"A51mmppp5g.hpp\"\n0002: \n0003: #include <cmath>\n0004: #include <constants_mod.hpp>\n0005: #include <epinv2_mod.hpp>\n0006: #include <epinv_mod.hpp>\n0007: #include <mxpart_mod.hpp>\n0008: #include <Need.hpp>\n0009: #include <scale_mod.hpp>\n0010: #include <sprods_com_mod.hpp>\n0011: \n0012: void A51mmppp5g(int j1, int j2, int j3, int j4, int j5,\n0013:                  FArra"
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/A51mmppp5g.cpp"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/A51mpmpp5g.cpp\n# lines: 1-22\n0001: #include \"A51mpmpp5g.hpp\"\n0002: #include <cmath>\n0003: #include <constants_mod.hpp>\n0004: #include <epinv2_mod.hpp>\n0005: #include <epinv_mod.hpp>\n0006: #include <mxpart_mod.hpp>\n0007: #include <Need.hpp>\n0008: #include <scale_mod.hpp>\n0009: #include <sprods_com_mod.hpp>\n0010: \n0011: void A51mpmpp5g(int j1,int j2,int j3,int j4,int j5,FArray2D<std::complex<double>>& za,FArra"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/A51mpmpp5g.cpp\n# lines: 1-22\n0001: #include \"A51mpmpp5g.hpp\"\n0002: #include <cmath>\n0003: #include <constants_mod.hpp>\n0004: #include <epinv2_mod.hpp>\n0005: #include <epinv_mod.hpp>\n0006: #include <mxpart_mod.hpp>\n0007: #include <Need.hpp>\n0008: #include <scale_mod.hpp>\n0009: #include <sprods_com_mod.hpp>\n0010: \n0011: void A51mpmpp5g(int j1,int j2,int j3,int j4,int j5,FArray2D<std::complex<double>>& za,FArra"
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/A51mpmpp5g.cpp"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/A51mmppp5g.hpp\n# lines: 1-14\n0001: #ifndef A51MMPPP5G_HPP\n0002: #define A51MMPPP5G_HPP\n0003: \n0004: #include <complex>\n0005: #include <FArray.hpp>\n0006: \n0007: void A51mmppp5g(int j1, int j2, int j3, int j4, int j5,\n0008:                  FArray2D<std::complex<double>>& za,\n0009:                  FArray2D<std::complex<double>>& zb,\n0010:                  std::complex<double>& miA5tree,\n0011:                 "
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/A51mmppp5g.hpp\n# lines: 1-14\n0001: #ifndef A51MMPPP5G_HPP\n0002: #define A51MMPPP5G_HPP\n0003: \n0004: #include <complex>\n0005: #include <FArray.hpp>\n0006: \n0007: void A51mmppp5g(int j1, int j2, int j3, int j4, int j5,\n0008:                  FArray2D<std::complex<double>>& za,\n0009:                  FArray2D<std::complex<double>>& zb,\n0010:                  std::complex<double>& miA5tree,\n0011:                 "
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/A51mmppp5g.hpp"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/A51mpmpp5g.hpp\n# lines: 1-14\n0001: #ifndef A51MPMPP5G_HPP\n0002: #define A51MPMPP5G_HPP\n0003: \n0004: #include <complex>\n0005: #include <FArray.hpp>\n0006: \n0007: void A51mpmpp5g(int j1, int j2, int j3, int j4, int j5,\n0008:                  FArray2D<std::complex<double>>& za,\n0009:                  FArray2D<std::complex<double>>& zb,\n0010:                  std::complex<double>& miA5tree,\n0011:                 "
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/A51mpmpp5g.hpp\n# lines: 1-14\n0001: #ifndef A51MPMPP5G_HPP\n0002: #define A51MPMPP5G_HPP\n0003: \n0004: #include <complex>\n0005: #include <FArray.hpp>\n0006: \n0007: void A51mpmpp5g(int j1, int j2, int j3, int j4, int j5,\n0008:                  FArray2D<std::complex<double>>& za,\n0009:                  FArray2D<std::complex<double>>& zb,\n0010:                  std::complex<double>& miA5tree,\n0011:                 "
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/A51mpmpp5g.hpp"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/A51mmppp5g_fi.F90\n# lines: 1-17\n0001: subroutine A51mmppp5g(j1,j2,j3,j4,j5,za,zb,miA5tree,A51half,A51one)\n0002:   use, intrinsic :: iso_c_binding\n0003:   use mxpart_mod, only: mxpart\n0004:   implicit none\n0005:   integer(c_int), intent(in) :: j1,j2,j3,j4,j5\n0006:   complex(c_double_complex), intent(inout) :: za(mxpart,mxpart),zb(mxpart,mxpart)\n0007:   complex(c_double_complex), intent(out) :: miA5tree,A51hal"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/A51mmppp5g_fi.F90\n# lines: 1-17\n0001: subroutine A51mmppp5g(j1,j2,j3,j4,j5,za,zb,miA5tree,A51half,A51one)\n0002:   use, intrinsic :: iso_c_binding\n0003:   use mxpart_mod, only: mxpart\n0004:   implicit none\n0005:   integer(c_int), intent(in) :: j1,j2,j3,j4,j5\n0006:   complex(c_double_complex), intent(inout) :: za(mxpart,mxpart),zb(mxpart,mxpart)\n0007:   complex(c_double_complex), intent(out) :: miA5tree,A51hal"
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/A51mmppp5g_fi.F90"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/A51mpmpp5g_fi.F90\n# lines: 1-17\n0001: subroutine A51mpmpp5g(j1,j2,j3,j4,j5,za,zb,miA5tree,A51half,A51one)\n0002:   use, intrinsic :: iso_c_binding\n0003:   use mxpart_mod, only: mxpart\n0004:   implicit none\n0005:   integer(c_int), intent(in) :: j1,j2,j3,j4,j5\n0006:   complex(c_double_complex), intent(inout) :: za(mxpart,mxpart),zb(mxpart,mxpart)\n0007:   complex(c_double_complex), intent(out) :: miA5tree,A51hal"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/A51mpmpp5g_fi.F90\n# lines: 1-17\n0001: subroutine A51mpmpp5g(j1,j2,j3,j4,j5,za,zb,miA5tree,A51half,A51one)\n0002:   use, intrinsic :: iso_c_binding\n0003:   use mxpart_mod, only: mxpart\n0004:   implicit none\n0005:   integer(c_int), intent(in) :: j1,j2,j3,j4,j5\n0006:   complex(c_double_complex), intent(inout) :: za(mxpart,mxpart),zb(mxpart,mxpart)\n0007:   complex(c_double_complex), intent(out) :: miA5tree,A51hal"
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/A51mpmpp5g_fi.F90"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/CMakeLists.txt\n# lines: 1-28\n0001: target_sources(objlib PRIVATE\n0002: A5NLO4qg.f\n0003: fillaij0.f90\n0004: fillaij0.cpp\n0005: fillDij.f\n0006: fillEij.f\n0007: fillRCij.f90\n0008: fillRCij.cpp\n0009: fillSij.f90\n0010: fillSij.cpp\n0011: A5NLOqbqggg.f\n0012: fillamps_qbqggg.f\n0013: A5NLOggggg.f\n0014: A51mmppp5g_fi.F90\n0015: A51mmppp5g.cpp\n0016: A51mpmpp5g_fi.F90\n0017: A51mpmpp5g.cpp\n0018: A5gfill.f\n0019: qqb_thrjet"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/CMakeLists.txt\n# lines: 1-28\n0001: target_sources(objlib PRIVATE\n0002: A5NLO4qg.f\n0003: fillaij0.f90\n0004: fillaij0.cpp\n0005: fillDij.f\n0006: fillEij.f\n0007: fillRCij.f90\n0008: fillRCij.cpp\n0009: fillSij.f90\n0010: fillSij.cpp\n0011: A5NLOqbqggg.f\n0012: fillamps_qbqggg.f\n0013: A5NLOggggg.f\n0014: A51mmppp5g_fi.F90\n0015: A51mmppp5g.cpp\n0016: A51mpmpp5g_fi.F90\n0017: A51mpmpp5g.cpp\n0018: A5gfill.f\n0019: qqb_thrjet"
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/CMakeLists.txt"
 [[tools]]
 name = "read"
 ok = false
-output_preview = "Error: file not found: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/working/A51mmppp5g.f"
+output_preview = "Error: file not found: /home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/working/A51mmppp5g.f"
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/working/A51mmppp5g.f"
@@ -120,14 +120,14 @@ pattern = "software/mcfm/src/ThreeJets/**/A51mpmpp5g.f"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/tests/mcfm-verify/job.submit\n# lines: 1-55\n0001: #!/bin/bash\n0002: \n0003: \n0004: set -e\n0005: \n0006: export JobWorkDir=\"/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/tests/mcfm-verify\"\n0007: \n0008: cd /home/akash/Desktop/Akash/Projects/JSS-Paper-Example\n0009: \n0010: # Per-machine site selector. Points environment.sh at sites/$SiteName/environment.sh.\n0011: export SiteName=\"supercomp01a\"\n0012: \n0013: cd /home/akash/Desktop/Akash/"
+output_preview = "# path: /home/user/JSS-2026-Example/tests/mcfm-verify/job.submit\n# lines: 1-55\n0001: #!/bin/bash\n0002: \n0003: \n0004: set -e\n0005: \n0006: export JobWorkDir=\"/home/user/JSS-2026-Example/tests/mcfm-verify\"\n0007: \n0008: cd /home/user/JSS-2026-Example\n0009: \n0010: # Per-machine site selector. Points environment.sh at sites/$SiteName/environment.sh.\n0011: export SiteName=\"supercomp01a\"\n0012: \n0013: cd /home/user/"
 
 [tools.args]
 path = "tests/mcfm-verify/job.submit"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/tests/mcfm-verify/run.sh\n# lines: 1-4\n0001: #!/bin/bash\n0002: set -e\n0003: python3 dev/workflow.py verify software/mcfm/src/ThreeJets/A51mmppp5g.cpp -- g g g g g\n0004: python3 dev/workflow.py verify software/mcfm/src/ThreeJets/A51mpmpp5g.cpp -- g g g g g\n"
+output_preview = "# path: /home/user/JSS-2026-Example/tests/mcfm-verify/run.sh\n# lines: 1-4\n0001: #!/bin/bash\n0002: set -e\n0003: python3 dev/workflow.py verify software/mcfm/src/ThreeJets/A51mmppp5g.cpp -- g g g g g\n0004: python3 dev/workflow.py verify software/mcfm/src/ThreeJets/A51mpmpp5g.cpp -- g g g g g\n"
 
 [tools.args]
 path = "tests/mcfm-verify/run.sh"
@@ -141,7 +141,7 @@ command = "git status --short"
 [[tools]]
 name = "bash"
 ok = true
-output_preview = "exit_code: 0\nSTDOUT:\n# workflow status\nassets: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tmp/assets\nroadmap metrics: 443 untranslated file rows, 228 ready leaves\ncleanup index: 569 families, move 76, shim-delete 12, merge 33\n\n- mcfm-translate: groups: 1 total, 1 open, 0 completed, 0 pending approval\n- mcfm-cleanup: groups: 7 total, 0 open, 7 completed, 7 pending approval\n- pepper-kokkos-port: no agent_log.md yet\n\nSTDERR:\n"
+output_preview = "exit_code: 0\nSTDOUT:\n# workflow status\nassets: /home/user/JSS-2026-Example/dev/tmp/assets\nroadmap metrics: 443 untranslated file rows, 228 ready leaves\ncleanup index: 569 families, move 76, shim-delete 12, merge 33\n\n- mcfm-translate: groups: 1 total, 1 open, 0 completed, 0 pending approval\n- mcfm-cleanup: groups: 7 total, 0 open, 7 completed, 7 pending approval\n- pepper-kokkos-port: no agent_log.md yet\n\nSTDERR:\n"
 
 [tools.args]
 command = "python3 dev/workflow.py status"
@@ -172,14 +172,14 @@ command = "git diff --no-index -- software/mcfm/src/ThreeJets/A51mmppp5g.f softw
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/A51mpmpp5g.f\n# lines: 1-95\n0001: !\n0002: !  SPDX-License-Identifier: GPL-3.0-or-later\n0003: !  Copyright (C) 2019-2022, respective authors of MCFM.\n0004: !\n0005: \n0006:       subroutine A51mpmpp5g(j1,j2,j3,j4,j5,za,zb,miA5tree,A51half,A51one)\n0007:       use types\n0008:       use constants_mod\n0009:       use mxpart_mod\n0010:       use sprods_com_mod\n0011:       use epinv_mod\n0012:       use epinv2_mod\n0013:"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/A51mpmpp5g.f\n# lines: 1-95\n0001: !\n0002: !  SPDX-License-Identifier: GPL-3.0-or-later\n0003: !  Copyright (C) 2019-2022, respective authors of MCFM.\n0004: !\n0005: \n0006:       subroutine A51mpmpp5g(j1,j2,j3,j4,j5,za,zb,miA5tree,A51half,A51one)\n0007:       use types\n0008:       use constants_mod\n0009:       use mxpart_mod\n0010:       use sprods_com_mod\n0011:       use epinv_mod\n0012:       use epinv2_mod\n0013:"
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/A51mpmpp5g.f"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/A51mmppp5g.f\n# lines: 1-55\n0001: !\n0002: !  SPDX-License-Identifier: GPL-3.0-or-later\n0003: !  Copyright (C) 2019-2022, respective authors of MCFM.\n0004: !\n0005:       subroutine A51mmppp5g(j1,j2,j3,j4,j5,za,zb,miA5tree,A51half,A51one)\n0006:       use types\n0007:       use constants_mod\n0008:       use mxpart_mod\n0009:       use sprods_com_mod\n0010:       use epinv_mod\n0011:       use epinv2_mod\n0012:       "
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/A51mmppp5g.f\n# lines: 1-55\n0001: !\n0002: !  SPDX-License-Identifier: GPL-3.0-or-later\n0003: !  Copyright (C) 2019-2022, respective authors of MCFM.\n0004: !\n0005:       subroutine A51mmppp5g(j1,j2,j3,j4,j5,za,zb,miA5tree,A51half,A51one)\n0006:       use types\n0007:       use constants_mod\n0008:       use mxpart_mod\n0009:       use sprods_com_mod\n0010:       use epinv_mod\n0011:       use epinv2_mod\n0012:       "
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/A51mmppp5g.f"
@@ -200,7 +200,7 @@ command = "git -C software/mcfm diff -- src/ThreeJets/CMakeLists.txt src/ThreeJe
 [[tools]]
 name = "bash"
 ok = true
-output_preview = "exit_code: 0\nSTDOUT:\nx1b[95mROOT:x1b[0m /home/akash/Desktop/Akash/Projects/JSS-Paper-Example\nx1b[95mNODE:x1b[0m <ROOT>/tests/mcfm\n\nx1b[95mSCRIPTS: x1b[0m\n    - <ROOT>/config.sh\n    - <ROOT>/environment.sh\n    - <ROOT>/tests/mcfm/test.sh\n\nx1b[95mEXECUTE:x1b[0m <ROOT>/tests/mcfm/job.submit\nin 1:30.9 \nx1b[92mSUCCESS x1b[0m\n\nx1b[95mOUTPUT:x1b[0m <ROOT>/tests/mcfm/job.output\n\nSTDERR:\n"
+output_preview = "exit_code: 0\nSTDOUT:\nx1b[95mROOT:x1b[0m /home/user/JSS-2026-Example\nx1b[95mNODE:x1b[0m <ROOT>/tests/mcfm\n\nx1b[95mSCRIPTS: x1b[0m\n    - <ROOT>/config.sh\n    - <ROOT>/environment.sh\n    - <ROOT>/tests/mcfm/test.sh\n\nx1b[95mEXECUTE:x1b[0m <ROOT>/tests/mcfm/job.submit\nin 1:30.9 \nx1b[92mSUCCESS x1b[0m\n\nx1b[95mOUTPUT:x1b[0m <ROOT>/tests/mcfm/job.output\n\nSTDERR:\n"
 
 [tools.args]
 command = "jobrunner submit tests/mcfm"
@@ -215,7 +215,7 @@ pattern = "tests/mcfm/**"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/environment.sh\n# lines: 1-41\n0001: # Shell configuration shared across the lab notebook.\n0002: #\n0003: # Sourcing this file exports the project paths every orchestrator, skill, and\n0004: # tool depends on. It resolves the project root from THIS script's own location\n0005: # (via BASH_SOURCE), not the current working directory, so\n0006: #   source /abs/path/to/environment.sh\n0007: # is correct from any cwd — including inside a subagent "
+output_preview = "# path: /home/user/JSS-2026-Example/environment.sh\n# lines: 1-41\n0001: # Shell configuration shared across the lab notebook.\n0002: #\n0003: # Sourcing this file exports the project paths every orchestrator, skill, and\n0004: # tool depends on. It resolves the project root from THIS script's own location\n0005: # (via BASH_SOURCE), not the current working directory, so\n0006: #   source /abs/path/to/environment.sh\n0007: # is correct from any cwd — including inside a subagent "
 
 [tools.args]
 path = "environment.sh"
@@ -223,21 +223,21 @@ limit = 80
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/tests/mcfm/job.output\n# lines: 1-940\n0001: ---------------------------------------------------------------------------------------\n0002: Lab-notebook environment:\n0003:   PROJECT_HOME=/home/akash/Desktop/Akash/Projects/JSS-Paper-Example\n0004:   SITE_HOME=/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/sites/supercomp01a\n0005:   MCFM_HOME=/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm\n0006:   PEPPER_HOME=/home/a"
+output_preview = "# path: /home/user/JSS-2026-Example/tests/mcfm/job.output\n# lines: 1-940\n0001: ---------------------------------------------------------------------------------------\n0002: Lab-notebook environment:\n0003:   PROJECT_HOME=/home/user/JSS-2026-Example\n0004:   SITE_HOME=/home/user/JSS-2026-Example/sites/supercomp01a\n0005:   MCFM_HOME=/home/user/JSS-2026-Example/software/mcfm\n0006:   PEPPER_HOME=/home/u"
 
 [tools.args]
 path = "tests/mcfm/job.output"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/tests/mcfm/job.error\n# lines: 1-96\n0001: Please consult the manual for using the C++ interface test programs.\n0002: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/lib/SpecialFunctions/xcdil.f:46:22:\n0003: \n0004:    46 |       IF(AAZ-1.) 4,2,3\n0005:       |                      1\n0006: Warning: Fortran 2018 deleted feature: Arithmetic IF statement at (1)\n0007: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/soft"
+output_preview = "# path: /home/user/JSS-2026-Example/tests/mcfm/job.error\n# lines: 1-96\n0001: Please consult the manual for using the C++ interface test programs.\n0002: /home/user/JSS-2026-Example/software/mcfm/lib/SpecialFunctions/xcdil.f:46:22:\n0003: \n0004:    46 |       IF(AAZ-1.) 4,2,3\n0005:       |                      1\n0006: Warning: Fortran 2018 deleted feature: Arithmetic IF statement at (1)\n0007: /home/user/JSS-2026-Example/soft"
 
 [tools.args]
 path = "tests/mcfm/job.error"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/tests/mcfm/Jobfile\n# lines: 1-5\n0001: job:\n0002:   submit:\n0003:     - test.sh\n0004:   archive:\n0005:     - runlogs\n"
+output_preview = "# path: /home/user/JSS-2026-Example/tests/mcfm/Jobfile\n# lines: 1-5\n0001: job:\n0002:   submit:\n0003:     - test.sh\n0004:   archive:\n0005:     - runlogs\n"
 
 [tools.args]
 path = "tests/mcfm/Jobfile"
@@ -251,7 +251,7 @@ command = "git -C software/mcfm ls-files src/ThreeJets/A51mmppp5g.f src/ThreeJet
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/tests/mcfm/job.output\n# lines: 850-940\n0850: d~ u ve e+ g: x1b[1;32m PASSED x1b[0m\n0851: d~ g ve e+ u~: x1b[1;32m PASSED x1b[0m\n0852: u d~ ve e+ g: x1b[1;32m PASSED x1b[0m\n0853: u g ve e+ d: x1b[1;32m PASSED x1b[0m\n0854: g d~ ve e+ u~: x1b[1;32m PASSED x1b[0m\n0855: g u ve e+ d: x1b[1;32m PASSED x1b[0m\n0856: x1b[1m===> W+jj processes <===x1b[0m\n0857: d d~ ve e+ d u~: x1b[1;32m PASSED x1b[0m\n0858: d d~ ve e+ s c~: x1b[1;32m PASSED x1b[0m\n0859: d u ve e+ d d: x1b[1;32m PASSED"
+output_preview = "# path: /home/user/JSS-2026-Example/tests/mcfm/job.output\n# lines: 850-940\n0850: d~ u ve e+ g: x1b[1;32m PASSED x1b[0m\n0851: d~ g ve e+ u~: x1b[1;32m PASSED x1b[0m\n0852: u d~ ve e+ g: x1b[1;32m PASSED x1b[0m\n0853: u g ve e+ d: x1b[1;32m PASSED x1b[0m\n0854: g d~ ve e+ u~: x1b[1;32m PASSED x1b[0m\n0855: g u ve e+ d: x1b[1;32m PASSED x1b[0m\n0856: x1b[1m===> W+jj processes <===x1b[0m\n0857: d d~ ve e+ d u~: x1b[1;32m PASSED x1b[0m\n0858: d d~ ve e+ s c~: x1b[1;32m PASSED x1b[0m\n0859: d u ve e+ d d: x1b[1;32m PASSED"
 
 [tools.args]
 path = "tests/mcfm/job.output"
@@ -260,7 +260,7 @@ limit = 100
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/workflow.py\n# lines: 1-240\n0001: #!/usr/bin/env python3\n0002: \"\"\"Unified workflow CLI for dev tooling.\n0003: \n0004: Examples:\n0005:   python3 dev/workflow.py refresh\n0006:   python3 dev/workflow.py status\n0007:   python3 dev/workflow.py next mcfm-translate\n0008:   python3 dev/workflow.py gate mcfm-translate\n0009:   python3 dev/workflow.py approve mcfm-translate --latest-blocking\n0010:   python3 dev/workflow.py draft software/mcfm/s"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/workflow.py\n# lines: 1-240\n0001: #!/usr/bin/env python3\n0002: \"\"\"Unified workflow CLI for dev tooling.\n0003: \n0004: Examples:\n0005:   python3 dev/workflow.py refresh\n0006:   python3 dev/workflow.py status\n0007:   python3 dev/workflow.py next mcfm-translate\n0008:   python3 dev/workflow.py gate mcfm-translate\n0009:   python3 dev/workflow.py approve mcfm-translate --latest-blocking\n0010:   python3 dev/workflow.py draft software/mcfm/s"
 
 [tools.args]
 path = "dev/workflow.py"
@@ -276,7 +276,7 @@ pattern = "dev/tools/coverage/*.py"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/workflow.py\n# lines: 240-318\n0240: def cmd_kokkos_draft(args: argparse.Namespace) -> int:\n0241:     return run([sys.executable, str(TOOLS / \"kokkos\" / \"kokkosify.py\"), *args.args])\n0242: \n0243: \n0244: def cmd_kokkos_validate(args: argparse.Namespace) -> int:\n0245:     return run([sys.executable, str(TOOLS / \"kokkos\" / \"kokkosify.py\"), \"validate\", *args.args])\n0246: \n0247: \n0248: def build_parser() -> argparse.ArgumentParser:\n0249: "
+output_preview = "# path: /home/user/JSS-2026-Example/dev/workflow.py\n# lines: 240-318\n0240: def cmd_kokkos_draft(args: argparse.Namespace) -> int:\n0241:     return run([sys.executable, str(TOOLS / \"kokkos\" / \"kokkosify.py\"), *args.args])\n0242: \n0243: \n0244: def cmd_kokkos_validate(args: argparse.Namespace) -> int:\n0245:     return run([sys.executable, str(TOOLS / \"kokkos\" / \"kokkosify.py\"), \"validate\", *args.args])\n0246: \n0247: \n0248: def build_parser() -> argparse.ArgumentParser:\n0249: "
 
 [tools.args]
 path = "dev/workflow.py"
@@ -285,7 +285,7 @@ limit = 120
 [[tools]]
 name = "bash"
 ok = true
-output_preview = "exit_code: 0\nSTDOUT:\nx1b[95mROOT:x1b[0m /home/akash/Desktop/Akash/Projects/JSS-Paper-Example\nx1b[95mNODE:x1b[0m <ROOT>/tests/mcfm-verify\n\nx1b[95mSCRIPTS: x1b[0m\n    - <ROOT>/config.sh\n    - <ROOT>/environment.sh\n\nx1b[95mEXECUTE:x1b[0m <ROOT>/tests/mcfm-verify/job.submit\nin 0.0s \nx1b[92mSUCCESS x1b[0m\n\nx1b[95mOUTPUT:x1b[0m <ROOT>/tests/mcfm-verify/job.output\n\nSTDERR:\n"
+output_preview = "exit_code: 0\nSTDOUT:\nx1b[95mROOT:x1b[0m /home/user/JSS-2026-Example\nx1b[95mNODE:x1b[0m <ROOT>/tests/mcfm-verify\n\nx1b[95mSCRIPTS: x1b[0m\n    - <ROOT>/config.sh\n    - <ROOT>/environment.sh\n\nx1b[95mEXECUTE:x1b[0m <ROOT>/tests/mcfm-verify/job.submit\nin 0.0s \nx1b[92mSUCCESS x1b[0m\n\nx1b[95mOUTPUT:x1b[0m <ROOT>/tests/mcfm-verify/job.output\n\nSTDERR:\n"
 
 [tools.args]
 command = "jobrunner submit tests/mcfm-verify"
@@ -293,7 +293,7 @@ timeout = 1200
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/tests/mcfm-verify/job.output\n# lines: 1-8\n0001: ---------------------------------------------------------------------------------------\n0002: Lab-notebook environment:\n0003:   PROJECT_HOME=/home/akash/Desktop/Akash/Projects/JSS-Paper-Example\n0004:   SITE_HOME=/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/sites/supercomp01a\n0005:   MCFM_HOME=/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm\n0006:   PEPPER_HOME=/h"
+output_preview = "# path: /home/user/JSS-2026-Example/tests/mcfm-verify/job.output\n# lines: 1-8\n0001: ---------------------------------------------------------------------------------------\n0002: Lab-notebook environment:\n0003:   PROJECT_HOME=/home/user/JSS-2026-Example\n0004:   SITE_HOME=/home/user/JSS-2026-Example/sites/supercomp01a\n0005:   MCFM_HOME=/home/user/JSS-2026-Example/software/mcfm\n0006:   PEPPER_HOME=/h"
 
 [tools.args]
 path = "tests/mcfm-verify/job.output"
@@ -314,7 +314,7 @@ pattern = "tests/mcfm-verify/**"
 [[tools]]
 name = "write"
 ok = true
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/tests/mcfm-verify/Jobfile (28 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/tests/mcfm-verify/Jobfile (28 bytes)"
 
 [tools.args]
 path = "tests/mcfm-verify/Jobfile"
@@ -322,7 +322,7 @@ content = "job:\n  submit:\n    - run.sh\n"
 [[tools]]
 name = "bash"
 ok = true
-output_preview = "exit_code: 0\nSTDOUT:\nx1b[95mROOT:x1b[0m /home/akash/Desktop/Akash/Projects/JSS-Paper-Example\nx1b[95mNODE:x1b[0m <ROOT>/tests/mcfm-verify\n\nx1b[95mSCRIPTS: x1b[0m\n    - <ROOT>/config.sh\n    - <ROOT>/environment.sh\n    - <ROOT>/tests/mcfm-verify/run.sh\n\nx1b[95mEXECUTE:x1b[0m <ROOT>/tests/mcfm-verify/job.submit\nin 0.0s \npython3: can't open file 'dev/workflow.py': [Errno 2] No such file or directory\n\nx1b[91mFAILURE x1b[0m\n\nx1b[95mOUTPUT:x1b[0m <ROOT>/tests/mcfm-verify/job.output\n\nSTDERR:\n"
+output_preview = "exit_code: 0\nSTDOUT:\nx1b[95mROOT:x1b[0m /home/user/JSS-2026-Example\nx1b[95mNODE:x1b[0m <ROOT>/tests/mcfm-verify\n\nx1b[95mSCRIPTS: x1b[0m\n    - <ROOT>/config.sh\n    - <ROOT>/environment.sh\n    - <ROOT>/tests/mcfm-verify/run.sh\n\nx1b[95mEXECUTE:x1b[0m <ROOT>/tests/mcfm-verify/job.submit\nin 0.0s \npython3: can't open file 'dev/workflow.py': [Errno 2] No such file or directory\n\nx1b[91mFAILURE x1b[0m\n\nx1b[95mOUTPUT:x1b[0m <ROOT>/tests/mcfm-verify/job.output\n\nSTDERR:\n"
 
 [tools.args]
 command = "jobrunner submit tests/mcfm-verify"
@@ -330,7 +330,7 @@ timeout = 1200
 [[tools]]
 name = "write"
 ok = true
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/tests/mcfm-verify/run.sh (257 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/tests/mcfm-verify/run.sh (257 bytes)"
 
 [tools.args]
 path = "tests/mcfm-verify/run.sh"
@@ -338,7 +338,7 @@ content = "#!/bin/bash\nset -e\npython3 \"$PROJECT_HOME/dev/workflow.py\" verify
 [[tools]]
 name = "bash"
 ok = true
-output_preview = "exit_code: 0\nSTDOUT:\nx1b[95mROOT:x1b[0m /home/akash/Desktop/Akash/Projects/JSS-Paper-Example\nx1b[95mNODE:x1b[0m <ROOT>/tests/mcfm-verify\n\nx1b[95mSCRIPTS: x1b[0m\n    - <ROOT>/config.sh\n    - <ROOT>/environment.sh\n    - <ROOT>/tests/mcfm-verify/run.sh\n\nx1b[95mEXECUTE:x1b[0m <ROOT>/tests/mcfm-verify/job.submit\nin 2.6s \n\nx1b[91mFAILURE x1b[0m\n\nx1b[95mOUTPUT:x1b[0m <ROOT>/tests/mcfm-verify/job.output\n\nSTDERR:\n"
+output_preview = "exit_code: 0\nSTDOUT:\nx1b[95mROOT:x1b[0m /home/user/JSS-2026-Example\nx1b[95mNODE:x1b[0m <ROOT>/tests/mcfm-verify\n\nx1b[95mSCRIPTS: x1b[0m\n    - <ROOT>/config.sh\n    - <ROOT>/environment.sh\n    - <ROOT>/tests/mcfm-verify/run.sh\n\nx1b[95mEXECUTE:x1b[0m <ROOT>/tests/mcfm-verify/job.submit\nin 2.6s \n\nx1b[91mFAILURE x1b[0m\n\nx1b[95mOUTPUT:x1b[0m <ROOT>/tests/mcfm-verify/job.output\n\nSTDERR:\n"
 
 [tools.args]
 command = "jobrunner submit tests/mcfm-verify"
@@ -346,7 +346,7 @@ timeout = 1200
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/tests/mcfm-verify/job.output\n# lines: 1-17\n0001: ---------------------------------------------------------------------------------------\n0002: Lab-notebook environment:\n0003:   PROJECT_HOME=/home/akash/Desktop/Akash/Projects/JSS-Paper-Example\n0004:   SITE_HOME=/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/sites/supercomp01a\n0005:   MCFM_HOME=/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm\n0006:   PEPPER_HOME=/"
+output_preview = "# path: /home/user/JSS-2026-Example/tests/mcfm-verify/job.output\n# lines: 1-17\n0001: ---------------------------------------------------------------------------------------\n0002: Lab-notebook environment:\n0003:   PROJECT_HOME=/home/user/JSS-2026-Example\n0004:   SITE_HOME=/home/user/JSS-2026-Example/sites/supercomp01a\n0005:   MCFM_HOME=/home/user/JSS-2026-Example/software/mcfm\n0006:   PEPPER_HOME=/"
 
 [tools.args]
 path = "tests/mcfm-verify/job.output"
@@ -360,7 +360,7 @@ path = "tests/mcfm-verify/job.error"
 [[tools]]
 name = "write"
 ok = true
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/tests/mcfm-verify/run.sh (138 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/tests/mcfm-verify/run.sh (138 bytes)"
 
 [tools.args]
 path = "tests/mcfm-verify/run.sh"
@@ -368,7 +368,7 @@ content = "#!/bin/bash\nset -e\npython3 \"$PROJECT_HOME/dev/workflow.py\" verify
 [[tools]]
 name = "bash"
 ok = true
-output_preview = "exit_code: 0\nSTDOUT:\nx1b[95mROOT:x1b[0m /home/akash/Desktop/Akash/Projects/JSS-Paper-Example\nx1b[95mNODE:x1b[0m <ROOT>/tests/mcfm-verify\n\nx1b[95mSCRIPTS: x1b[0m\n    - <ROOT>/config.sh\n    - <ROOT>/environment.sh\n    - <ROOT>/tests/mcfm-verify/run.sh\n\nx1b[95mEXECUTE:x1b[0m <ROOT>/tests/mcfm-verify/job.submit\nin 2.4s \n    sys.exit(main(sys.argv[1:]))\n  File \"/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tools/coverage/coverage_check.py\", line 76, in main\n    build(bin, mcfm)\n  File \"/home/akash/Desktop"
+output_preview = "exit_code: 0\nSTDOUT:\nx1b[95mROOT:x1b[0m /home/user/JSS-2026-Example\nx1b[95mNODE:x1b[0m <ROOT>/tests/mcfm-verify\n\nx1b[95mSCRIPTS: x1b[0m\n    - <ROOT>/config.sh\n    - <ROOT>/environment.sh\n    - <ROOT>/tests/mcfm-verify/run.sh\n\nx1b[95mEXECUTE:x1b[0m <ROOT>/tests/mcfm-verify/job.submit\nin 2.4s \n    sys.exit(main(sys.argv[1:]))\n  File \"/home/user/JSS-2026-Example/dev/tools/coverage/coverage_check.py\", line 76, in main\n    build(bin, mcfm)\n  File \"/home/user"
 
 [tools.args]
 command = "jobrunner submit tests/mcfm-verify"
@@ -376,14 +376,14 @@ timeout = 1200
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/tests/mcfm-verify/job.output\n# lines: 1-14\n0001: ---------------------------------------------------------------------------------------\n0002: Lab-notebook environment:\n0003:   PROJECT_HOME=/home/akash/Desktop/Akash/Projects/JSS-Paper-Example\n0004:   SITE_HOME=/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/sites/supercomp01a\n0005:   MCFM_HOME=/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm\n0006:   PEPPER_HOME=/"
+output_preview = "# path: /home/user/JSS-2026-Example/tests/mcfm-verify/job.output\n# lines: 1-14\n0001: ---------------------------------------------------------------------------------------\n0002: Lab-notebook environment:\n0003:   PROJECT_HOME=/home/user/JSS-2026-Example\n0004:   SITE_HOME=/home/user/JSS-2026-Example/sites/supercomp01a\n0005:   MCFM_HOME=/home/user/JSS-2026-Example/software/mcfm\n0006:   PEPPER_HOME=/"
 
 [tools.args]
 path = "tests/mcfm-verify/job.output"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/tests/mcfm-verify/job.error\n# lines: 1-22\n0001: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/A51mpmpp5g.cpp: In function ‘void A51mpmpp5g(int, int, int, int, int, FArray2D<std::complex<double> >&, FArray2D<std::complex<double> >&, std::complex<double>&, std::complex<double>&, std::complex<double>&)’:\n0002: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/A51mpmpp5g.cpp"
+output_preview = "# path: /home/user/JSS-2026-Example/tests/mcfm-verify/job.error\n# lines: 1-22\n0001: /home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/A51mpmpp5g.cpp: In function ‘void A51mpmpp5g(int, int, int, int, int, FArray2D<std::complex<double> >&, FArray2D<std::complex<double> >&, std::complex<double>&, std::complex<double>&, std::complex<double>&)’:\n0002: /home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/A51mpmpp5g.cpp"
 
 [tools.args]
 path = "tests/mcfm-verify/job.error"
@@ -397,7 +397,7 @@ command = "grep -n \"error:\" tests/mcfm-verify/job.output"
 [[tools]]
 name = "edit"
 ok = true
-output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/A51mpmpp5g.cpp\",\n  \"applied\": 1,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 101,\n      \"new_len\": 102,\n      \"before_snippet\": \"…))+std::pow(za(j1,j3),2)*zb(j2,j4)*zb(j2,j5)/(six*s(j3,j4)*za(j4,j5)*s(j5,j1));\\n A51half=-(Vf+Vs)*miA5tree-(Ff+Fs); A51one=(Vg+four*Vf+Vs)*miA5tree+(four*Ff+Fs); // @coverage-probe\\n}\\nextern \\\"C\\\" void A51mpmpp5g_wrappe"
+output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/A51mpmpp5g.cpp\",\n  \"applied\": 1,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 101,\n      \"new_len\": 102,\n      \"before_snippet\": \"…))+std::pow(za(j1,j3),2)*zb(j2,j4)*zb(j2,j5)/(six*s(j3,j4)*za(j4,j5)*s(j5,j1));\\n A51half=-(Vf+Vs)*miA5tree-(Ff+Fs); A51one=(Vg+four*Vf+Vs)*miA5tree+(four*Ff+Fs); // @coverage-probe\\n}\\nextern \\\"C\\\" void A51mpmpp5g_wrappe"
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/A51mpmpp5g.cpp"
@@ -408,7 +408,7 @@ newText = " A51half=-(Vf+Vs)*miA5tree-(Ff+Fs);\n A51one=(Vg+four*Vf+Vs)*miA5tree
 [[tools]]
 name = "bash"
 ok = true
-output_preview = "exit_code: 0\nSTDOUT:\nx1b[95mROOT:x1b[0m /home/akash/Desktop/Akash/Projects/JSS-Paper-Example\nx1b[95mNODE:x1b[0m <ROOT>/tests/mcfm-verify\n\nx1b[95mSCRIPTS: x1b[0m\n    - <ROOT>/config.sh\n    - <ROOT>/environment.sh\n    - <ROOT>/tests/mcfm-verify/run.sh\n\nx1b[95mEXECUTE:x1b[0m <ROOT>/tests/mcfm-verify/job.submit\nin 5.0s \n\nx1b[91mFAILURE x1b[0m\n\nx1b[95mOUTPUT:x1b[0m <ROOT>/tests/mcfm-verify/job.output\n\nSTDERR:\n"
+output_preview = "exit_code: 0\nSTDOUT:\nx1b[95mROOT:x1b[0m /home/user/JSS-2026-Example\nx1b[95mNODE:x1b[0m <ROOT>/tests/mcfm-verify\n\nx1b[95mSCRIPTS: x1b[0m\n    - <ROOT>/config.sh\n    - <ROOT>/environment.sh\n    - <ROOT>/tests/mcfm-verify/run.sh\n\nx1b[95mEXECUTE:x1b[0m <ROOT>/tests/mcfm-verify/job.submit\nin 5.0s \n\nx1b[91mFAILURE x1b[0m\n\nx1b[95mOUTPUT:x1b[0m <ROOT>/tests/mcfm-verify/job.output\n\nSTDERR:\n"
 
 [tools.args]
 command = "jobrunner submit tests/mcfm-verify"
@@ -416,7 +416,7 @@ timeout = 1200
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/tests/mcfm-verify/job.output\n# lines: 1-17\n0001: ---------------------------------------------------------------------------------------\n0002: Lab-notebook environment:\n0003:   PROJECT_HOME=/home/akash/Desktop/Akash/Projects/JSS-Paper-Example\n0004:   SITE_HOME=/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/sites/supercomp01a\n0005:   MCFM_HOME=/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm\n0006:   PEPPER_HOME=/"
+output_preview = "# path: /home/user/JSS-2026-Example/tests/mcfm-verify/job.output\n# lines: 1-17\n0001: ---------------------------------------------------------------------------------------\n0002: Lab-notebook environment:\n0003:   PROJECT_HOME=/home/user/JSS-2026-Example\n0004:   SITE_HOME=/home/user/JSS-2026-Example/sites/supercomp01a\n0005:   MCFM_HOME=/home/user/JSS-2026-Example/software/mcfm\n0006:   PEPPER_HOME=/"
 
 [tools.args]
 path = "tests/mcfm-verify/job.output"
@@ -430,7 +430,7 @@ path = "tests/mcfm-verify/job.error"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/A51mpmpp5g.cpp\n# lines: 18-23\n0018:  Fs=-za(j1,j2)*za(j2,j3)*za(j3,j4)*std::pow(za(j4,j1)*zb(j2,j4),2)/(za(j4,j5)*za(j5,j1)*std::pow(za(j2,j4),2)*std::pow(s(j5,j1),2))*(two*Ls1(-s(j2,j3),-s(j5,j1),-s(j3,j4),-s(j5,j1))+L1(-s(j2,j3),-s(j5,j1))+L1(-s(j3,j4),-s(j5,j1)))+za(j3,j2)*za(j2,j1)*za(j1,j5)*std::pow(za(j5,j3)*zb(j2,j5),2)/(za(j5,j4)*za(j4,j3)*std::pow(za(j2,j5),2)*std::pow(s(j3,j4),2))*(two*Ls1(-s(j1,j2"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/A51mpmpp5g.cpp\n# lines: 18-23\n0018:  Fs=-za(j1,j2)*za(j2,j3)*za(j3,j4)*std::pow(za(j4,j1)*zb(j2,j4),2)/(za(j4,j5)*za(j5,j1)*std::pow(za(j2,j4),2)*std::pow(s(j5,j1),2))*(two*Ls1(-s(j2,j3),-s(j5,j1),-s(j3,j4),-s(j5,j1))+L1(-s(j2,j3),-s(j5,j1))+L1(-s(j3,j4),-s(j5,j1)))+za(j3,j2)*za(j2,j1)*za(j1,j5)*std::pow(za(j5,j3)*zb(j2,j5),2)/(za(j5,j4)*za(j4,j3)*std::pow(za(j2,j5),2)*std::pow(s(j3,j4),2))*(two*Ls1(-s(j1,j2"
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/A51mpmpp5g.cpp"
@@ -453,7 +453,7 @@ command = "git -C software/mcfm rm src/ThreeJets/A51mmppp5g.f"
 [[tools]]
 name = "bash"
 ok = true
-output_preview = "exit_code: 0\nSTDOUT:\nx1b[95mROOT:x1b[0m /home/akash/Desktop/Akash/Projects/JSS-Paper-Example\nx1b[95mNODE:x1b[0m <ROOT>/tests/mcfm\n\nx1b[95mSCRIPTS: x1b[0m\n    - <ROOT>/config.sh\n    - <ROOT>/environment.sh\n    - <ROOT>/tests/mcfm/test.sh\n\nx1b[95mEXECUTE:x1b[0m <ROOT>/tests/mcfm/job.submit\nin 1:30.9 \nx1b[92mSUCCESS x1b[0m\n\nx1b[95mOUTPUT:x1b[0m <ROOT>/tests/mcfm/job.output\n\nSTDERR:\n"
+output_preview = "exit_code: 0\nSTDOUT:\nx1b[95mROOT:x1b[0m /home/user/JSS-2026-Example\nx1b[95mNODE:x1b[0m <ROOT>/tests/mcfm\n\nx1b[95mSCRIPTS: x1b[0m\n    - <ROOT>/config.sh\n    - <ROOT>/environment.sh\n    - <ROOT>/tests/mcfm/test.sh\n\nx1b[95mEXECUTE:x1b[0m <ROOT>/tests/mcfm/job.submit\nin 1:30.9 \nx1b[92mSUCCESS x1b[0m\n\nx1b[95mOUTPUT:x1b[0m <ROOT>/tests/mcfm/job.output\n\nSTDERR:\n"
 
 [tools.args]
 command = "jobrunner submit tests/mcfm"
@@ -461,7 +461,7 @@ timeout = 1200
 [[tools]]
 name = "write"
 ok = true
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/agent_log.md (745 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/agent_log.md (745 bytes)"
 
 [tools.args]
 path = "dev/transformations/mcfm-translate/agent_log.md"
@@ -477,7 +477,7 @@ timeout = 120
 [[tools]]
 name = "bash"
 ok = true
-output_preview = "exit_code: 0\nSTDOUT:\nGenerating Doxygen XML for /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src -> /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/doxygen_dep/xml\nwrote 1130 XML file(s) to /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/doxygen_dep/xml\nsource 529  translated 86  untranslated 443\nready leaves (deps=0, non-blind): 228\nsymbol index: 915 symbol(s)\ncleanup candidates: move 74  shim-delete 12  merge 33\nwrote roadmap_metrics."
+output_preview = "exit_code: 0\nSTDOUT:\nGenerating Doxygen XML for /home/user/JSS-2026-Example/software/mcfm/src -> /home/user/JSS-2026-Example/software/mcfm/doxygen_dep/xml\nwrote 1130 XML file(s) to /home/user/JSS-2026-Example/software/mcfm/doxygen_dep/xml\nsource 529  translated 86  untranslated 443\nready leaves (deps=0, non-blind): 228\nsymbol index: 915 symbol(s)\ncleanup candidates: move 74  shim-delete 12  merge 33\nwrote roadmap_metrics."
 
 [tools.args]
 command = "python3 dev/workflow.py refresh"
@@ -499,7 +499,7 @@ command = "git clean -fd tests/mcfm-verify"
 [[tools]]
 name = "bash"
 ok = true
-output_preview = "exit_code: 0\nSTDOUT:\n# workflow status\nassets: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tmp/assets\nroadmap metrics: 443 untranslated file rows, 228 ready leaves\ncleanup index: 569 families, move 74, shim-delete 12, merge 33\n\n- mcfm-translate: groups: 1 total, 0 open, 1 completed, 1 pending approval\n- mcfm-cleanup: groups: 7 total, 0 open, 7 completed, 7 pending approval\n- pepper-kokkos-port: no agent_log.md yet\n\nSTDERR:\n"
+output_preview = "exit_code: 0\nSTDOUT:\n# workflow status\nassets: /home/user/JSS-2026-Example/dev/tmp/assets\nroadmap metrics: 443 untranslated file rows, 228 ready leaves\ncleanup index: 569 families, move 74, shim-delete 12, merge 33\n\n- mcfm-translate: groups: 1 total, 0 open, 1 completed, 1 pending approval\n- mcfm-cleanup: groups: 7 total, 0 open, 7 completed, 7 pending approval\n- pepper-kokkos-port: no agent_log.md yet\n\nSTDERR:\n"
 
 [tools.args]
 command = "python3 dev/workflow.py status"

@@ -97,17 +97,34 @@ def module_of(unit):
     return unit.split("/")[0]
 
 
+def discover_runs(experiments_root):
+    """Every run directory in the corpus, oldest day first.
+
+    Deliberately not the figure set: which runs the paper plots is
+    generate_graphs.RUNS's business, and importing it here would be circular
+    (generate_graphs imports this module). A hand-copied list drifts out of
+    date the moment a run is added or dropped, so the CLI below enumerates the
+    corpus instead — including runs the figures exclude, since "no archival
+    branch" is one of the things this tool exists to report.
+    """
+    return [
+        (day.name, run.name)
+        for day in sorted(experiments_root.iterdir())
+        if day.is_dir()
+        for run in sorted(r for r in day.iterdir() if r.is_dir())
+    ]
+
+
 if __name__ == "__main__":
-    for day, run_name in [
-        ("08-11-2026", "csloop-opus-5"),
-        ("08-11-2026", "csloop-opus-5-with-reasoning"),
-        ("08-12-2026", "ccworkflow-sonnet-5-opus-5-integrate"),
-        ("08-12-2026", "ccworkflow-sonnet-5-opus-5-integrate-run2"),
-        ("08-12-2026", "codescribe-opus-5-run2"),
-        ("08-12-2026", "codescribe-opus-5-with-reasoning"),
-        ("08-12-2026", "codescribe-sonnet-5-with-reasoning"),
-        ("08-12-2026", "codescribe-sonnet-5-with-reasoning-run2"),
-        ("08-12-2026", "codescribe-kimi-k3-5"),
-    ]:
+    import sys
+
+    experiments = Path(__file__).parent.parent / "experiments"
+    args = sys.argv[1:]
+    runs = [tuple(a.split("/", 1)) for a in args] if args else discover_runs(experiments)
+
+    for day, run_name in runs:
         units = translated_file_units(day, run_name)
-        print(day, run_name, len(units) if units is not None else None, units)
+        if units is None:
+            print(f"{day}/{run_name}: no archival branch — no git-exact count")
+        else:
+            print(f"{day}/{run_name}: {len(units)} {units}")

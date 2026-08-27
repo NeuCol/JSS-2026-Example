@@ -2,8 +2,8 @@ run_id = "20260826-161355-33e834"
 loop_index = 3
 phase = "review"
 model = "oaic-gpt56sol"
-task_file = "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/loop.toml"
-workdir = "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example"
+task_file = "/home/user/JSS-2026-Example/dev/transformations/mcfm-translate/loop.toml"
+workdir = "/home/user/JSS-2026-Example"
 stop_reason = "final_text"
 final_text_present = true
 iterations = 6
@@ -13,35 +13,35 @@ created_at = "2026-08-26T21:35:02.022675+00:00"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/loop.toml\n# lines: 1-18\n0001: # CodeScribe loop for Fortran -> C++.\n0002: #\n0003: # Run from the project root:\n0004: #   code-scribe loop -p dev/transformations/mcfm-translate/loop.toml -m <model>\n0005: \n0006: [tools]\n0007: bash = [\"jobrunner\", \"python3\"]\n0008: \n0009: [[chat.user]]\n0010: content = '''\n0011: Each round, follow the round algorithm in dev/transformations/mcfm-translate/current_plan.md an"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/loop.toml\n# lines: 1-18\n0001: # CodeScribe loop for Fortran -> C++.\n0002: #\n0003: # Run from the project root:\n0004: #   code-scribe loop -p dev/transformations/mcfm-translate/loop.toml -m <model>\n0005: \n0006: [tools]\n0007: bash = [\"jobrunner\", \"python3\"]\n0008: \n0009: [[chat.user]]\n0010: content = '''\n0011: Each round, follow the round algorithm in dev/transformations/mcfm-translate/current_plan.md an"
 
 [tools.args]
 path = "dev/transformations/mcfm-translate/loop.toml"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/agent_log.md\n# lines: 1-22\n0001: # MCFM translation worklist\n0002: \n0003: ## Group W2jet leaf functions\n0004: \n0005: - [x] software/mcfm/src/W2jet/atree.cpp — TRANSLATED (NOT COVERED; restored build passed)\n0006: - [x] software/mcfm/src/W2jet/fvf.cpp — TRANSLATED (NOT COVERED; restored build passed)\n0007: - [x] software/mcfm/src/W2jet/subqcd.cpp — TRANSLATED (NOT COVERED; restored build passed)\n0008: "
+output_preview = "# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/agent_log.md\n# lines: 1-22\n0001: # MCFM translation worklist\n0002: \n0003: ## Group W2jet leaf functions\n0004: \n0005: - [x] software/mcfm/src/W2jet/atree.cpp — TRANSLATED (NOT COVERED; restored build passed)\n0006: - [x] software/mcfm/src/W2jet/fvf.cpp — TRANSLATED (NOT COVERED; restored build passed)\n0007: - [x] software/mcfm/src/W2jet/subqcd.cpp — TRANSLATED (NOT COVERED; restored build passed)\n0008: "
 
 [tools.args]
 path = "dev/transformations/mcfm-translate/agent_log.md"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/current_plan.md\n# lines: 1-182\n0001: # Fortran → C++ plan\n0002: \n0003: This file says how to run step 1. The rewrite rules and correctness bar are in\n0004: `desired_spec.md`.\n0005: \n0006: > This Plan is the policy: it selects and orders the work over the ready set (see *When to\n0007: > stop*). The correctness contract — objective `f`, invariants `I`, oracle `V`, and status set\n0008: > `Σ` — lives in `"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/current_plan.md\n# lines: 1-182\n0001: # Fortran → C++ plan\n0002: \n0003: This file says how to run step 1. The rewrite rules and correctness bar are in\n0004: `desired_spec.md`.\n0005: \n0006: > This Plan is the policy: it selects and orders the work over the ready set (see *When to\n0007: > stop*). The correctness contract — objective `f`, invariants `I`, oracle `V`, and status set\n0008: > `Σ` — lives in `"
 
 [tools.args]
 path = "dev/transformations/mcfm-translate/current_plan.md"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/desired_spec.md\n# lines: 1-144\n0001: # Fortran → C++: target output for one MCFM file\n0002: \n0003: This file defines the rewrite target and correctness bar for step 1. The workflow lives in\n0004: `current_plan.md`.\n0005: \n0006: Paths are written as `software/mcfm/src/...`.\n0007: \n0008: ---\n0009: \n0010: ## Contract\n0011: \n0012: This step advances by *settling* source files one at a time: each file is r"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/desired_spec.md\n# lines: 1-144\n0001: # Fortran → C++: target output for one MCFM file\n0002: \n0003: This file defines the rewrite target and correctness bar for step 1. The workflow lives in\n0004: `current_plan.md`.\n0005: \n0006: Paths are written as `software/mcfm/src/...`.\n0007: \n0008: ---\n0009: \n0010: ## Contract\n0011: \n0012: This step advances by *settling* source files one at a time: each file is r"
 
 [tools.args]
 path = "dev/transformations/mcfm-translate/desired_spec.md"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/approvals.toml\n# lines: 1-1\n0001: version = 1\n"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/approvals.toml\n# lines: 1-1\n0001: version = 1\n"
 
 [tools.args]
 path = "dev/transformations/mcfm-translate/approvals.toml"
@@ -57,35 +57,35 @@ limit = 50
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/.codescribe/loop/metadata/loop_003_author.toml\n# lines: 1-987\n0001: run_id = \"20260826-161355-33e834\"\n0002: loop_index = 3\n0003: phase = \"author\"\n0004: model = \"oaic-gpt56sol\"\n0005: task_file = \"/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/loop.toml\"\n0006: workdir = \"/home/akash/Desktop/Akash/Projects/JSS-Paper-Example\"\n0007: stop_reason = \"max_iterations\"\n0008: final_text_present = false\n0009"
+output_preview = "# path: /home/user/JSS-2026-Example/.codescribe/loop/metadata/loop_003_author.toml\n# lines: 1-987\n0001: run_id = \"20260826-161355-33e834\"\n0002: loop_index = 3\n0003: phase = \"author\"\n0004: model = \"oaic-gpt56sol\"\n0005: task_file = \"/home/user/JSS-2026-Example/dev/transformations/mcfm-translate/loop.toml\"\n0006: workdir = \"/home/user/JSS-2026-Example\"\n0007: stop_reason = \"max_iterations\"\n0008: final_text_present = false\n0009"
 
 [tools.args]
 path = ".codescribe/loop/metadata/loop_003_author.toml"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/.codescribe/loop/review_output.toml\n# lines: 1-15\n0001: loop = 2\n0002: summary = \"The agent refreshed the workflow, attempted verification of the five-file W2jet group, corrected invalid coverage-probe statements in vv.cpp and vvg.cpp, and then successfully reran verification for those files. All five translations were classified as not covered and recorded as TRANSLATED; the group was completed, the approval gate passed, and the full "
+output_preview = "# path: /home/user/JSS-2026-Example/.codescribe/loop/review_output.toml\n# lines: 1-15\n0001: loop = 2\n0002: summary = \"The agent refreshed the workflow, attempted verification of the five-file W2jet group, corrected invalid coverage-probe statements in vv.cpp and vvg.cpp, and then successfully reran verification for those files. All five translations were classified as not covered and recorded as TRANSLATED; the group was completed, the approval gate passed, and the full "
 
 [tools.args]
 path = ".codescribe/loop/review_output.toml"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/.codescribe/loop/metadata/loop_002_review.toml\n# lines: 1-33\n0001: run_id = \"20260826-161355-33e834\"\n0002: loop_index = 2\n0003: phase = \"review\"\n0004: model = \"oaic-gpt56sol\"\n0005: task_file = \"/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/loop.toml\"\n0006: workdir = \"/home/akash/Desktop/Akash/Projects/JSS-Paper-Example\"\n0007: stop_reason = \"final_text\"\n0008: final_text_present = true\n0009: iter"
+output_preview = "# path: /home/user/JSS-2026-Example/.codescribe/loop/metadata/loop_002_review.toml\n# lines: 1-33\n0001: run_id = \"20260826-161355-33e834\"\n0002: loop_index = 2\n0003: phase = \"review\"\n0004: model = \"oaic-gpt56sol\"\n0005: task_file = \"/home/user/JSS-2026-Example/dev/transformations/mcfm-translate/loop.toml\"\n0006: workdir = \"/home/user/JSS-2026-Example\"\n0007: stop_reason = \"final_text\"\n0008: final_text_present = true\n0009: iter"
 
 [tools.args]
 path = ".codescribe/loop/metadata/loop_002_review.toml"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/.codescribe/loop/review.toml\n# lines: 1-1140\n0001: \n0002: [[event]]\n0003: event = \"run_start\"\n0004: run_id = \"20260826-162047-e9a48a\"\n0005: mode = \"native_tools\"\n0006: max_iterations = 15\n0007: ts = \"2026-08-26T21:20:47.169154+00:00\"\n0008: \n0009: [[event]]\n0010: event = \"iteration_start\"\n0011: run_id = \"20260826-162047-e9a48a\"\n0012: iteration = 1\n0013: ts = \"2026-08-26T21:20:47.169264+00:00\"\n0014: \n0015: [[event]]\n0016: event = \"model_"
+output_preview = "# path: /home/user/JSS-2026-Example/.codescribe/loop/review.toml\n# lines: 1-1140\n0001: \n0002: [[event]]\n0003: event = \"run_start\"\n0004: run_id = \"20260826-162047-e9a48a\"\n0005: mode = \"native_tools\"\n0006: max_iterations = 15\n0007: ts = \"2026-08-26T21:20:47.169154+00:00\"\n0008: \n0009: [[event]]\n0010: event = \"iteration_start\"\n0011: run_id = \"20260826-162047-e9a48a\"\n0012: iteration = 1\n0013: ts = \"2026-08-26T21:20:47.169264+00:00\"\n0014: \n0015: [[event]]\n0016: event = \"model_"
 
 [tools.args]
 path = ".codescribe/loop/review.toml"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/.codescribe/loop/metadata/loop_003_author.toml\n# lines: 820-987\n0820: [[tools]]\n0821: name = \"read\"\n0822: ok = true\n0823: output_preview = \"# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/W2jet/w2jetsq.cpp\\n# lines: 16-26\\n0016:  qed(1,1)=qcd1(1,1)+qcd2(1,1); qed(1,-1)=qcd1(1,-1)+qcd2(-1,1);\\n0017:  qed(-1,1)=qcd1(-1,1)+qcd2(1,-1); qed(-1,-1)=qcd1(-1,-1)+qcd2(-1,-1);\\n0018:  double msq1=std::norm(qcd1(1,1"
+output_preview = "# path: /home/user/JSS-2026-Example/.codescribe/loop/metadata/loop_003_author.toml\n# lines: 820-987\n0820: [[tools]]\n0821: name = \"read\"\n0822: ok = true\n0823: output_preview = \"# path: /home/user/JSS-2026-Example/software/mcfm/src/W2jet/w2jetsq.cpp\\n# lines: 16-26\\n0016:  qed(1,1)=qcd1(1,1)+qcd2(1,1); qed(1,-1)=qcd1(1,-1)+qcd2(-1,1);\\n0017:  qed(-1,1)=qcd1(-1,1)+qcd2(1,-1); qed(-1,-1)=qcd1(-1,-1)+qcd2(-1,-1);\\n0018:  double msq1=std::norm(qcd1(1,1"
 
 [tools.args]
 path = ".codescribe/loop/metadata/loop_003_author.toml"
@@ -94,7 +94,7 @@ limit = 168
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/.codescribe/loop/metadata/loop_003_author.toml\n# lines: 900-987\n0900: \n0901: [tools.args]\n0902: command = \"python3 dev/tmp/verify_mcfm_group.py\"\n0903: timeout = 120\n0904: [[tools]]\n0905: name = \"edit\"\n0906: ok = true\n0907: output_preview = \"{\\n  \\\"ok\\\": true,\\n  \\\"path\\\": \\\"/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/agent_log.md\\\",\\n  \\\"applied\\\": 1,\\n  \\\"replacements\\\": [\\n    {\\n      \\\"in"
+output_preview = "# path: /home/user/JSS-2026-Example/.codescribe/loop/metadata/loop_003_author.toml\n# lines: 900-987\n0900: \n0901: [tools.args]\n0902: command = \"python3 dev/tmp/verify_mcfm_group.py\"\n0903: timeout = 120\n0904: [[tools]]\n0905: name = \"edit\"\n0906: ok = true\n0907: output_preview = \"{\\n  \\\"ok\\\": true,\\n  \\\"path\\\": \\\"/home/user/JSS-2026-Example/dev/transformations/mcfm-translate/agent_log.md\\\",\\n  \\\"applied\\\": 1,\\n  \\\"replacements\\\": [\\n    {\\n      \\\"in"
 
 [tools.args]
 path = ".codescribe/loop/metadata/loop_003_author.toml"
@@ -103,7 +103,7 @@ limit = 88
 [[tools]]
 name = "write"
 ok = true
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/.codescribe/loop/review_output.toml (1410 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/.codescribe/loop/review_output.toml (1410 bytes)"
 
 [tools.args]
 path = ".codescribe/loop/review_output.toml"

@@ -2,8 +2,8 @@ run_id = "20260826-104355-bc6f23"
 loop_index = 3
 phase = "author"
 model = "oaic-gpt56sol"
-task_file = "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/loop.toml"
-workdir = "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example"
+task_file = "/home/user/JSS-2026-Example/dev/transformations/mcfm-translate/loop.toml"
+workdir = "/home/user/JSS-2026-Example"
 stop_reason = "max_iterations"
 final_text_present = false
 iterations = 30
@@ -12,14 +12,14 @@ created_at = "2026-08-26T16:02:10.632692+00:00"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/current_plan.md\n# lines: 1-182\n0001: # Fortran → C++ plan\n0002: \n0003: This file says how to run step 1. The rewrite rules and correctness bar are in\n0004: `desired_spec.md`.\n0005: \n0006: > This Plan is the policy: it selects and orders the work over the ready set (see *When to\n0007: > stop*). The correctness contract — objective `f`, invariants `I`, oracle `V`, and status set\n0008: > `Σ` — lives in `"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/current_plan.md\n# lines: 1-182\n0001: # Fortran → C++ plan\n0002: \n0003: This file says how to run step 1. The rewrite rules and correctness bar are in\n0004: `desired_spec.md`.\n0005: \n0006: > This Plan is the policy: it selects and orders the work over the ready set (see *When to\n0007: > stop*). The correctness contract — objective `f`, invariants `I`, oracle `V`, and status set\n0008: > `Σ` — lives in `"
 
 [tools.args]
 path = "dev/transformations/mcfm-translate/current_plan.md"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/current_plan.md\n# lines: 164-182\n0164: ## When to stop\n0165: \n0166: The *ready set* is the set of ready, not-yet-settled files. Each settled file leaves the\n0167: ready set and the readiness graph is acyclic, so the pass terminates. Stop only when one of\n0168: these is true:\n0169: \n0170: - a completed group needs human approval before the next group can start\n0171: - the ready set is empty (no ready f"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/current_plan.md\n# lines: 164-182\n0164: ## When to stop\n0165: \n0166: The *ready set* is the set of ready, not-yet-settled files. Each settled file leaves the\n0167: ready set and the readiness graph is acyclic, so the pass terminates. Stop only when one of\n0168: these is true:\n0169: \n0170: - a completed group needs human approval before the next group can start\n0171: - the ready set is empty (no ready f"
 
 [tools.args]
 path = "dev/transformations/mcfm-translate/current_plan.md"
@@ -28,70 +28,70 @@ limit = 30
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/desired_spec.md\n# lines: 1-144\n0001: # Fortran → C++: target output for one MCFM file\n0002: \n0003: This file defines the rewrite target and correctness bar for step 1. The workflow lives in\n0004: `current_plan.md`.\n0005: \n0006: Paths are written as `software/mcfm/src/...`.\n0007: \n0008: ---\n0009: \n0010: ## Contract\n0011: \n0012: This step advances by *settling* source files one at a time: each file is r"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/desired_spec.md\n# lines: 1-144\n0001: # Fortran → C++: target output for one MCFM file\n0002: \n0003: This file defines the rewrite target and correctness bar for step 1. The workflow lives in\n0004: `current_plan.md`.\n0005: \n0006: Paths are written as `software/mcfm/src/...`.\n0007: \n0008: ---\n0009: \n0010: ## Contract\n0011: \n0012: This step advances by *settling* source files one at a time: each file is r"
 
 [tools.args]
 path = "dev/transformations/mcfm-translate/desired_spec.md"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/agent_log.md\n# lines: 1-11\n0001: # MCFM translation worklist\n0002: \n0003: ## Group 1 — ThreeJets five-gluon primitive amplitudes\n0004: \n0005: - [x] software/mcfm/src/ThreeJets/A51mpmpp5g.f — TRANSLATED (build passed; coverage process `g g g g g` reported NOT COVERED)\n0006: - [x] software/mcfm/src/ThreeJets/A51mmppp5g.f — TRANSLATED (build passed; coverage process `g g g g g` reported NOT COVERED)\n0007"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/agent_log.md\n# lines: 1-11\n0001: # MCFM translation worklist\n0002: \n0003: ## Group 1 — ThreeJets five-gluon primitive amplitudes\n0004: \n0005: - [x] software/mcfm/src/ThreeJets/A51mpmpp5g.f — TRANSLATED (build passed; coverage process `g g g g g` reported NOT COVERED)\n0006: - [x] software/mcfm/src/ThreeJets/A51mmppp5g.f — TRANSLATED (build passed; coverage process `g g g g g` reported NOT COVERED)\n0007"
 
 [tools.args]
 path = "dev/transformations/mcfm-translate/agent_log.md"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/approvals.toml\n# lines: 1-1\n0001: version = 1\n"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/approvals.toml\n# lines: 1-1\n0001: version = 1\n"
 
 [tools.args]
 path = "dev/transformations/mcfm-translate/approvals.toml"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/CMakeLists.txt\n# lines: 1-28\n0001: target_sources(objlib PRIVATE\n0002: A5NLO4qg.f\n0003: fillaij0.f90\n0004: fillaij0.cpp\n0005: fillDij.f\n0006: fillEij.f\n0007: fillRCij.f90\n0008: fillRCij.cpp\n0009: fillSij.f90\n0010: fillSij.cpp\n0011: A5NLOqbqggg.f\n0012: fillamps_qbqggg.f\n0013: A5NLOggggg.f\n0014: A51mmppp5g_fi.F90\n0015: A51mmppp5g.cpp\n0016: A51mpmpp5g_fi.F90\n0017: A51mpmpp5g.cpp\n0018: A5gfill.f\n0019: qqb_thrjet"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/CMakeLists.txt\n# lines: 1-28\n0001: target_sources(objlib PRIVATE\n0002: A5NLO4qg.f\n0003: fillaij0.f90\n0004: fillaij0.cpp\n0005: fillDij.f\n0006: fillEij.f\n0007: fillRCij.f90\n0008: fillRCij.cpp\n0009: fillSij.f90\n0010: fillSij.cpp\n0011: A5NLOqbqggg.f\n0012: fillamps_qbqggg.f\n0013: A5NLOggggg.f\n0014: A51mmppp5g_fi.F90\n0015: A51mmppp5g.cpp\n0016: A51mpmpp5g_fi.F90\n0017: A51mpmpp5g.cpp\n0018: A5gfill.f\n0019: qqb_thrjet"
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/CMakeLists.txt"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/A51mmppp5g.cpp\n# lines: 1-72\n0001: #include \"A51mmppp5g.hpp\"\n0002: \n0003: #include <cmath>\n0004: #include <constants_mod.hpp>\n0005: #include <epinv2_mod.hpp>\n0006: #include <epinv_mod.hpp>\n0007: #include <mxpart_mod.hpp>\n0008: #include <Need.hpp>\n0009: #include <scale_mod.hpp>\n0010: #include <sprods_com_mod.hpp>\n0011: \n0012: void A51mmppp5g(int j1, int j2, int j3, int j4, int j5,\n0013:                  FArra"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/A51mmppp5g.cpp\n# lines: 1-72\n0001: #include \"A51mmppp5g.hpp\"\n0002: \n0003: #include <cmath>\n0004: #include <constants_mod.hpp>\n0005: #include <epinv2_mod.hpp>\n0006: #include <epinv_mod.hpp>\n0007: #include <mxpart_mod.hpp>\n0008: #include <Need.hpp>\n0009: #include <scale_mod.hpp>\n0010: #include <sprods_com_mod.hpp>\n0011: \n0012: void A51mmppp5g(int j1, int j2, int j3, int j4, int j5,\n0013:                  FArra"
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/A51mmppp5g.cpp"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/A51mmppp5g.hpp\n# lines: 1-14\n0001: #ifndef A51MMPPP5G_HPP\n0002: #define A51MMPPP5G_HPP\n0003: \n0004: #include <complex>\n0005: #include <FArray.hpp>\n0006: \n0007: void A51mmppp5g(int j1, int j2, int j3, int j4, int j5,\n0008:                  FArray2D<std::complex<double>>& za,\n0009:                  FArray2D<std::complex<double>>& zb,\n0010:                  std::complex<double>& miA5tree,\n0011:                 "
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/A51mmppp5g.hpp\n# lines: 1-14\n0001: #ifndef A51MMPPP5G_HPP\n0002: #define A51MMPPP5G_HPP\n0003: \n0004: #include <complex>\n0005: #include <FArray.hpp>\n0006: \n0007: void A51mmppp5g(int j1, int j2, int j3, int j4, int j5,\n0008:                  FArray2D<std::complex<double>>& za,\n0009:                  FArray2D<std::complex<double>>& zb,\n0010:                  std::complex<double>& miA5tree,\n0011:                 "
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/A51mmppp5g.hpp"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/A51mmppp5g_fi.F90\n# lines: 1-17\n0001: subroutine A51mmppp5g(j1,j2,j3,j4,j5,za,zb,miA5tree,A51half,A51one)\n0002:   use, intrinsic :: iso_c_binding\n0003:   use mxpart_mod, only: mxpart\n0004:   implicit none\n0005:   integer(c_int), intent(in) :: j1,j2,j3,j4,j5\n0006:   complex(c_double_complex), intent(inout) :: za(mxpart,mxpart),zb(mxpart,mxpart)\n0007:   complex(c_double_complex), intent(out) :: miA5tree,A51hal"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/A51mmppp5g_fi.F90\n# lines: 1-17\n0001: subroutine A51mmppp5g(j1,j2,j3,j4,j5,za,zb,miA5tree,A51half,A51one)\n0002:   use, intrinsic :: iso_c_binding\n0003:   use mxpart_mod, only: mxpart\n0004:   implicit none\n0005:   integer(c_int), intent(in) :: j1,j2,j3,j4,j5\n0006:   complex(c_double_complex), intent(inout) :: za(mxpart,mxpart),zb(mxpart,mxpart)\n0007:   complex(c_double_complex), intent(out) :: miA5tree,A51hal"
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/A51mmppp5g_fi.F90"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/A51mpmpp5g.cpp\n# lines: 1-23\n0001: #include \"A51mpmpp5g.hpp\"\n0002: #include <cmath>\n0003: #include <constants_mod.hpp>\n0004: #include <epinv2_mod.hpp>\n0005: #include <epinv_mod.hpp>\n0006: #include <mxpart_mod.hpp>\n0007: #include <Need.hpp>\n0008: #include <scale_mod.hpp>\n0009: #include <sprods_com_mod.hpp>\n0010: \n0011: void A51mpmpp5g(int j1,int j2,int j3,int j4,int j5,FArray2D<std::complex<double>>& za,FArra"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/A51mpmpp5g.cpp\n# lines: 1-23\n0001: #include \"A51mpmpp5g.hpp\"\n0002: #include <cmath>\n0003: #include <constants_mod.hpp>\n0004: #include <epinv2_mod.hpp>\n0005: #include <epinv_mod.hpp>\n0006: #include <mxpart_mod.hpp>\n0007: #include <Need.hpp>\n0008: #include <scale_mod.hpp>\n0009: #include <sprods_com_mod.hpp>\n0010: \n0011: void A51mpmpp5g(int j1,int j2,int j3,int j4,int j5,FArray2D<std::complex<double>>& za,FArra"
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/A51mpmpp5g.cpp"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/A51mpmpp5g.hpp\n# lines: 1-14\n0001: #ifndef A51MPMPP5G_HPP\n0002: #define A51MPMPP5G_HPP\n0003: \n0004: #include <complex>\n0005: #include <FArray.hpp>\n0006: \n0007: void A51mpmpp5g(int j1, int j2, int j3, int j4, int j5,\n0008:                  FArray2D<std::complex<double>>& za,\n0009:                  FArray2D<std::complex<double>>& zb,\n0010:                  std::complex<double>& miA5tree,\n0011:                 "
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/A51mpmpp5g.hpp\n# lines: 1-14\n0001: #ifndef A51MPMPP5G_HPP\n0002: #define A51MPMPP5G_HPP\n0003: \n0004: #include <complex>\n0005: #include <FArray.hpp>\n0006: \n0007: void A51mpmpp5g(int j1, int j2, int j3, int j4, int j5,\n0008:                  FArray2D<std::complex<double>>& za,\n0009:                  FArray2D<std::complex<double>>& zb,\n0010:                  std::complex<double>& miA5tree,\n0011:                 "
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/A51mpmpp5g.hpp"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/A51mpmpp5g_fi.F90\n# lines: 1-17\n0001: subroutine A51mpmpp5g(j1,j2,j3,j4,j5,za,zb,miA5tree,A51half,A51one)\n0002:   use, intrinsic :: iso_c_binding\n0003:   use mxpart_mod, only: mxpart\n0004:   implicit none\n0005:   integer(c_int), intent(in) :: j1,j2,j3,j4,j5\n0006:   complex(c_double_complex), intent(inout) :: za(mxpart,mxpart),zb(mxpart,mxpart)\n0007:   complex(c_double_complex), intent(out) :: miA5tree,A51hal"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/A51mpmpp5g_fi.F90\n# lines: 1-17\n0001: subroutine A51mpmpp5g(j1,j2,j3,j4,j5,za,zb,miA5tree,A51half,A51one)\n0002:   use, intrinsic :: iso_c_binding\n0003:   use mxpart_mod, only: mxpart\n0004:   implicit none\n0005:   integer(c_int), intent(in) :: j1,j2,j3,j4,j5\n0006:   complex(c_double_complex), intent(inout) :: za(mxpart,mxpart),zb(mxpart,mxpart)\n0007:   complex(c_double_complex), intent(out) :: miA5tree,A51hal"
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/A51mpmpp5g_fi.F90"
@@ -151,7 +151,7 @@ timeout = 30
 [[tools]]
 name = "bash"
 ok = true
-output_preview = "exit_code: 0\nSTDOUT:\nGenerating Doxygen XML for /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src -> /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/doxygen_dep/xml\nwrote 1130 XML file(s) to /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/doxygen_dep/xml\nsource 529  translated 86  untranslated 443\nready leaves (deps=0, non-blind): 228\nsymbol index: 915 symbol(s)\ncleanup candidates: move 74  shim-delete 12  merge 33\nwrote roadmap_metrics."
+output_preview = "exit_code: 0\nSTDOUT:\nGenerating Doxygen XML for /home/user/JSS-2026-Example/software/mcfm/src -> /home/user/JSS-2026-Example/software/mcfm/doxygen_dep/xml\nwrote 1130 XML file(s) to /home/user/JSS-2026-Example/software/mcfm/doxygen_dep/xml\nsource 529  translated 86  untranslated 443\nready leaves (deps=0, non-blind): 228\nsymbol index: 915 symbol(s)\ncleanup candidates: move 74  shim-delete 12  merge 33\nwrote roadmap_metrics."
 
 [tools.args]
 command = "python3 dev/workflow.py refresh"
@@ -174,14 +174,14 @@ timeout = 30
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/working/prompts.toml\n# lines: 1-264\n0001: [[chat]]\n0002: role = \"user\"\n0003: content = '''\n0004: You are a code conversion tool for a scientific computing application.\n0005: The application is organized as different source files in a directory structure.\n0006: I will give you a Fortran file which you will convert to a C++ source code file.\n0007: \n0008: The code you will receive is part of a larger codebase, "
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/working/prompts.toml\n# lines: 1-264\n0001: [[chat]]\n0002: role = \"user\"\n0003: content = '''\n0004: You are a code conversion tool for a scientific computing application.\n0005: The application is organized as different source files in a directory structure.\n0006: I will give you a Fortran file which you will convert to a C++ source code file.\n0007: \n0008: The code you will receive is part of a larger codebase, "
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/working/prompts.toml"
 [[tools]]
 name = "write"
 ok = true
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/deprecated/A51mmppp5g.f (2492 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/deprecated/A51mmppp5g.f (2492 bytes)"
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/deprecated/A51mmppp5g.f"
@@ -189,49 +189,49 @@ content = "!\n!  SPDX-License-Identifier: GPL-3.0-or-later\n!  Copyright (C) 201
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/A5qbmgmqpgpgp.f\n# lines: 1-72\n0001:       subroutine A5qbmgmqpgpgp(j1,j2,j3,j4,j5,za,zb,miA5tree,AL,ASUSY,Af,As)\n0002: ! Amplitudes for 0 -> qb- g- q+ g+ g+ from:\n0003: ! 'One-Loop Corrections to Two-Quark Three-Gluon Amplitudes'\n0004: !  Zvi Bern, Lance Dixon, David A. Kosower\n0005: ! Published in: Nucl.Phys.B 437 (1995) 259-304,\n0006: ! e-Print: hep-ph/9409393 [hep-ph]\n0007:       use types\n0008:       use"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/A5qbmgmqpgpgp.f\n# lines: 1-72\n0001:       subroutine A5qbmgmqpgpgp(j1,j2,j3,j4,j5,za,zb,miA5tree,AL,ASUSY,Af,As)\n0002: ! Amplitudes for 0 -> qb- g- q+ g+ g+ from:\n0003: ! 'One-Loop Corrections to Two-Quark Three-Gluon Amplitudes'\n0004: !  Zvi Bern, Lance Dixon, David A. Kosower\n0005: ! Published in: Nucl.Phys.B 437 (1995) 259-304,\n0006: ! e-Print: hep-ph/9409393 [hep-ph]\n0007:       use types\n0008:       use"
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/A5qbmgmqpgpgp.f"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/A5qbmgpqpgmgp.f\n# lines: 1-99\n0001:       subroutine A5qbmgpqpgmgp(j1,j2,j3,j4,j5,za,zb,miA5tree,AL,ASUSY,Af,As)\n0002: ! Amplitudes for 0 -> qb- g+ q+ g- g+ from:\n0003: ! 'One-Loop Corrections to Two-Quark Three-Gluon Amplitudes'\n0004: !  Zvi Bern, Lance Dixon, David A. Kosower\n0005: ! Published in: Nucl.Phys.B 437 (1995) 259-304,\n0006: ! e-Print: hep-ph/9409393 [hep-ph]\n0007:       use types\n0008:       use"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/A5qbmgpqpgmgp.f\n# lines: 1-99\n0001:       subroutine A5qbmgpqpgmgp(j1,j2,j3,j4,j5,za,zb,miA5tree,AL,ASUSY,Af,As)\n0002: ! Amplitudes for 0 -> qb- g+ q+ g- g+ from:\n0003: ! 'One-Loop Corrections to Two-Quark Three-Gluon Amplitudes'\n0004: !  Zvi Bern, Lance Dixon, David A. Kosower\n0005: ! Published in: Nucl.Phys.B 437 (1995) 259-304,\n0006: ! e-Print: hep-ph/9409393 [hep-ph]\n0007:       use types\n0008:       use"
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/A5qbmgpqpgmgp.f"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/A5qbmgpqpgpgm.f\n# lines: 1-77\n0001:       subroutine A5qbmgpqpgpgm(j1,j2,j3,j4,j5,za,zb,miA5tree,AL,ASUSY,Af,As)\n0002: ! Amplitudes for 0 -> qb- g+ q+ g+ g- from:\n0003: ! 'One-Loop Corrections to Two-Quark Three-Gluon Amplitudes'\n0004: !  Zvi Bern, Lance Dixon, David A. Kosower\n0005: ! Published in: Nucl.Phys.B 437 (1995) 259-304,\n0006: ! e-Print: hep-ph/9409393 [hep-ph]\n0007:       use types\n0008:       use"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/A5qbmgpqpgpgm.f\n# lines: 1-77\n0001:       subroutine A5qbmgpqpgpgm(j1,j2,j3,j4,j5,za,zb,miA5tree,AL,ASUSY,Af,As)\n0002: ! Amplitudes for 0 -> qb- g+ q+ g+ g- from:\n0003: ! 'One-Loop Corrections to Two-Quark Three-Gluon Amplitudes'\n0004: !  Zvi Bern, Lance Dixon, David A. Kosower\n0005: ! Published in: Nucl.Phys.B 437 (1995) 259-304,\n0006: ! e-Print: hep-ph/9409393 [hep-ph]\n0007:       use types\n0008:       use"
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/A5qbmgpqpgpgm.f"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/A5qbmqpgmgpgp.f\n# lines: 1-102\n0001:       subroutine A5qbmqpgmgpgp(j1,j2,j3,j4,j5,za,zb,miA5tree,AL,ASUSY,Af,As)\n0002: ! Amplitudes for 0 -> qb- q+ g- g+ g+ from:\n0003: ! 'One-Loop Corrections to Two-Quark Three-Gluon Amplitudes'\n0004: !  Zvi Bern, Lance Dixon, David A. Kosower\n0005: ! Published in: Nucl.Phys.B 437 (1995) 259-304,\n0006: ! e-Print: hep-ph/9409393 [hep-ph]\n0007:       use types\n0008:       us"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/A5qbmqpgmgpgp.f\n# lines: 1-102\n0001:       subroutine A5qbmqpgmgpgp(j1,j2,j3,j4,j5,za,zb,miA5tree,AL,ASUSY,Af,As)\n0002: ! Amplitudes for 0 -> qb- q+ g- g+ g+ from:\n0003: ! 'One-Loop Corrections to Two-Quark Three-Gluon Amplitudes'\n0004: !  Zvi Bern, Lance Dixon, David A. Kosower\n0005: ! Published in: Nucl.Phys.B 437 (1995) 259-304,\n0006: ! e-Print: hep-ph/9409393 [hep-ph]\n0007:       use types\n0008:       us"
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/A5qbmqpgmgpgp.f"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/A5qbmqpgpgmgp.f\n# lines: 1-107\n0001:       subroutine A5qbmqpgpgmgp(j1,j2,j3,j4,j5,za,zb,miA5tree,AL,ASUSY,Af,As)\n0002: ! Amplitudes for 0 -> qb- q+ g+ g- g+ from:\n0003: ! 'One-Loop Corrections to Two-Quark Three-Gluon Amplitudes'\n0004: !  Zvi Bern, Lance Dixon, David A. Kosower\n0005: ! Published in: Nucl.Phys.B 437 (1995) 259-304,\n0006: ! e-Print: hep-ph/9409393 [hep-ph]\n0007:       use types\n0008:       us"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/A5qbmqpgpgmgp.f\n# lines: 1-107\n0001:       subroutine A5qbmqpgpgmgp(j1,j2,j3,j4,j5,za,zb,miA5tree,AL,ASUSY,Af,As)\n0002: ! Amplitudes for 0 -> qb- q+ g+ g- g+ from:\n0003: ! 'One-Loop Corrections to Two-Quark Three-Gluon Amplitudes'\n0004: !  Zvi Bern, Lance Dixon, David A. Kosower\n0005: ! Published in: Nucl.Phys.B 437 (1995) 259-304,\n0006: ! e-Print: hep-ph/9409393 [hep-ph]\n0007:       use types\n0008:       us"
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/A5qbmqpgpgmgp.f"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/A5qbmqpgpgpgm.f\n# lines: 1-88\n0001:       subroutine A5qbmqpgpgpgm(j1,j2,j3,j4,j5,za,zb,miA5tree,AL,ASUSY,Af,As)\n0002: ! Amplitudes for 0 -> qb- q+ g+ g+ g- from:\n0003: ! 'One-Loop Corrections to Two-Quark Three-Gluon Amplitudes'\n0004: !  Zvi Bern, Lance Dixon, David A. Kosower\n0005: ! Published in: Nucl.Phys.B 437 (1995) 259-304,\n0006: ! e-Print: hep-ph/9409393 [hep-ph]\n0007:       use types\n0008:       use"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/A5qbmqpgpgpgm.f\n# lines: 1-88\n0001:       subroutine A5qbmqpgpgpgm(j1,j2,j3,j4,j5,za,zb,miA5tree,AL,ASUSY,Af,As)\n0002: ! Amplitudes for 0 -> qb- q+ g+ g+ g- from:\n0003: ! 'One-Loop Corrections to Two-Quark Three-Gluon Amplitudes'\n0004: !  Zvi Bern, Lance Dixon, David A. Kosower\n0005: ! Published in: Nucl.Phys.B 437 (1995) 259-304,\n0006: ! e-Print: hep-ph/9409393 [hep-ph]\n0007:       use types\n0008:       use"
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/A5qbmqpgpgpgm.f"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/deprecated/A51mmppp5g.f\n# lines: 1-8\n0001: !\n0002: !  SPDX-License-Identifier: GPL-3.0-or-later\n0003: !  Copyright (C) 2019-2022, respective authors of MCFM.\n0004: !\n0005:       subroutine A51mmppp5g(j1,j2,j3,j4,j5,za,zb,miA5tree,A51half,A51one)\n0006:       use types\n0007:       use constants_mod\n0008:       use mxpart_mod\n"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/deprecated/A51mmppp5g.f\n# lines: 1-8\n0001: !\n0002: !  SPDX-License-Identifier: GPL-3.0-or-later\n0003: !  Copyright (C) 2019-2022, respective authors of MCFM.\n0004: !\n0005:       subroutine A51mmppp5g(j1,j2,j3,j4,j5,za,zb,miA5tree,A51half,A51one)\n0006:       use types\n0007:       use constants_mod\n0008:       use mxpart_mod\n"
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/deprecated/A51mmppp5g.f"
@@ -247,28 +247,28 @@ timeout = 30
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/fillDij.f\n# lines: 1-237\n0001:       subroutine fillDij(za,zb,s,aQQ_qb0,DQQ_qb,DQQ_QQb)\n0002: !--- finite contributions from 9405386, Eqs. (17)-(23)\n0003:       use types\n0004:       use constants_mod\n0005:       use epinv_mod\n0006:       use epinv2_mod\n0007:       use mxpart_mod\n0008:       use nflav_mod\n0009:       use scale_mod\n0010:       implicit none\n0011:       real(dp):: s(mxpart,mxpart)\n0012:       "
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/fillDij.f\n# lines: 1-237\n0001:       subroutine fillDij(za,zb,s,aQQ_qb0,DQQ_qb,DQQ_QQb)\n0002: !--- finite contributions from 9405386, Eqs. (17)-(23)\n0003:       use types\n0004:       use constants_mod\n0005:       use epinv_mod\n0006:       use epinv2_mod\n0007:       use mxpart_mod\n0008:       use nflav_mod\n0009:       use scale_mod\n0010:       implicit none\n0011:       real(dp):: s(mxpart,mxpart)\n0012:       "
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/fillDij.f"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/fillEij.f\n# lines: 1-236\n0001:       subroutine fillEij(za,zb,s,aQQ_qb0,aQQ_QQb0,aq_qb0,aq_QQb0,EQQ_qb,EQQ_QQb)\n0002: !--- pentagon and box finite contributions from 9405386, Eqs. (11)-(13)\n0003:       use types\n0004:       use constants_mod\n0005:       use epinv_mod\n0006:       use epinv2_mod\n0007:       use mxpart_mod\n0008:       use nflav_mod\n0009:       use scale_mod\n0010:       implicit none\n0011:      "
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/fillEij.f\n# lines: 1-236\n0001:       subroutine fillEij(za,zb,s,aQQ_qb0,aQQ_QQb0,aq_qb0,aq_QQb0,EQQ_qb,EQQ_QQb)\n0002: !--- pentagon and box finite contributions from 9405386, Eqs. (11)-(13)\n0003:       use types\n0004:       use constants_mod\n0005:       use epinv_mod\n0006:       use epinv2_mod\n0007:       use mxpart_mod\n0008:       use nflav_mod\n0009:       use scale_mod\n0010:       implicit none\n0011:      "
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/fillEij.f"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/A5gfill.f\n# lines: 1-154\n0001: !\n0002: !  SPDX-License-Identifier: GPL-3.0-or-later\n0003: !  Copyright (C) 2019-2022, respective authors of MCFM.\n0004: !\n0005: ! This routine built on the same structure as Aboxfill\n0006: \n0007:       subroutine A5gfill(j1,j2,j3,j4,j5,za,zb,miA5tree,A51half,A51one)\n0008:       use types\n0009:       use constants_mod\n0010:       use mxpart_mod\n0011:       implicit none\n0012:  "
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/A5gfill.f\n# lines: 1-154\n0001: !\n0002: !  SPDX-License-Identifier: GPL-3.0-or-later\n0003: !  Copyright (C) 2019-2022, respective authors of MCFM.\n0004: !\n0005: ! This routine built on the same structure as Aboxfill\n0006: \n0007:       subroutine A5gfill(j1,j2,j3,j4,j5,za,zb,miA5tree,A51half,A51one)\n0008:       use types\n0009:       use constants_mod\n0010:       use mxpart_mod\n0011:       implicit none\n0012:  "
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/A5gfill.f"
 [[tools]]
 name = "bash"
 ok = true
-output_preview = "exit_code: 0\nSTDOUT:\nwrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tmp/drafts/ThreeJets/A5qbmgmqpgpgp.scribe\n\nSTDERR:\n"
+output_preview = "exit_code: 0\nSTDOUT:\nwrote /home/user/JSS-2026-Example/dev/tmp/drafts/ThreeJets/A5qbmgmqpgpgp.scribe\n\nSTDERR:\n"
 
 [tools.args]
 command = "python3 dev/workflow.py draft software/mcfm/src/ThreeJets/A5qbmgmqpgpgp.f"
@@ -276,7 +276,7 @@ timeout = 120
 [[tools]]
 name = "bash"
 ok = true
-output_preview = "exit_code: 0\nSTDOUT:\nwrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tmp/drafts/ThreeJets/A5qbmgpqpgmgp.scribe\n\nSTDERR:\n"
+output_preview = "exit_code: 0\nSTDOUT:\nwrote /home/user/JSS-2026-Example/dev/tmp/drafts/ThreeJets/A5qbmgpqpgmgp.scribe\n\nSTDERR:\n"
 
 [tools.args]
 command = "python3 dev/workflow.py draft software/mcfm/src/ThreeJets/A5qbmgpqpgmgp.f"
@@ -284,7 +284,7 @@ timeout = 120
 [[tools]]
 name = "bash"
 ok = true
-output_preview = "exit_code: 0\nSTDOUT:\nskipping (exists): /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tmp/drafts/ThreeJets/A5qbmgpqpgpgm.scribe  (use --force)\n\nSTDERR:\n"
+output_preview = "exit_code: 0\nSTDOUT:\nskipping (exists): /home/user/JSS-2026-Example/dev/tmp/drafts/ThreeJets/A5qbmgpqpgpgm.scribe  (use --force)\n\nSTDERR:\n"
 
 [tools.args]
 command = "python3 dev/workflow.py draft software/mcfm/src/ThreeJets/A5qbmgpqpgpgm.f"
@@ -292,28 +292,28 @@ timeout = 120
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tmp/drafts/ThreeJets/A5qbmgmqpgpgp.scribe\n# lines: 1-81\n0001: scribe-prompt: Add an extern \"C\" <name>_wrapper; see the seed examples for FArray/scalar handling.\n0002: scribe-prompt: A variable used as a function is an external or statement function.\n0003: scribe-prompt: l0 is an external function (defined in Need/lfunctions.f90)\n0004: scribe-prompt: l1 is an external function (defined in Need/lfunctions.f90)\n0005: scribe-prompt: ln"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/tmp/drafts/ThreeJets/A5qbmgmqpgpgp.scribe\n# lines: 1-81\n0001: scribe-prompt: Add an extern \"C\" <name>_wrapper; see the seed examples for FArray/scalar handling.\n0002: scribe-prompt: A variable used as a function is an external or statement function.\n0003: scribe-prompt: l0 is an external function (defined in Need/lfunctions.f90)\n0004: scribe-prompt: l1 is an external function (defined in Need/lfunctions.f90)\n0005: scribe-prompt: ln"
 
 [tools.args]
 path = "dev/tmp/drafts/ThreeJets/A5qbmgmqpgpgp.scribe"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tmp/drafts/ThreeJets/A5qbmgpqpgmgp.scribe\n# lines: 1-111\n0001: scribe-prompt: Add an extern \"C\" <name>_wrapper; see the seed examples for FArray/scalar handling.\n0002: scribe-prompt: A variable used as a function is an external or statement function.\n0003: scribe-prompt: l0 is an external function (defined in Need/lfunctions.f90)\n0004: scribe-prompt: l1 is an external function (defined in Need/lfunctions.f90)\n0005: scribe-prompt: l"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/tmp/drafts/ThreeJets/A5qbmgpqpgmgp.scribe\n# lines: 1-111\n0001: scribe-prompt: Add an extern \"C\" <name>_wrapper; see the seed examples for FArray/scalar handling.\n0002: scribe-prompt: A variable used as a function is an external or statement function.\n0003: scribe-prompt: l0 is an external function (defined in Need/lfunctions.f90)\n0004: scribe-prompt: l1 is an external function (defined in Need/lfunctions.f90)\n0005: scribe-prompt: l"
 
 [tools.args]
 path = "dev/tmp/drafts/ThreeJets/A5qbmgpqpgmgp.scribe"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tmp/drafts/ThreeJets/A5qbmgpqpgpgm.scribe\n# lines: 1-87\n0001: scribe-prompt: Add an extern \"C\" <name>_wrapper; see the seed examples for FArray/scalar handling.\n0002: scribe-prompt: A variable used as a function is an external or statement function.\n0003: scribe-prompt: l0 is an external function (defined in Need/lfunctions.f90)\n0004: scribe-prompt: l1 is an external function (defined in Need/lfunctions.f90)\n0005: scribe-prompt: ln"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/tmp/drafts/ThreeJets/A5qbmgpqpgpgm.scribe\n# lines: 1-87\n0001: scribe-prompt: Add an extern \"C\" <name>_wrapper; see the seed examples for FArray/scalar handling.\n0002: scribe-prompt: A variable used as a function is an external or statement function.\n0003: scribe-prompt: l0 is an external function (defined in Need/lfunctions.f90)\n0004: scribe-prompt: l1 is an external function (defined in Need/lfunctions.f90)\n0005: scribe-prompt: ln"
 
 [tools.args]
 path = "dev/tmp/drafts/ThreeJets/A5qbmgpqpgpgm.scribe"
 [[tools]]
 name = "edit"
 ok = true
-output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/agent_log.md\",\n  \"applied\": 2,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 15,\n      \"new_len\": 223,\n      \"before_snippet\": \"…— TRANSLATED (build passed; coverage process `g g g g g` reported NOT COVERED)\\n\\n## Session log\\n\\n- 2026-08-26: Opened Group 1 after refresh reported 229 ready leaves; translati…\",\n      \"after_snippet\": \"…— TRANSLA"
+output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/user/JSS-2026-Example/dev/transformations/mcfm-translate/agent_log.md\",\n  \"applied\": 2,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 15,\n      \"new_len\": 223,\n      \"before_snippet\": \"…— TRANSLATED (build passed; coverage process `g g g g g` reported NOT COVERED)\\n\\n## Session log\\n\\n- 2026-08-26: Opened Group 1 after refresh reported 229 ready leaves; translati…\",\n      \"after_snippet\": \"…— TRANSLA"
 
 [tools.args]
 path = "dev/transformations/mcfm-translate/agent_log.md"
@@ -328,7 +328,7 @@ newText = "- 2026-08-26: Completed Group 1. Both translations build cleanly and 
 [[tools]]
 name = "write"
 ok = true
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/A5qbmgmqpgpgp.hpp (111 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/A5qbmgmqpgpgp.hpp (111 bytes)"
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/A5qbmgmqpgpgp.hpp"
@@ -336,14 +336,14 @@ content = "#ifndef A5QBMG…10483 chars truncated…gpgm_wrapper(j1,j2,j3,j4,j5,
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/A5qbmgmqpgpgp.hpp\n# lines: 1-2\n0001: #ifndef A5QBMG…10483 chars truncated…gpgm_wrapper(j1,j2,j3,j4,j5,za,zb,miA5tree,AL,ASUSY,Af,As)\n0002: end subroutine\n"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/A5qbmgmqpgpgp.hpp\n# lines: 1-2\n0001: #ifndef A5QBMG…10483 chars truncated…gpgm_wrapper(j1,j2,j3,j4,j5,za,zb,miA5tree,AL,ASUSY,Af,As)\n0002: end subroutine\n"
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/A5qbmgmqpgpgp.hpp"
 [[tools]]
 name = "write"
 ok = true
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/A5qbmgmqpgpgp.hpp (46 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/A5qbmgmqpgpgp.hpp (46 bytes)"
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/A5qbmgmqpgpgp.hpp"
@@ -351,7 +351,7 @@ content = "#ifndef A5QBMG…67 chars truncated…&);\n\n#endif\n"
 [[tools]]
 name = "write"
 ok = true
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/A5qbmgmqpgpgp.hpp (61 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/A5qbmgmqpgpgp.hpp (61 bytes)"
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/A5qbmgmqpgpgp.hpp"
@@ -359,7 +359,7 @@ content = "#ifndef A5QBMG…409 chars truncated…omplex<double>&);\n\n#endif\n"
 [[tools]]
 name = "write"
 ok = true
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/A5qbmgpqpgpgm.hpp (61 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/A5qbmgpqpgpgm.hpp (61 bytes)"
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/A5qbmgpqpgpgm.hpp"
@@ -367,7 +367,7 @@ content = "#ifndef A5QBMG…409 chars truncated…omplex<double>&);\n\n#endif\n"
 [[tools]]
 name = "write"
 ok = true
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/A5qbmqpgpgpgm.hpp (61 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/A5qbmqpgpgpgm.hpp (61 bytes)"
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/A5qbmqpgpgpgm.hpp"
@@ -375,7 +375,7 @@ content = "#ifndef A5QBMQ…409 chars truncated…omplex<double>&);\n\n#endif\n"
 [[tools]]
 name = "write"
 ok = true
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/A5qbmgmqpgpgp_fi.F90 (793 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/A5qbmgmqpgpgp_fi.F90 (793 bytes)"
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/A5qbmgmqpgpgp_fi.F90"
@@ -383,7 +383,7 @@ content = "subroutine A5qbmgmqpgpgp(j1,j2,j3,j4,j5,za,zb,miA5tree,AL,ASUSY,Af,As
 [[tools]]
 name = "write"
 ok = true
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/A5qbmgpqpgpgm_fi.F90 (793 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/A5qbmgpqpgpgm_fi.F90 (793 bytes)"
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/A5qbmgpqpgpgm_fi.F90"
@@ -391,7 +391,7 @@ content = "subroutine A5qbmgpqpgpgm(j1,j2,j3,j4,j5,za,zb,miA5tree,AL,ASUSY,Af,As
 [[tools]]
 name = "write"
 ok = true
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/A5qbmqpgpgpgm_fi.F90 (793 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/A5qbmqpgpgpgm_fi.F90 (793 bytes)"
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/A5qbmqpgpgpgm_fi.F90"
@@ -407,7 +407,7 @@ timeout = 30
 [[tools]]
 name = "edit"
 ok = true
-output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/agent_log.md\",\n  \"applied\": 2,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 208,\n      \"new_len\": 0,\n      \"before_snippet\": \"…— TRANSLATED (build passed; coverage process `g g g g g` reported NOT COVERED)\\n\\n## Group 2 — ThreeJets quark/gluon primitive amplitudes\\n\\n- [ ] software/mcfm/src/ThreeJets/A5qbmgmqpgpgp.f\\n- [ ] software/mcfm/src/Th"
+output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/user/JSS-2026-Example/dev/transformations/mcfm-translate/agent_log.md\",\n  \"applied\": 2,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 208,\n      \"new_len\": 0,\n      \"before_snippet\": \"…— TRANSLATED (build passed; coverage process `g g g g g` reported NOT COVERED)\\n\\n## Group 2 — ThreeJets quark/gluon primitive amplitudes\\n\\n- [ ] software/mcfm/src/ThreeJets/A5qbmgmqpgpgp.f\\n- [ ] software/mcfm/src/Th"
 
 [tools.args]
 path = "dev/transformations/mcfm-translate/agent_log.md"
@@ -430,7 +430,7 @@ timeout = 30
 [[tools]]
 name = "bash"
 ok = true
-output_preview = "exit_code: 0\nSTDOUT:\n# workflow status\nassets: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tmp/assets\nroadmap metrics: 443 untranslated file rows, 228 ready leaves\ncleanup index: 569 families, move 74, shim-delete 12, merge 33\n\n- mcfm-translate: groups: 1 total, 0 open, 1 completed, 1 pending approval\n- mcfm-cleanup: groups: 7 total, 0 open, 7 completed, 7 pending approval\n- pepper-kokkos-port: no agent_log.md yet\n\nSTDERR:\n"
+output_preview = "exit_code: 0\nSTDOUT:\n# workflow status\nassets: /home/user/JSS-2026-Example/dev/tmp/assets\nroadmap metrics: 443 untranslated file rows, 228 ready leaves\ncleanup index: 569 families, move 74, shim-delete 12, merge 33\n\n- mcfm-translate: groups: 1 total, 0 open, 1 completed, 1 pending approval\n- mcfm-cleanup: groups: 7 total, 0 open, 7 completed, 7 pending approval\n- pepper-kokkos-port: no agent_log.md yet\n\nSTDERR:\n"
 
 [tools.args]
 command = "python3 dev/workflow.py status"
@@ -524,7 +524,7 @@ timeout = 30
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/A5qbmgmqpgpgp.cpp\n# lines: 1-25\n0001: // Amplitudes for 0 -> qb- g- q+ g+ g+ from:\n0002: // 'One-Loop Corrections to Two-Quark Three-Gluon Amplitudes'\n0003: //  Zvi Bern, Lance Dixon, David A. Kosower\n0004: // Published in: Nucl.Phys.B 437 (1995) 259-304,\n0005: // e-Print: hep-ph/9409393 [hep-ph]\n0006: \n0007: #include <constants_mod.hpp>\n0008: #include <epinv_mod.hpp>\n0009: #include <epinv2_mod.hpp>\n0010: #i"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/A5qbmgmqpgpgp.cpp\n# lines: 1-25\n0001: // Amplitudes for 0 -> qb- g- q+ g+ g+ from:\n0002: // 'One-Loop Corrections to Two-Quark Three-Gluon Amplitudes'\n0003: //  Zvi Bern, Lance Dixon, David A. Kosower\n0004: // Published in: Nucl.Phys.B 437 (1995) 259-304,\n0005: // e-Print: hep-ph/9409393 [hep-ph]\n0006: \n0007: #include <constants_mod.hpp>\n0008: #include <epinv_mod.hpp>\n0009: #include <epinv2_mod.hpp>\n0010: #i"
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/A5qbmgmqpgpgp.cpp"
@@ -533,7 +533,7 @@ limit = 25
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/A5qbmgpqpgpgm.cpp\n# lines: 1-25\n0001: // Amplitudes for 0 -> qb- g+ q+ g+ g- from:\n0002: // 'One-Loop Corrections to Two-Quark Three-Gluon Amplitudes'\n0003: //  Zvi Bern, Lance Dixon, David A. Kosower\n0004: // Published in: Nucl.Phys.B 437 (1995) 259-304,\n0005: // e-Print: hep-ph/9409393 [hep-ph]\n0006: \n0007: #include <constants_mod.hpp>\n0008: #include <epinv_mod.hpp>\n0009: #include <epinv2_mod.hpp>\n0010: #i"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/A5qbmgpqpgpgm.cpp\n# lines: 1-25\n0001: // Amplitudes for 0 -> qb- g+ q+ g+ g- from:\n0002: // 'One-Loop Corrections to Two-Quark Three-Gluon Amplitudes'\n0003: //  Zvi Bern, Lance Dixon, David A. Kosower\n0004: // Published in: Nucl.Phys.B 437 (1995) 259-304,\n0005: // e-Print: hep-ph/9409393 [hep-ph]\n0006: \n0007: #include <constants_mod.hpp>\n0008: #include <epinv_mod.hpp>\n0009: #include <epinv2_mod.hpp>\n0010: #i"
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/A5qbmgpqpgpgm.cpp"
@@ -542,7 +542,7 @@ limit = 25
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/A5qbmqpgpgpgm.cpp\n# lines: 1-28\n0001: #include <complex>\n0002: #include <constants_mod.hpp>\n0003: #include <epinv2_mod.hpp>\n0004: #include <epinv_mod.hpp>\n0005: #include <mxpart_mod.hpp>\n0006: #include <scale_mod.hpp>\n0007: #include <sprods_com_mod.hpp>\n0008: #include <FArray.hpp>\n0009: #include <Need.hpp>\n0010: \n0011: // Amplitudes for 0 -> qb- q+ g+ g+ g- from:\n0012: // 'One-Loop Corrections to Two-Quark T"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/A5qbmqpgpgpgm.cpp\n# lines: 1-28\n0001: #include <complex>\n0002: #include <constants_mod.hpp>\n0003: #include <epinv2_mod.hpp>\n0004: #include <epinv_mod.hpp>\n0005: #include <mxpart_mod.hpp>\n0006: #include <scale_mod.hpp>\n0007: #include <sprods_com_mod.hpp>\n0008: #include <FArray.hpp>\n0009: #include <Need.hpp>\n0010: \n0011: // Amplitudes for 0 -> qb- q+ g+ g+ g- from:\n0012: // 'One-Loop Corrections to Two-Quark T"
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/A5qbmqpgpgpgm.cpp"
@@ -551,28 +551,28 @@ limit = 28
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/A5qbmgmqpgpgp_fi.f90\n# lines: 1-22\n0001: subroutine A5qbmgmqpgpgp(j1,j2,j3,j4,j5,za,zb,miA5tree,AL,ASUSY,Af,As)\n0002:   use, intrinsic :: iso_c_binding\n0003:   use mxpart_mod\n0004:   implicit none\n0005: \n0006:   integer(c_int), intent(in) :: j1, j2, j3, j4, j5\n0007:   complex(c_double_complex), intent(inout) :: za(mxpart,mxpart), zb(mxpart,mxpart)\n0008:   complex(c_double_complex), intent(inout) :: miA5tree,"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/A5qbmgmqpgpgp_fi.f90\n# lines: 1-22\n0001: subroutine A5qbmgmqpgpgp(j1,j2,j3,j4,j5,za,zb,miA5tree,AL,ASUSY,Af,As)\n0002:   use, intrinsic :: iso_c_binding\n0003:   use mxpart_mod\n0004:   implicit none\n0005: \n0006:   integer(c_int), intent(in) :: j1, j2, j3, j4, j5\n0007:   complex(c_double_complex), intent(inout) :: za(mxpart,mxpart), zb(mxpart,mxpart)\n0008:   complex(c_double_complex), intent(inout) :: miA5tree,"
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/A5qbmgmqpgpgp_fi.f90"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/A5qbmgpqpgpgm_fi.f90\n# lines: 1-22\n0001: subroutine A5qbmgpqpgpgm(j1,j2,j3,j4,j5,za,zb,miA5tree,AL,ASUSY,Af,As)\n0002:   use, intrinsic :: iso_c_binding\n0003:   use mxpart_mod\n0004:   implicit none\n0005: \n0006:   integer(c_int), intent(in) :: j1, j2, j3, j4, j5\n0007:   complex(c_double_complex), intent(inout) :: za(mxpart,mxpart), zb(mxpart,mxpart)\n0008:   complex(c_double_complex), intent(inout) :: miA5tree,"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/A5qbmgpqpgpgm_fi.f90\n# lines: 1-22\n0001: subroutine A5qbmgpqpgpgm(j1,j2,j3,j4,j5,za,zb,miA5tree,AL,ASUSY,Af,As)\n0002:   use, intrinsic :: iso_c_binding\n0003:   use mxpart_mod\n0004:   implicit none\n0005: \n0006:   integer(c_int), intent(in) :: j1, j2, j3, j4, j5\n0007:   complex(c_double_complex), intent(inout) :: za(mxpart,mxpart), zb(mxpart,mxpart)\n0008:   complex(c_double_complex), intent(inout) :: miA5tree,"
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/A5qbmgpqpgpgm_fi.f90"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/A5qbmqpgpgpgm_fi.f90\n# lines: 1-21\n0001: subroutine A5qbmqpgpgpgm(j1,j2,j3,j4,j5,za,zb,miA5tree,AL,ASUSY,Af,As)\n0002:   use, intrinsic :: iso_c_binding\n0003:   use mxpart_mod\n0004:   implicit none\n0005: \n0006:   integer(c_int), intent(in) :: j1,j2,j3,j4,j5\n0007:   complex(c_double_complex), intent(inout) :: za(mxpart,mxpart), zb(mxpart,mxpart)\n0008:   complex(c_double_complex), intent(inout) :: miA5tree, AL,"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/A5qbmqpgpgpgm_fi.f90\n# lines: 1-21\n0001: subroutine A5qbmqpgpgpgm(j1,j2,j3,j4,j5,za,zb,miA5tree,AL,ASUSY,Af,As)\n0002:   use, intrinsic :: iso_c_binding\n0003:   use mxpart_mod\n0004:   implicit none\n0005: \n0006:   integer(c_int), intent(in) :: j1,j2,j3,j4,j5\n0007:   complex(c_double_complex), intent(inout) :: za(mxpart,mxpart), zb(mxpart,mxpart)\n0008:   complex(c_double_complex), intent(inout) :: miA5tree, AL,"
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/A5qbmqpgpgpgm_fi.f90"
 [[tools]]
 name = "write"
 ok = true
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/A5qbmgmqpgpgp.hpp (269 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/A5qbmgmqpgpgp.hpp (269 bytes)"
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/A5qbmgmqpgpgp.hpp"
@@ -580,7 +580,7 @@ content = "#pragma once\n#include <complex>\n#include <FArray.hpp>\nvoid A5qbmgm
 [[tools]]
 name = "write"
 ok = true
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/A5qbmgpqpgpgm.hpp (269 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/A5qbmgpqpgpgm.hpp (269 bytes)"
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/A5qbmgpqpgpgm.hpp"
@@ -588,7 +588,7 @@ content = "#pragma once\n#include <complex>\n#include <FArray.hpp>\nvoid A5qbmgp
 [[tools]]
 name = "write"
 ok = true
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/A5qbmqpgpgpgm.hpp (269 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/A5qbmqpgpgpgm.hpp (269 bytes)"
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/A5qbmqpgpgpgm.hpp"
@@ -596,7 +596,7 @@ content = "#pragma once\n#include <complex>\n#include <FArray.hpp>\nvoid A5qbmqp
 [[tools]]
 name = "edit"
 ok = true
-output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/CMakeLists.txt\",\n  \"applied\": 1,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 96,\n      \"new_len\": 165,\n      \"before_snippet\": \"…fi.F90\\nA51mmppp5g.cpp\\nA51mpmpp5g_fi.F90\\nA51mpmpp5g.cpp\\nA5gfill.f\\nqqb_thrjet_v.f\\nA5qbmgmqpgpgp.f\\nA5qbmgpqpgmgp.f\\nA5qbmgpqpgpgm.f\\nA5qbmqpgmgpgp.f\\nA5qbmqpgpgmgp.f\\nA5qbmqpgpgpgm.f\\nhelfill.f90\\nhelfill.cpp\\n)\\n\",\n  "
+output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/CMakeLists.txt\",\n  \"applied\": 1,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 96,\n      \"new_len\": 165,\n      \"before_snippet\": \"…fi.F90\\nA51mmppp5g.cpp\\nA51mpmpp5g_fi.F90\\nA51mpmpp5g.cpp\\nA5gfill.f\\nqqb_thrjet_v.f\\nA5qbmgmqpgpgp.f\\nA5qbmgpqpgmgp.f\\nA5qbmgpqpgpgm.f\\nA5qbmqpgmgpgp.f\\nA5qbmqpgpgmgp.f\\nA5qbmqpgpgpgm.f\\nhelfill.f90\\nhelfill.cpp\\n)\\n\",\n  "
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/CMakeLists.txt"
@@ -607,7 +607,7 @@ newText = "A5qbmgmqpgpgp_fi.f90\nA5qbmgmqpgpgp.cpp\nA5qbmgpqpgmgp.f\nA5qbmgpqpgp
 [[tools]]
 name = "edit"
 ok = true
-output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/A5qbmgmqpgpgp.cpp\",\n  \"applied\": 3,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 28,\n      \"new_len\": 57,\n      \"before_snippet\": \"…lished in: Nucl.Phys.B 437 (1995) 259-304,\\n// e-Print: hep-ph/9409393 [hep-ph]\\n\\n#include <constants_mod.hpp>\\n#include <epinv_mod.hpp>\\n#include <epinv2_mod.hpp>\\n#include <mxpart_mod.hpp>\\n#i…\",\n      \"after_snippet\""
+output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/A5qbmgmqpgpgp.cpp\",\n  \"applied\": 3,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 28,\n      \"new_len\": 57,\n      \"before_snippet\": \"…lished in: Nucl.Phys.B 437 (1995) 259-304,\\n// e-Print: hep-ph/9409393 [hep-ph]\\n\\n#include <constants_mod.hpp>\\n#include <epinv_mod.hpp>\\n#include <epinv2_mod.hpp>\\n#include <mxpart_mod.hpp>\\n#i…\",\n      \"after_snippet\""
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/A5qbmgmqpgpgp.cpp"
@@ -626,7 +626,7 @@ newText = "*miA5tree, *AL, *ASUSY, *Af, *As);"
 [[tools]]
 name = "edit"
 ok = true
-output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/A5qbmgpqpgpgm.cpp\",\n  \"applied\": 1,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 28,\n      \"new_len\": 57,\n      \"before_snippet\": \"…lished in: Nucl.Phys.B 437 (1995) 259-304,\\n// e-Print: hep-ph/9409393 [hep-ph]\\n\\n#include <constants_mod.hpp>\\n#include <epinv_mod.hpp>\\n#include <epinv2_mod.hpp>\\n#include <mxpart_mod.hpp>\\n#i…\",\n      \"after_snippet\""
+output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/A5qbmgpqpgpgm.cpp\",\n  \"applied\": 1,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 28,\n      \"new_len\": 57,\n      \"before_snippet\": \"…lished in: Nucl.Phys.B 437 (1995) 259-304,\\n// e-Print: hep-ph/9409393 [hep-ph]\\n\\n#include <constants_mod.hpp>\\n#include <epinv_mod.hpp>\\n#include <epinv2_mod.hpp>\\n#include <mxpart_mod.hpp>\\n#i…\",\n      \"after_snippet\""
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/A5qbmgpqpgpgm.cpp"
@@ -656,7 +656,7 @@ newText = "za, zb, *miA5tree, *AL, *ASUSY, *Af, *As);"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/A5qbmqpgpgpgm.cpp\n# lines: 95-103\n0095: \n0096: extern \"C\" {\n0097:   void A5qbmqpgpgpgm_wrapper(int j1, int j2, int j3, int j4, int j5, std::complex<double>* fza, std::complex<double>* fzb, std::complex<double>& miA5tree, std::complex<double>& AL, std::complex<double>& ASUSY, std::complex<double>& Af, std::complex<double>& As) {\n0098: \n0099:     FArray2D<std::complex<double>> za(fza, mxpart, mxpart);\n0100:   "
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/A5qbmqpgpgpgm.cpp\n# lines: 95-103\n0095: \n0096: extern \"C\" {\n0097:   void A5qbmqpgpgpgm_wrapper(int j1, int j2, int j3, int j4, int j5, std::complex<double>* fza, std::complex<double>* fzb, std::complex<double>& miA5tree, std::complex<double>& AL, std::complex<double>& ASUSY, std::complex<double>& Af, std::complex<double>& As) {\n0098: \n0099:     FArray2D<std::complex<double>> za(fza, mxpart, mxpart);\n0100:   "
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/A5qbmqpgpgpgm.cpp"
@@ -665,7 +665,7 @@ limit = 25
 [[tools]]
 name = "edit"
 ok = true
-output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/ThreeJets/A5qbmqpgpgpgm.cpp\",\n  \"applied\": 3,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 47,\n      \"new_len\": 76,\n      \"before_snippet\": \"#include <complex>\\n#include <constants_mod.hpp>\\n#include <epinv2_mod.hpp>\\n#include <epinv_mod.hpp>\\n#include <mxpart_mod.hpp>\\n#i…\",\n      \"after_snippet\": \"#include \\\"A5qbmqpgpgpgm.hpp\\\"\\n#include <complex>\\n#include "
+output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/user/JSS-2026-Example/software/mcfm/src/ThreeJets/A5qbmqpgpgpgm.cpp\",\n  \"applied\": 3,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 47,\n      \"new_len\": 76,\n      \"before_snippet\": \"#include <complex>\\n#include <constants_mod.hpp>\\n#include <epinv2_mod.hpp>\\n#include <epinv_mod.hpp>\\n#include <mxpart_mod.hpp>\\n#i…\",\n      \"after_snippet\": \"#include \\\"A5qbmqpgpgpgm.hpp\\\"\\n#include <complex>\\n#include "
 
 [tools.args]
 path = "software/mcfm/src/ThreeJets/A5qbmqpgpgpgm.cpp"

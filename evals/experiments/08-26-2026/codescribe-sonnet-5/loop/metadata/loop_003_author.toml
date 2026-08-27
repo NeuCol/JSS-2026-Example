@@ -2,8 +2,8 @@ run_id = "20260826-151920-37810c"
 loop_index = 3
 phase = "author"
 model = "anthropic-claude-sonnet-5"
-task_file = "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/loop.toml"
-workdir = "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example"
+task_file = "/home/user/JSS-2026-Example/dev/transformations/mcfm-translate/loop.toml"
+workdir = "/home/user/JSS-2026-Example"
 stop_reason = "max_iterations"
 final_text_present = false
 iterations = 30
@@ -13,21 +13,21 @@ created_at = "2026-08-26T20:42:00.044238+00:00"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/current_plan.md\n# lines: 1-182\n0001: # Fortran → C++ plan\n0002: \n0003: This file says how to run step 1. The rewrite rules and correctness bar are in\n0004: `desired_spec.md`.\n0005: \n0006: > This Plan is the policy: it selects and orders the work over the ready set (see *When to\n0007: > stop*). The correctness contract — objective `f`, invariants `I`, oracle `V`, and status set\n0008: > `Σ` — lives in `"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/current_plan.md\n# lines: 1-182\n0001: # Fortran → C++ plan\n0002: \n0003: This file says how to run step 1. The rewrite rules and correctness bar are in\n0004: `desired_spec.md`.\n0005: \n0006: > This Plan is the policy: it selects and orders the work over the ready set (see *When to\n0007: > stop*). The correctness contract — objective `f`, invariants `I`, oracle `V`, and status set\n0008: > `Σ` — lives in `"
 
 [tools.args]
 path = "dev/transformations/mcfm-translate/current_plan.md"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/desired_spec.md\n# lines: 1-144\n0001: # Fortran → C++: target output for one MCFM file\n0002: \n0003: This file defines the rewrite target and correctness bar for step 1. The workflow lives in\n0004: `current_plan.md`.\n0005: \n0006: Paths are written as `software/mcfm/src/...`.\n0007: \n0008: ---\n0009: \n0010: ## Contract\n0011: \n0012: This step advances by *settling* source files one at a time: each file is r"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/desired_spec.md\n# lines: 1-144\n0001: # Fortran → C++: target output for one MCFM file\n0002: \n0003: This file defines the rewrite target and correctness bar for step 1. The workflow lives in\n0004: `current_plan.md`.\n0005: \n0006: Paths are written as `software/mcfm/src/...`.\n0007: \n0008: ---\n0009: \n0010: ## Contract\n0011: \n0012: This step advances by *settling* source files one at a time: each file is r"
 
 [tools.args]
 path = "dev/transformations/mcfm-translate/desired_spec.md"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/current_plan.md\n# lines: 164-182\n0164: ## When to stop\n0165: \n0166: The *ready set* is the set of ready, not-yet-settled files. Each settled file leaves the\n0167: ready set and the readiness graph is acyclic, so the pass terminates. Stop only when one of\n0168: these is true:\n0169: \n0170: - a completed group needs human approval before the next group can start\n0171: - the ready set is empty (no ready f"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/current_plan.md\n# lines: 164-182\n0164: ## When to stop\n0165: \n0166: The *ready set* is the set of ready, not-yet-settled files. Each settled file leaves the\n0167: ready set and the readiness graph is acyclic, so the pass terminates. Stop only when one of\n0168: these is true:\n0169: \n0170: - a completed group needs human approval before the next group can start\n0171: - the ready set is empty (no ready f"
 
 [tools.args]
 path = "dev/transformations/mcfm-translate/current_plan.md"
@@ -84,21 +84,21 @@ command = "find dev/tmp -iname \"*scribe*\""
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/M1bit1.f\n# lines: 1-38\n0001: !\n0002: !  SPDX-License-Identifier: GPL-3.0-or-later\n0003: !  Copyright (C) 2019-2022, respective authors of MCFM.\n0004: !\n0005:       function M1bit1(j1,j2,j3,j4,j5,j6,za,zb)\n0006: c     Z. Bern, L. Dixon, D.A. Kosower, e-Print:hep-ph/9708239\n0007: c     Eq 7.1\n0008:       use types\n0009:       use mxpart_mod\n0010:       use sprods_com_mod\n0011:       implicit none\n0012:       complex"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/BDK/M1bit1.f\n# lines: 1-38\n0001: !\n0002: !  SPDX-License-Identifier: GPL-3.0-or-later\n0003: !  Copyright (C) 2019-2022, respective authors of MCFM.\n0004: !\n0005:       function M1bit1(j1,j2,j3,j4,j5,j6,za,zb)\n0006: c     Z. Bern, L. Dixon, D.A. Kosower, e-Print:hep-ph/9708239\n0007: c     Eq 7.1\n0008:       use types\n0009:       use mxpart_mod\n0010:       use sprods_com_mod\n0011:       implicit none\n0012:       complex"
 
 [tools.args]
 path = "software/mcfm/src/BDK/M1bit1.f"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tmp/drafts/BDK/M1bit1.scribe\n# lines: 1-40\n0001: scribe-prompt: Add an extern \"C\" <name>_wrapper; see the seed examples for FArray/scalar handling.\n0002: scribe-prompt: A variable used as a function is an external or statement function.\n0003: scribe-prompt: t is an external function (defined in W1jet/gpt-4o-conversions/t_fi.f90)\n0004: \n0005: #include <cmath>\n0006: #include <complex>\n0007: #include <mxpart_mod.hpp>\n0008: #include <s"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/tmp/drafts/BDK/M1bit1.scribe\n# lines: 1-40\n0001: scribe-prompt: Add an extern \"C\" <name>_wrapper; see the seed examples for FArray/scalar handling.\n0002: scribe-prompt: A variable used as a function is an external or statement function.\n0003: scribe-prompt: t is an external function (defined in W1jet/gpt-4o-conversions/t_fi.f90)\n0004: \n0005: #include <cmath>\n0006: #include <complex>\n0007: #include <mxpart_mod.hpp>\n0008: #include <s"
 
 [tools.args]
 path = "dev/tmp/drafts/BDK/M1bit1.scribe"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/CMakeLists.txt\n# lines: 1-44\n0001: target_sources(objlib PRIVATE\n0002: FFPPsc.f\n0003: M2abit2.f\n0004: FFMPsc.f\n0005: FFPMcc.f\n0006: FMPFsc.f\n0007: CMakeLists.txt\n0008: FFPMscT.f\n0009: M3bit4.f\n0010: FFPMsc.f\n0011: Master3a.f\n0012: FPFMccTtilde.f\n0013: FFMPcc.f\n0014: FFPPcc.f\n0015: M2abit1.f\n0016: AAAREADME.txt\n0017: Master2a.f\n0018: FMPFcc.f\n0019: M3bit3.f\n0020: FFPMscTtilde.f\n0021: M3abit1.f\n0022: FPFMsc.f\n0023: "
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/BDK/CMakeLists.txt\n# lines: 1-44\n0001: target_sources(objlib PRIVATE\n0002: FFPPsc.f\n0003: M2abit2.f\n0004: FFMPsc.f\n0005: FFPMcc.f\n0006: FMPFsc.f\n0007: CMakeLists.txt\n0008: FFPMscT.f\n0009: M3bit4.f\n0010: FFPMsc.f\n0011: Master3a.f\n0012: FPFMccTtilde.f\n0013: FFMPcc.f\n0014: FFPPcc.f\n0015: M2abit1.f\n0016: AAAREADME.txt\n0017: Master2a.f\n0018: FMPFcc.f\n0019: M3bit3.f\n0020: FFPMscTtilde.f\n0021: M3abit1.f\n0022: FPFMsc.f\n0023: "
 
 [tools.args]
 path = "software/mcfm/src/BDK/CMakeLists.txt"
@@ -133,7 +133,7 @@ command = "find software/mcfm/src -iname \"mxpart_mod.hpp\" -o -iname \"sprods_c
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/W1jet/t.cpp\n# lines: 1-19\n0001: #include <W1jet.hpp>\n0002: #include <cmath>\n0003: #include <complex>\n0004: #include <mxpart_mod.hpp>\n0005: #include <sprods_com_mod.hpp>\n0006: \n0007: using namespace mxpart_mod;\n0008: using namespace sprods_com_mod;\n0009: \n0010: double t(int j1, int j2, int j3) {\n0011:   double t_value = s(j1, j2) + s(j2, j3) + s(j1, j3);\n0012:   return t_value;\n0013: }\n0014: \n0015: extern \"C\" {\n0016:  "
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/W1jet/t.cpp\n# lines: 1-19\n0001: #include <W1jet.hpp>\n0002: #include <cmath>\n0003: #include <complex>\n0004: #include <mxpart_mod.hpp>\n0005: #include <sprods_com_mod.hpp>\n0006: \n0007: using namespace mxpart_mod;\n0008: using namespace sprods_com_mod;\n0009: \n0010: double t(int j1, int j2, int j3) {\n0011:   double t_value = s(j1, j2) + s(j2, j3) + s(j1, j3);\n0012:   return t_value;\n0013: }\n0014: \n0015: extern \"C\" {\n0016:  "
 
 [tools.args]
 path = "software/mcfm/src/W1jet/t.cpp"
@@ -147,7 +147,7 @@ command = "find software/mcfm/src/W1jet -maxdepth 1 -iname \"t.*\""
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/W1jet/t_fi.f90\n# lines: 1-22\n0001: \n0002: function t(j1,j2,j3) result(res)\n0003:   use, intrinsic :: iso_c_binding\n0004:   use types\n0005:   use mxpart_mod\n0006:   use sprods_com_mod\n0007: \n0008:   implicit none\n0009: \n0010:   integer(c_int), intent(in) :: j1, j2, j3\n0011:   real(c_double) :: res\n0012: \n0013:   interface\n0014:     function t_wrapper(j1,j2,j3) bind(C, name=\"t_wrapper\")\n0015:       import :: c_int, c_do"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/W1jet/t_fi.f90\n# lines: 1-22\n0001: \n0002: function t(j1,j2,j3) result(res)\n0003:   use, intrinsic :: iso_c_binding\n0004:   use types\n0005:   use mxpart_mod\n0006:   use sprods_com_mod\n0007: \n0008:   implicit none\n0009: \n0010:   integer(c_int), intent(in) :: j1, j2, j3\n0011:   real(c_double) :: res\n0012: \n0013:   interface\n0014:     function t_wrapper(j1,j2,j3) bind(C, name=\"t_wrapper\")\n0015:       import :: c_int, c_do"
 
 [tools.args]
 path = "software/mcfm/src/W1jet/t_fi.f90"
@@ -161,14 +161,14 @@ command = "find software/mcfm/src/W1jet -maxdepth 1 -iname \"A52.*\"; find softw
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/W1jet/A52.cpp\n# lines: 1-70\n0001: #include <W1jet.hpp>\n0002: #include <cmath>\n0003: #include <complex>\n0004: #include <constants_mod.hpp>\n0005: #include <epinv2_mod.hpp>\n0006: #include <epinv_mod.hpp>\n0007: #include <mxpart_mod.hpp>\n0008: #include <scale_mod.hpp>\n0009: #include <sprods_com_mod.hpp>\n0010: #include <FArray.hpp>\n0011: #include <Need.hpp>\n0012: \n0013: std::complex<double> A52(int j1, int j2, int j3, int j"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/W1jet/A52.cpp\n# lines: 1-70\n0001: #include <W1jet.hpp>\n0002: #include <cmath>\n0003: #include <complex>\n0004: #include <constants_mod.hpp>\n0005: #include <epinv2_mod.hpp>\n0006: #include <epinv_mod.hpp>\n0007: #include <mxpart_mod.hpp>\n0008: #include <scale_mod.hpp>\n0009: #include <sprods_com_mod.hpp>\n0010: #include <FArray.hpp>\n0011: #include <Need.hpp>\n0012: \n0013: std::complex<double> A52(int j1, int j2, int j3, int j"
 
 [tools.args]
 path = "software/mcfm/src/W1jet/A52.cpp"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/W1jet/W1jet.hpp\n# lines: 1-34\n0001: #ifndef W1JET_H\n0002: #define W1JET_H\n0003: \n0004: #include <FArray.hpp>\n0005: #include <complex>\n0006: \n0007: extern double t(int j1, int j2, int j3);\n0008: extern std::complex<double> A52(int j1, int j2, int j3, int j4, int j5, FArray2D<std::complex<double>>& za, FArray2D<std::complex<double>>& zb);\n0009: extern std::complex<double> A51(int j1, int j2, int j3, int j4, int j5, FArr"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/W1jet/W1jet.hpp\n# lines: 1-34\n0001: #ifndef W1JET_H\n0002: #define W1JET_H\n0003: \n0004: #include <FArray.hpp>\n0005: #include <complex>\n0006: \n0007: extern double t(int j1, int j2, int j3);\n0008: extern std::complex<double> A52(int j1, int j2, int j3, int j4, int j5, FArray2D<std::complex<double>>& za, FArray2D<std::complex<double>>& zb);\n0009: extern std::complex<double> A51(int j1, int j2, int j3, int j4, int j5, FArr"
 
 [tools.args]
 path = "software/mcfm/src/W1jet/W1jet.hpp"
@@ -182,7 +182,7 @@ command = "find software/mcfm/src/W1jet -maxdepth 1 -type f"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/W1jet/CMakeLists.txt\n# lines: 1-12\n0001: target_sources(objlib PRIVATE\n0002: A51.cpp\n0003: A52.cpp\n0004: A53.cpp\n0005: A5NLO.cpp\n0006: qqb_w1jet_v.cpp\n0007: t.cpp\n0008: t_fi.f90\n0009: virt5.cpp\n0010: )\n0011: \n0012: \n"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/W1jet/CMakeLists.txt\n# lines: 1-12\n0001: target_sources(objlib PRIVATE\n0002: A51.cpp\n0003: A52.cpp\n0004: A53.cpp\n0005: A5NLO.cpp\n0006: qqb_w1jet_v.cpp\n0007: t.cpp\n0008: t_fi.f90\n0009: virt5.cpp\n0010: )\n0011: \n0012: \n"
 
 [tools.args]
 path = "software/mcfm/src/W1jet/CMakeLists.txt"
@@ -196,14 +196,14 @@ command = "find software/mcfm/src -maxdepth 2 -iname \"*.hpp\" -not -path \"*Mod
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Mods/sprods_com_mod.hpp\n# lines: 1-10\n0001: #ifndef SPRODS_COM_MOD\n0002: #define SPRODS_COM_MOD\n0003: \n0004: #include <FArray.hpp>\n0005: \n0006: namespace sprods_com_mod {\n0007:   extern FArray2D<double> s;\n0008: }\n0009: \n0010: #endif\n"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/sprods_com_mod.hpp\n# lines: 1-10\n0001: #ifndef SPRODS_COM_MOD\n0002: #define SPRODS_COM_MOD\n0003: \n0004: #include <FArray.hpp>\n0005: \n0006: namespace sprods_com_mod {\n0007:   extern FArray2D<double> s;\n0008: }\n0009: \n0010: #endif\n"
 
 [tools.args]
 path = "software/mcfm/src/Mods/sprods_com_mod.hpp"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Mods/mxpart_mod.hpp\n# lines: 1-75\n0001: /* LLM INSTRUCTIONS START\n0002:  * You are a code conversion tool for a scientific computing application.\n0003:  * The application is organized as different source files in a directory structure. \n0004:  * I will give you a FORTRAN file which you will convert to a C++ source code file.\n0005:  * \n0006:  * The code you will receive is part of a bigger codebase so do not add additi"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/mxpart_mod.hpp\n# lines: 1-75\n0001: /* LLM INSTRUCTIONS START\n0002:  * You are a code conversion tool for a scientific computing application.\n0003:  * The application is organized as different source files in a directory structure. \n0004:  * I will give you a FORTRAN file which you will convert to a C++ source code file.\n0005:  * \n0006:  * The code you will receive is part of a bigger codebase so do not add additi"
 
 [tools.args]
 path = "software/mcfm/src/Mods/mxpart_mod.hpp"
@@ -217,7 +217,7 @@ command = "find software/mcfm/src -maxdepth 1 -iname \"CMakeLists.txt\""
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/CMakeLists.txt\n# lines: 1-15\n0001: add_subdirectory(BLHA)\n0002: add_subdirectory(Mods)\n0003: add_subdirectory(Need)\n0004: add_subdirectory(Procdep)\n0005: add_subdirectory(loop)\n0006: add_subdirectory(W)\n0007: add_subdirectory(Z)\n0008: add_subdirectory(ggH)\n0009: add_subdirectory(W1jet)\n0010: add_subdirectory(W2jet)\n0011: add_subdirectory(Z1jet)\n0012: add_subdirectory(Z2jet)\n0013: add_subdirectory(BDK)\n0014: add_subdir"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/CMakeLists.txt\n# lines: 1-15\n0001: add_subdirectory(BLHA)\n0002: add_subdirectory(Mods)\n0003: add_subdirectory(Need)\n0004: add_subdirectory(Procdep)\n0005: add_subdirectory(loop)\n0006: add_subdirectory(W)\n0007: add_subdirectory(Z)\n0008: add_subdirectory(ggH)\n0009: add_subdirectory(W1jet)\n0010: add_subdirectory(W2jet)\n0011: add_subdirectory(Z1jet)\n0012: add_subdirectory(Z2jet)\n0013: add_subdirectory(BDK)\n0014: add_subdir"
 
 [tools.args]
 path = "software/mcfm/src/CMakeLists.txt"
@@ -245,42 +245,42 @@ command = "find software/mcfm/src -iname \"*_fi.F90\" -not -path \"*gpt-4o*\""
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Inc/FArray.hpp\n# lines: 1-219\n0001: #ifndef FARRAY_H\n0002: #define FARRAY_H\n0003: \n0004: #include <cstddef>\n0005: #include <initializer_list>\n0006:  \n0007: template <typename T>\n0008: class FArray1D {\n0009: \n0010:   private:\n0011:     bool ownsData;\n0012:     int start_i;\n0013: \n0014:   public:\n0015:     size_t ni;\n0016:     T* data;\n0017: \n0018:     // Constructor to allocate memory\n0019:     FArray1D(size_t ni, int "
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/Inc/FArray.hpp\n# lines: 1-219\n0001: #ifndef FARRAY_H\n0002: #define FARRAY_H\n0003: \n0004: #include <cstddef>\n0005: #include <initializer_list>\n0006:  \n0007: template <typename T>\n0008: class FArray1D {\n0009: \n0010:   private:\n0011:     bool ownsData;\n0012:     int start_i;\n0013: \n0014:   public:\n0015:     size_t ni;\n0016:     T* data;\n0017: \n0018:     // Constructor to allocate memory\n0019:     FArray1D(size_t ni, int "
 
 [tools.args]
 path = "software/mcfm/src/Inc/FArray.hpp"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/W1jet/deprecated/A52_fi.f90\n# lines: 1-22\n0001: \n0002: function A52(j1,j2,j3,j4,j5,za,zb) result(res)\n0003:   use, intrinsic :: iso_c_binding\n0004:   use mxpart_mod\n0005: \n0006:   implicit none\n0007: \n0008:   integer, intent(in) :: j1, j2, j3, j4, j5\n0009:   complex(c_double_complex), intent(inout), dimension(mxpart,mxpart) :: za, zb\n0010:   complex(c_double_complex) :: res\n0011: \n0012:   interface\n0013:     function "
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/W1jet/deprecated/A52_fi.f90\n# lines: 1-22\n0001: \n0002: function A52(j1,j2,j3,j4,j5,za,zb) result(res)\n0003:   use, intrinsic :: iso_c_binding\n0004:   use mxpart_mod\n0005: \n0006:   implicit none\n0007: \n0008:   integer, intent(in) :: j1, j2, j3, j4, j5\n0009:   complex(c_double_complex), intent(inout), dimension(mxpart,mxpart) :: za, zb\n0010:   complex(c_double_complex) :: res\n0011: \n0012:   interface\n0013:     function "
 
 [tools.args]
 path = "software/mcfm/src/W1jet/deprecated/A52_fi.f90"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/FPFPcc.f\n# lines: 1-116\n0001: !\n0002: !  SPDX-License-Identifier: GPL-3.0-or-later\n0003: !  Copyright (C) 2019-2022, respective authors of MCFM.\n0004: !\n0005:       function FPFPcc(j1,j2,j3,j4,j5,j6,za,zb)\n0006: c     Z. Bern, L. Dixon, D.A. Kosower, e-Print:hep-ph/9708239\n0007: c     Eq9.4\n0008:       use types\n0009:       use mxpart_mod\n0010:       use sprods_com_mod\n0011:       implicit none\n0012:       complex"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/BDK/FPFPcc.f\n# lines: 1-116\n0001: !\n0002: !  SPDX-License-Identifier: GPL-3.0-or-later\n0003: !  Copyright (C) 2019-2022, respective authors of MCFM.\n0004: !\n0005:       function FPFPcc(j1,j2,j3,j4,j5,j6,za,zb)\n0006: c     Z. Bern, L. Dixon, D.A. Kosower, e-Print:hep-ph/9708239\n0007: c     Eq9.4\n0008:       use types\n0009:       use mxpart_mod\n0010:       use sprods_com_mod\n0011:       implicit none\n0012:       complex"
 
 [tools.args]
 path = "software/mcfm/src/BDK/FPFPcc.f"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tmp/drafts/BDK/FPFPcc.scribe\n# lines: 1-104\n0001: scribe-prompt: Add an extern \"C\" <name>_wrapper; see the seed examples for FArray/scalar handling.\n0002: scribe-prompt: A variable used as a function is an external or statement function.\n0003: scribe-prompt: l0 is an external function (defined in Need/lfunctions.f90)\n0004: scribe-prompt: lsm1 is an external function (defined in Need/lfunctions.f90)\n0005: scribe-prompt: lsm1_2me is "
+output_preview = "# path: /home/user/JSS-2026-Example/dev/tmp/drafts/BDK/FPFPcc.scribe\n# lines: 1-104\n0001: scribe-prompt: Add an extern \"C\" <name>_wrapper; see the seed examples for FArray/scalar handling.\n0002: scribe-prompt: A variable used as a function is an external or statement function.\n0003: scribe-prompt: l0 is an external function (defined in Need/lfunctions.f90)\n0004: scribe-prompt: lsm1 is an external function (defined in Need/lfunctions.f90)\n0005: scribe-prompt: lsm1_2me is "
 
 [tools.args]
 path = "dev/tmp/drafts/BDK/FPFPcc.scribe"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/fvs.f\n# lines: 1-178\n0001: !\n0002: !  SPDX-License-Identifier: GPL-3.0-or-later\n0003: !  Copyright (C) 2019-2022, respective authors of MCFM.\n0004: !\n0005:       function Fvs(st,j1,j2,j3,j4,j5,j6,za,zb)\n0006:       use types\n0007:       use mxpart_mod\n0008:       use sprods_com_mod\n0009:       use heldefs_mod\n0010:       implicit none\n0011:       complex(dp):: Fvs\n0012: c--- This function returns the result of BDK"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/BDK/fvs.f\n# lines: 1-178\n0001: !\n0002: !  SPDX-License-Identifier: GPL-3.0-or-later\n0003: !  Copyright (C) 2019-2022, respective authors of MCFM.\n0004: !\n0005:       function Fvs(st,j1,j2,j3,j4,j5,j6,za,zb)\n0006:       use types\n0007:       use mxpart_mod\n0008:       use sprods_com_mod\n0009:       use heldefs_mod\n0010:       implicit none\n0011:       complex(dp):: Fvs\n0012: c--- This function returns the result of BDK"
 
 [tools.args]
 path = "software/mcfm/src/BDK/fvs.f"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tmp/drafts/BDK/fvs.scribe\n# lines: 1-191\n0001: scribe-prompt: Add an extern \"C\" <name>_wrapper; see the seed examples for FArray/scalar handling.\n0002: scribe-prompt: A variable used as a function is an external or statement function.\n0003: scribe-prompt: i3m is an external function (defined in Need/i3m.f90)\n0004: scribe-prompt: l0 is an external function (defined in Need/lfunctions.f90)\n0005: scribe-prompt: l1 is an external funct"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/tmp/drafts/BDK/fvs.scribe\n# lines: 1-191\n0001: scribe-prompt: Add an extern \"C\" <name>_wrapper; see the seed examples for FArray/scalar handling.\n0002: scribe-prompt: A variable used as a function is an external or statement function.\n0003: scribe-prompt: i3m is an external function (defined in Need/i3m.f90)\n0004: scribe-prompt: l0 is an external function (defined in Need/lfunctions.f90)\n0005: scribe-prompt: l1 is an external funct"
 
 [tools.args]
 path = "dev/tmp/drafts/BDK/fvs.scribe"
@@ -301,7 +301,7 @@ command = "find software/mcfm/src/Need -maxdepth 1 -iname \"lnrat*\" -o -iname \
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Need/Need.hpp\n# lines: 1-46\n0001: #ifndef NEED_H\n0002: #define NEED_H\n0003: \n0004: #include <FArray.hpp>\n0005: #include <complex>\n0006: \n0007: extern void coupling();\n0008: \n0009: extern void couplz(double xw);\n0010: extern void couplz_cms(std::complex<double> zxw_in);\n0011: \n0012: extern void spinoru(int N, const FArray2D<double>& p, FArray2D<std::complex<double>>& za, FArray2D<std::complex<double>>& zb);\n0013: \n0014"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/Need/Need.hpp\n# lines: 1-46\n0001: #ifndef NEED_H\n0002: #define NEED_H\n0003: \n0004: #include <FArray.hpp>\n0005: #include <complex>\n0006: \n0007: extern void coupling();\n0008: \n0009: extern void couplz(double xw);\n0010: extern void couplz_cms(std::complex<double> zxw_in);\n0011: \n0012: extern void spinoru(int N, const FArray2D<double>& p, FArray2D<std::complex<double>>& za, FArray2D<std::complex<double>>& zb);\n0013: \n0014"
 
 [tools.args]
 path = "software/mcfm/src/Need/Need.hpp"
@@ -315,42 +315,42 @@ command = "find software/mcfm/src/Mods -iname \"heldefs_mod*\""
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/M3bit4.f\n# lines: 1-27\n0001: !\n0002: !  SPDX-License-Identifier: GPL-3.0-or-later\n0003: !  Copyright (C) 2019-2022, respective authors of MCFM.\n0004: !\n0005:       function M3bit4(j1,j2,j3,j4,j5,j6,za,zb)\n0006: c     Z. Bern, L. Dixon, D.A. Kosower, e-Print:hep-ph/9708239\n0007: c     Eq.7.5\n0008:       use types\n0009:       use mxpart_mod\n0010:       implicit none\n0011:       complex(dp):: za(mxpart,mxpart),zb(mxp"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/BDK/M3bit4.f\n# lines: 1-27\n0001: !\n0002: !  SPDX-License-Identifier: GPL-3.0-or-later\n0003: !  Copyright (C) 2019-2022, respective authors of MCFM.\n0004: !\n0005:       function M3bit4(j1,j2,j3,j4,j5,j6,za,zb)\n0006: c     Z. Bern, L. Dixon, D.A. Kosower, e-Print:hep-ph/9708239\n0007: c     Eq.7.5\n0008:       use types\n0009:       use mxpart_mod\n0010:       implicit none\n0011:       complex(dp):: za(mxpart,mxpart),zb(mxp"
 
 [tools.args]
 path = "software/mcfm/src/BDK/M3bit4.f"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/FPFMccTtilde.f\n# lines: 1-47\n0001: !\n0002: !  SPDX-License-Identifier: GPL-3.0-or-later\n0003: !  Copyright (C) 2019-2022, respective authors of MCFM.\n0004: !\n0005:       function FPFMccTtilde(j1,j2,j3,j4,j5,j6,za,zb)\n0006: c     Z. Bern, L. Dixon, D.A. Kosower, e-Print:hep-ph/9708239\n0007: c     Eq 9.12\n0008:       use types\n0009:       use mxpart_mod\n0010:       use sprods_com_mod\n0011:       implicit none\n0012: "
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/BDK/FPFMccTtilde.f\n# lines: 1-47\n0001: !\n0002: !  SPDX-License-Identifier: GPL-3.0-or-later\n0003: !  Copyright (C) 2019-2022, respective authors of MCFM.\n0004: !\n0005:       function FPFMccTtilde(j1,j2,j3,j4,j5,j6,za,zb)\n0006: c     Z. Bern, L. Dixon, D.A. Kosower, e-Print:hep-ph/9708239\n0007: c     Eq 9.12\n0008:       use types\n0009:       use mxpart_mod\n0010:       use sprods_com_mod\n0011:       implicit none\n0012: "
 
 [tools.args]
 path = "software/mcfm/src/BDK/FPFMccTtilde.f"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Mods/heldefs_mod.hpp\n# lines: 1-19\n0001: #ifndef HELDEFS_MOD\n0002: #define HELDEFS_MOD\n0003: \n0004: namespace heldefs_mod {\n0005:   const int hqpgmgmqbm = 1;\n0006:   const int hqpgmgpqbm = 2;\n0007:   const int hqpgpgmqbm = 3;\n0008:   const int hqpgpgpqbm = 4;\n0009: \n0010:   const int hqpqbmgpgp = 5;\n0011:   const int hqpqbmgpgm = 6;\n0012:   const int hqpqbmgmgp = 7;\n0013:   const int hqpqbmgmgm = 8;\n0014: \n0015:   con"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/heldefs_mod.hpp\n# lines: 1-19\n0001: #ifndef HELDEFS_MOD\n0002: #define HELDEFS_MOD\n0003: \n0004: namespace heldefs_mod {\n0005:   const int hqpgmgmqbm = 1;\n0006:   const int hqpgmgpqbm = 2;\n0007:   const int hqpgpgmqbm = 3;\n0008:   const int hqpgpgpqbm = 4;\n0009: \n0010:   const int hqpqbmgpgp = 5;\n0011:   const int hqpqbmgpgm = 6;\n0012:   const int hqpqbmgmgp = 7;\n0013:   const int hqpqbmgmgm = 8;\n0014: \n0015:   con"
 
 [tools.args]
 path = "software/mcfm/src/Mods/heldefs_mod.hpp"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tmp/drafts/BDK/FPFMccTtilde.scribe\n# lines: 1-49\n0001: scribe-prompt: Add an extern \"C\" <name>_wrapper; see the seed examples for FArray/scalar handling.\n0002: scribe-prompt: A variable used as a function is an external or statement function.\n0003: scribe-prompt: t is an external function (defined in W1jet/gpt-4o-conversions/t_fi.f90)\n0004: \n0005: #include <cmath>\n0006: #include <complex>\n0007: #include <mxpart_mod.hpp>\n0008: #incl"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/tmp/drafts/BDK/FPFMccTtilde.scribe\n# lines: 1-49\n0001: scribe-prompt: Add an extern \"C\" <name>_wrapper; see the seed examples for FArray/scalar handling.\n0002: scribe-prompt: A variable used as a function is an external or statement function.\n0003: scribe-prompt: t is an external function (defined in W1jet/gpt-4o-conversions/t_fi.f90)\n0004: \n0005: #include <cmath>\n0006: #include <complex>\n0007: #include <mxpart_mod.hpp>\n0008: #incl"
 
 [tools.args]
 path = "dev/tmp/drafts/BDK/FPFMccTtilde.scribe"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tmp/drafts/BDK/M3bit4.scribe\n# lines: 1-27\n0001: scribe-prompt: Add an extern \"C\" <name>_wrapper; see the seed examples for FArray/scalar handling.\n0002: scribe-prompt: A variable used as a function is an external or statement function.\n0003: \n0004: #include <cmath>\n0005: #include <complex>\n0006: #include <mxpart_mod.hpp>\n0007: #include <types.hpp>\n0008: \n0009:       function M3bit4(j1,j2,j3,j4,j5,j6,za,zb)\n0010: using namespace ty"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/tmp/drafts/BDK/M3bit4.scribe\n# lines: 1-27\n0001: scribe-prompt: Add an extern \"C\" <name>_wrapper; see the seed examples for FArray/scalar handling.\n0002: scribe-prompt: A variable used as a function is an external or statement function.\n0003: \n0004: #include <cmath>\n0005: #include <complex>\n0006: #include <mxpart_mod.hpp>\n0007: #include <types.hpp>\n0008: \n0009:       function M3bit4(j1,j2,j3,j4,j5,j6,za,zb)\n0010: using namespace ty"
 
 [tools.args]
 path = "dev/tmp/drafts/BDK/M3bit4.scribe"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tmp/drafts/BDK/fvs.scribe\n# lines: 140-191\n0140: \n0141:       function Brackpma(j1,j2,j3,j4,j5,j6,za,zb)\n0142: using namespace types;\n0143: using namespace mxpart_mod;\n0144: using namespace sprods_com_mod;\n0145: \n0146:       complex<double> Brackpma\n0147: c---This is the curly braces expression in Eq.(11.6) subject to flip_3\n0148: c---ie  flip3:( 1<-->5, 2<-->6, 3<-->4, za<-->zb)\n0149: \n0150:       int j1,j2,j3,j4,j5,j6\n0151:      "
+output_preview = "# path: /home/user/JSS-2026-Example/dev/tmp/drafts/BDK/fvs.scribe\n# lines: 140-191\n0140: \n0141:       function Brackpma(j1,j2,j3,j4,j5,j6,za,zb)\n0142: using namespace types;\n0143: using namespace mxpart_mod;\n0144: using namespace sprods_com_mod;\n0145: \n0146:       complex<double> Brackpma\n0147: c---This is the curly braces expression in Eq.(11.6) subject to flip_3\n0148: c---ie  flip3:( 1<-->5, 2<-->6, 3<-->4, za<-->zb)\n0149: \n0150:       int j1,j2,j3,j4,j5,j6\n0151:      "
 
 [tools.args]
 path = "dev/tmp/drafts/BDK/fvs.scribe"
@@ -365,14 +365,14 @@ command = "find software/mcfm/src -iname \"types.hpp\""
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/AAAREADME.txt\n# lines: 1-6\n0001: An implementation of the formulae in:\n0002: \n0003: Z. Bern, L. J. Dixon and D. A. Kosower,\n0004: ``One loop amplitudes for e+ e- to four partons,''\n0005: Nucl. Phys. B 513, 3-86 (1998)\n0006: [arXiv:hep-ph/9708239 [hep-ph]].\n"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/BDK/AAAREADME.txt\n# lines: 1-6\n0001: An implementation of the formulae in:\n0002: \n0003: Z. Bern, L. J. Dixon and D. A. Kosower,\n0004: ``One loop amplitudes for e+ e- to four partons,''\n0005: Nucl. Phys. B 513, 3-86 (1998)\n0006: [arXiv:hep-ph/9708239 [hep-ph]].\n"
 
 [tools.args]
 path = "software/mcfm/src/BDK/AAAREADME.txt"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/CMakeLists.txt\n# lines: 85-144\n0085: if(${use_internal_lhapdf})\n0086:     set(use_external_lhapdf OFF BOOL)\n0087: else()\n0088:     set(use_external_lhapdf ON BOOL)\n0089: endif()\n0090: \n0091: add_compile_definitions(HAVE_LHAPDF=1)\n0092: \n0093: ### main MCFM code below\n0094: \n0095: add_library(objlib OBJECT)\n0096: set_property(TARGET objlib PROPERTY POSITION_INDEPENDENT_CODE ON)\n0097: target_include_directories(objlib PRIVA"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/CMakeLists.txt\n# lines: 85-144\n0085: if(${use_internal_lhapdf})\n0086:     set(use_external_lhapdf OFF BOOL)\n0087: else()\n0088:     set(use_external_lhapdf ON BOOL)\n0089: endif()\n0090: \n0091: add_compile_definitions(HAVE_LHAPDF=1)\n0092: \n0093: ### main MCFM code below\n0094: \n0095: add_library(objlib OBJECT)\n0096: set_property(TARGET objlib PROPERTY POSITION_INDEPENDENT_CODE ON)\n0097: target_include_directories(objlib PRIVA"
 
 [tools.args]
 path = "software/mcfm/CMakeLists.txt"
@@ -381,7 +381,7 @@ limit = 60
 [[tools]]
 name = "edit"
 ok = true
-output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/CMakeLists.txt\",\n  \"applied\": 3,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 140,\n      \"new_len\": 148,\n      \"before_snippet\": \"…bjlib OBJECT)\\nset_property(TARGET objlib PROPERTY POSITION_INDEPENDENT_CODE ON)\\ntarget_include_directories(objlib PRIVATE src/Inc src/Mods src/Need src/loop src/Z src/W src/Z1jet src/W1jet lib/SpecialFunctions src/ggH .)\\n\\n## MCFM a"
+output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/user/JSS-2026-Example/software/mcfm/CMakeLists.txt\",\n  \"applied\": 3,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 140,\n      \"new_len\": 148,\n      \"before_snippet\": \"…bjlib OBJECT)\\nset_property(TARGET objlib PROPERTY POSITION_INDEPENDENT_CODE ON)\\ntarget_include_directories(objlib PRIVATE src/Inc src/Mods src/Need src/loop src/Z src/W src/Z1jet src/W1jet lib/SpecialFunctions src/ggH .)\\n\\n## MCFM a"
 
 [tools.args]
 path = "software/mcfm/CMakeLists.txt"
@@ -400,7 +400,7 @@ newText = "    target_include_directories(test PRIVATE src/Inc src/Mods src/Need
 [[tools]]
 name = "write"
 ok = true
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/BDK.hpp (1667 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/software/mcfm/src/BDK/BDK.hpp (1667 bytes)"
 
 [tools.args]
 path = "software/mcfm/src/BDK/BDK.hpp"
@@ -408,7 +408,7 @@ content = "#ifndef BDK_H\n#define BDK_H\n\n#include <FArray.hpp>\n#include <comp
 [[tools]]
 name = "write"
 ok = true
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/M1bit1.cpp (2010 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/software/mcfm/src/BDK/M1bit1.cpp (2010 bytes)"
 
 [tools.args]
 path = "software/mcfm/src/BDK/M1bit1.cpp"
@@ -416,7 +416,7 @@ content = "#include <BDK.hpp>\n#include <cmath>\n#include <complex>\n#include <m
 [[tools]]
 name = "write"
 ok = true
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/M1bit1_fi.f90 (723 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/software/mcfm/src/BDK/M1bit1_fi.f90 (723 bytes)"
 
 [tools.args]
 path = "software/mcfm/src/BDK/M1bit1_fi.f90"
@@ -424,7 +424,7 @@ content = "\nfunction M1bit1(j1,j2,j3,j4,j5,j6,za,zb) result(res)\n  use, intrin
 [[tools]]
 name = "write"
 ok = true
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/M3bit4.cpp (1132 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/software/mcfm/src/BDK/M3bit4.cpp (1132 bytes)"
 
 [tools.args]
 path = "software/mcfm/src/BDK/M3bit4.cpp"
@@ -432,7 +432,7 @@ content = "#include <BDK.hpp>\n#include <cmath>\n#include <complex>\n#include <m
 [[tools]]
 name = "write"
 ok = true
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/M3bit4_fi.f90 (723 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/software/mcfm/src/BDK/M3bit4_fi.f90 (723 bytes)"
 
 [tools.args]
 path = "software/mcfm/src/BDK/M3bit4_fi.f90"
@@ -440,7 +440,7 @@ content = "\nfunction M3bit4(j1,j2,j3,j4,j5,j6,za,zb) result(res)\n  use, intrin
 [[tools]]
 name = "write"
 ok = true
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/FPFMccTtilde.cpp (2308 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/software/mcfm/src/BDK/FPFMccTtilde.cpp (2308 bytes)"
 
 [tools.args]
 path = "software/mcfm/src/BDK/FPFMccTtilde.cpp"
@@ -448,7 +448,7 @@ content = "#include <BDK.hpp>\n#include <cmath>\n#include <complex>\n#include <m
 [[tools]]
 name = "write"
 ok = true
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/FPFMccTtilde_fi.f90 (765 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/software/mcfm/src/BDK/FPFMccTtilde_fi.f90 (765 bytes)"
 
 [tools.args]
 path = "software/mcfm/src/BDK/FPFMccTtilde_fi.f90"
@@ -456,7 +456,7 @@ content = "\nfunction FPFMccTtilde(j1,j2,j3,j4,j5,j6,za,zb) result(res)\n  use, 
 [[tools]]
 name = "write"
 ok = true
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/FPFPcc.cpp (3211 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/software/mcfm/src/BDK/FPFPcc.cpp (3211 bytes)"
 
 [tools.args]
 path = "software/mcfm/src/BDK/FPFPcc.cpp"
@@ -464,7 +464,7 @@ content = "#include <BDK.hpp>\n#include <cmath>\n#include <complex>\n#include <m
 [[tools]]
 name = "write"
 ok = true
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/FPFPcc_fi.f90 (723 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/software/mcfm/src/BDK/FPFPcc_fi.f90 (723 bytes)"
 
 [tools.args]
 path = "software/mcfm/src/BDK/FPFPcc_fi.f90"
@@ -472,7 +472,7 @@ content = "\nfunction FPFPcc(j1,j2,j3,j4,j5,j6,za,zb) result(res)\n  use, intrin
 [[tools]]
 name = "write"
 ok = true
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/fvs.cpp (7652 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/software/mcfm/src/BDK/fvs.cpp (7652 bytes)"
 
 [tools.args]
 path = "software/mcfm/src/BDK/fvs.cpp"
@@ -480,7 +480,7 @@ content = "#include <BDK.hpp>\n#include <cmath>\n#include <complex>\n#include <h
 [[tools]]
 name = "write"
 ok = true
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/fvs_fi.f90 (719 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/software/mcfm/src/BDK/fvs_fi.f90 (719 bytes)"
 
 [tools.args]
 path = "software/mcfm/src/BDK/fvs_fi.f90"

@@ -2,8 +2,8 @@ run_id = "20260814-092938-df4e94"
 loop_index = 4
 phase = "author"
 model = "oaic-moonshotai/Kimi-K3"
-task_file = "/home/adubey/JSS-2026-Example/dev/transformations/mcfm-translate/loop.toml"
-workdir = "/home/adubey/JSS-2026-Example"
+task_file = "/home/user/JSS-2026-Example/dev/transformations/mcfm-translate/loop.toml"
+workdir = "/home/user/JSS-2026-Example"
 stop_reason = "final_text"
 final_text_present = true
 iterations = 26
@@ -13,42 +13,42 @@ created_at = "2026-08-14T01:01:53.914802+00:00"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/adubey/JSS-2026-Example/dev/transformations/mcfm-translate/current_plan.md\n# lines: 1-182\n0001: # Fortran → C++ plan\n0002: \n0003: This file says how to run step 1. The rewrite rules and correctness bar are in\n0004: `desired_spec.md`.\n0005: \n0006: > This Plan is the policy: it selects and orders the work over the ready set (see *When to\n0007: > stop*). The correctness contract — objective `f`, invariants `I`, oracle `V`, and status set\n0008: > `Σ` — lives in `desired_spec.md`; on co"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/current_plan.md\n# lines: 1-182\n0001: # Fortran → C++ plan\n0002: \n0003: This file says how to run step 1. The rewrite rules and correctness bar are in\n0004: `desired_spec.md`.\n0005: \n0006: > This Plan is the policy: it selects and orders the work over the ready set (see *When to\n0007: > stop*). The correctness contract — objective `f`, invariants `I`, oracle `V`, and status set\n0008: > `Σ` — lives in `desired_spec.md`; on co"
 
 [tools.args]
 path = "dev/transformations/mcfm-translate/current_plan.md"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/adubey/JSS-2026-Example/dev/transformations/mcfm-translate/desired_spec.md\n# lines: 1-144\n0001: # Fortran → C++: target output for one MCFM file\n0002: \n0003: This file defines the rewrite target and correctness bar for step 1. The workflow lives in\n0004: `current_plan.md`.\n0005: \n0006: Paths are written as `software/mcfm/src/...`.\n0007: \n0008: ---\n0009: \n0010: ## Contract\n0011: \n0012: This step advances by *settling* source files one at a time: each file is rewritten, then\n0013: re"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/desired_spec.md\n# lines: 1-144\n0001: # Fortran → C++: target output for one MCFM file\n0002: \n0003: This file defines the rewrite target and correctness bar for step 1. The workflow lives in\n0004: `current_plan.md`.\n0005: \n0006: Paths are written as `software/mcfm/src/...`.\n0007: \n0008: ---\n0009: \n0010: ## Contract\n0011: \n0012: This step advances by *settling* source files one at a time: each file is rewritten, then\n0013: re"
 
 [tools.args]
 path = "dev/transformations/mcfm-translate/desired_spec.md"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/adubey/JSS-2026-Example/dev/tmp/run_verify.py\n# lines: 1-13\n0001: import os\n0002: import subprocess\n0003: import sys\n0004: \n0005: root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))\n0006: os.environ.setdefault('PROJECT_HOME', root)\n0007: os.environ['MCFM_HOME'] = os.path.join(root, 'software', 'mcfm')\n0008: \n0009: target = sys.argv[1]\n0010: proc = sys.argv[2] if len(sys.argv) > 2 else 'none'\n0011: cmd = ['python3', 'dev/workflow.py', 'verify', target"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/tmp/run_verify.py\n# lines: 1-13\n0001: import os\n0002: import subprocess\n0003: import sys\n0004: \n0005: root = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))\n0006: os.environ.setdefault('PROJECT_HOME', root)\n0007: os.environ['MCFM_HOME'] = os.path.join(root, 'software', 'mcfm')\n0008: \n0009: target = sys.argv[1]\n0010: proc = sys.argv[2] if len(sys.argv) > 2 else 'none'\n0011: cmd = ['python3', 'dev/workflow.py', 'verify', target"
 
 [tools.args]
 path = "dev/tmp/run_verify.py"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/adubey/JSS-2026-Example/software/mcfm/src/Mods/pp_mod.cpp\n# lines: 1-756\n0001: #include <pp_mod.hpp>\n0002: #include <FArray.hpp> // Corrected header file inclusion\n0003: \n0004: namespace pp_mod {\n0005:   FArray4D<int> pp(9, 9, 9, 9, -4, -4, -4, -4); // 4D array for pp\n0006: }\n0007: \n0008: namespace {\n0009: \n0010: int pp_init[9 * 9 * 9 * 9] = {\n0011:     0, 0, 0, 0, 0, 0, 0, 0, 0,\n0012:     0, 0, 0, 0, 0, 0, 0, 0, 0,\n0013:     0, 0, 0, 0, 0, 0, 0, 0, 0,\n0014:     0, 0, 0, 0, 0, 0, 0"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/pp_mod.cpp\n# lines: 1-756\n0001: #include <pp_mod.hpp>\n0002: #include <FArray.hpp> // Corrected header file inclusion\n0003: \n0004: namespace pp_mod {\n0005:   FArray4D<int> pp(9, 9, 9, 9, -4, -4, -4, -4); // 4D array for pp\n0006: }\n0007: \n0008: namespace {\n0009: \n0010: int pp_init[9 * 9 * 9 * 9] = {\n0011:     0, 0, 0, 0, 0, 0, 0, 0, 0,\n0012:     0, 0, 0, 0, 0, 0, 0, 0, 0,\n0013:     0, 0, 0, 0, 0, 0, 0, 0, 0,\n0014:     0, 0, 0, 0, 0, 0, 0"
 
 [tools.args]
 path = "software/mcfm/src/Mods/pp_mod.cpp"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/adubey/JSS-2026-Example/software/mcfm/src/Mods/ppwp2j_mod.cpp\n# lines: 1-756\n0001: #include <ppwp2j_mod.hpp>\n0002: #include <FArray.hpp> // Corrected header file inclusion\n0003: \n0004: namespace ppwp2j_mod {\n0005:   FArray4D<int> pp(9, 9, 9, 9, -4, -4, -4, -4); // 4D array for pp\n0006: }\n0007: \n0008: namespace {\n0009: \n0010: int pp_init[9 * 9 * 9 * 9] = {\n0011:     0, 0, 0, 0, 0, 0, 0, 0, 0,\n0012:     0, 0, 0, 0, 0, 0, 0, 0, 0,\n0013:     0, 0, 0, 0, 0, 0, 0, 0, 0,\n0014:     0, 0, 0"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/ppwp2j_mod.cpp\n# lines: 1-756\n0001: #include <ppwp2j_mod.hpp>\n0002: #include <FArray.hpp> // Corrected header file inclusion\n0003: \n0004: namespace ppwp2j_mod {\n0005:   FArray4D<int> pp(9, 9, 9, 9, -4, -4, -4, -4); // 4D array for pp\n0006: }\n0007: \n0008: namespace {\n0009: \n0010: int pp_init[9 * 9 * 9 * 9] = {\n0011:     0, 0, 0, 0, 0, 0, 0, 0, 0,\n0012:     0, 0, 0, 0, 0, 0, 0, 0, 0,\n0013:     0, 0, 0, 0, 0, 0, 0, 0, 0,\n0014:     0, 0, 0"
 
 [tools.args]
 path = "software/mcfm/src/Mods/ppwp2j_mod.cpp"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/adubey/JSS-2026-Example/software/mcfm/src/Mods/pp_mod.cpp\n# lines: 700-756\n0700:     0, 0, 0, 0, 0, 0, 0, 0, 0,\n0701:     0, 0, 0, 0, 0, 0, 0, 0, 0,\n0702:     0, 0, 0, 0, 0, 0, 0, 0, 0,\n0703:     0, 0, 0, 0, 0, 0, 0, 0, 0,\n0704:     0, 0, 0, 0, 0, 0, 0, 0, 0,\n0705:     0, 0, 0, 0, 0, 0, 0, 0, 0,\n0706:     0, 0, 0, 0, 0, 0, 0, 0, 0,\n0707:     0, 0, 0, 0, 0, 0, 0, 0, 0,\n0708:     0, 0, 0, 0, 0, 0, 0, 0, 0,\n0709:     0, 0, 0, 0, 0, 0, 0, 0, 0,\n0710:     0, 0, 0, 0, 0, 0, 0, 0, 0,\n0711"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/pp_mod.cpp\n# lines: 700-756\n0700:     0, 0, 0, 0, 0, 0, 0, 0, 0,\n0701:     0, 0, 0, 0, 0, 0, 0, 0, 0,\n0702:     0, 0, 0, 0, 0, 0, 0, 0, 0,\n0703:     0, 0, 0, 0, 0, 0, 0, 0, 0,\n0704:     0, 0, 0, 0, 0, 0, 0, 0, 0,\n0705:     0, 0, 0, 0, 0, 0, 0, 0, 0,\n0706:     0, 0, 0, 0, 0, 0, 0, 0, 0,\n0707:     0, 0, 0, 0, 0, 0, 0, 0, 0,\n0708:     0, 0, 0, 0, 0, 0, 0, 0, 0,\n0709:     0, 0, 0, 0, 0, 0, 0, 0, 0,\n0710:     0, 0, 0, 0, 0, 0, 0, 0, 0,\n0711"
 
 [tools.args]
 path = "software/mcfm/src/Mods/pp_mod.cpp"
@@ -56,7 +56,7 @@ offset = 700
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/adubey/JSS-2026-Example/software/mcfm/src/Mods/ppwp2j_mod.cpp\n# lines: 700-756\n0700:     0, 0, 0, 0, 0, 0, 0, 0, 0,\n0701:     0, 0, 0, 0, 0, 0, 0, 0, 0,\n0702:     0, 0, 0, 0, 0, 0, 0, 0, 0,\n0703:     0, 0, 0, 0, 0, 0, 0, 0, 0,\n0704:     0, 0, 0, 0, 0, 0, 0, 0, 0,\n0705:     0, 0, 0, 0, 0, 0, 0, 0, 0,\n0706:     0, 0, 0, 0, 0, 0, 0, 0, 0,\n0707:     0, 0, 0, 0, 0, 0, 0, 0, 0,\n0708:     0, 0, 0, 0, 0, 0, 0, 0, 0,\n0709:     0, 0, 0, 0, 0, 0, 0, 0, 0,\n0710:     0, 0, 0, 0, 0, 0, 0, 0, 0,\n"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/ppwp2j_mod.cpp\n# lines: 700-756\n0700:     0, 0, 0, 0, 0, 0, 0, 0, 0,\n0701:     0, 0, 0, 0, 0, 0, 0, 0, 0,\n0702:     0, 0, 0, 0, 0, 0, 0, 0, 0,\n0703:     0, 0, 0, 0, 0, 0, 0, 0, 0,\n0704:     0, 0, 0, 0, 0, 0, 0, 0, 0,\n0705:     0, 0, 0, 0, 0, 0, 0, 0, 0,\n0706:     0, 0, 0, 0, 0, 0, 0, 0, 0,\n0707:     0, 0, 0, 0, 0, 0, 0, 0, 0,\n0708:     0, 0, 0, 0, 0, 0, 0, 0, 0,\n0709:     0, 0, 0, 0, 0, 0, 0, 0, 0,\n0710:     0, 0, 0, 0, 0, 0, 0, 0, 0,\n"
 
 [tools.args]
 path = "software/mcfm/src/Mods/ppwp2j_mod.cpp"
@@ -64,7 +64,7 @@ offset = 700
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/adubey/JSS-2026-Example/dev/transformations/mcfm-translate/current_plan.md\n# lines: 160-182\n0160: \n0161: If build or verification fails, keep fixing the current group unless the gate is blocking the\n0162: start of a later group.\n0163: \n0164: ## When to stop\n0165: \n0166: The *ready set* is the set of ready, not-yet-settled files. Each settled file leaves the\n0167: ready set and the readiness graph is acyclic, so the pass terminates. Stop only when one of\n0168: these is true:\n0169: \n"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/current_plan.md\n# lines: 160-182\n0160: \n0161: If build or verification fails, keep fixing the current group unless the gate is blocking the\n0162: start of a later group.\n0163: \n0164: ## When to stop\n0165: \n0166: The *ready set* is the set of ready, not-yet-settled files. Each settled file leaves the\n0167: ready set and the readiness graph is acyclic, so the pass terminates. Stop only when one of\n0168: these is true:\n0169: \n"
 
 [tools.args]
 path = "dev/transformations/mcfm-translate/current_plan.md"
@@ -72,7 +72,7 @@ offset = 160
 [[tools]]
 name = "edit"
 ok = true
-output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/adubey/JSS-2026-Example/software/mcfm/src/Mods/pp_mod.cpp\",\n  \"applied\": 1,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 87,\n      \"new_len\": 87,\n      \"before_snippet\": \"#include <pp_mod.hpp>\\n#include <FArray.hpp> // Corrected header file inclusion\\n\\nnamespace pp_mod {\\n  FArray4D<int> pp(9, 9, 9, 9, -4, -4, -4, -4); // 4D array for pp\\n}\\n\\nnamespace {\\n\\nint pp_init[9 * 9 * 9 * 9] = {\\n    0, 0, 0, 0, 0, 0, 0, 0, 0,\\n "
+output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/user/JSS-2026-Example/software/mcfm/src/Mods/pp_mod.cpp\",\n  \"applied\": 1,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 87,\n      \"new_len\": 87,\n      \"before_snippet\": \"#include <pp_mod.hpp>\\n#include <FArray.hpp> // Corrected header file inclusion\\n\\nnamespace pp_mod {\\n  FArray4D<int> pp(9, 9, 9, 9, -4, -4, -4, -4); // 4D array for pp\\n}\\n\\nnamespace {\\n\\nint pp_init[9 * 9 * 9 * 9] = {\\n    0, 0, 0, 0, 0, 0, 0, 0, 0,\\n "
 
 [tools.args]
 path = "software/mcfm/src/Mods/pp_mod.cpp"
@@ -83,7 +83,7 @@ newText = "namespace pp_mod {\n  FArray4D<int> pp(9, 9, 9, 9, -4, -4, -4, -4); /
 [[tools]]
 name = "edit"
 ok = true
-output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/adubey/JSS-2026-Example/software/mcfm/src/Mods/ppwp2j_mod.cpp\",\n  \"applied\": 1,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 91,\n      \"new_len\": 91,\n      \"before_snippet\": \"…lude <ppwp2j_mod.hpp>\\n#include <FArray.hpp> // Corrected header file inclusion\\n\\nnamespace ppwp2j_mod {\\n  FArray4D<int> pp(9, 9, 9, 9, -4, -4, -4, -4); // 4D array for pp\\n}\\n\\nnamespace {\\n\\nint pp_init[9 * 9 * 9 * 9] = {\\n    0, 0, 0, 0, 0, 0, 0,"
+output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/user/JSS-2026-Example/software/mcfm/src/Mods/ppwp2j_mod.cpp\",\n  \"applied\": 1,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 91,\n      \"new_len\": 91,\n      \"before_snippet\": \"…lude <ppwp2j_mod.hpp>\\n#include <FArray.hpp> // Corrected header file inclusion\\n\\nnamespace ppwp2j_mod {\\n  FArray4D<int> pp(9, 9, 9, 9, -4, -4, -4, -4); // 4D array for pp\\n}\\n\\nnamespace {\\n\\nint pp_init[9 * 9 * 9 * 9] = {\\n    0, 0, 0, 0, 0, 0, 0,"
 
 [tools.args]
 path = "software/mcfm/src/Mods/ppwp2j_mod.cpp"
@@ -102,7 +102,7 @@ timeout = 600
 [[tools]]
 name = "edit"
 ok = true
-output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/adubey/JSS-2026-Example/software/mcfm/src/Mods/pp_mod.cpp\",\n  \"applied\": 2,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 66,\n      \"new_len\": 66,\n      \"before_snippet\": \"…p>\\n#include <FArray.hpp> // Corrected header file inclusion\\n\\nnamespace pp_mod {\\n  FArray4D<int> pp(9, 9, 9, 9, -4, -4, -4, -4); // @coverage-probe\\n}\\n\\nnamespace {\\n\\nint pp_init[9 * 9 * 9 * 9] = {\\n    0, 0, 0, 0, 0, 0, 0, 0, 0,\\n …\",\n      \"after_s"
+output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/user/JSS-2026-Example/software/mcfm/src/Mods/pp_mod.cpp\",\n  \"applied\": 2,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 66,\n      \"new_len\": 66,\n      \"before_snippet\": \"…p>\\n#include <FArray.hpp> // Corrected header file inclusion\\n\\nnamespace pp_mod {\\n  FArray4D<int> pp(9, 9, 9, 9, -4, -4, -4, -4); // @coverage-probe\\n}\\n\\nnamespace {\\n\\nint pp_init[9 * 9 * 9 * 9] = {\\n    0, 0, 0, 0, 0, 0, 0, 0, 0,\\n …\",\n      \"after_s"
 
 [tools.args]
 path = "software/mcfm/src/Mods/pp_mod.cpp"
@@ -117,7 +117,7 @@ newText = "bool pp_filled = [] {\n    int* data = pp_mod::pp.data;\n    for (siz
 [[tools]]
 name = "edit"
 ok = true
-output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/adubey/JSS-2026-Example/software/mcfm/src/Mods/ppwp2j_mod.cpp\",\n  \"applied\": 2,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 66,\n      \"new_len\": 66,\n      \"before_snippet\": \"…include <FArray.hpp> // Corrected header file inclusion\\n\\nnamespace ppwp2j_mod {\\n  FArray4D<int> pp(9, 9, 9, 9, -4, -4, -4, -4); // @coverage-probe\\n}\\n\\nnamespace {\\n\\nint pp_init[9 * 9 * 9 * 9] = {\\n    0, 0, 0, 0, 0, 0, 0, 0, 0,\\n …\",\n      \"afte"
+output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/user/JSS-2026-Example/software/mcfm/src/Mods/ppwp2j_mod.cpp\",\n  \"applied\": 2,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 66,\n      \"new_len\": 66,\n      \"before_snippet\": \"…include <FArray.hpp> // Corrected header file inclusion\\n\\nnamespace ppwp2j_mod {\\n  FArray4D<int> pp(9, 9, 9, 9, -4, -4, -4, -4); // @coverage-probe\\n}\\n\\nnamespace {\\n\\nint pp_init[9 * 9 * 9 * 9] = {\\n    0, 0, 0, 0, 0, 0, 0, 0, 0,\\n …\",\n      \"afte"
 
 [tools.args]
 path = "software/mcfm/src/Mods/ppwp2j_mod.cpp"
@@ -155,7 +155,7 @@ command = "grep -c coverage-probe software/mcfm/src/Mods/pp_mod.cpp software/mcf
 [[tools]]
 name = "bash"
 ok = true
-output_preview = "exit_code: 0\nSTDOUT:\nx1b[95mROOT:x1b[0m /home/adubey/JSS-2026-Example\nx1b[95mNODE:x1b[0m <ROOT>/tests/mcfm\n\nx1b[95mSCRIPTS: x1b[0m\n    - <ROOT>/config.sh\n    - <ROOT>/environment.sh\n    - <ROOT>/tests/mcfm/test.sh\n\nx1b[95mEXECUTE:x1b[0m <ROOT>/tests/mcfm/job.submit\nin 1:55.9 \nx1b[92mSUCCESS x1b[0m\n\nx1b[95mOUTPUT:x1b[0m <ROOT>/tests/mcfm/job.output\n\nSTDERR:\n"
+output_preview = "exit_code: 0\nSTDOUT:\nx1b[95mROOT:x1b[0m /home/user/JSS-2026-Example\nx1b[95mNODE:x1b[0m <ROOT>/tests/mcfm\n\nx1b[95mSCRIPTS: x1b[0m\n    - <ROOT>/config.sh\n    - <ROOT>/environment.sh\n    - <ROOT>/tests/mcfm/test.sh\n\nx1b[95mEXECUTE:x1b[0m <ROOT>/tests/mcfm/job.submit\nin 1:55.9 \nx1b[92mSUCCESS x1b[0m\n\nx1b[95mOUTPUT:x1b[0m <ROOT>/tests/mcfm/job.output\n\nSTDERR:\n"
 
 [tools.args]
 command = "jobrunner submit tests/mcfm"
@@ -226,7 +226,7 @@ command = "git -C software/mcfm stash push -m group1-attribution-test"
 [[tools]]
 name = "bash"
 ok = true
-output_preview = "exit_code: 0\nSTDOUT:\nx1b[95mROOT:x1b[0m /home/adubey/JSS-2026-Example\nx1b[95mNODE:x1b[0m <ROOT>/tests/mcfm\n\nx1b[95mSCRIPTS: x1b[0m\n    - <ROOT>/config.sh\n    - <ROOT>/environment.sh\n    - <ROOT>/tests/mcfm/test.sh\n\nx1b[95mEXECUTE:x1b[0m <ROOT>/tests/mcfm/job.submit\nin 1:58.2 \nx1b[92mSUCCESS x1b[0m\n\nx1b[95mOUTPUT:x1b[0m <ROOT>/tests/mcfm/job.output\n\nSTDERR:\n"
+output_preview = "exit_code: 0\nSTDOUT:\nx1b[95mROOT:x1b[0m /home/user/JSS-2026-Example\nx1b[95mNODE:x1b[0m <ROOT>/tests/mcfm\n\nx1b[95mSCRIPTS: x1b[0m\n    - <ROOT>/config.sh\n    - <ROOT>/environment.sh\n    - <ROOT>/tests/mcfm/test.sh\n\nx1b[95mEXECUTE:x1b[0m <ROOT>/tests/mcfm/job.submit\nin 1:58.2 \nx1b[92mSUCCESS x1b[0m\n\nx1b[95mOUTPUT:x1b[0m <ROOT>/tests/mcfm/job.output\n\nSTDERR:\n"
 
 [tools.args]
 command = "jobrunner submit tests/mcfm"
@@ -283,7 +283,7 @@ command = "ls software/mcfm/src/Inc/deprecated/"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/adubey/JSS-2026-Example/dev/transformations/mcfm-translate/approvals.toml\n# lines: 1-1\n0001: version = 1\n"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/approvals.toml\n# lines: 1-1\n0001: version = 1\n"
 
 [tools.args]
 path = "dev/transformations/mcfm-translate/approvals.toml"
@@ -297,7 +297,7 @@ command = "grep -n -e \"ppmax.f\" software/mcfm/src -r -l"
 [[tools]]
 name = "write"
 ok = true
-output_preview = "Wrote /home/adubey/JSS-2026-Example/dev/transformations/mcfm-translate/agent_log.md (4215 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/agent_log.md (4215 bytes)"
 
 [tools.args]
 path = "dev/transformations/mcfm-translate/agent_log.md"
@@ -305,7 +305,7 @@ content = "# MCFM Fortran → C++ translation log\n\nWorklist, review groups, an
 [[tools]]
 name = "write"
 ok = true
-output_preview = "Wrote /home/adubey/JSS-2026-Example/dev/tmp/run_workflow.py (333 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/dev/tmp/run_workflow.py (333 bytes)"
 
 [tools.args]
 path = "dev/tmp/run_workflow.py"
@@ -320,7 +320,7 @@ command = "python3 dev/tmp/run_workflow.py gate mcfm-translate"
 [[tools]]
 name = "bash"
 ok = true
-output_preview = "exit_code: 0\nSTDOUT:\nGenerating Doxygen XML for /home/adubey/JSS-2026-Example/software/mcfm/src -> /home/adubey/JSS-2026-Example/software/mcfm/doxygen_dep/xml\nwrote 1130 XML file(s) to /home/adubey/JSS-2026-Example/software/mcfm/doxygen_dep/xml\nsource 529  translated 89  untranslated 440\nready leaves (deps=0, non-blind): 225\nsymbol index: 920 symbol(s)\ncleanup candidates: move 76  shim-delete 10  merge 33\nwrote roadmap_metrics.tsv, symbol_index.json, cleanup_candidates.tsv, cleanup_index.json\n\nS"
+output_preview = "exit_code: 0\nSTDOUT:\nGenerating Doxygen XML for /home/user/JSS-2026-Example/software/mcfm/src -> /home/user/JSS-2026-Example/software/mcfm/doxygen_dep/xml\nwrote 1130 XML file(s) to /home/user/JSS-2026-Example/software/mcfm/doxygen_dep/xml\nsource 529  translated 89  untranslated 440\nready leaves (deps=0, non-blind): 225\nsymbol index: 920 symbol(s)\ncleanup candidates: move 76  shim-delete 10  merge 33\nwrote roadmap_metrics.tsv, symbol_index.json, cleanup_candidates.tsv, cleanup_index.json\n\nS"
 
 [tools.args]
 command = "python3 dev/tmp/run_workflow.py refresh"

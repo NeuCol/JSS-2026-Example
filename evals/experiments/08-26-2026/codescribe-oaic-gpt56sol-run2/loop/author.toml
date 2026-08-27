@@ -53,7 +53,7 @@ ok = true
 duration_ms = 0.613
 output_chars = 8710
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/current_plan.md
+# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/current_plan.md
 # lines: 1-182
 0001: # Fortran → C++ plan
 0002: 
@@ -89,7 +89,7 @@ ok = true
 duration_ms = 0.42
 output_chars = 468
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tmp/revert_mcfm_group.py
+# path: /home/user/JSS-2026-Example/dev/tmp/revert_mcfm_group.py
 # lines: 1-9
 0001: from pathlib import Path
 0002: src=Path('software/mcfm/src/BDK')
@@ -127,7 +127,7 @@ ok = true
 duration_ms = 0.467
 output_chars = 826
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/CMakeLists.txt
+# path: /home/user/JSS-2026-Example/software/mcfm/src/BDK/CMakeLists.txt
 # lines: 1-44
 0001: target_sources(objlib PRIVATE
 0002: FFPPsc.f
@@ -178,7 +178,7 @@ ok = true
 duration_ms = 0.45
 output_chars = 3006
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/agent_log.md
+# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/agent_log.md
 # lines: 1-31
 0001: # MCFM translation worklist
 0002: 
@@ -249,7 +249,7 @@ ok = true
 duration_ms = 0.61
 output_chars = 7692
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/desired_spec.md
+# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/desired_spec.md
 # lines: 1-144
 0001: # Fortran → C++: target output for one MCFM file
 0002: 
@@ -579,7 +579,7 @@ output_chars = 358
 output_preview = '''
 exit_code: 0
 STDOUT:
-[95mROOT:[0m /home/akash/Desktop/Akash/Projects/JSS-Paper-Example
+[95mROOT:[0m /home/user/JSS-2026-Example
 [95mNODE:[0m <ROOT>/tests/mcfm
 
 [95mSCRIPTS: [0m
@@ -1151,7 +1151,7 @@ ok = true
 duration_ms = 0.471
 output_chars = 394
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tmp/finalize_mcfm_group.py
+# path: /home/user/JSS-2026-Example/dev/tmp/finalize_mcfm_group.py
 # lines: 1-7
 0001: from pathlib import Path
 0002: root=Path.cwd()
@@ -1189,7 +1189,7 @@ ok = true
 duration_ms = 0.429
 output_chars = 727
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tmp/verify_mcfm_group.py
+# path: /home/user/JSS-2026-Example/dev/tmp/verify_mcfm_group.py
 # lines: 1-12
 0001: import os, subprocess
 0002: from pathlib import Path
@@ -1252,7 +1252,7 @@ tool = "write"
 ok = true
 duration_ms = 0.632
 output_chars = 111
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tmp/revert_w2jet_regression_group.py (429 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/dev/tmp/revert_w2jet_regression_group.py (429 bytes)"
 ts = "2026-08-26T21:42:50.779939+00:00"
 
 [[event]]
@@ -1295,7 +1295,7 @@ ok = true
 duration_ms = 0.514
 output_chars = 1563
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/W2jet/CMakeLists.txt
+# path: /home/user/JSS-2026-Example/software/mcfm/src/W2jet/CMakeLists.txt
 # lines: 1-79
 0001: target_sources(objlib PRIVATE
 0002: aqqb_zbb.f
@@ -1386,7 +1386,7 @@ output_chars = 2904
 output_preview = '''
 {
   "ok": true,
-  "path": "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/W2jet/CMakeLists.txt",
+  "path": "/home/user/JSS-2026-Example/software/mcfm/src/W2jet/CMakeLists.txt",
   "applied": 5,
   "replacements": [
     {
@@ -1503,7 +1503,7 @@ output_chars = 358
 output_preview = '''
 exit_code: 0
 STDOUT:
-[95mROOT:[0m /home/akash/Desktop/Akash/Projects/JSS-Paper-Example
+[95mROOT:[0m /home/user/JSS-2026-Example
 [95mNODE:[0m <ROOT>/tests/mcfm
 
 [95mSCRIPTS: [0m
@@ -1704,7 +1704,7 @@ output_chars = 4367
 output_preview = '''
 {
   "ok": true,
-  "path": "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/agent_log.md",
+  "path": "/home/user/JSS-2026-Example/dev/transformations/mcfm-translate/agent_log.md",
   "applied": 2,
   "replacements": [
     {
@@ -1757,8 +1757,8 @@ output_chars = 44339
 output_preview = '''
 exit_code: 0
 STDOUT:
-Generating Doxygen XML for /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src -> /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/doxygen_dep/xml
-wrote 1138 XML file(s) to /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/doxygen_dep/xml
+Generating Doxygen XML for /home/user/JSS-2026-Example/software/mcfm/src -> /home/user/JSS-2026-Example/software/mcfm/doxygen_dep/xml
+wrote 1138 XML file(s) to /home/user/JSS-2026-Example/software/mcfm/doxygen_dep/xml
 source 526  translated 86  untranslated 440
 ready leaves (deps=0, non-blind): 231
 symbol index: 915 symbol(s)
@@ -1900,7 +1900,7 @@ output_chars = 1227
 output_preview = '''
 {
   "ok": true,
-  "path": "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/agent_log.md",
+  "path": "/home/user/JSS-2026-Example/dev/transformations/mcfm-translate/agent_log.md",
   "applied": 1,
   "replacements": [
     {

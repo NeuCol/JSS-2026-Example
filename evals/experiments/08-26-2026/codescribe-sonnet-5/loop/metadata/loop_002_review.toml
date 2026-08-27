@@ -2,8 +2,8 @@ run_id = "20260826-151920-37810c"
 loop_index = 2
 phase = "review"
 model = "anthropic-claude-sonnet-5"
-task_file = "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/loop.toml"
-workdir = "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example"
+task_file = "/home/user/JSS-2026-Example/dev/transformations/mcfm-translate/loop.toml"
+workdir = "/home/user/JSS-2026-Example"
 stop_reason = "final_text"
 final_text_present = true
 iterations = 9
@@ -34,21 +34,21 @@ pattern = ".codescribe/**"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/.codescribe/loop/author.toml\n# lines: 1-3158\n0001: \n0002: [[event]]\n0003: event = \"run_start\"\n0004: run_id = \"20260826-152623-a5669c\"\n0005: mode = \"native_tools\"\n0006: max_iterations = 30\n0007: ts = \"2026-08-26T20:26:23.007489+00:00\"\n0008: \n0009: [[event]]\n0010: event = \"iteration_start\"\n0011: run_id = \"20260826-152623-a5669c\"\n0012: iteration = 1\n0013: ts = \"2026-08-26T20:26:23.007682+00:00\"\n0014: \n0015: [[event]]\n0016: event = \"model_"
+output_preview = "# path: /home/user/JSS-2026-Example/.codescribe/loop/author.toml\n# lines: 1-3158\n0001: \n0002: [[event]]\n0003: event = \"run_start\"\n0004: run_id = \"20260826-152623-a5669c\"\n0005: mode = \"native_tools\"\n0006: max_iterations = 30\n0007: ts = \"2026-08-26T20:26:23.007489+00:00\"\n0008: \n0009: [[event]]\n0010: event = \"iteration_start\"\n0011: run_id = \"20260826-152623-a5669c\"\n0012: iteration = 1\n0013: ts = \"2026-08-26T20:26:23.007682+00:00\"\n0014: \n0015: [[event]]\n0016: event = \"model_"
 
 [tools.args]
 path = ".codescribe/loop/author.toml"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/.codescribe/loop/metadata/loop_002_author.toml\n# lines: 1-625\n0001: run_id = \"20260826-151920-37810c\"\n0002: loop_index = 2\n0003: phase = \"author\"\n0004: model = \"anthropic-claude-sonnet-5\"\n0005: task_file = \"/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/loop.toml\"\n0006: workdir = \"/home/akash/Desktop/Akash/Projects/JSS-Paper-Example\"\n0007: stop_reason = \"max_iterations\"\n0008: final_text_present "
+output_preview = "# path: /home/user/JSS-2026-Example/.codescribe/loop/metadata/loop_002_author.toml\n# lines: 1-625\n0001: run_id = \"20260826-151920-37810c\"\n0002: loop_index = 2\n0003: phase = \"author\"\n0004: model = \"anthropic-claude-sonnet-5\"\n0005: task_file = \"/home/user/JSS-2026-Example/dev/transformations/mcfm-translate/loop.toml\"\n0006: workdir = \"/home/user/JSS-2026-Example\"\n0007: stop_reason = \"max_iterations\"\n0008: final_text_present "
 
 [tools.args]
 path = ".codescribe/loop/metadata/loop_002_author.toml"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/loop.toml\n# lines: 1-18\n0001: # CodeScribe loop for Fortran -> C++.\n0002: #\n0003: # Run from the project root:\n0004: #   code-scribe loop -p dev/transformations/mcfm-translate/loop.toml -m <model>\n0005: \n0006: [tools]\n0007: bash = [\"jobrunner\", \"python3\"]\n0008: \n0009: [[chat.user]]\n0010: content = '''\n0011: Each round, follow the round algorithm in dev/transformations/mcfm-translate/current_plan.md an"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/loop.toml\n# lines: 1-18\n0001: # CodeScribe loop for Fortran -> C++.\n0002: #\n0003: # Run from the project root:\n0004: #   code-scribe loop -p dev/transformations/mcfm-translate/loop.toml -m <model>\n0005: \n0006: [tools]\n0007: bash = [\"jobrunner\", \"python3\"]\n0008: \n0009: [[chat.user]]\n0010: content = '''\n0011: Each round, follow the round algorithm in dev/transformations/mcfm-translate/current_plan.md an"
 
 [tools.args]
 path = "dev/transformations/mcfm-translate/loop.toml"
@@ -62,7 +62,7 @@ pattern = "dev/transformations/mcfm-translate/agent_log.md"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/.codescribe/loop/metadata/loop_002_author.toml\n# lines: 560-625\n0560: [tools.args]\n0561: command = \"grep -n \\\"M1bit1\\\" software/mcfm/src/BDK/Master1.f\"\n0562: [[tools]]\n0563: name = \"bash\"\n0564: ok = true\n0565: output_preview = \"exit_code: 0\\nSTDOUT:\\n15:      complex(dp):: L0,L1,Lsm1_2mh,I3m,M3bit1,M3bit2,M3bit3,M3bit4\\n45:      M3bit4=-0.5_dp*za(j2,j3)*zb(j2,j4)*zab2(j5,j3,j4,j2)\\n76:     & +M3bit4*L1(-s(j3,j4),-t(j2,j3,j4))/t(j2,j3,j"
+output_preview = "# path: /home/user/JSS-2026-Example/.codescribe/loop/metadata/loop_002_author.toml\n# lines: 560-625\n0560: [tools.args]\n0561: command = \"grep -n \\\"M1bit1\\\" software/mcfm/src/BDK/Master1.f\"\n0562: [[tools]]\n0563: name = \"bash\"\n0564: ok = true\n0565: output_preview = \"exit_code: 0\\nSTDOUT:\\n15:      complex(dp):: L0,L1,Lsm1_2mh,I3m,M3bit1,M3bit2,M3bit3,M3bit4\\n45:      M3bit4=-0.5_dp*za(j2,j3)*zb(j2,j4)*zab2(j5,j3,j4,j2)\\n76:     & +M3bit4*L1(-s(j3,j4),-t(j2,j3,j4))/t(j2,j3,j"
 
 [tools.args]
 path = ".codescribe/loop/metadata/loop_002_author.toml"
@@ -70,7 +70,7 @@ offset = 560
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/approvals.toml\n# lines: 1-1\n0001: version = 1\n"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/approvals.toml\n# lines: 1-1\n0001: version = 1\n"
 
 [tools.args]
 path = "dev/transformations/mcfm-translate/approvals.toml"
@@ -98,7 +98,7 @@ command = "grep -c \"name = \\\"write\\\"\" .codescribe/loop/metadata/loop_002_a
 [[tools]]
 name = "write"
 ok = true
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/.codescribe/loop/review_output.toml (2687 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/.codescribe/loop/review_output.toml (2687 bytes)"
 
 [tools.args]
 path = ".codescribe/loop/review_output.toml"
@@ -106,7 +106,7 @@ content = "loop = 2\nsummary = \"The author agent spent all 30 iterations (85 to
 [[tools]]
 name = "write"
 ok = true
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/.codescribe/loop/review_output.toml (2649 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/.codescribe/loop/review_output.toml (2649 bytes)"
 
 [tools.args]
 path = ".codescribe/loop/review_output.toml"

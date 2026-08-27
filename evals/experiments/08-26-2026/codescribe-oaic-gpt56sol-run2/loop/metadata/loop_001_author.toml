@@ -2,8 +2,8 @@ run_id = "20260826-161355-33e834"
 loop_index = 1
 phase = "author"
 model = "oaic-gpt56sol"
-task_file = "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/loop.toml"
-workdir = "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example"
+task_file = "/home/user/JSS-2026-Example/dev/transformations/mcfm-translate/loop.toml"
+workdir = "/home/user/JSS-2026-Example"
 stop_reason = "max_iterations"
 final_text_present = false
 iterations = 30
@@ -12,14 +12,14 @@ created_at = "2026-08-26T21:20:47.166110+00:00"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/current_plan.md\n# lines: 1-182\n0001: # Fortran → C++ plan\n0002: \n0003: This file says how to run step 1. The rewrite rules and correctness bar are in\n0004: `desired_spec.md`.\n0005: \n0006: > This Plan is the policy: it selects and orders the work over the ready set (see *When to\n0007: > stop*). The correctness contract — objective `f`, invariants `I`, oracle `V`, and status set\n0008: > `Σ` — lives in `"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/current_plan.md\n# lines: 1-182\n0001: # Fortran → C++ plan\n0002: \n0003: This file says how to run step 1. The rewrite rules and correctness bar are in\n0004: `desired_spec.md`.\n0005: \n0006: > This Plan is the policy: it selects and orders the work over the ready set (see *When to\n0007: > stop*). The correctness contract — objective `f`, invariants `I`, oracle `V`, and status set\n0008: > `Σ` — lives in `"
 
 [tools.args]
 path = "dev/transformations/mcfm-translate/current_plan.md"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/current_plan.md\n# lines: 164-182\n0164: ## When to stop\n0165: \n0166: The *ready set* is the set of ready, not-yet-settled files. Each settled file leaves the\n0167: ready set and the readiness graph is acyclic, so the pass terminates. Stop only when one of\n0168: these is true:\n0169: \n0170: - a completed group needs human approval before the next group can start\n0171: - the ready set is empty (no ready f"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/current_plan.md\n# lines: 164-182\n0164: ## When to stop\n0165: \n0166: The *ready set* is the set of ready, not-yet-settled files. Each settled file leaves the\n0167: ready set and the readiness graph is acyclic, so the pass terminates. Stop only when one of\n0168: these is true:\n0169: \n0170: - a completed group needs human approval before the next group can start\n0171: - the ready set is empty (no ready f"
 
 [tools.args]
 path = "dev/transformations/mcfm-translate/current_plan.md"
@@ -28,28 +28,28 @@ limit = 30
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/desired_spec.md\n# lines: 1-144\n0001: # Fortran → C++: target output for one MCFM file\n0002: \n0003: This file defines the rewrite target and correctness bar for step 1. The workflow lives in\n0004: `current_plan.md`.\n0005: \n0006: Paths are written as `software/mcfm/src/...`.\n0007: \n0008: ---\n0009: \n0010: ## Contract\n0011: \n0012: This step advances by *settling* source files one at a time: each file is r"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/desired_spec.md\n# lines: 1-144\n0001: # Fortran → C++: target output for one MCFM file\n0002: \n0003: This file defines the rewrite target and correctness bar for step 1. The workflow lives in\n0004: `current_plan.md`.\n0005: \n0006: Paths are written as `software/mcfm/src/...`.\n0007: \n0008: ---\n0009: \n0010: ## Contract\n0011: \n0012: This step advances by *settling* source files one at a time: each file is r"
 
 [tools.args]
 path = "dev/transformations/mcfm-translate/desired_spec.md"
 [[tools]]
 name = "read"
 ok = false
-output_preview = "Error: file not found: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/agent_log.md"
+output_preview = "Error: file not found: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/agent_log.md"
 
 [tools.args]
 path = "dev/transformations/mcfm-translate/agent_log.md"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/approvals.toml\n# lines: 1-1\n0001: version = 1\n"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/approvals.toml\n# lines: 1-1\n0001: version = 1\n"
 
 [tools.args]
 path = "dev/transformations/mcfm-translate/approvals.toml"
 [[tools]]
 name = "bash"
 ok = true
-output_preview = "exit_code: 0\nSTDOUT:\nGenerating Doxygen XML for /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src -> /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/doxygen_dep/xml\nwrote 1128 XML file(s) to /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/doxygen_dep/xml\nsource 531  translated 86  untranslated 445\nready leaves (deps=0, non-blind): 229\nsymbol index: 915 symbol(s)\ncleanup candidates: move 74  shim-delete 10  merge 31\nwrote roadmap_metrics."
+output_preview = "exit_code: 0\nSTDOUT:\nGenerating Doxygen XML for /home/user/JSS-2026-Example/software/mcfm/src -> /home/user/JSS-2026-Example/software/mcfm/doxygen_dep/xml\nwrote 1128 XML file(s) to /home/user/JSS-2026-Example/software/mcfm/doxygen_dep/xml\nsource 531  translated 86  untranslated 445\nready leaves (deps=0, non-blind): 229\nsymbol index: 915 symbol(s)\ncleanup candidates: move 74  shim-delete 10  merge 31\nwrote roadmap_metrics."
 
 [tools.args]
 command = "python3 dev/workflow.py refresh"
@@ -57,7 +57,7 @@ timeout = 120
 [[tools]]
 name = "bash"
 ok = true
-output_preview = "exit_code: 0\nSTDOUT:\nno log found in /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate — nothing to gate.\n\nSTDERR:\n"
+output_preview = "exit_code: 0\nSTDOUT:\nno log found in /home/user/JSS-2026-Example/dev/transformations/mcfm-translate — nothing to gate.\n\nSTDERR:\n"
 
 [tools.args]
 command = "python3 dev/workflow.py gate mcfm-translate"
@@ -65,7 +65,7 @@ timeout = 120
 [[tools]]
 name = "bash"
 ok = true
-output_preview = "exit_code: 0\nSTDOUT:\n# workflow status\nassets: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tmp/assets\nroadmap metrics: 445 untranslated file rows, 229 ready leaves\ncleanup index: 569 families, move 74, shim-delete 10, merge 31\n\n- mcfm-translate: no agent_log.md yet\n- mcfm-cleanup: groups: 7 total, 0 open, 7 completed, 7 pending approval\n- pepper-kokkos-port: no agent_log.md yet\n\nSTDERR:\n"
+output_preview = "exit_code: 0\nSTDOUT:\n# workflow status\nassets: /home/user/JSS-2026-Example/dev/tmp/assets\nroadmap metrics: 445 untranslated file rows, 229 ready leaves\ncleanup index: 569 families, move 74, shim-delete 10, merge 31\n\n- mcfm-translate: no agent_log.md yet\n- mcfm-cleanup: groups: 7 total, 0 open, 7 completed, 7 pending approval\n- pepper-kokkos-port: no agent_log.md yet\n\nSTDERR:\n"
 
 [tools.args]
 command = "python3 dev/workflow.py status"
@@ -81,7 +81,7 @@ timeout = 120
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tmp/assets/roadmap_metrics.tsv\n# lines: 1-80\n0001: rel\ttop\tdeps\tblind\tfanin\tbench\n0002: Mods/types_mod.f\tMods\t0\t0\t8\t\n0003: W2jet/atree.f\tW2jet\t0\t0\t6\tu d~ ve e+ g g\n0004: W2jet/ggZZcapture.f\tW2jet\t0\t0\t6\tu d~ ve e+ g g\n0005: gghgg_dep/gghgg_dep_params.f\tgghgg_dep\t0\t0\t2\tg g h g g\n0006: BDK/fvs.f\tBDK\t0\t0\t2\t\n0007: W2jet/fvf.f\tW2jet\t0\t0\t2\tu d~ ve e+ g g\n0008: W2jet/ZZbox1LL.f\tW2jet\t0\t0\t2\tu d~ ve e+ g g\n0009: W2jet/a6treeg.f\tW2jet\t0\t0\t2\tu"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/tmp/assets/roadmap_metrics.tsv\n# lines: 1-80\n0001: rel\ttop\tdeps\tblind\tfanin\tbench\n0002: Mods/types_mod.f\tMods\t0\t0\t8\t\n0003: W2jet/atree.f\tW2jet\t0\t0\t6\tu d~ ve e+ g g\n0004: W2jet/ggZZcapture.f\tW2jet\t0\t0\t6\tu d~ ve e+ g g\n0005: gghgg_dep/gghgg_dep_params.f\tgghgg_dep\t0\t0\t2\tg g h g g\n0006: BDK/fvs.f\tBDK\t0\t0\t2\t\n0007: W2jet/fvf.f\tW2jet\t0\t0\t2\tu d~ ve e+ g g\n0008: W2jet/ZZbox1LL.f\tW2jet\t0\t0\t2\tu d~ ve e+ g g\n0009: W2jet/a6treeg.f\tW2jet\t0\t0\t2\tu"
 
 [tools.args]
 path = "dev/tmp/assets/roadmap_metrics.tsv"
@@ -89,7 +89,7 @@ limit = 80
 [[tools]]
 name = "bash"
 ok = true
-output_preview = "exit_code: 0\nSTDOUT:\nwrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tmp/drafts/W2jet/atree.scribe\n\nSTDERR:\n"
+output_preview = "exit_code: 0\nSTDOUT:\nwrote /home/user/JSS-2026-Example/dev/tmp/drafts/W2jet/atree.scribe\n\nSTDERR:\n"
 
 [tools.args]
 command = "python3 dev/workflow.py draft software/mcfm/src/W2jet/atree.f"
@@ -97,7 +97,7 @@ timeout = 120
 [[tools]]
 name = "bash"
 ok = true
-output_preview = "exit_code: 0\nSTDOUT:\nwrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tmp/drafts/W2jet/fvf.scribe\n\nSTDERR:\n"
+output_preview = "exit_code: 0\nSTDOUT:\nwrote /home/user/JSS-2026-Example/dev/tmp/drafts/W2jet/fvf.scribe\n\nSTDERR:\n"
 
 [tools.args]
 command = "python3 dev/workflow.py draft software/mcfm/src/W2jet/fvf.f"
@@ -105,7 +105,7 @@ timeout = 120
 [[tools]]
 name = "bash"
 ok = true
-output_preview = "exit_code: 0\nSTDOUT:\nwrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tmp/drafts/W2jet/subqcd.scribe\n\nSTDERR:\n"
+output_preview = "exit_code: 0\nSTDOUT:\nwrote /home/user/JSS-2026-Example/dev/tmp/drafts/W2jet/subqcd.scribe\n\nSTDERR:\n"
 
 [tools.args]
 command = "python3 dev/workflow.py draft software/mcfm/src/W2jet/subqcd.f"
@@ -113,7 +113,7 @@ timeout = 120
 [[tools]]
 name = "bash"
 ok = true
-output_preview = "exit_code: 0\nSTDOUT:\nwrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tmp/drafts/W2jet/vvg.scribe\n\nSTDERR:\n"
+output_preview = "exit_code: 0\nSTDOUT:\nwrote /home/user/JSS-2026-Example/dev/tmp/drafts/W2jet/vvg.scribe\n\nSTDERR:\n"
 
 [tools.args]
 command = "python3 dev/workflow.py draft software/mcfm/src/W2jet/vvg.f"
@@ -121,7 +121,7 @@ timeout = 120
 [[tools]]
 name = "bash"
 ok = true
-output_preview = "exit_code: 0\nSTDOUT:\nwrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tmp/drafts/W2jet/vv.scribe\n\nSTDERR:\n"
+output_preview = "exit_code: 0\nSTDOUT:\nwrote /home/user/JSS-2026-Example/dev/tmp/drafts/W2jet/vv.scribe\n\nSTDERR:\n"
 
 [tools.args]
 command = "python3 dev/workflow.py draft software/mcfm/src/W2jet/vv.f"
@@ -129,77 +129,77 @@ timeout = 120
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/W2jet/atree.f\n# lines: 1-45\n0001: !\n0002: !  SPDX-License-Identifier: GPL-3.0-or-later\n0003: !  Copyright (C) 2019-2022, respective authors of MCFM.\n0004: !\n0005: \n0006:       function atree(st,j1,j2,j3,j4,j5,j6,za,zb)\n0007:       use types\n0008: \n0009: c***********************************************************************\n0010: c     Author: R.K. Ellis                                               *\n0011: c     Jul"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/W2jet/atree.f\n# lines: 1-45\n0001: !\n0002: !  SPDX-License-Identifier: GPL-3.0-or-later\n0003: !  Copyright (C) 2019-2022, respective authors of MCFM.\n0004: !\n0005: \n0006:       function atree(st,j1,j2,j3,j4,j5,j6,za,zb)\n0007:       use types\n0008: \n0009: c***********************************************************************\n0010: c     Author: R.K. Ellis                                               *\n0011: c     Jul"
 
 [tools.args]
 path = "software/mcfm/src/W2jet/atree.f"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/W2jet/fvf.f\n# lines: 1-45\n0001: !\n0002: !  SPDX-License-Identifier: GPL-3.0-or-later\n0003: !  Copyright (C) 2019-2022, respective authors of MCFM.\n0004: !\n0005:       function Fvf(st,j1,j2,j3,j4,j5,j6,za,zb)\n0006:       use types\n0007:       use mxpart_mod\n0008:       use sprods_com_mod\n0009:       use heldefs_mod\n0010:       implicit none\n0011:       complex(dp):: Fvf\n0012:       integer:: j1,j2,j3,j4,j5,j6\n0013:    "
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/W2jet/fvf.f\n# lines: 1-45\n0001: !\n0002: !  SPDX-License-Identifier: GPL-3.0-or-later\n0003: !  Copyright (C) 2019-2022, respective authors of MCFM.\n0004: !\n0005:       function Fvf(st,j1,j2,j3,j4,j5,j6,za,zb)\n0006:       use types\n0007:       use mxpart_mod\n0008:       use sprods_com_mod\n0009:       use heldefs_mod\n0010:       implicit none\n0011:       complex(dp):: Fvf\n0012:       integer:: j1,j2,j3,j4,j5,j6\n0013:    "
 
 [tools.args]
 path = "software/mcfm/src/W2jet/fvf.f"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/W2jet/subqcd.f\n# lines: 1-76\n0001: !\n0002: !  SPDX-License-Identifier: GPL-3.0-or-later\n0003: !  Copyright (C) 2019-2022, respective authors of MCFM.\n0004: !\n0005:       subroutine subqcd(i1,i2,i3,i4,i5,i6,za,zb,amp)\n0006:       use types\n0007:       use constants_mod\n0008:       use mxpart_mod\n0009:       use sprods_com_mod\n0010:       implicit none\n0011:       complex(dp):: za(mxpart,mxpart),zb(mxpart,mxpart)\n0012: "
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/W2jet/subqcd.f\n# lines: 1-76\n0001: !\n0002: !  SPDX-License-Identifier: GPL-3.0-or-later\n0003: !  Copyright (C) 2019-2022, respective authors of MCFM.\n0004: !\n0005:       subroutine subqcd(i1,i2,i3,i4,i5,i6,za,zb,amp)\n0006:       use types\n0007:       use constants_mod\n0008:       use mxpart_mod\n0009:       use sprods_com_mod\n0010:       implicit none\n0011:       complex(dp):: za(mxpart,mxpart),zb(mxpart,mxpart)\n0012: "
 
 [tools.args]
 path = "software/mcfm/src/W2jet/subqcd.f"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/W2jet/vvg.f\n# lines: 1-87\n0001: !\n0002: !  SPDX-License-Identifier: GPL-3.0-or-later\n0003: !  Copyright (C) 2019-2022, respective authors of MCFM.\n0004: !\n0005: \n0006: \n0007: c ADJUSTED TO REMOVE ALL 1/eps**2 PIECES IF EPINV2 IN EPINV2.F = 0._dp\n0008: c ADJUSTED TO REMOVE ALL 1/eps**2 PIECES IF EPINV2 IN EPINV2.F = 0._dp\n0009: c ADJUSTED TO REMOVE ALL 1/eps**2 PIECES IF EPINV2 IN EPINV2.F = 0._dp\n0010: \n0011:       fu"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/W2jet/vvg.f\n# lines: 1-87\n0001: !\n0002: !  SPDX-License-Identifier: GPL-3.0-or-later\n0003: !  Copyright (C) 2019-2022, respective authors of MCFM.\n0004: !\n0005: \n0006: \n0007: c ADJUSTED TO REMOVE ALL 1/eps**2 PIECES IF EPINV2 IN EPINV2.F = 0._dp\n0008: c ADJUSTED TO REMOVE ALL 1/eps**2 PIECES IF EPINV2 IN EPINV2.F = 0._dp\n0009: c ADJUSTED TO REMOVE ALL 1/eps**2 PIECES IF EPINV2 IN EPINV2.F = 0._dp\n0010: \n0011:       fu"
 
 [tools.args]
 path = "software/mcfm/src/W2jet/vvg.f"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/W2jet/vv.f\n# lines: 1-54\n0001: !\n0002: !  SPDX-License-Identifier: GPL-3.0-or-later\n0003: !  Copyright (C) 2019-2022, respective authors of MCFM.\n0004: !\n0005:       function vv(st,j1,j2,j3,j4,j5,j6)\n0006:       use types\n0007: c***********************************************************************\n0008: c     Author: R.K. Ellis                                               *\n0009: c     July, 1998.                  "
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/W2jet/vv.f\n# lines: 1-54\n0001: !\n0002: !  SPDX-License-Identifier: GPL-3.0-or-later\n0003: !  Copyright (C) 2019-2022, respective authors of MCFM.\n0004: !\n0005:       function vv(st,j1,j2,j3,j4,j5,j6)\n0006:       use types\n0007: c***********************************************************************\n0008: c     Author: R.K. Ellis                                               *\n0009: c     July, 1998.                  "
 
 [tools.args]
 path = "software/mcfm/src/W2jet/vv.f"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tmp/drafts/W2jet/atree.scribe\n# lines: 1-49\n0001: scribe-prompt: Add an extern \"C\" <name>_wrapper; see the seed examples for FArray/scalar handling.\n0002: scribe-prompt: A variable used as a function is an external or statement function.\n0003: scribe-prompt: t is an external function (defined in W1jet/gpt-4o-conversions/t_fi.f90)\n0004: \n0005: #include <cmath>\n0006: #include <complex>\n0007: #include <mxpart_mod.hpp>\n0008: #include <"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/tmp/drafts/W2jet/atree.scribe\n# lines: 1-49\n0001: scribe-prompt: Add an extern \"C\" <name>_wrapper; see the seed examples for FArray/scalar handling.\n0002: scribe-prompt: A variable used as a function is an external or statement function.\n0003: scribe-prompt: t is an external function (defined in W1jet/gpt-4o-conversions/t_fi.f90)\n0004: \n0005: #include <cmath>\n0006: #include <complex>\n0007: #include <mxpart_mod.hpp>\n0008: #include <"
 
 [tools.args]
 path = "dev/tmp/drafts/W2jet/atree.scribe"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tmp/drafts/W2jet/fvf.scribe\n# lines: 1-55\n0001: scribe-prompt: Add an extern \"C\" <name>_wrapper; see the seed examples for FArray/scalar handling.\n0002: scribe-prompt: A variable used as a function is an external or statement function.\n0003: scribe-prompt: i3m is an external function (defined in Need/i3m.f90)\n0004: scribe-prompt: lsm1_2me is an external function (defined in Need/lfunctions.f90)\n0005: scribe-prompt: lsm1_2mh is an e"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/tmp/drafts/W2jet/fvf.scribe\n# lines: 1-55\n0001: scribe-prompt: Add an extern \"C\" <name>_wrapper; see the seed examples for FArray/scalar handling.\n0002: scribe-prompt: A variable used as a function is an external or statement function.\n0003: scribe-prompt: i3m is an external function (defined in Need/i3m.f90)\n0004: scribe-prompt: lsm1_2me is an external function (defined in Need/lfunctions.f90)\n0005: scribe-prompt: lsm1_2mh is an e"
 
 [tools.args]
 path = "dev/tmp/drafts/W2jet/fvf.scribe"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tmp/drafts/W2jet/subqcd.scribe\n# lines: 1-55\n0001: scribe-prompt: Add an extern \"C\" <name>_wrapper; see the seed examples for FArray/scalar handling.\n0002: scribe-prompt: A variable used as a function is an external or statement function.\n0003: \n0004: #include <cmath>\n0005: #include <complex>\n0006: #include <constants_mod.hpp>\n0007: #include <mxpart_mod.hpp>\n0008: #include <sprods_com_mod.hpp>\n0009: #include <types.hpp>\n0010: \n0011"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/tmp/drafts/W2jet/subqcd.scribe\n# lines: 1-55\n0001: scribe-prompt: Add an extern \"C\" <name>_wrapper; see the seed examples for FArray/scalar handling.\n0002: scribe-prompt: A variable used as a function is an external or statement function.\n0003: \n0004: #include <cmath>\n0005: #include <complex>\n0006: #include <constants_mod.hpp>\n0007: #include <mxpart_mod.hpp>\n0008: #include <sprods_com_mod.hpp>\n0009: #include <types.hpp>\n0010: \n0011"
 
 [tools.args]
 path = "dev/tmp/drafts/W2jet/subqcd.scribe"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tmp/drafts/W2jet/vvg.scribe\n# lines: 1-93\n0001: scribe-prompt: Add an extern \"C\" <name>_wrapper; see the seed examples for FArray/scalar handling.\n0002: scribe-prompt: A variable used as a function is an external or statement function.\n0003: scribe-prompt: lnrat is an external function (defined in Need/lnrat.f90)\n0004: \n0005: #include <cmath>\n0006: #include <complex>\n0007: #include <constants_mod.hpp>\n0008: #include <epinv2_mod.hpp"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/tmp/drafts/W2jet/vvg.scribe\n# lines: 1-93\n0001: scribe-prompt: Add an extern \"C\" <name>_wrapper; see the seed examples for FArray/scalar handling.\n0002: scribe-prompt: A variable used as a function is an external or statement function.\n0003: scribe-prompt: lnrat is an external function (defined in Need/lnrat.f90)\n0004: \n0005: #include <cmath>\n0006: #include <complex>\n0007: #include <constants_mod.hpp>\n0008: #include <epinv2_mod.hpp"
 
 [tools.args]
 path = "dev/tmp/drafts/W2jet/vvg.scribe"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tmp/drafts/W2jet/vv.scribe\n# lines: 1-56\n0001: scribe-prompt: Add an extern \"C\" <name>_wrapper; see the seed examples for FArray/scalar handling.\n0002: scribe-prompt: A variable used as a function is an external or statement function.\n0003: scribe-prompt: lnrat is an external function (defined in Need/lnrat.f90)\n0004: \n0005: #include <cmath>\n0006: #include <complex>\n0007: #include <constants_mod.hpp>\n0008: #include <epinv2_mod.hpp>"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/tmp/drafts/W2jet/vv.scribe\n# lines: 1-56\n0001: scribe-prompt: Add an extern \"C\" <name>_wrapper; see the seed examples for FArray/scalar handling.\n0002: scribe-prompt: A variable used as a function is an external or statement function.\n0003: scribe-prompt: lnrat is an external function (defined in Need/lnrat.f90)\n0004: \n0005: #include <cmath>\n0006: #include <complex>\n0007: #include <constants_mod.hpp>\n0008: #include <epinv2_mod.hpp>"
 
 [tools.args]
 path = "dev/tmp/drafts/W2jet/vv.scribe"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/W2jet/CMakeLists.txt\n# lines: 1-69\n0001: target_sources(objlib PRIVATE\n0002: aqqb_zbb.f\n0003: atree.f\n0004: a61LLL.f\n0005: a61LRL.f\n0006: a61g.f\n0007: atrLLL.f\n0008: atrLRL.f\n0009: a6g.f\n0010: a6treeg.f\n0011: a6.f\n0012: a61.f\n0013: a62.f\n0014: a6routine.f\n0015: Acalc.f\n0016: A6axBDK.f\n0017: A6texact.f\n0018: BDKqqbggAxAmp.f\n0019: fax.f\n0020: faxsl.f\n0021: fcc.f\n0022: fpm.f\n0023: fpp.f\n0024: fsc.f\n0025: fsl.f\n0026: fvf."
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/W2jet/CMakeLists.txt\n# lines: 1-69\n0001: target_sources(objlib PRIVATE\n0002: aqqb_zbb.f\n0003: atree.f\n0004: a61LLL.f\n0005: a61LRL.f\n0006: a61g.f\n0007: atrLLL.f\n0008: atrLRL.f\n0009: a6g.f\n0010: a6treeg.f\n0011: a6.f\n0012: a61.f\n0013: a62.f\n0014: a6routine.f\n0015: Acalc.f\n0016: A6axBDK.f\n0017: A6texact.f\n0018: BDKqqbggAxAmp.f\n0019: fax.f\n0020: faxsl.f\n0021: fcc.f\n0022: fpm.f\n0023: fpp.f\n0024: fsc.f\n0025: fsl.f\n0026: fvf."
 
 [tools.args]
 path = "software/mcfm/src/W2jet/CMakeLists.txt"
@@ -289,21 +289,21 @@ pattern = "software/mcfm/src/Need/*{lnrat,lfunctions,i3m}*"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Inc/FArray.hpp\n# lines: 1-219\n0001: #ifndef FARRAY_H\n0002: #define FARRAY_H\n0003: \n0004: #include <cstddef>\n0005: #include <initializer_list>\n0006:  \n0007: template <typename T>\n0008: class FArray1D {\n0009: \n0010:   private:\n0011:     bool ownsData;\n0012:     int start_i;\n0013: \n0014:   public:\n0015:     size_t ni;\n0016:     T* data;\n0017: \n0018:     // Constructor to allocate memory\n0019:     FArray1D(size_t ni, int "
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/Inc/FArray.hpp\n# lines: 1-219\n0001: #ifndef FARRAY_H\n0002: #define FARRAY_H\n0003: \n0004: #include <cstddef>\n0005: #include <initializer_list>\n0006:  \n0007: template <typename T>\n0008: class FArray1D {\n0009: \n0010:   private:\n0011:     bool ownsData;\n0012:     int start_i;\n0013: \n0014:   public:\n0015:     size_t ni;\n0016:     T* data;\n0017: \n0018:     // Constructor to allocate memory\n0019:     FArray1D(size_t ni, int "
 
 [tools.args]
 path = "software/mcfm/src/Inc/FArray.hpp"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Mods/constants_mod.hpp\n# lines: 1-95\n0001: /*PROMPT START\n0002: // - You are a code conversion tool for a scientific computing application. The application is organized as different source files in a directory structure.\n0003: // - Convert this file to a C++ source code file. Note that inputs are chunks which belong to same file, do not try to infer around the input or provide any context. Simply convert the source co"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/constants_mod.hpp\n# lines: 1-95\n0001: /*PROMPT START\n0002: // - You are a code conversion tool for a scientific computing application. The application is organized as different source files in a directory structure.\n0003: // - Convert this file to a C++ source code file. Note that inputs are chunks which belong to same file, do not try to infer around the input or provide any context. Simply convert the source co"
 
 [tools.args]
 path = "software/mcfm/src/Mods/constants_mod.hpp"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Mods/heldefs_mod.hpp\n# lines: 1-19\n0001: #ifndef HELDEFS_MOD\n0002: #define HELDEFS_MOD\n0003: \n0004: namespace heldefs_mod {\n0005:   const int hqpgmgmqbm = 1;\n0006:   const int hqpgmgpqbm = 2;\n0007:   const int hqpgpgmqbm = 3;\n0008:   const int hqpgpgpqbm = 4;\n0009: \n0010:   const int hqpqbmgpgp = 5;\n0011:   const int hqpqbmgpgm = 6;\n0012:   const int hqpqbmgmgp = 7;\n0013:   const int hqpqbmgmgm = 8;\n0014: \n0015:   con"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/heldefs_mod.hpp\n# lines: 1-19\n0001: #ifndef HELDEFS_MOD\n0002: #define HELDEFS_MOD\n0003: \n0004: namespace heldefs_mod {\n0005:   const int hqpgmgmqbm = 1;\n0006:   const int hqpgmgpqbm = 2;\n0007:   const int hqpgpgmqbm = 3;\n0008:   const int hqpgpgpqbm = 4;\n0009: \n0010:   const int hqpqbmgpgp = 5;\n0011:   const int hqpqbmgpgm = 6;\n0012:   const int hqpqbmgmgp = 7;\n0013:   const int hqpqbmgmgm = 8;\n0014: \n0015:   con"
 
 [tools.args]
 path = "software/mcfm/src/Mods/heldefs_mod.hpp"
@@ -366,14 +366,14 @@ pattern = "software/mcfm/src/Need/i3m.*"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/W1jet/A51.cpp\n# lines: 1-55\n0001: #include <W1jet.hpp>\n0002: #include <complex>\n0003: #include <constants_mod.hpp>\n0004: #include <epinv2_mod.hpp>\n0005: #include <epinv_mod.hpp>\n0006: #include <mxpart_mod.hpp>\n0007: #include <scale_mod.hpp>\n0008: #include <sprods_com_mod.hpp>\n0009: #include <FArray.hpp>\n0010: #include <Need.hpp>\n0011: \n0012: using namespace constants_mod;\n0013: using namespace mxpart_mod;\n0014: using "
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/W1jet/A51.cpp\n# lines: 1-55\n0001: #include <W1jet.hpp>\n0002: #include <complex>\n0003: #include <constants_mod.hpp>\n0004: #include <epinv2_mod.hpp>\n0005: #include <epinv_mod.hpp>\n0006: #include <mxpart_mod.hpp>\n0007: #include <scale_mod.hpp>\n0008: #include <sprods_com_mod.hpp>\n0009: #include <FArray.hpp>\n0010: #include <Need.hpp>\n0011: \n0012: using namespace constants_mod;\n0013: using namespace mxpart_mod;\n0014: using "
 
 [tools.args]
 path = "software/mcfm/src/W1jet/A51.cpp"
 [[tools]]
 name = "read"
 ok = false
-output_preview = "Error: file not found: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/W1jet/A51_fi.f90"
+output_preview = "Error: file not found: /home/user/JSS-2026-Example/software/mcfm/src/W1jet/A51_fi.f90"
 
 [tools.args]
 path = "software/mcfm/src/W1jet/A51_fi.f90"
@@ -387,35 +387,35 @@ pattern = "software/mcfm/src/W1jet/*A51*"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/W1jet/W1jet.hpp\n# lines: 1-34\n0001: #ifndef W1JET_H\n0002: #define W1JET_H\n0003: \n0004: #include <FArray.hpp>\n0005: #include <complex>\n0006: \n0007: extern double t(int j1, int j2, int j3);\n0008: extern std::complex<double> A52(int j1, int j2, int j3, int j4, int j5, FArray2D<std::complex<double>>& za, FArray2D<std::complex<double>>& zb);\n0009: extern std::complex<double> A51(int j1, int j2, int j3, int j4, int j5, FArr"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/W1jet/W1jet.hpp\n# lines: 1-34\n0001: #ifndef W1JET_H\n0002: #define W1JET_H\n0003: \n0004: #include <FArray.hpp>\n0005: #include <complex>\n0006: \n0007: extern double t(int j1, int j2, int j3);\n0008: extern std::complex<double> A52(int j1, int j2, int j3, int j4, int j5, FArray2D<std::complex<double>>& za, FArray2D<std::complex<double>>& zb);\n0009: extern std::complex<double> A51(int j1, int j2, int j3, int j4, int j5, FArr"
 
 [tools.args]
 path = "software/mcfm/src/W1jet/W1jet.hpp"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/W1jet/t.cpp\n# lines: 1-19\n0001: #include <W1jet.hpp>\n0002: #include <cmath>\n0003: #include <complex>\n0004: #include <mxpart_mod.hpp>\n0005: #include <sprods_com_mod.hpp>\n0006: \n0007: using namespace mxpart_mod;\n0008: using namespace sprods_com_mod;\n0009: \n0010: double t(int j1, int j2, int j3) {\n0011:   double t_value = s(j1, j2) + s(j2, j3) + s(j1, j3);\n0012:   return t_value;\n0013: }\n0014: \n0015: extern \"C\" {\n0016:  "
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/W1jet/t.cpp\n# lines: 1-19\n0001: #include <W1jet.hpp>\n0002: #include <cmath>\n0003: #include <complex>\n0004: #include <mxpart_mod.hpp>\n0005: #include <sprods_com_mod.hpp>\n0006: \n0007: using namespace mxpart_mod;\n0008: using namespace sprods_com_mod;\n0009: \n0010: double t(int j1, int j2, int j3) {\n0011:   double t_value = s(j1, j2) + s(j2, j3) + s(j1, j3);\n0012:   return t_value;\n0013: }\n0014: \n0015: extern \"C\" {\n0016:  "
 
 [tools.args]
 path = "software/mcfm/src/W1jet/t.cpp"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/W1jet/t_fi.f90\n# lines: 1-22\n0001: \n0002: function t(j1,j2,j3) result(res)\n0003:   use, intrinsic :: iso_c_binding\n0004:   use types\n0005:   use mxpart_mod\n0006:   use sprods_com_mod\n0007: \n0008:   implicit none\n0009: \n0010:   integer(c_int), intent(in) :: j1, j2, j3\n0011:   real(c_double) :: res\n0012: \n0013:   interface\n0014:     function t_wrapper(j1,j2,j3) bind(C, name=\"t_wrapper\")\n0015:       import :: c_int, c_do"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/W1jet/t_fi.f90\n# lines: 1-22\n0001: \n0002: function t(j1,j2,j3) result(res)\n0003:   use, intrinsic :: iso_c_binding\n0004:   use types\n0005:   use mxpart_mod\n0006:   use sprods_com_mod\n0007: \n0008:   implicit none\n0009: \n0010:   integer(c_int), intent(in) :: j1, j2, j3\n0011:   real(c_double) :: res\n0012: \n0013:   interface\n0014:     function t_wrapper(j1,j2,j3) bind(C, name=\"t_wrapper\")\n0015:       import :: c_int, c_do"
 
 [tools.args]
 path = "software/mcfm/src/W1jet/t_fi.f90"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Need/Need.hpp\n# lines: 1-46\n0001: #ifndef NEED_H\n0002: #define NEED_H\n0003: \n0004: #include <FArray.hpp>\n0005: #include <complex>\n0006: \n0007: extern void coupling();\n0008: \n0009: extern void couplz(double xw);\n0010: extern void couplz_cms(std::complex<double> zxw_in);\n0011: \n0012: extern void spinoru(int N, const FArray2D<double>& p, FArray2D<std::complex<double>>& za, FArray2D<std::complex<double>>& zb);\n0013: \n0014"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/Need/Need.hpp\n# lines: 1-46\n0001: #ifndef NEED_H\n0002: #define NEED_H\n0003: \n0004: #include <FArray.hpp>\n0005: #include <complex>\n0006: \n0007: extern void coupling();\n0008: \n0009: extern void couplz(double xw);\n0010: extern void couplz_cms(std::complex<double> zxw_in);\n0011: \n0012: extern void spinoru(int N, const FArray2D<double>& p, FArray2D<std::complex<double>>& za, FArray2D<std::complex<double>>& zb);\n0013: \n0014"
 
 [tools.args]
 path = "software/mcfm/src/Need/Need.hpp"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Need/i3m.cpp\n# lines: 1-93\n0001: #include <iostream>\n0002: #include <algorithm>\n0003: #include <cmath>\n0004: #include <complex>\n0005: #include <constants_mod.hpp>\n0006: #include <Need.hpp>\n0007: #include <SpecialFunctions.hpp>\n0008: \n0009: double I3m1a(double s1, double s2, double s3, double rtmdel) {\n0010:     using namespace constants_mod;\n0011: \n0012:     double d1 = s1 - s2 - s3;\n0013:     double d2 = s2 - s3 - s1"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/Need/i3m.cpp\n# lines: 1-93\n0001: #include <iostream>\n0002: #include <algorithm>\n0003: #include <cmath>\n0004: #include <complex>\n0005: #include <constants_mod.hpp>\n0006: #include <Need.hpp>\n0007: #include <SpecialFunctions.hpp>\n0008: \n0009: double I3m1a(double s1, double s2, double s3, double rtmdel) {\n0010:     using namespace constants_mod;\n0011: \n0012:     double d1 = s1 - s2 - s3;\n0013:     double d2 = s2 - s3 - s1"
 
 [tools.args]
 path = "software/mcfm/src/Need/i3m.cpp"
@@ -423,28 +423,28 @@ limit = 100
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Mods/mxpart_mod.hpp\n# lines: 1-75\n0001: /* LLM INSTRUCTIONS START\n0002:  * You are a code conversion tool for a scientific computing application.\n0003:  * The application is organized as different source files in a directory structure. \n0004:  * I will give you a FORTRAN file which you will convert to a C++ source code file.\n0005:  * \n0006:  * The code you will receive is part of a bigger codebase so do not add additi"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/mxpart_mod.hpp\n# lines: 1-75\n0001: /* LLM INSTRUCTIONS START\n0002:  * You are a code conversion tool for a scientific computing application.\n0003:  * The application is organized as different source files in a directory structure. \n0004:  * I will give you a FORTRAN file which you will convert to a C++ source code file.\n0005:  * \n0006:  * The code you will receive is part of a bigger codebase so do not add additi"
 
 [tools.args]
 path = "software/mcfm/src/Mods/mxpart_mod.hpp"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Mods/sprods_com_mod.hpp\n# lines: 1-10\n0001: #ifndef SPRODS_COM_MOD\n0002: #define SPRODS_COM_MOD\n0003: \n0004: #include <FArray.hpp>\n0005: \n0006: namespace sprods_com_mod {\n0007:   extern FArray2D<double> s;\n0008: }\n0009: \n0010: #endif\n"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/sprods_com_mod.hpp\n# lines: 1-10\n0001: #ifndef SPRODS_COM_MOD\n0002: #define SPRODS_COM_MOD\n0003: \n0004: #include <FArray.hpp>\n0005: \n0006: namespace sprods_com_mod {\n0007:   extern FArray2D<double> s;\n0008: }\n0009: \n0010: #endif\n"
 
 [tools.args]
 path = "software/mcfm/src/Mods/sprods_com_mod.hpp"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Mods/scale_mod.hpp\n# lines: 1-8\n0001: #ifndef SCALE_MOD\n0002: #define SCALE_MOD\n0003: \n0004: namespace scale_mod {\n0005:   extern double scale, musq;\n0006: }\n0007: \n0008: #endif\n"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/scale_mod.hpp\n# lines: 1-8\n0001: #ifndef SCALE_MOD\n0002: #define SCALE_MOD\n0003: \n0004: namespace scale_mod {\n0005:   extern double scale, musq;\n0006: }\n0007: \n0008: #endif\n"
 
 [tools.args]
 path = "software/mcfm/src/Mods/scale_mod.hpp"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Mods/epinv_mod.hpp\n# lines: 1-8\n0001: #ifndef EPINV_MOD\n0002: #define EPINV_MOD\n0003: \n0004: namespace epinv_mod {\n0005:   extern double epinv;\n0006: }\n0007: \n0008: #endif\n"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/epinv_mod.hpp\n# lines: 1-8\n0001: #ifndef EPINV_MOD\n0002: #define EPINV_MOD\n0003: \n0004: namespace epinv_mod {\n0005:   extern double epinv;\n0006: }\n0007: \n0008: #endif\n"
 
 [tools.args]
 path = "software/mcfm/src/Mods/epinv_mod.hpp"
@@ -467,7 +467,7 @@ limit = 40
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Mods/epinv2_mod.hpp\n# lines: 1-83\n0001: /* LLM INSTRUCTIONS START\n0002:  * You are a code conversion tool for a scientific computing application.\n0003:  * The application is organized as different source files in a directory structure. \n0004:  * I will give you a FORTRAN file which you will convert to a C++ source code file.\n0005:  * \n0006:  * The code you will receive is part of a bigger codebase so do not add additi"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/epinv2_mod.hpp\n# lines: 1-83\n0001: /* LLM INSTRUCTIONS START\n0002:  * You are a code conversion tool for a scientific computing application.\n0003:  * The application is organized as different source files in a directory structure. \n0004:  * I will give you a FORTRAN file which you will convert to a C++ source code file.\n0005:  * \n0006:  * The code you will receive is part of a bigger codebase so do not add additi"
 
 [tools.args]
 path = "software/mcfm/src/Mods/epinv2_mod.hpp"
@@ -490,14 +490,14 @@ timeout = 120
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/W1jet/deprecated/A51_fi.f90\n# lines: 1-27\n0001: \n0002: function A51(j1,j2,j3,j4,j5,za,zb) result(res)\n0003:   use, intrinsic :: iso_c_binding\n0004:   use constants_mod\n0005:   use mxpart_mod\n0006:   use sprods_com_mod\n0007:   use scale_mod\n0008:   use epinv_mod\n0009:   use epinv2_mod\n0010: \n0011:   implicit none\n0012: \n0013:   complex(c_double_complex) :: res\n0014:   complex(c_double_complex), dimension(mxpart,mxpart)"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/W1jet/deprecated/A51_fi.f90\n# lines: 1-27\n0001: \n0002: function A51(j1,j2,j3,j4,j5,za,zb) result(res)\n0003:   use, intrinsic :: iso_c_binding\n0004:   use constants_mod\n0005:   use mxpart_mod\n0006:   use sprods_com_mod\n0007:   use scale_mod\n0008:   use epinv_mod\n0009:   use epinv2_mod\n0010: \n0011:   implicit none\n0012: \n0013:   complex(c_double_complex) :: res\n0014:   complex(c_double_complex), dimension(mxpart,mxpart)"
 
 [tools.args]
 path = "software/mcfm/src/W1jet/deprecated/A51_fi.f90"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/W1jet/deprecated/A5NLO_fi.f90\n# lines: 1-21\n0001: \n0002: subroutine A5NLO(j1,j2,j3,j4,j5,za,zb,A5LOm,A5NLOm,A5ax)\n0003:   use, intrinsic :: iso_c_binding\n0004:   use mxpart_mod\n0005:   implicit none\n0006: \n0007:   integer(c_int), intent(in) :: j1,j2,j3,j4,j5\n0008:   complex(c_double_complex), dimension(mxpart,mxpart), intent(inout) :: za, zb\n0009:   complex(c_double_complex), intent(inout) :: A5LOm, A5NLOm, A5ax\n0010:"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/W1jet/deprecated/A5NLO_fi.f90\n# lines: 1-21\n0001: \n0002: subroutine A5NLO(j1,j2,j3,j4,j5,za,zb,A5LOm,A5NLOm,A5ax)\n0003:   use, intrinsic :: iso_c_binding\n0004:   use mxpart_mod\n0005:   implicit none\n0006: \n0007:   integer(c_int), intent(in) :: j1,j2,j3,j4,j5\n0008:   complex(c_double_complex), dimension(mxpart,mxpart), intent(inout) :: za, zb\n0009:   complex(c_double_complex), intent(inout) :: A5LOm, A5NLOm, A5ax\n0010:"
 
 [tools.args]
 path = "software/mcfm/src/W1jet/deprecated/A5NLO_fi.f90"
@@ -512,21 +512,21 @@ timeout = 120
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/W2jet/a6.f\n# lines: 1-48\n0001: !\n0002: !  SPDX-License-Identifier: GPL-3.0-or-later\n0003: !  Copyright (C) 2019-2022, respective authors of MCFM.\n0004: !\n0005:       function a6(st,j1,j2,j3,j4,j5,j6,za,zb)\n0006:       use types\n0007: \n0008: c***********************************************************************\n0009: c     Author: R.K. Ellis                                               *\n0010: c     July, 1998.     "
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/W2jet/a6.f\n# lines: 1-48\n0001: !\n0002: !  SPDX-License-Identifier: GPL-3.0-or-later\n0003: !  Copyright (C) 2019-2022, respective authors of MCFM.\n0004: !\n0005:       function a6(st,j1,j2,j3,j4,j5,j6,za,zb)\n0006:       use types\n0007: \n0008: c***********************************************************************\n0009: c     Author: R.K. Ellis                                               *\n0010: c     July, 1998.     "
 
 [tools.args]
 path = "software/mcfm/src/W2jet/a6.f"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/W2jet/a6g.f\n# lines: 1-28\n0001: !\n0002: !  SPDX-License-Identifier: GPL-3.0-or-later\n0003: !  Copyright (C) 2019-2022, respective authors of MCFM.\n0004: !\n0005: \n0006:       function a6g(st,j1,j2,j3,j4,j5,j6,za,zb)\n0007:       use types\n0008: \n0009: c***********************************************************************\n0010: c     Author: R.K. Ellis                                               *\n0011: c     August,"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/W2jet/a6g.f\n# lines: 1-28\n0001: !\n0002: !  SPDX-License-Identifier: GPL-3.0-or-later\n0003: !  Copyright (C) 2019-2022, respective authors of MCFM.\n0004: !\n0005: \n0006:       function a6g(st,j1,j2,j3,j4,j5,j6,za,zb)\n0007:       use types\n0008: \n0009: c***********************************************************************\n0010: c     Author: R.K. Ellis                                               *\n0011: c     August,"
 
 [tools.args]
 path = "software/mcfm/src/W2jet/a6g.f"
 [[tools]]
 name = "write"
 ok = true
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/W2jet/atree.hpp (342 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/software/mcfm/src/W2jet/atree.hpp (342 bytes)"
 
 [tools.args]
 path = "software/mcfm/src/W2jet/atree.hpp"
@@ -534,7 +534,7 @@ content = "#ifndef W2JET_ATREE_HPP\n#define W2JET_ATREE_HPP\n\n#include <FArray.
 [[tools]]
 name = "write"
 ok = true
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/W2jet/atree.cpp (1322 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/software/mcfm/src/W2jet/atree.cpp (1322 bytes)"
 
 [tools.args]
 path = "software/mcfm/src/W2jet/atree.cpp"
@@ -542,7 +542,7 @@ content = "// SPDX-License-Identifier: GPL-3.0-or-later\n#include \"atree.hpp\"\
 [[tools]]
 name = "write"
 ok = true
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/W2jet/atree_fi.f90 (872 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/software/mcfm/src/W2jet/atree_fi.f90 (872 bytes)"
 
 [tools.args]
 path = "software/mcfm/src/W2jet/atree_fi.f90"
@@ -550,7 +550,7 @@ content = "function atree(st,j1,j2,j3,j4,j5,j6,za,zb) result(res)\n  use, intrin
 [[tools]]
 name = "edit"
 ok = true
-output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/W2jet/CMakeLists.txt\",\n  \"applied\": 1,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 7,\n      \"new_len\": 22,\n      \"before_snippet\": \"target_sources(objlib PRIVATE\\naqqb_zbb.f\\natree.f\\na61LLL.f\\na61LRL.f\\na61g.f\\natrLLL.f\\natrLRL.f\\na6g.f\\na6treeg.f\\na6.f\\na61.f\\na62.f\\na6r…\",\n      \"after_snippet\": \"target_sources(objlib PRIVATE\\naqqb_zbb.f\\natree.cpp\\natree_"
+output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/user/JSS-2026-Example/software/mcfm/src/W2jet/CMakeLists.txt\",\n  \"applied\": 1,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 7,\n      \"new_len\": 22,\n      \"before_snippet\": \"target_sources(objlib PRIVATE\\naqqb_zbb.f\\natree.f\\na61LLL.f\\na61LRL.f\\na61g.f\\natrLLL.f\\natrLRL.f\\na6g.f\\na6treeg.f\\na6.f\\na61.f\\na62.f\\na6r…\",\n      \"after_snippet\": \"target_sources(objlib PRIVATE\\naqqb_zbb.f\\natree.cpp\\natree_"
 
 [tools.args]
 path = "software/mcfm/src/W2jet/CMakeLists.txt"
@@ -561,7 +561,7 @@ newText = "atree.cpp\natree_fi.f90"
 [[tools]]
 name = "bash"
 ok = true
-output_preview = "exit_code: 0\nSTDOUT:\nx1b[95mROOT:x1b[0m /home/akash/Desktop/Akash/Projects/JSS-Paper-Example\nx1b[95mNODE:x1b[0m <ROOT>/tests/mcfm\n\nx1b[95mSCRIPTS: x1b[0m\n    - <ROOT>/config.sh\n    - <ROOT>/environment.sh\n    - <ROOT>/tests/mcfm/test.sh\n\nx1b[95mEXECUTE:x1b[0m <ROOT>/tests/mcfm/job.submit\nin 1:29.1 \nx1b[92mSUCCESS x1b[0m\n\nx1b[95mOUTPUT:x1b[0m <ROOT>/tests/mcfm/job.output\n\nSTDERR:\n"
+output_preview = "exit_code: 0\nSTDOUT:\nx1b[95mROOT:x1b[0m /home/user/JSS-2026-Example\nx1b[95mNODE:x1b[0m <ROOT>/tests/mcfm\n\nx1b[95mSCRIPTS: x1b[0m\n    - <ROOT>/config.sh\n    - <ROOT>/environment.sh\n    - <ROOT>/tests/mcfm/test.sh\n\nx1b[95mEXECUTE:x1b[0m <ROOT>/tests/mcfm/job.submit\nin 1:29.1 \nx1b[92mSUCCESS x1b[0m\n\nx1b[95mOUTPUT:x1b[0m <ROOT>/tests/mcfm/job.output\n\nSTDERR:\n"
 
 [tools.args]
 command = "jobrunner submit tests/mcfm"
@@ -577,21 +577,21 @@ timeout = 120
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/environment.sh\n# lines: 1-41\n0001: # Shell configuration shared across the lab notebook.\n0002: #\n0003: # Sourcing this file exports the project paths every orchestrator, skill, and\n0004: # tool depends on. It resolves the project root from THIS script's own location\n0005: # (via BASH_SOURCE), not the current working directory, so\n0006: #   source /abs/path/to/environment.sh\n0007: # is correct from any cwd — including inside a subagent "
+output_preview = "# path: /home/user/JSS-2026-Example/environment.sh\n# lines: 1-41\n0001: # Shell configuration shared across the lab notebook.\n0002: #\n0003: # Sourcing this file exports the project paths every orchestrator, skill, and\n0004: # tool depends on. It resolves the project root from THIS script's own location\n0005: # (via BASH_SOURCE), not the current working directory, so\n0006: #   source /abs/path/to/environment.sh\n0007: # is correct from any cwd — including inside a subagent "
 
 [tools.args]
 path = "environment.sh"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/config.sh\n# lines: 1-2\n0001: # Per-machine site selector. Points environment.sh at sites/$SiteName/environment.sh.\n0002: export SiteName=\"supercomp01a\"\n"
+output_preview = "# path: /home/user/JSS-2026-Example/config.sh\n# lines: 1-2\n0001: # Per-machine site selector. Points environment.sh at sites/$SiteName/environment.sh.\n0002: export SiteName=\"supercomp01a\"\n"
 
 [tools.args]
 path = "config.sh"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/tests/mcfm/job.output\n# lines: 1-80\n0001: ---------------------------------------------------------------------------------------\n0002: Lab-notebook environment:\n0003:   PROJECT_HOME=/home/akash/Desktop/Akash/Projects/JSS-Paper-Example\n0004:   SITE_HOME=/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/sites/supercomp01a\n0005:   MCFM_HOME=/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm\n0006:   PEPPER_HOME=/home/ak"
+output_preview = "# path: /home/user/JSS-2026-Example/tests/mcfm/job.output\n# lines: 1-80\n0001: ---------------------------------------------------------------------------------------\n0002: Lab-notebook environment:\n0003:   PROJECT_HOME=/home/user/JSS-2026-Example\n0004:   SITE_HOME=/home/user/JSS-2026-Example/sites/supercomp01a\n0005:   MCFM_HOME=/home/user/JSS-2026-Example/software/mcfm\n0006:   PEPPER_HOME=/home/us"
 
 [tools.args]
 path = "tests/mcfm/job.output"
@@ -608,7 +608,7 @@ timeout = 120
 [[tools]]
 name = "write"
 ok = true
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/W2jet/fvf.hpp (238 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/software/mcfm/src/W2jet/fvf.hpp (238 bytes)"
 
 [tools.args]
 path = "software/mcfm/src/W2jet/fvf.hpp"
@@ -616,7 +616,7 @@ content = "#ifndef W2JET_FVF_HPP\n#define W2JET_FVF_HPP\n#include <FArray.hpp>\n
 [[tools]]
 name = "write"
 ok = true
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/W2jet/fvf.cpp (1686 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/software/mcfm/src/W2jet/fvf.cpp (1686 bytes)"
 
 [tools.args]
 path = "software/mcfm/src/W2jet/fvf.cpp"
@@ -624,7 +624,7 @@ content = "// SPDX-License-Identifier: GPL-3.0-or-later\n#include \"fvf.hpp\"\n#
 [[tools]]
 name = "write"
 ok = true
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/W2jet/fvf_fi.f90 (615 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/software/mcfm/src/W2jet/fvf_fi.f90 (615 bytes)"
 
 [tools.args]
 path = "software/mcfm/src/W2jet/fvf_fi.f90"
@@ -632,7 +632,7 @@ content = "function Fvf(st,j1,j2,j3,j4,j5,j6,za,zb) result(res)\n use,intrinsic:
 [[tools]]
 name = "write"
 ok = true
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/W2jet/subqcd.hpp (260 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/software/mcfm/src/W2jet/subqcd.hpp (260 bytes)"
 
 [tools.args]
 path = "software/mcfm/src/W2jet/subqcd.hpp"
@@ -640,7 +640,7 @@ content = "#ifndef W2JET_SUBQCD_HPP\n#define W2JET_SUBQCD_HPP\n#include <FArray.
 [[tools]]
 name = "write"
 ok = true
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/W2jet/subqcd.cpp (1597 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/software/mcfm/src/W2jet/subqcd.cpp (1597 bytes)"
 
 [tools.args]
 path = "software/mcfm/src/W2jet/subqcd.cpp"
@@ -648,7 +648,7 @@ content = "// SPDX-License-Identifier: GPL-3.0-or-later\n#include \"subqcd.hpp\"
 [[tools]]
 name = "write"
 ok = true
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/W2jet/subqcd_fi.f90 (601 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/software/mcfm/src/W2jet/subqcd_fi.f90 (601 bytes)"
 
 [tools.args]
 path = "software/mcfm/src/W2jet/subqcd_fi.f90"
@@ -656,7 +656,7 @@ content = "subroutine subqcd(i1,i2,i3,i4,i5,i6,za,zb,amp)\n use,intrinsic::iso_c
 [[tools]]
 name = "write"
 ok = true
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/W2jet/vv.hpp (176 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/software/mcfm/src/W2jet/vv.hpp (176 bytes)"
 
 [tools.args]
 path = "software/mcfm/src/W2jet/vv.hpp"
@@ -664,7 +664,7 @@ content = "#ifndef W2JET_VV_HPP\n#define W2JET_VV_HPP\n#include <complex>\n#incl
 [[tools]]
 name = "write"
 ok = true
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/W2jet/vv.cpp (1075 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/software/mcfm/src/W2jet/vv.cpp (1075 bytes)"
 
 [tools.args]
 path = "software/mcfm/src/W2jet/vv.cpp"
@@ -672,7 +672,7 @@ content = "// SPDX-License-Identifier: GPL-3.0-or-later\n#include \"vv.hpp\"\n#i
 [[tools]]
 name = "write"
 ok = true
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/W2jet/vv_fi.f90 (598 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/software/mcfm/src/W2jet/vv_fi.f90 (598 bytes)"
 
 [tools.args]
 path = "software/mcfm/src/W2jet/vv_fi.f90"
@@ -680,7 +680,7 @@ content = "function vv(st,j1,j2,j3,j4,j5,j6) result(res)\n use,intrinsic::iso_c_
 [[tools]]
 name = "write"
 ok = true
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/W2jet/vvg.hpp (146 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/software/mcfm/src/W2jet/vvg.hpp (146 bytes)"
 
 [tools.args]
 path = "software/mcfm/src/W2jet/vvg.hpp"
@@ -688,7 +688,7 @@ content = "#ifndef W2JET_VVG_HPP\n#define W2JET_VVG_HPP\n#include <complex>\nstd
 [[tools]]
 name = "write"
 ok = true
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/W2jet/vvg.cpp (1583 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/software/mcfm/src/W2jet/vvg.cpp (1583 bytes)"
 
 [tools.args]
 path = "software/mcfm/src/W2jet/vvg.cpp"
@@ -696,7 +696,7 @@ content = "// SPDX-License-Identifier: GPL-3.0-or-later\n#include \"vvg.hpp\"\n#
 [[tools]]
 name = "write"
 ok = true
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/W2jet/vvg_fi.f90 (460 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/software/mcfm/src/W2jet/vvg_fi.f90 (460 bytes)"
 
 [tools.args]
 path = "software/mcfm/src/W2jet/vvg_fi.f90"
@@ -704,7 +704,7 @@ content = "function vvg(st,j1,j2,j3,j4,j5,j6) result(res)\n use,intrinsic::iso_c
 [[tools]]
 name = "edit"
 ok = true
-output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/W2jet/CMakeLists.txt\",\n  \"applied\": 3,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 5,\n      \"new_len\": 18,\n      \"before_snippet\": \"…6axBDK.f\\nA6texact.f\\nBDKqqbggAxAmp.f\\nfax.f\\nfaxsl.f\\nfcc.f\\nfpm.f\\nfpp.f\\nfsc.f\\nfsl.f\\nfvf.f\\nFtexact.f\\nggZZcapture.f\\nggZZmassamp_new.f\\nLtfunctions.f\\nLRcalc.f\\nqqbggAxbox3x12…\",\n      \"after_snippet\": \"…6axBDK.f\\nA6texact"
+output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/user/JSS-2026-Example/software/mcfm/src/W2jet/CMakeLists.txt\",\n  \"applied\": 3,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 5,\n      \"new_len\": 18,\n      \"before_snippet\": \"…6axBDK.f\\nA6texact.f\\nBDKqqbggAxAmp.f\\nfax.f\\nfaxsl.f\\nfcc.f\\nfpm.f\\nfpp.f\\nfsc.f\\nfsl.f\\nfvf.f\\nFtexact.f\\nggZZcapture.f\\nggZZmassamp_new.f\\nLtfunctions.f\\nLRcalc.f\\nqqbggAxbox3x12…\",\n      \"after_snippet\": \"…6axBDK.f\\nA6texact"
 
 [tools.args]
 path = "software/mcfm/src/W2jet/CMakeLists.txt"
@@ -723,7 +723,7 @@ newText = "vv.cpp\nvv_fi.f90\nvvg.cpp\nvvg_fi.f90"
 [[tools]]
 name = "bash"
 ok = true
-output_preview = "exit_code: 0\nSTDOUT:\nx1b[95mROOT:x1b[0m /home/akash/Desktop/Akash/Projects/JSS-Paper-Example\nx1b[95mNODE:x1b[0m <ROOT>/tests/mcfm\n\nx1b[95mSCRIPTS: x1b[0m\n    - <ROOT>/config.sh\n    - <ROOT>/environment.sh\n    - <ROOT>/tests/mcfm/test.sh\n\nx1b[95mEXECUTE:x1b[0m <ROOT>/tests/mcfm/job.submit\nin 1:30.7 \nx1b[92mSUCCESS x1b[0m\n\nx1b[95mOUTPUT:x1b[0m <ROOT>/tests/mcfm/job.output\n\nSTDERR:\n"
+output_preview = "exit_code: 0\nSTDOUT:\nx1b[95mROOT:x1b[0m /home/user/JSS-2026-Example\nx1b[95mNODE:x1b[0m <ROOT>/tests/mcfm\n\nx1b[95mSCRIPTS: x1b[0m\n    - <ROOT>/config.sh\n    - <ROOT>/environment.sh\n    - <ROOT>/tests/mcfm/test.sh\n\nx1b[95mEXECUTE:x1b[0m <ROOT>/tests/mcfm/job.submit\nin 1:30.7 \nx1b[92mSUCCESS x1b[0m\n\nx1b[95mOUTPUT:x1b[0m <ROOT>/tests/mcfm/job.output\n\nSTDERR:\n"
 
 [tools.args]
 command = "jobrunner submit tests/mcfm"
@@ -754,7 +754,7 @@ pattern = "software/mcfm/src/W2jet/deprecated/*"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/tests/mcfm/job.output\n# lines: 900-943\n0900: g g h: x1b[1;32m PASSED x1b[0m\n0901: x1b[1m===> hjj (SM) processes <===x1b[0m\n0902: d d h d d: x1b[1;32m PASSED x1b[0m\n0903: d d~ h d d~: x1b[1;32m PASSED x1b[0m\n0904: d d~ h u u~: x1b[1;32m PASSED x1b[0m\n0905: d d~ h g g: x1b[1;32m PASSED x1b[0m\n0906: d u h d u: x1b[1;32m PASSED x1b[0m\n0907: d u~ h d u~: x1b[1;32m PASSED x1b[0m\n0908: d g h g d: x1b[1;32m PASSED x1b[0m\n0909: d~ d h d d~: x1b[1;32m PASSED x1b[0m\n0910: d~ d h u u~: "
+output_preview = "# path: /home/user/JSS-2026-Example/tests/mcfm/job.output\n# lines: 900-943\n0900: g g h: x1b[1;32m PASSED x1b[0m\n0901: x1b[1m===> hjj (SM) processes <===x1b[0m\n0902: d d h d d: x1b[1;32m PASSED x1b[0m\n0903: d d~ h d d~: x1b[1;32m PASSED x1b[0m\n0904: d d~ h u u~: x1b[1;32m PASSED x1b[0m\n0905: d d~ h g g: x1b[1;32m PASSED x1b[0m\n0906: d u h d u: x1b[1;32m PASSED x1b[0m\n0907: d u~ h d u~: x1b[1;32m PASSED x1b[0m\n0908: d g h g d: x1b[1;32m PASSED x1b[0m\n0909: d~ d h d d~: x1b[1;32m PASSED x1b[0m\n0910: d~ d h u u~: "
 
 [tools.args]
 path = "tests/mcfm/job.output"
@@ -763,7 +763,7 @@ limit = 100
 [[tools]]
 name = "write"
 ok = true
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tmp/finalize_mcfm_group.py (738 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/dev/tmp/finalize_mcfm_group.py (738 bytes)"
 
 [tools.args]
 path = "dev/tmp/finalize_mcfm_group.py"

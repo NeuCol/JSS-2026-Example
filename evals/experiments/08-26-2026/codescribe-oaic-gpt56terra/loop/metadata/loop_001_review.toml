@@ -2,8 +2,8 @@ run_id = "20260826-145551-d22aff"
 loop_index = 1
 phase = "review"
 model = "oaic-gpt56terra"
-task_file = "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/loop.toml"
-workdir = "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example"
+task_file = "/home/user/JSS-2026-Example/dev/transformations/mcfm-translate/loop.toml"
+workdir = "/home/user/JSS-2026-Example"
 stop_reason = "final_text"
 final_text_present = true
 iterations = 3
@@ -21,7 +21,7 @@ with_line_numbers = 0
 [[tools]]
 name = "read"
 ok = false
-output_preview = "Error: file not found: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/.codescribe/loop/review_output.toml"
+output_preview = "Error: file not found: /home/user/JSS-2026-Example/.codescribe/loop/review_output.toml"
 
 [tools.args]
 path = ".codescribe/loop/review_output.toml"
@@ -37,7 +37,7 @@ with_line_numbers = 0
 [[tools]]
 name = "write"
 ok = true
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/.codescribe/loop/review_output.toml (1278 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/.codescribe/loop/review_output.toml (1278 bytes)"
 
 [tools.args]
 path = ".codescribe/loop/review_output.toml"

@@ -38,7 +38,7 @@ tool = "read"
 ok = true
 duration_ms = 0.842
 output_chars = 840
-output_preview = "# path: /home/adubey/JSS-2026-Example/dev/transformations/mcfm-translate/loop.toml\n# lines: 1-18\n0001: # CodeScribe loop for Fortran -> C++.\n0002: #\n0003: # Run from the project root:\n0004: #   code-scribe loop -p dev/transformations/mcfm-translate/loop.toml -m <model>\n0005: \n0006: [tools]\n0007: bash = [\"jobrunner\", \"python3\"]\n0008: \n0009: [[chat.user]]\n0010: content = '''\n0011: Each round, follow the round algorithm in dev/transformations/mcfm-translate/current_plan.md and\n0012: the contract in"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/loop.toml\n# lines: 1-18\n0001: # CodeScribe loop for Fortran -> C++.\n0002: #\n0003: # Run from the project root:\n0004: #   code-scribe loop -p dev/transformations/mcfm-translate/loop.toml -m <model>\n0005: \n0006: [tools]\n0007: bash = [\"jobrunner\", \"python3\"]\n0008: \n0009: [[chat.user]]\n0010: content = '''\n0011: Each round, follow the round algorithm in dev/transformations/mcfm-translate/current_plan.md and\n0012: the contract in"
 ts = "2026-08-14T00:34:08.505989+00:00"
 
 [[event]]
@@ -127,7 +127,7 @@ ok = true
 duration_ms = 2.89
 output_chars = 100973
 output_preview = '''
-# path: /home/adubey/JSS-2026-Example/.codescribe/loop/author.toml
+# path: /home/user/JSS-2026-Example/.codescribe/loop/author.toml
 # lines: 1-2897
 0001: 
 0002: [[event]]
@@ -188,7 +188,7 @@ ok = true
 duration_ms = 1.249
 output_chars = 6460
 output_preview = '''
-# path: /home/adubey/JSS-2026-Example/.codescribe/loop/author.toml
+# path: /home/user/JSS-2026-Example/.codescribe/loop/author.toml
 # lines: 2700-2896
 2700: [[event]]
 2701: event = "tool_end"
@@ -224,11 +224,11 @@ ok = true
 duration_ms = 1.184
 output_chars = 360
 output_preview = '''
-# path: /home/adubey/JSS-2026-Example/.codescribe/loop/state.toml
+# path: /home/user/JSS-2026-Example/.codescribe/loop/state.toml
 # lines: 1-6
 0001: run_id = "20260814-092938-df4e94"
-0002: workdir = "/home/adubey/JSS-2026-Example"
-0003: task_file = "/home/adubey/JSS-2026-Example/dev/transformations/mcfm-translate/loop.toml"
+0002: workdir = "/home/user/JSS-2026-Example"
+0003: task_file = "/home/user/JSS-2026-Example/dev/transformations/mcfm-translate/loop.toml"
 0004: loop_index = 1
 0005: phase = "review"
 0006: updated_at = "2026-08-14T00:34:05.595363+00:00"
@@ -322,7 +322,7 @@ tool = "read"
 ok = true
 duration_ms = 1.695
 output_chars = 9560
-output_preview = "# path: /home/adubey/JSS-2026-Example/.codescribe/loop/author.toml\n# lines: 1840-2039\n1840: ts = \"2026-08-14T00:30:51.398850+00:00\"\n1841: \n1842: [[event]]\n1843: event = \"model_response\"\n1844: run_id = \"20260814-092938-17c268\"\n1845: iteration = 21\n1846: duration_ms = 12725.743\n1847: text_chars = 960\n1848: tool_calls = 4\n1849: usage = \"{\\\"prompt_tokens\\\": 63393, \\\"completion_tokens\\\": 527, \\\"total_tokens\\\": 63920, \\\"reasoning_tokens\\\": 3, \\\"cache_read_input_tokens\\\": 59776}\"\n1850: model_text = '''"
+output_preview = "# path: /home/user/JSS-2026-Example/.codescribe/loop/author.toml\n# lines: 1840-2039\n1840: ts = \"2026-08-14T00:30:51.398850+00:00\"\n1841: \n1842: [[event]]\n1843: event = \"model_response\"\n1844: run_id = \"20260814-092938-17c268\"\n1845: iteration = 21\n1846: duration_ms = 12725.743\n1847: text_chars = 960\n1848: tool_calls = 4\n1849: usage = \"{\\\"prompt_tokens\\\": 63393, \\\"completion_tokens\\\": 527, \\\"total_tokens\\\": 63920, \\\"reasoning_tokens\\\": 3, \\\"cache_read_input_tokens\\\": 59776}\"\n1850: model_text = '''"
 ts = "2026-08-14T00:34:16.663475+00:00"
 
 [[event]]
@@ -428,7 +428,7 @@ ok = true
 duration_ms = 1.424
 output_chars = 2960
 output_preview = '''
-# path: /home/adubey/JSS-2026-Example/.codescribe/loop/author.toml
+# path: /home/user/JSS-2026-Example/.codescribe/loop/author.toml
 # lines: 2140-2219
 2140: output_chars = 0
 2141: ts = "2026-08-14T00:31:10.823805+00:00"
@@ -487,7 +487,7 @@ ok = true
 duration_ms = 1.223
 output_chars = 5271
 output_preview = '''
-# path: /home/adubey/JSS-2026-Example/.codescribe/loop/author.toml
+# path: /home/user/JSS-2026-Example/.codescribe/loop/author.toml
 # lines: 480-629
 0480: iteration = 5
 0481: stop_reason = "tool_calls"
@@ -547,7 +547,7 @@ ok = true
 duration_ms = 1.508
 output_chars = 6998
 output_preview = '''
-# path: /home/adubey/JSS-2026-Example/.codescribe/loop/author.toml
+# path: /home/user/JSS-2026-Example/.codescribe/loop/author.toml
 # lines: 2040-2229
 2040: ts = "2026-08-14T00:31:10.807533+00:00"
 2041: 
@@ -582,7 +582,7 @@ ok = true
 duration_ms = 1.435
 output_chars = 7545
 output_preview = '''
-# path: /home/adubey/JSS-2026-Example/.codescribe/loop/author.toml
+# path: /home/user/JSS-2026-Example/.codescribe/loop/author.toml
 # lines: 630-839
 0630: model_text = "The shell is quite restrictive. I'll write a small helper script to analyze the roadmap instead."
 0631: ts = "2026-08-14T00:30:07.114876+00:00"
@@ -634,7 +634,7 @@ tool = "read"
 ok = true
 duration_ms = 1.207
 output_chars = 3972
-output_preview = "# path: /home/adubey/JSS-2026-Example/.codescribe/loop/author.toml\n# lines: 2229-2358\n2229: 0007: couplz_cms.cpp\n2230: 0008: cplx.f90\n2231: 0009: cplx.cpp\n2232: 0010: dot.f90\n2233: 0011: dot.cpp\n2234: 0012: dotem.f90\n2235: 0013: dotem.cpp\n2236: 0014: fixcms.f90\n2237: 0015: fixcms.cpp\n2238: 0016: i3m.f90\n2239: 0017: i3m.cpp\n2240: 0018: lfunctions.f90\n2241: 0019: lfunctions.cpp\n2242: 0020: lnrat.f90\n2243: 0021: lnrat.cpp\n2244: 0022: spinoru.f90\n2245: 0023: spinoru.cpp\n2246: '''\n2247: ts = \"2026-08"
+output_preview = "# path: /home/user/JSS-2026-Example/.codescribe/loop/author.toml\n# lines: 2229-2358\n2229: 0007: couplz_cms.cpp\n2230: 0008: cplx.f90\n2231: 0009: cplx.cpp\n2232: 0010: dot.f90\n2233: 0011: dot.cpp\n2234: 0012: dotem.f90\n2235: 0013: dotem.cpp\n2236: 0014: fixcms.f90\n2237: 0015: fixcms.cpp\n2238: 0016: i3m.f90\n2239: 0017: i3m.cpp\n2240: 0018: lfunctions.f90\n2241: 0019: lfunctions.cpp\n2242: 0020: lnrat.f90\n2243: 0021: lnrat.cpp\n2244: 0022: spinoru.f90\n2245: 0023: spinoru.cpp\n2246: '''\n2247: ts = \"2026-08"
 ts = "2026-08-14T00:34:30.138067+00:00"
 
 [[event]]
@@ -677,7 +677,7 @@ ok = true
 duration_ms = 1.302
 output_chars = 4560
 output_preview = '''
-# path: /home/adubey/JSS-2026-Example/.codescribe/loop/author.toml
+# path: /home/user/JSS-2026-Example/.codescribe/loop/author.toml
 # lines: 2358-2492
 2358: event = "model_response"
 2359: run_id = "20260814-092938-17c268"
@@ -732,7 +732,7 @@ ok = true
 duration_ms = 1.132
 output_chars = 119
 output_preview = '''
-# path: /home/adubey/JSS-2026-Example/dev/transformations/mcfm-translate/approvals.toml
+# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/approvals.toml
 # lines: 1-1
 0001: version = 1
 '''
@@ -844,7 +844,7 @@ tool = "write"
 ok = true
 duration_ms = 2.166
 output_chars = 84
-output_preview = "Wrote /home/adubey/JSS-2026-Example/.codescribe/loop/review_output.toml (2395 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/.codescribe/loop/review_output.toml (2395 bytes)"
 ts = "2026-08-14T00:35:02.312918+00:00"
 
 [[event]]
@@ -927,7 +927,7 @@ tool = "read"
 ok = true
 duration_ms = 0.999
 output_chars = 840
-output_preview = "# path: /home/adubey/JSS-2026-Example/dev/transformations/mcfm-translate/loop.toml\n# lines: 1-18\n0001: # CodeScribe loop for Fortran -> C++.\n0002: #\n0003: # Run from the project root:\n0004: #   code-scribe loop -p dev/transformations/mcfm-translate/loop.toml -m <model>\n0005: \n0006: [tools]\n0007: bash = [\"jobrunner\", \"python3\"]\n0008: \n0009: [[chat.user]]\n0010: content = '''\n0011: Each round, follow the round algorithm in dev/transformations/mcfm-translate/current_plan.md and\n0012: the contract in"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/loop.toml\n# lines: 1-18\n0001: # CodeScribe loop for Fortran -> C++.\n0002: #\n0003: # Run from the project root:\n0004: #   code-scribe loop -p dev/transformations/mcfm-translate/loop.toml -m <model>\n0005: \n0006: [tools]\n0007: bash = [\"jobrunner\", \"python3\"]\n0008: \n0009: [[chat.user]]\n0010: content = '''\n0011: Each round, follow the round algorithm in dev/transformations/mcfm-translate/current_plan.md and\n0012: the contract in"
 ts = "2026-08-14T00:44:32.340164+00:00"
 
 [[event]]
@@ -947,7 +947,7 @@ ok = true
 duration_ms = 1.264
 output_chars = 8687
 output_preview = '''
-# path: /home/adubey/JSS-2026-Example/dev/transformations/mcfm-translate/current_plan.md
+# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/current_plan.md
 # lines: 1-182
 0001: # Fortran → C++ plan
 0002: 
@@ -1023,7 +1023,7 @@ ok = true
 duration_ms = 3.216
 output_chars = 107188
 output_preview = '''
-# path: /home/adubey/JSS-2026-Example/.codescribe/loop/author.toml
+# path: /home/user/JSS-2026-Example/.codescribe/loop/author.toml
 # lines: 1-2839
 0001: 
 0002: [[event]]
@@ -1061,7 +1061,7 @@ ok = true
 duration_ms = 0.958
 output_chars = 2591
 output_preview = '''
-# path: /home/adubey/JSS-2026-Example/.codescribe/loop/review_output.toml
+# path: /home/user/JSS-2026-Example/.codescribe/loop/review_output.toml
 # lines: 1-18
 0001: loop = 1
 0002: summary = "The agent read the plan and spec, rebuilt the readiness map via dev/workflow.py refresh, and enumerated the ready set: five Mods files (types_mod.f, pp_mod.f90, ppwp2j_mod.f90, mod_qcdloop_c.f, Modules_Interface.f90), two Inc files (ppmax.f, tri123x4x56coeffs.f), and one Procdep file. It verified that ppmax.f is still included only by pp_mod/ppwp2j_mod and their deprecated copi'''
@@ -1257,7 +1257,7 @@ ok = true
 duration_ms = 1.72
 output_chars = 6480
 output_preview = '''
-# path: /home/adubey/JSS-2026-Example/.codescribe/loop/author.toml
+# path: /home/user/JSS-2026-Example/.codescribe/loop/author.toml
 # lines: 765-959
 0765: event = "model_response"
 0766: run_id = "20260814-093508-b030cc"
@@ -1398,7 +1398,7 @@ tool = "read"
 ok = true
 duration_ms = 1.815
 output_chars = 9075
-output_preview = "# path: /home/adubey/JSS-2026-Example/.codescribe/loop/author.toml\n# lines: 2300-2514\n2300: software/mcfm/src/Mods/pp_mod.cpp exists\n2301: software/mcfm/src/Mods/ppwp2j_mod.cpp exists\n2302: software/mcfm/src/Inc/deprecated/tri123x4x56coeffs.f exists\n2303: ppmax.f present in Inc: False\n2304: \n2305: STDERR:\n2306: '''\n2307: ts = \"2026-08-14T00:40:01.509281+00:00\"\n2308: \n2309: [[event]]\n2310: event = \"iteration_end\"\n2311: run_id = \"20260814-093508-b030cc\"\n2312: iteration = 22\n2313: stop_reason = \"to"
+output_preview = "# path: /home/user/JSS-2026-Example/.codescribe/loop/author.toml\n# lines: 2300-2514\n2300: software/mcfm/src/Mods/pp_mod.cpp exists\n2301: software/mcfm/src/Mods/ppwp2j_mod.cpp exists\n2302: software/mcfm/src/Inc/deprecated/tri123x4x56coeffs.f exists\n2303: ppmax.f present in Inc: False\n2304: \n2305: STDERR:\n2306: '''\n2307: ts = \"2026-08-14T00:40:01.509281+00:00\"\n2308: \n2309: [[event]]\n2310: event = \"iteration_end\"\n2311: run_id = \"20260814-093508-b030cc\"\n2312: iteration = 22\n2313: stop_reason = \"to"
 ts = "2026-08-14T00:44:46.851891+00:00"
 
 [[event]]
@@ -1441,7 +1441,7 @@ ok = true
 duration_ms = 1.639
 output_chars = 11099
 output_preview = '''
-# path: /home/adubey/JSS-2026-Example/.codescribe/loop/author.toml
+# path: /home/user/JSS-2026-Example/.codescribe/loop/author.toml
 # lines: 2491-2780
 2491: event = "model_response"
 2492: run_id = "20260814-093508-b030cc"
@@ -1720,7 +1720,7 @@ tool = "write"
 ok = true
 duration_ms = 2.051
 output_chars = 84
-output_preview = "Wrote /home/adubey/JSS-2026-Example/.codescribe/loop/review_output.toml (3530 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/.codescribe/loop/review_output.toml (3530 bytes)"
 ts = "2026-08-14T00:45:18.390865+00:00"
 
 [[event]]
@@ -1803,7 +1803,7 @@ tool = "read"
 ok = true
 duration_ms = 1.087
 output_chars = 840
-output_preview = "# path: /home/adubey/JSS-2026-Example/dev/transformations/mcfm-translate/loop.toml\n# lines: 1-18\n0001: # CodeScribe loop for Fortran -> C++.\n0002: #\n0003: # Run from the project root:\n0004: #   code-scribe loop -p dev/transformations/mcfm-translate/loop.toml -m <model>\n0005: \n0006: [tools]\n0007: bash = [\"jobrunner\", \"python3\"]\n0008: \n0009: [[chat.user]]\n0010: content = '''\n0011: Each round, follow the round algorithm in dev/transformations/mcfm-translate/current_plan.md and\n0012: the contract in"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/loop.toml\n# lines: 1-18\n0001: # CodeScribe loop for Fortran -> C++.\n0002: #\n0003: # Run from the project root:\n0004: #   code-scribe loop -p dev/transformations/mcfm-translate/loop.toml -m <model>\n0005: \n0006: [tools]\n0007: bash = [\"jobrunner\", \"python3\"]\n0008: \n0009: [[chat.user]]\n0010: content = '''\n0011: Each round, follow the round algorithm in dev/transformations/mcfm-translate/current_plan.md and\n0012: the contract in"
 ts = "2026-08-14T00:51:32.196742+00:00"
 
 [[event]]
@@ -1870,7 +1870,7 @@ ok = true
 duration_ms = 3.031
 output_chars = 85259
 output_preview = '''
-# path: /home/adubey/JSS-2026-Example/.codescribe/loop/author.toml
+# path: /home/user/JSS-2026-Example/.codescribe/loop/author.toml
 # lines: 1-2417
 0001: 
 0002: [[event]]
@@ -1908,7 +1908,7 @@ ok = true
 duration_ms = 1.182
 output_chars = 3726
 output_preview = '''
-# path: /home/adubey/JSS-2026-Example/.codescribe/loop/review_output.toml
+# path: /home/user/JSS-2026-Example/.codescribe/loop/review_output.toml
 # lines: 1-18
 0001: loop = 2
 0002: summary = "The agent executed a large part of Group 1's translation work on the ready Mods files: it generated C++ translations of pp_mod.f90 and ppwp2j_mod.f90 via a helper generator (dev/tmp/gen_group1.py), producing pp_mod.cpp/pp_mod.hpp and ppwp2j_mod.cpp/ppwp2j_mod.hpp with 6561-element initializer tables, rewrote the pp_mod.f90 and ppwp2j_mod.f90 Fortran files into c_f_pointer-based'''
@@ -1953,7 +1953,7 @@ tool = "read"
 ok = true
 duration_ms = 1.651
 output_chars = 12846
-output_preview = "# path: /home/adubey/JSS-2026-Example/.codescribe/loop/author.toml\n# lines: 2050-2417\n2050: iteration = 24\n2051: tool = \"bash\"\n2052: ok = true\n2053: duration_ms = 6.546\n2054: output_chars = 333\n2055: output_preview = '''\n2056: exit_code: 0\n2057: STDOUT:\n2058: tests/mcfm/test.sh:43:#./test -b g g h g g         # gghgg_dep\n2059: tests/mcfm/job.submit:101:#./test -b g g h g g         # gghgg_dep\n2060: tests/mcfm/job.output:904:d d~ h g g: [1;31m FAILED [0m\n2061: tests/mcfm/job.output:910:d~ d h g"
+output_preview = "# path: /home/user/JSS-2026-Example/.codescribe/loop/author.toml\n# lines: 2050-2417\n2050: iteration = 24\n2051: tool = \"bash\"\n2052: ok = true\n2053: duration_ms = 6.546\n2054: output_chars = 333\n2055: output_preview = '''\n2056: exit_code: 0\n2057: STDOUT:\n2058: tests/mcfm/test.sh:43:#./test -b g g h g g         # gghgg_dep\n2059: tests/mcfm/job.submit:101:#./test -b g g h g g         # gghgg_dep\n2060: tests/mcfm/job.output:904:d d~ h g g: [1;31m FAILED [0m\n2061: tests/mcfm/job.output:910:d~ d h g"
 ts = "2026-08-14T00:51:42.029253+00:00"
 
 [[event]]
@@ -2031,7 +2031,7 @@ ok = true
 duration_ms = 1.615
 output_chars = 5150
 output_preview = '''
-# path: /home/adubey/JSS-2026-Example/.codescribe/loop/author.toml
+# path: /home/user/JSS-2026-Example/.codescribe/loop/author.toml
 # lines: 2274-2417
 2274: tool = "write"
 2275: args = "{\"path\": \"dev/tmp/run_verify.py\", \"content\": \"import os\\nimport subprocess\\nimport sys\\n\\nroot = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))\\nos.environ.setdefault('PROJECT_HOME', root)\\nos.environ['MCFM_HOME'] = os.path.join(root, 'software', 'mcfm')\\n\\ntarget = sys.argv[1]\\nproc = sys.argv[2] if len(sys.argv) > 2 else 'none'\\'''
@@ -2077,7 +2077,7 @@ ok = true
 duration_ms = 1.613
 output_chars = 19866
 output_preview = '''
-# path: /home/adubey/JSS-2026-Example/.codescribe/loop/author.toml
+# path: /home/user/JSS-2026-Example/.codescribe/loop/author.toml
 # lines: 400-899
 0400: # lines: 1-42
 0401: 0001: import re
@@ -2153,7 +2153,7 @@ ok = true
 duration_ms = 1.553
 output_chars = 23724
 output_preview = '''
-# path: /home/adubey/JSS-2026-Example/.codescribe/loop/author.toml
+# path: /home/user/JSS-2026-Example/.codescribe/loop/author.toml
 # lines: 618-1237
 0618: [[event]]
 0619: event = "tool_start"
@@ -2209,7 +2209,7 @@ ok = true
 duration_ms = 2.024
 output_chars = 27872
 output_preview = '''
-# path: /home/adubey/JSS-2026-Example/.codescribe/loop/author.toml
+# path: /home/user/JSS-2026-Example/.codescribe/loop/author.toml
 # lines: 1237-2051
 1237: args = "{\"command\": \"grep -n \\\"use ppmax_mod\\\\|use pp_mod\\\\|use ppwp2j_mod\\\\|use \\\" software/mcfm/src/W2jet/qqb_w2jet_v.f software/mcfm/src/Z2jet/qqb_z2jet_v.f\"}"
 1238: ts = "2026-08-14T00:48:27.480025+00:00"
@@ -2346,7 +2346,7 @@ tool = "write"
 ok = true
 duration_ms = 2.19
 output_chars = 84
-output_preview = "Wrote /home/adubey/JSS-2026-Example/.codescribe/loop/review_output.toml (3745 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/.codescribe/loop/review_output.toml (3745 bytes)"
 ts = "2026-08-14T00:53:04.342254+00:00"
 
 [[event]]

@@ -1,7 +1,7 @@
 run_id = "20260814-092938-df4e94"
 created_at = "2026-08-14T00:29:38.118950+00:00"
-workdir = "/home/adubey/JSS-2026-Example"
-task_file = "/home/adubey/JSS-2026-Example/dev/transformations/mcfm-translate/loop.toml"
+workdir = "/home/user/JSS-2026-Example"
+task_file = "/home/user/JSS-2026-Example/dev/transformations/mcfm-translate/loop.toml"
 model = "oaic-moonshotai/Kimi-K3"
 agent_loops = 5
 agent_iterations = 30

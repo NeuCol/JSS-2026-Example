@@ -2,8 +2,8 @@ run_id = "20260826-161355-33e834"
 loop_index = 5
 phase = "author"
 model = "oaic-gpt56sol"
-task_file = "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/loop.toml"
-workdir = "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example"
+task_file = "/home/user/JSS-2026-Example/dev/transformations/mcfm-translate/loop.toml"
+workdir = "/home/user/JSS-2026-Example"
 stop_reason = "final_text"
 final_text_present = true
 iterations = 20
@@ -13,28 +13,28 @@ created_at = "2026-08-26T21:45:41.890808+00:00"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/current_plan.md\n# lines: 1-182\n0001: # Fortran → C++ plan\n0002: \n0003: This file says how to run step 1. The rewrite rules and correctness bar are in\n0004: `desired_spec.md`.\n0005: \n0006: > This Plan is the policy: it selects and orders the work over the ready set (see *When to\n0007: > stop*). The correctness contract — objective `f`, invariants `I`, oracle `V`, and status set\n0008: > `Σ` — lives in `"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/current_plan.md\n# lines: 1-182\n0001: # Fortran → C++ plan\n0002: \n0003: This file says how to run step 1. The rewrite rules and correctness bar are in\n0004: `desired_spec.md`.\n0005: \n0006: > This Plan is the policy: it selects and orders the work over the ready set (see *When to\n0007: > stop*). The correctness contract — objective `f`, invariants `I`, oracle `V`, and status set\n0008: > `Σ` — lives in `"
 
 [tools.args]
 path = "dev/transformations/mcfm-translate/current_plan.md"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tmp/revert_mcfm_group.py\n# lines: 1-9\n0001: from pathlib import Path\n0002: src=Path('software/mcfm/src/BDK')\n0003: dep=src/'deprecated'\n0004: for name in ['M3bit3','M3bit4','FPFMscT','M3bit2','M2bit2']:\n0005:  old=dep/f'{name}.f'\n0006:  if old.exists(): old.replace(src/old.name)\n0007:  for suffix in ('.cpp','.hpp','_fi.f90'):\n0008:   path=src/f'{name}{suffix}'\n0009:   if path.exists(): path.unlink()\n"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/tmp/revert_mcfm_group.py\n# lines: 1-9\n0001: from pathlib import Path\n0002: src=Path('software/mcfm/src/BDK')\n0003: dep=src/'deprecated'\n0004: for name in ['M3bit3','M3bit4','FPFMscT','M3bit2','M2bit2']:\n0005:  old=dep/f'{name}.f'\n0006:  if old.exists(): old.replace(src/old.name)\n0007:  for suffix in ('.cpp','.hpp','_fi.f90'):\n0008:   path=src/f'{name}{suffix}'\n0009:   if path.exists(): path.unlink()\n"
 
 [tools.args]
 path = "dev/tmp/revert_mcfm_group.py"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/CMakeLists.txt\n# lines: 1-44\n0001: target_sources(objlib PRIVATE\n0002: FFPPsc.f\n0003: M2abit2.f\n0004: FFMPsc.f\n0005: FFPMcc.f\n0006: FMPFsc.f\n0007: CMakeLists.txt\n0008: FFPMscT.f\n0009: M3bit4.f\n0010: FFPMsc.f\n0011: Master3a.f\n0012: FPFMccTtilde.f\n0013: FFMPcc.f\n0014: FFPPcc.f\n0015: M2abit1.f\n0016: AAAREADME.txt\n0017: Master2a.f\n0018: FMPFcc.f\n0019: M3bit3.f\n0020: FFPMscTtilde.f\n0021: M3abit1.f\n0022: FPFMsc.f\n0023: "
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/BDK/CMakeLists.txt\n# lines: 1-44\n0001: target_sources(objlib PRIVATE\n0002: FFPPsc.f\n0003: M2abit2.f\n0004: FFMPsc.f\n0005: FFPMcc.f\n0006: FMPFsc.f\n0007: CMakeLists.txt\n0008: FFPMscT.f\n0009: M3bit4.f\n0010: FFPMsc.f\n0011: Master3a.f\n0012: FPFMccTtilde.f\n0013: FFMPcc.f\n0014: FFPPcc.f\n0015: M2abit1.f\n0016: AAAREADME.txt\n0017: Master2a.f\n0018: FMPFcc.f\n0019: M3bit3.f\n0020: FFPMscTtilde.f\n0021: M3abit1.f\n0022: FPFMsc.f\n0023: "
 
 [tools.args]
 path = "software/mcfm/src/BDK/CMakeLists.txt"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/agent_log.md\n# lines: 1-31\n0001: # MCFM translation worklist\n0002: \n0003: ## Group W2jet leaf functions\n0004: \n0005: - [x] software/mcfm/src/W2jet/atree.cpp — TRANSLATED (NOT COVERED; restored build passed)\n0006: - [x] software/mcfm/src/W2jet/fvf.cpp — TRANSLATED (NOT COVERED; restored build passed)\n0007: - [x] software/mcfm/src/W2jet/subqcd.cpp — TRANSLATED (NOT COVERED; restored build passed)\n0008: "
+output_preview = "# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/agent_log.md\n# lines: 1-31\n0001: # MCFM translation worklist\n0002: \n0003: ## Group W2jet leaf functions\n0004: \n0005: - [x] software/mcfm/src/W2jet/atree.cpp — TRANSLATED (NOT COVERED; restored build passed)\n0006: - [x] software/mcfm/src/W2jet/fvf.cpp — TRANSLATED (NOT COVERED; restored build passed)\n0007: - [x] software/mcfm/src/W2jet/subqcd.cpp — TRANSLATED (NOT COVERED; restored build passed)\n0008: "
 
 [tools.args]
 path = "dev/transformations/mcfm-translate/agent_log.md"
@@ -48,7 +48,7 @@ command = "git status --short"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/desired_spec.md\n# lines: 1-144\n0001: # Fortran → C++: target output for one MCFM file\n0002: \n0003: This file defines the rewrite target and correctness bar for step 1. The workflow lives in\n0004: `current_plan.md`.\n0005: \n0006: Paths are written as `software/mcfm/src/...`.\n0007: \n0008: ---\n0009: \n0010: ## Contract\n0011: \n0012: This step advances by *settling* source files one at a time: each file is r"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/desired_spec.md\n# lines: 1-144\n0001: # Fortran → C++: target output for one MCFM file\n0002: \n0003: This file defines the rewrite target and correctness bar for step 1. The workflow lives in\n0004: `current_plan.md`.\n0005: \n0006: Paths are written as `software/mcfm/src/...`.\n0007: \n0008: ---\n0009: \n0010: ## Contract\n0011: \n0012: This step advances by *settling* source files one at a time: each file is r"
 
 [tools.args]
 path = "dev/transformations/mcfm-translate/desired_spec.md"
@@ -90,7 +90,7 @@ command = "find software/mcfm/src/BDK/deprecated -maxdepth 1 -name M3bit3.f -o -
 [[tools]]
 name = "bash"
 ok = true
-output_preview = "exit_code: 0\nSTDOUT:\nx1b[95mROOT:x1b[0m /home/akash/Desktop/Akash/Projects/JSS-Paper-Example\nx1b[95mNODE:x1b[0m <ROOT>/tests/mcfm\n\nx1b[95mSCRIPTS: x1b[0m\n    - <ROOT>/config.sh\n    - <ROOT>/environment.sh\n    - <ROOT>/tests/mcfm/test.sh\n\nx1b[95mEXECUTE:x1b[0m <ROOT>/tests/mcfm/job.submit\nin 1:32.2 \nx1b[92mSUCCESS x1b[0m\n\nx1b[95mOUTPUT:x1b[0m <ROOT>/tests/mcfm/job.output\n\nSTDERR:\n"
+output_preview = "exit_code: 0\nSTDOUT:\nx1b[95mROOT:x1b[0m /home/user/JSS-2026-Example\nx1b[95mNODE:x1b[0m <ROOT>/tests/mcfm\n\nx1b[95mSCRIPTS: x1b[0m\n    - <ROOT>/config.sh\n    - <ROOT>/environment.sh\n    - <ROOT>/tests/mcfm/test.sh\n\nx1b[95mEXECUTE:x1b[0m <ROOT>/tests/mcfm/job.submit\nin 1:32.2 \nx1b[92mSUCCESS x1b[0m\n\nx1b[95mOUTPUT:x1b[0m <ROOT>/tests/mcfm/job.output\n\nSTDERR:\n"
 
 [tools.args]
 command = "jobrunner submit tests/mcfm"
@@ -182,21 +182,21 @@ command = "git -C software/mcfm diff -- src/W2jet/CMakeLists.txt"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tmp/finalize_mcfm_group.py\n# lines: 1-7\n0001: from pathlib import Path\n0002: root=Path.cwd()\n0003: src=root/'software/mcfm/src/BDK'\n0004: dep=src/'deprecated'; dep.mkdir(exist_ok=True)\n0005: for name in ['M3bit3','M3bit4','FPFMscT','M3bit2','M2bit2']:\n0006:  old=src/f'{name}.f'\n0007:  if old.exists(): old.replace(dep/old.name)\n"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/tmp/finalize_mcfm_group.py\n# lines: 1-7\n0001: from pathlib import Path\n0002: root=Path.cwd()\n0003: src=root/'software/mcfm/src/BDK'\n0004: dep=src/'deprecated'; dep.mkdir(exist_ok=True)\n0005: for name in ['M3bit3','M3bit4','FPFMscT','M3bit2','M2bit2']:\n0006:  old=src/f'{name}.f'\n0007:  if old.exists(): old.replace(dep/old.name)\n"
 
 [tools.args]
 path = "dev/tmp/finalize_mcfm_group.py"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tmp/verify_mcfm_group.py\n# lines: 1-12\n0001: import os, subprocess\n0002: from pathlib import Path\n0003: root=Path.cwd(); env=os.environ.copy(); env['MCFM_HOME']=str(root/'software/mcfm')\n0004: files=['M3bit3','M3bit4','FPFMscT','M3bit2','M2bit2']\n0005: failed=False\n0006: for name in files:\n0007:  cmd=['python3','dev/workflow.py','verify',f'software/mcfm/src/BDK/{name}.cpp','--','u','u~','e-','e+','g','g']\n0008:  print('$ '+' '.join"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/tmp/verify_mcfm_group.py\n# lines: 1-12\n0001: import os, subprocess\n0002: from pathlib import Path\n0003: root=Path.cwd(); env=os.environ.copy(); env['MCFM_HOME']=str(root/'software/mcfm')\n0004: files=['M3bit3','M3bit4','FPFMscT','M3bit2','M2bit2']\n0005: failed=False\n0006: for name in files:\n0007:  cmd=['python3','dev/workflow.py','verify',f'software/mcfm/src/BDK/{name}.cpp','--','u','u~','e-','e+','g','g']\n0008:  print('$ '+' '.join"
 
 [tools.args]
 path = "dev/tmp/verify_mcfm_group.py"
 [[tools]]
 name = "write"
 ok = true
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tmp/revert_w2jet_regression_group.py (429 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/dev/tmp/revert_w2jet_regression_group.py (429 bytes)"
 
 [tools.args]
 path = "dev/tmp/revert_w2jet_regression_group.py"
@@ -204,7 +204,7 @@ content = "from pathlib import Path\n\nsrc = Path(\"software/mcfm/src/W2jet\")\n
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/W2jet/CMakeLists.txt\n# lines: 1-79\n0001: target_sources(objlib PRIVATE\n0002: aqqb_zbb.f\n0003: atree.cpp\n0004: atree_fi.f90\n0005: a61LLL.f\n0006: a61LRL.f\n0007: a61g.f\n0008: atrLLL.f\n0009: atrLRL.f\n0010: a6g.f\n0011: a6treeg.cpp\n0012: a6treeg_fi.f90\n0013: a6.f\n0014: a61.f\n0015: a62.f\n0016: a6routine.f\n0017: Acalc.f\n0018: A6axBDK.f\n0019: A6texact.f\n0020: BDKqqbggAxAmp.f\n0021: fax.f\n0022: faxsl.f\n0023: fcc.f\n0024: fpm.f\n00"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/W2jet/CMakeLists.txt\n# lines: 1-79\n0001: target_sources(objlib PRIVATE\n0002: aqqb_zbb.f\n0003: atree.cpp\n0004: atree_fi.f90\n0005: a61LLL.f\n0006: a61LRL.f\n0007: a61g.f\n0008: atrLLL.f\n0009: atrLRL.f\n0010: a6g.f\n0011: a6treeg.cpp\n0012: a6treeg_fi.f90\n0013: a6.f\n0014: a61.f\n0015: a62.f\n0016: a6routine.f\n0017: Acalc.f\n0018: A6axBDK.f\n0019: A6texact.f\n0020: BDKqqbggAxAmp.f\n0021: fax.f\n0022: faxsl.f\n0023: fcc.f\n0024: fpm.f\n00"
 
 [tools.args]
 path = "software/mcfm/src/W2jet/CMakeLists.txt"
@@ -218,7 +218,7 @@ command = "grep -n \"Z+2\\|Z2jet\\|Z + 2\" tests/mcfm/job.output"
 [[tools]]
 name = "edit"
 ok = true
-output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/W2jet/CMakeLists.txt\",\n  \"applied\": 5,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 26,\n      \"new_len\": 9,\n      \"before_snippet\": \"…b_zbb.f\\natree.cpp\\natree_fi.f90\\na61LLL.f\\na61LRL.f\\na61g.f\\natrLLL.f\\natrLRL.f\\na6g.f\\na6treeg.cpp\\na6treeg_fi.f90\\na6.f\\na61.f\\na62.f\\na6routine.f\\nAcalc.f\\nA6axBDK.f\\nA6texact.f\\nBDKqqbggAxAmp.f\\nfax.f…\",\n      \"after_snippe"
+output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/user/JSS-2026-Example/software/mcfm/src/W2jet/CMakeLists.txt\",\n  \"applied\": 5,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 26,\n      \"new_len\": 9,\n      \"before_snippet\": \"…b_zbb.f\\natree.cpp\\natree_fi.f90\\na61LLL.f\\na61LRL.f\\na61g.f\\natrLLL.f\\natrLRL.f\\na6g.f\\na6treeg.cpp\\na6treeg_fi.f90\\na6.f\\na61.f\\na62.f\\na6routine.f\\nAcalc.f\\nA6axBDK.f\\nA6texact.f\\nBDKqqbggAxAmp.f\\nfax.f…\",\n      \"after_snippe"
 
 [tools.args]
 path = "software/mcfm/src/W2jet/CMakeLists.txt"
@@ -252,7 +252,7 @@ command = "python3 dev/tmp/revert_w2jet_regression_group.py"
 [[tools]]
 name = "bash"
 ok = true
-output_preview = "exit_code: 0\nSTDOUT:\nx1b[95mROOT:x1b[0m /home/akash/Desktop/Akash/Projects/JSS-Paper-Example\nx1b[95mNODE:x1b[0m <ROOT>/tests/mcfm\n\nx1b[95mSCRIPTS: x1b[0m\n    - <ROOT>/config.sh\n    - <ROOT>/environment.sh\n    - <ROOT>/tests/mcfm/test.sh\n\nx1b[95mEXECUTE:x1b[0m <ROOT>/tests/mcfm/job.submit\nin 1:31.3 \nx1b[92mSUCCESS x1b[0m\n\nx1b[95mOUTPUT:x1b[0m <ROOT>/tests/mcfm/job.output\n\nSTDERR:\n"
+output_preview = "exit_code: 0\nSTDOUT:\nx1b[95mROOT:x1b[0m /home/user/JSS-2026-Example\nx1b[95mNODE:x1b[0m <ROOT>/tests/mcfm\n\nx1b[95mSCRIPTS: x1b[0m\n    - <ROOT>/config.sh\n    - <ROOT>/environment.sh\n    - <ROOT>/tests/mcfm/test.sh\n\nx1b[95mEXECUTE:x1b[0m <ROOT>/tests/mcfm/job.submit\nin 1:31.3 \nx1b[92mSUCCESS x1b[0m\n\nx1b[95mOUTPUT:x1b[0m <ROOT>/tests/mcfm/job.output\n\nSTDERR:\n"
 
 [tools.args]
 command = "jobrunner submit tests/mcfm"
@@ -288,7 +288,7 @@ command = "git -C software/mcfm status --short src/W2jet src/BDK"
 [[tools]]
 name = "edit"
 ok = true
-output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/agent_log.md\",\n  \"applied\": 2,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 1013,\n      \"new_len\": 1205,\n      \"before_snippet\": \"…tware/mcfm/src/W2jet/vvg.cpp — TRANSLATED (NOT COVERED; restored build passed)\\n\\n## Group W2jet coefficients and matrix elements\\n\\n- [x] software/mcfm/src/W2jet/ggZZcapture.cpp — TRANSLATED (NOT COVERED; restored"
+output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/user/JSS-2026-Example/dev/transformations/mcfm-translate/agent_log.md\",\n  \"applied\": 2,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 1013,\n      \"new_len\": 1205,\n      \"before_snippet\": \"…tware/mcfm/src/W2jet/vvg.cpp — TRANSLATED (NOT COVERED; restored build passed)\\n\\n## Group W2jet coefficients and matrix elements\\n\\n- [x] software/mcfm/src/W2jet/ggZZcapture.cpp — TRANSLATED (NOT COVERED; restored"
 
 [tools.args]
 path = "dev/transformations/mcfm-translate/agent_log.md"
@@ -303,7 +303,7 @@ newText = "- 2026-08-26: The BDK translations were reverted and their Fortran or
 [[tools]]
 name = "bash"
 ok = true
-output_preview = "exit_code: 0\nSTDOUT:\nGenerating Doxygen XML for /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src -> /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/doxygen_dep/xml\nwrote 1138 XML file(s) to /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/doxygen_dep/xml\nsource 526  translated 86  untranslated 440\nready leaves (deps=0, non-blind): 231\nsymbol index: 915 symbol(s)\ncleanup candidates: move 74  shim-delete 15  merge 36\nwrote roadmap_metrics."
+output_preview = "exit_code: 0\nSTDOUT:\nGenerating Doxygen XML for /home/user/JSS-2026-Example/software/mcfm/src -> /home/user/JSS-2026-Example/software/mcfm/doxygen_dep/xml\nwrote 1138 XML file(s) to /home/user/JSS-2026-Example/software/mcfm/doxygen_dep/xml\nsource 526  translated 86  untranslated 440\nready leaves (deps=0, non-blind): 231\nsymbol index: 915 symbol(s)\ncleanup candidates: move 74  shim-delete 15  merge 36\nwrote roadmap_metrics."
 
 [tools.args]
 command = "python3 dev/workflow.py refresh"
@@ -333,7 +333,7 @@ command = "grep -c PASSED tests/mcfm/job.output"
 [[tools]]
 name = "edit"
 ok = true
-output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/agent_log.md\",\n  \"applied\": 1,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 267,\n      \"new_len\": 309,\n      \"before_snippet\": \"…cle could instrument them. The final full MCFM build/test passed 272/272 cases.\\n- 2026-08-26: Translated and wired ggZZcapture, ZZbox1LL, w2jetsq, a6treeg, and qqbggAxslCoeffs, moving their Fortran originals to W2je"
+output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/user/JSS-2026-Example/dev/transformations/mcfm-translate/agent_log.md\",\n  \"applied\": 1,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 267,\n      \"new_len\": 309,\n      \"before_snippet\": \"…cle could instrument them. The final full MCFM build/test passed 272/272 cases.\\n- 2026-08-26: Translated and wired ggZZcapture, ZZbox1LL, w2jetsq, a6treeg, and qqbggAxslCoeffs, moving their Fortran originals to W2je"
 
 [tools.args]
 path = "dev/transformations/mcfm-translate/agent_log.md"

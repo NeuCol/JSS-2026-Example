@@ -41,7 +41,7 @@ ok = true
 duration_ms = 1.242
 output_chars = 8687
 output_preview = '''
-# path: /home/adubey/JSS-2026-Example/dev/transformations/mcfm-translate/current_plan.md
+# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/current_plan.md
 # lines: 1-182
 0001: # Fortran → C++ plan
 0002: 
@@ -71,7 +71,7 @@ ok = true
 duration_ms = 1.387
 output_chars = 7669
 output_preview = '''
-# path: /home/adubey/JSS-2026-Example/dev/transformations/mcfm-translate/desired_spec.md
+# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/desired_spec.md
 # lines: 1-144
 0001: # Fortran → C++: target output for one MCFM file
 0002: 
@@ -106,7 +106,7 @@ ok = true
 duration_ms = 1.308
 output_chars = 583
 output_preview = '''
-# path: /home/adubey/JSS-2026-Example/dev/tmp/run_verify.py
+# path: /home/user/JSS-2026-Example/dev/tmp/run_verify.py
 # lines: 1-13
 0001: import os
 0002: import subprocess
@@ -139,7 +139,7 @@ ok = true
 duration_ms = 2.11
 output_chars = 27807
 output_preview = '''
-# path: /home/adubey/JSS-2026-Example/software/mcfm/src/Mods/pp_mod.cpp
+# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/pp_mod.cpp
 # lines: 1-756
 0001: #include <pp_mod.hpp>
 0002: #include <FArray.hpp> // Corrected header file inclusion
@@ -175,7 +175,7 @@ ok = true
 duration_ms = 1.473
 output_chars = 27823
 output_preview = '''
-# path: /home/adubey/JSS-2026-Example/software/mcfm/src/Mods/ppwp2j_mod.cpp
+# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/ppwp2j_mod.cpp
 # lines: 1-756
 0001: #include <ppwp2j_mod.hpp>
 0002: #include <FArray.hpp> // Corrected header file inclusion
@@ -235,7 +235,7 @@ ok = true
 duration_ms = 1.291
 output_chars = 1972
 output_preview = '''
-# path: /home/adubey/JSS-2026-Example/software/mcfm/src/Mods/pp_mod.cpp
+# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/pp_mod.cpp
 # lines: 700-756
 0700:     0, 0, 0, 0, 0, 0, 0, 0, 0,
 0701:     0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -269,7 +269,7 @@ ok = true
 duration_ms = 1.114
 output_chars = 1988
 output_preview = '''
-# path: /home/adubey/JSS-2026-Example/software/mcfm/src/Mods/ppwp2j_mod.cpp
+# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/ppwp2j_mod.cpp
 # lines: 700-756
 0700:     0, 0, 0, 0, 0, 0, 0, 0, 0,
 0701:     0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -303,7 +303,7 @@ ok = true
 duration_ms = 1.044
 output_chars = 1174
 output_preview = '''
-# path: /home/adubey/JSS-2026-Example/dev/transformations/mcfm-translate/current_plan.md
+# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/current_plan.md
 # lines: 160-182
 0160: 
 0161: If build or verification fails, keep fixing the current group unless the gate is blocking the
@@ -382,7 +382,7 @@ output_chars = 802
 output_preview = '''
 {
   "ok": true,
-  "path": "/home/adubey/JSS-2026-Example/software/mcfm/src/Mods/pp_mod.cpp",
+  "path": "/home/user/JSS-2026-Example/software/mcfm/src/Mods/pp_mod.cpp",
   "applied": 1,
   "replacements": [
     {
@@ -423,7 +423,7 @@ output_chars = 816
 output_preview = '''
 {
   "ok": true,
-  "path": "/home/adubey/JSS-2026-Example/software/mcfm/src/Mods/ppwp2j_mod.cpp",
+  "path": "/home/user/JSS-2026-Example/software/mcfm/src/Mods/ppwp2j_mod.cpp",
   "applied": 1,
   "replacements": [
     {
@@ -531,7 +531,7 @@ output_chars = 1645
 output_preview = '''
 {
   "ok": true,
-  "path": "/home/adubey/JSS-2026-Example/software/mcfm/src/Mods/pp_mod.cpp",
+  "path": "/home/user/JSS-2026-Example/software/mcfm/src/Mods/pp_mod.cpp",
   "applied": 2,
   "replacements": [
     {
@@ -562,7 +562,7 @@ output_chars = 1655
 output_preview = '''
 {
   "ok": true,
-  "path": "/home/adubey/JSS-2026-Example/software/mcfm/src/Mods/ppwp2j_mod.cpp",
+  "path": "/home/user/JSS-2026-Example/software/mcfm/src/Mods/ppwp2j_mod.cpp",
   "applied": 2,
   "replacements": [
     {
@@ -756,7 +756,7 @@ output_chars = 335
 output_preview = '''
 exit_code: 0
 STDOUT:
-[95mROOT:[0m /home/adubey/JSS-2026-Example
+[95mROOT:[0m /home/user/JSS-2026-Example
 [95mNODE:[0m <ROOT>/tests/mcfm
 
 [95mSCRIPTS: [0m
@@ -1200,7 +1200,7 @@ output_chars = 335
 output_preview = '''
 exit_code: 0
 STDOUT:
-[95mROOT:[0m /home/adubey/JSS-2026-Example
+[95mROOT:[0m /home/user/JSS-2026-Example
 [95mNODE:[0m <ROOT>/tests/mcfm
 
 [95mSCRIPTS: [0m
@@ -1609,7 +1609,7 @@ ok = true
 duration_ms = 1.564
 output_chars = 119
 output_preview = '''
-# path: /home/adubey/JSS-2026-Example/dev/transformations/mcfm-translate/approvals.toml
+# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/approvals.toml
 # lines: 1-1
 0001: version = 1
 '''
@@ -1696,7 +1696,7 @@ tool = "write"
 ok = true
 duration_ms = 2.137
 output_chars = 96
-output_preview = "Wrote /home/adubey/JSS-2026-Example/dev/transformations/mcfm-translate/agent_log.md (4215 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/agent_log.md (4215 bytes)"
 ts = "2026-08-14T01:00:31.335603+00:00"
 
 [[event]]
@@ -1738,7 +1738,7 @@ tool = "write"
 ok = true
 duration_ms = 1.908
 output_chars = 71
-output_preview = "Wrote /home/adubey/JSS-2026-Example/dev/tmp/run_workflow.py (333 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/dev/tmp/run_workflow.py (333 bytes)"
 ts = "2026-08-14T01:00:38.864456+00:00"
 
 [[event]]
@@ -1831,8 +1831,8 @@ output_chars = 40251
 output_preview = '''
 exit_code: 0
 STDOUT:
-Generating Doxygen XML for /home/adubey/JSS-2026-Example/software/mcfm/src -> /home/adubey/JSS-2026-Example/software/mcfm/doxygen_dep/xml
-wrote 1130 XML file(s) to /home/adubey/JSS-2026-Example/software/mcfm/doxygen_dep/xml
+Generating Doxygen XML for /home/user/JSS-2026-Example/software/mcfm/src -> /home/user/JSS-2026-Example/software/mcfm/doxygen_dep/xml
+wrote 1130 XML file(s) to /home/user/JSS-2026-Example/software/mcfm/doxygen_dep/xml
 source 529  translated 89  untranslated 440
 ready leaves (deps=0, non-blind): 225
 symbol index: 920 symbol(s)

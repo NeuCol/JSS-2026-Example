@@ -2,8 +2,8 @@ run_id = "20260826-151920-37810c"
 loop_index = 5
 phase = "author"
 model = "anthropic-claude-sonnet-5"
-task_file = "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/loop.toml"
-workdir = "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example"
+task_file = "/home/user/JSS-2026-Example/dev/transformations/mcfm-translate/loop.toml"
+workdir = "/home/user/JSS-2026-Example"
 stop_reason = "final_text"
 final_text_present = true
 iterations = 30
@@ -13,21 +13,21 @@ created_at = "2026-08-26T20:58:36.273568+00:00"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/current_plan.md\n# lines: 1-182\n0001: # Fortran → C++ plan\n0002: \n0003: This file says how to run step 1. The rewrite rules and correctness bar are in\n0004: `desired_spec.md`.\n0005: \n0006: > This Plan is the policy: it selects and orders the work over the ready set (see *When to\n0007: > stop*). The correctness contract — objective `f`, invariants `I`, oracle `V`, and status set\n0008: > `Σ` — lives in `"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/current_plan.md\n# lines: 1-182\n0001: # Fortran → C++ plan\n0002: \n0003: This file says how to run step 1. The rewrite rules and correctness bar are in\n0004: `desired_spec.md`.\n0005: \n0006: > This Plan is the policy: it selects and orders the work over the ready set (see *When to\n0007: > stop*). The correctness contract — objective `f`, invariants `I`, oracle `V`, and status set\n0008: > `Σ` — lives in `"
 
 [tools.args]
 path = "dev/transformations/mcfm-translate/current_plan.md"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/desired_spec.md\n# lines: 1-144\n0001: # Fortran → C++: target output for one MCFM file\n0002: \n0003: This file defines the rewrite target and correctness bar for step 1. The workflow lives in\n0004: `current_plan.md`.\n0005: \n0006: Paths are written as `software/mcfm/src/...`.\n0007: \n0008: ---\n0009: \n0010: ## Contract\n0011: \n0012: This step advances by *settling* source files one at a time: each file is r"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/desired_spec.md\n# lines: 1-144\n0001: # Fortran → C++: target output for one MCFM file\n0002: \n0003: This file defines the rewrite target and correctness bar for step 1. The workflow lives in\n0004: `current_plan.md`.\n0005: \n0006: Paths are written as `software/mcfm/src/...`.\n0007: \n0008: ---\n0009: \n0010: ## Contract\n0011: \n0012: This step advances by *settling* source files one at a time: each file is r"
 
 [tools.args]
 path = "dev/transformations/mcfm-translate/desired_spec.md"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/current_plan.md\n# lines: 164-182\n0164: ## When to stop\n0165: \n0166: The *ready set* is the set of ready, not-yet-settled files. Each settled file leaves the\n0167: ready set and the readiness graph is acyclic, so the pass terminates. Stop only when one of\n0168: these is true:\n0169: \n0170: - a completed group needs human approval before the next group can start\n0171: - the ready set is empty (no ready f"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/current_plan.md\n# lines: 164-182\n0164: ## When to stop\n0165: \n0166: The *ready set* is the set of ready, not-yet-settled files. Each settled file leaves the\n0167: ready set and the readiness graph is acyclic, so the pass terminates. Stop only when one of\n0168: these is true:\n0169: \n0170: - a completed group needs human approval before the next group can start\n0171: - the ready set is empty (no ready f"
 
 [tools.args]
 path = "dev/transformations/mcfm-translate/current_plan.md"
@@ -42,7 +42,7 @@ pattern = "dev/transformations/mcfm-translate/*"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/CMakeLists.txt\n# lines: 1-49\n0001: target_sources(objlib PRIVATE\n0002: FFPPsc.f\n0003: M2abit2.f\n0004: FFMPsc.f\n0005: FFPMcc.f\n0006: FMPFsc.f\n0007: CMakeLists.txt\n0008: FFPMscT.f\n0009: M3bit4.cpp\n0010: M3bit4_fi.f90\n0011: FFPMsc.f\n0012: Master3a.f\n0013: FPFMccTtilde.cpp\n0014: FPFMccTtilde_fi.f90\n0015: FFMPcc.f\n0016: FFPPcc.f\n0017: M2abit1.f\n0018: AAAREADME.txt\n0019: Master2a.f\n0020: FMPFcc.f\n0021: M3bit3.f\n0022: FF"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/BDK/CMakeLists.txt\n# lines: 1-49\n0001: target_sources(objlib PRIVATE\n0002: FFPPsc.f\n0003: M2abit2.f\n0004: FFMPsc.f\n0005: FFPMcc.f\n0006: FMPFsc.f\n0007: CMakeLists.txt\n0008: FFPMscT.f\n0009: M3bit4.cpp\n0010: M3bit4_fi.f90\n0011: FFPMsc.f\n0012: Master3a.f\n0013: FPFMccTtilde.cpp\n0014: FPFMccTtilde_fi.f90\n0015: FFMPcc.f\n0016: FFPPcc.f\n0017: M2abit1.f\n0018: AAAREADME.txt\n0019: Master2a.f\n0020: FMPFcc.f\n0021: M3bit3.f\n0022: FF"
 
 [tools.args]
 path = "software/mcfm/src/BDK/CMakeLists.txt"
@@ -91,7 +91,7 @@ pattern = "dev/workflow.py"
 [[tools]]
 name = "bash"
 ok = true
-output_preview = "exit_code: 0\nSTDOUT:\nGenerating Doxygen XML for /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src -> /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/doxygen_dep/xml\nwrote 1133 XML file(s) to /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/doxygen_dep/xml\nsource 526  translated 86  untranslated 440\nready leaves (deps=0, non-blind): 225\nsymbol index: 915 symbol(s)\ncleanup candidates: move 74  shim-delete 15  merge 31\nwrote roadmap_metrics."
+output_preview = "exit_code: 0\nSTDOUT:\nGenerating Doxygen XML for /home/user/JSS-2026-Example/software/mcfm/src -> /home/user/JSS-2026-Example/software/mcfm/doxygen_dep/xml\nwrote 1133 XML file(s) to /home/user/JSS-2026-Example/software/mcfm/doxygen_dep/xml\nsource 526  translated 86  untranslated 440\nready leaves (deps=0, non-blind): 225\nsymbol index: 915 symbol(s)\ncleanup candidates: move 74  shim-delete 15  merge 31\nwrote roadmap_metrics."
 
 [tools.args]
 command = "python3 dev/workflow.py refresh"
@@ -106,7 +106,7 @@ command = "grep -i \"BDK\" dev/tmp/assets/roadmap_metrics.tsv"
 [[tools]]
 name = "bash"
 ok = true
-output_preview = "exit_code: 0\nSTDOUT:\nx1b[95mROOT:x1b[0m /home/akash/Desktop/Akash/Projects/JSS-Paper-Example\nx1b[95mNODE:x1b[0m <ROOT>/tests/mcfm\n\nx1b[95mSCRIPTS: x1b[0m\n    - <ROOT>/config.sh\n    - <ROOT>/environment.sh\n    - <ROOT>/tests/mcfm/test.sh\n\nx1b[95mEXECUTE:x1b[0m <ROOT>/tests/mcfm/job.submit\nin 1:31.5 \nx1b[92mSUCCESS x1b[0m\n\nx1b[95mOUTPUT:x1b[0m <ROOT>/tests/mcfm/job.output\n\nSTDERR:\n"
+output_preview = "exit_code: 0\nSTDOUT:\nx1b[95mROOT:x1b[0m /home/user/JSS-2026-Example\nx1b[95mNODE:x1b[0m <ROOT>/tests/mcfm\n\nx1b[95mSCRIPTS: x1b[0m\n    - <ROOT>/config.sh\n    - <ROOT>/environment.sh\n    - <ROOT>/tests/mcfm/test.sh\n\nx1b[95mEXECUTE:x1b[0m <ROOT>/tests/mcfm/job.submit\nin 1:31.5 \nx1b[92mSUCCESS x1b[0m\n\nx1b[95mOUTPUT:x1b[0m <ROOT>/tests/mcfm/job.output\n\nSTDERR:\n"
 
 [tools.args]
 command = "jobrunner submit tests/mcfm"
@@ -154,7 +154,7 @@ timeout = 300
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/environment.sh\n# lines: 1-41\n0001: # Shell configuration shared across the lab notebook.\n0002: #\n0003: # Sourcing this file exports the project paths every orchestrator, skill, and\n0004: # tool depends on. It resolves the project root from THIS script's own location\n0005: # (via BASH_SOURCE), not the current working directory, so\n0006: #   source /abs/path/to/environment.sh\n0007: # is correct from any cwd — including inside a subagent "
+output_preview = "# path: /home/user/JSS-2026-Example/environment.sh\n# lines: 1-41\n0001: # Shell configuration shared across the lab notebook.\n0002: #\n0003: # Sourcing this file exports the project paths every orchestrator, skill, and\n0004: # tool depends on. It resolves the project root from THIS script's own location\n0005: # (via BASH_SOURCE), not the current working directory, so\n0006: #   source /abs/path/to/environment.sh\n0007: # is correct from any cwd — including inside a subagent "
 
 [tools.args]
 path = "environment.sh"
@@ -184,10 +184,10 @@ command = "source environment.sh"
 [[tools]]
 name = "bash"
 ok = false
-output_preview = "Error: command not allowed: 'MCFM_HOME=/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm'"
+output_preview = "Error: command not allowed: 'MCFM_HOME=/home/user/JSS-2026-Example/software/mcfm'"
 
 [tools.args]
-command = "MCFM_HOME=/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm python3 dev/workflow.py verify software/mcfm/src/BDK/M1bit1.cpp -- \"u d~ ve e+ g g\""
+command = "MCFM_HOME=/home/user/JSS-2026-Example/software/mcfm python3 dev/workflow.py verify software/mcfm/src/BDK/M1bit1.cpp -- \"u d~ ve e+ g g\""
 timeout = 300
 [[tools]]
 name = "bash"
@@ -213,7 +213,7 @@ command = "grep -n \"def cmd_verify\\|def verify\\|import coverage_check\\|from.
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tools/coverage/coverage_check.py\n# lines: 1-97\n0001: \"\"\"Coverage check — decide VERIFIED vs TRANSLATED for one rewritten MCFM file.\n0002: \n0003:   python3 coverage_check.py <target.cpp> -- <process args>\n0004: \n0005: Builds and tests once, scales the marked output statement, rebuilds and retests, then\n0006: restores the file and rebuilds clean. Changed output means `COVERED`; unchanged output\n0007: means `NOT COVERED`.\n0008: \n0009:"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/tools/coverage/coverage_check.py\n# lines: 1-97\n0001: \"\"\"Coverage check — decide VERIFIED vs TRANSLATED for one rewritten MCFM file.\n0002: \n0003:   python3 coverage_check.py <target.cpp> -- <process args>\n0004: \n0005: Builds and tests once, scales the marked output statement, rebuilds and retests, then\n0006: restores the file and rebuilds clean. Changed output means `COVERED`; unchanged output\n0007: means `NOT COVERED`.\n0008: \n0009:"
 
 [tools.args]
 path = "dev/tools/coverage/coverage_check.py"
@@ -227,7 +227,7 @@ command = "grep -n \"verify\" dev/workflow.py"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/workflow.py\n# lines: 220-289\n0220:         _print_approval_record(record)\n0221:     return 0\n0222: \n0223: \n0224: def cmd_draft(args: argparse.Namespace) -> int:\n0225:     return run([sys.executable, str(TOOLS / \"draft\" / \"scribe_draft.py\"), *args.args])\n0226: \n0227: \n0228: def cmd_verify(args: argparse.Namespace) -> int:\n0229:     return run([sys.executable, str(TOOLS / \"coverage\" / \"coverage_check.py\"), *args.args])\n0230: \n0231: \n"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/workflow.py\n# lines: 220-289\n0220:         _print_approval_record(record)\n0221:     return 0\n0222: \n0223: \n0224: def cmd_draft(args: argparse.Namespace) -> int:\n0225:     return run([sys.executable, str(TOOLS / \"draft\" / \"scribe_draft.py\"), *args.args])\n0226: \n0227: \n0228: def cmd_verify(args: argparse.Namespace) -> int:\n0229:     return run([sys.executable, str(TOOLS / \"coverage\" / \"coverage_check.py\"), *args.args])\n0230: \n0231: \n"
 
 [tools.args]
 path = "dev/workflow.py"
@@ -243,7 +243,7 @@ command = "python3 -c \"import os; os.environ['MCFM_HOME']=os.path.abspath('soft
 [[tools]]
 name = "write"
 ok = true
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tmp/run_verify.py (274 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/dev/tmp/run_verify.py (274 bytes)"
 
 [tools.args]
 path = "dev/tmp/run_verify.py"
@@ -266,7 +266,7 @@ command = "grep -n \"coverage-probe\" software/mcfm/src/BDK/M1bit1.cpp"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/M1bit1.cpp\n# lines: 1-45\n0001: #include <BDK.hpp>\n0002: #include <cmath>\n0003: #include <complex>\n0004: #include <mxpart_mod.hpp>\n0005: #include <sprods_com_mod.hpp>\n0006: #include <FArray.hpp>\n0007: #include <W1jet.hpp>\n0008: \n0009: using namespace mxpart_mod;\n0010: using namespace sprods_com_mod;\n0011: \n0012: // Z. Bern, L. Dixon, D.A. Kosower, e-Print:hep-ph/9708239\n0013: // Eq 7.1\n0014: std::complex<double> M1"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/BDK/M1bit1.cpp\n# lines: 1-45\n0001: #include <BDK.hpp>\n0002: #include <cmath>\n0003: #include <complex>\n0004: #include <mxpart_mod.hpp>\n0005: #include <sprods_com_mod.hpp>\n0006: #include <FArray.hpp>\n0007: #include <W1jet.hpp>\n0008: \n0009: using namespace mxpart_mod;\n0010: using namespace sprods_com_mod;\n0011: \n0012: // Z. Bern, L. Dixon, D.A. Kosower, e-Print:hep-ph/9708239\n0013: // Eq 7.1\n0014: std::complex<double> M1"
 
 [tools.args]
 path = "software/mcfm/src/BDK/M1bit1.cpp"
@@ -282,7 +282,7 @@ command = "grep -n \"coverage-probe\" software/mcfm/src/BDK/M3bit4.cpp software/
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/M3bit4.cpp\n# lines: 1-36\n0001: #include <BDK.hpp>\n0002: #include <cmath>\n0003: #include <complex>\n0004: #include <mxpart_mod.hpp>\n0005: #include <FArray.hpp>\n0006: \n0007: using namespace mxpart_mod;\n0008: \n0009: // Z. Bern, L. Dixon, D.A. Kosower, e-Print:hep-ph/9708239\n0010: // Eq.7.5\n0011: std::complex<double> M3bit4(int j1, int j2, int j3, int j4, int j5, int j6, FArray2D<std::complex<double>>& za, FArray2D<std"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/BDK/M3bit4.cpp\n# lines: 1-36\n0001: #include <BDK.hpp>\n0002: #include <cmath>\n0003: #include <complex>\n0004: #include <mxpart_mod.hpp>\n0005: #include <FArray.hpp>\n0006: \n0007: using namespace mxpart_mod;\n0008: \n0009: // Z. Bern, L. Dixon, D.A. Kosower, e-Print:hep-ph/9708239\n0010: // Eq.7.5\n0011: std::complex<double> M3bit4(int j1, int j2, int j3, int j4, int j5, int j6, FArray2D<std::complex<double>>& za, FArray2D<std"
 
 [tools.args]
 path = "software/mcfm/src/BDK/M3bit4.cpp"
@@ -303,28 +303,28 @@ command = "grep -rln \"coverage-probe\" software/mcfm/src"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/FPFMccTtilde.cpp\n# lines: 1-63\n0001: #include <BDK.hpp>\n0002: #include <cmath>\n0003: #include <complex>\n0004: #include <mxpart_mod.hpp>\n0005: #include <sprods_com_mod.hpp>\n0006: #include <FArray.hpp>\n0007: #include <W1jet.hpp>\n0008: \n0009: using namespace mxpart_mod;\n0010: using namespace sprods_com_mod;\n0011: \n0012: // Z. Bern, L. Dixon, D.A. Kosower, e-Print:hep-ph/9708239\n0013: // Eq 9.12\n0014: std::complex<dou"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/BDK/FPFMccTtilde.cpp\n# lines: 1-63\n0001: #include <BDK.hpp>\n0002: #include <cmath>\n0003: #include <complex>\n0004: #include <mxpart_mod.hpp>\n0005: #include <sprods_com_mod.hpp>\n0006: #include <FArray.hpp>\n0007: #include <W1jet.hpp>\n0008: \n0009: using namespace mxpart_mod;\n0010: using namespace sprods_com_mod;\n0011: \n0012: // Z. Bern, L. Dixon, D.A. Kosower, e-Print:hep-ph/9708239\n0013: // Eq 9.12\n0014: std::complex<dou"
 
 [tools.args]
 path = "software/mcfm/src/BDK/FPFMccTtilde.cpp"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/FPFPcc.cpp\n# lines: 1-90\n0001: #include <BDK.hpp>\n0002: #include <cmath>\n0003: #include <complex>\n0004: #include <mxpart_mod.hpp>\n0005: #include <sprods_com_mod.hpp>\n0006: #include <FArray.hpp>\n0007: #include <Need.hpp>\n0008: #include <W1jet.hpp>\n0009: \n0010: using namespace mxpart_mod;\n0011: using namespace sprods_com_mod;\n0012: \n0013: namespace {\n0014: \n0015: // Z. Bern, L. Dixon, D.A. Kosower, e-Print:hep-ph/97"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/BDK/FPFPcc.cpp\n# lines: 1-90\n0001: #include <BDK.hpp>\n0002: #include <cmath>\n0003: #include <complex>\n0004: #include <mxpart_mod.hpp>\n0005: #include <sprods_com_mod.hpp>\n0006: #include <FArray.hpp>\n0007: #include <Need.hpp>\n0008: #include <W1jet.hpp>\n0009: \n0010: using namespace mxpart_mod;\n0011: using namespace sprods_com_mod;\n0012: \n0013: namespace {\n0014: \n0015: // Z. Bern, L. Dixon, D.A. Kosower, e-Print:hep-ph/97"
 
 [tools.args]
 path = "software/mcfm/src/BDK/FPFPcc.cpp"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/fvs.cpp\n# lines: 1-184\n0001: #include <BDK.hpp>\n0002: #include <cmath>\n0003: #include <complex>\n0004: #include <heldefs_mod.hpp>\n0005: #include <mxpart_mod.hpp>\n0006: #include <sprods_com_mod.hpp>\n0007: #include <FArray.hpp>\n0008: #include <Need.hpp>\n0009: \n0010: using namespace mxpart_mod;\n0011: using namespace sprods_com_mod;\n0012: using namespace heldefs_mod;\n0013: \n0014: namespace {\n0015: \n0016: std::complex<d"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/BDK/fvs.cpp\n# lines: 1-184\n0001: #include <BDK.hpp>\n0002: #include <cmath>\n0003: #include <complex>\n0004: #include <heldefs_mod.hpp>\n0005: #include <mxpart_mod.hpp>\n0006: #include <sprods_com_mod.hpp>\n0007: #include <FArray.hpp>\n0008: #include <Need.hpp>\n0009: \n0010: using namespace mxpart_mod;\n0011: using namespace sprods_com_mod;\n0012: using namespace heldefs_mod;\n0013: \n0014: namespace {\n0015: \n0016: std::complex<d"
 
 [tools.args]
 path = "software/mcfm/src/BDK/fvs.cpp"
 [[tools]]
 name = "edit"
 ok = true
-output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/M1bit1.cpp\",\n  \"applied\": 2,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 56,\n      \"new_len\": 35,\n      \"before_snippet\": \"…6),2)\\n      - 2*s(j1,j2)*s(j3,j4) - 2*s(j3,j4)*s(j5,j6) - 2*s(j5,j6)*s(j1,j2);\\n\\n  // @coverage-probe\\n  std::complex<double> M1bit1_res =\\n      +2.0/(zab2(j1,j3,j4,j2)*zab2(j3,j1,j2,j4)*Delta3)\\n      *(zb(j1,j3)/za(j5…\",\n      \""
+output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/user/JSS-2026-Example/software/mcfm/src/BDK/M1bit1.cpp\",\n  \"applied\": 2,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 56,\n      \"new_len\": 35,\n      \"before_snippet\": \"…6),2)\\n      - 2*s(j1,j2)*s(j3,j4) - 2*s(j3,j4)*s(j5,j6) - 2*s(j5,j6)*s(j1,j2);\\n\\n  // @coverage-probe\\n  std::complex<double> M1bit1_res =\\n      +2.0/(zab2(j1,j3,j4,j2)*zab2(j3,j1,j2,j4)*Delta3)\\n      *(zb(j1,j3)/za(j5…\",\n      \""
 
 [tools.args]
 path = "software/mcfm/src/BDK/M1bit1.cpp"
@@ -339,7 +339,7 @@ newText = "  std::complex<double> M1bit1_result = M1bit1_res;  // @coverage-prob
 [[tools]]
 name = "edit"
 ok = true
-output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/M3bit4.cpp\",\n  \"applied\": 2,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 56,\n      \"new_len\": 35,\n      \"before_snippet\": \"…ab = [&za, &zb](int i1, int i2, int i3) {\\n    return za(i1,i2)*zb(i2,i3);\\n  };\\n\\n  // @coverage-probe\\n  std::complex<double> M3bit4_res = -0.5*za(j2,j3)*zb(j2,j4)*zab2(j5,j3,j4,j2)\\n      /(zb(j2,j3)*za(j5,j6)*zab2(j1,…\",\n      \""
+output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/user/JSS-2026-Example/software/mcfm/src/BDK/M3bit4.cpp\",\n  \"applied\": 2,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 56,\n      \"new_len\": 35,\n      \"before_snippet\": \"…ab = [&za, &zb](int i1, int i2, int i3) {\\n    return za(i1,i2)*zb(i2,i3);\\n  };\\n\\n  // @coverage-probe\\n  std::complex<double> M3bit4_res = -0.5*za(j2,j3)*zb(j2,j4)*zab2(j5,j3,j4,j2)\\n      /(zb(j2,j3)*za(j5,j6)*zab2(j1,…\",\n      \""
 
 [tools.args]
 path = "software/mcfm/src/BDK/M3bit4.cpp"
@@ -354,7 +354,7 @@ newText = "  std::complex<double> M3bit4_result = M3bit4_res;  // @coverage-prob
 [[tools]]
 name = "edit"
 ok = true
-output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/FPFMccTtilde.cpp\",\n  \"applied\": 2,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 62,\n      \"new_len\": 41,\n      \"before_snippet\": \"…za(i1,i2)*zb(i2,i3);\\n  };\\n\\n  double deltat23 = s(j2,j3) - s(j5,j6) - s(j1,j4);\\n\\n  // @coverage-probe\\n  std::complex<double> FPFMccTtilde_res =\\n      0.5*(t(j1,j2,j4)*deltat23+2*s(j1,j4)*s(j5,j6))/std::pow(t(j1,j2,j4),2)\\"
+output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/user/JSS-2026-Example/software/mcfm/src/BDK/FPFMccTtilde.cpp\",\n  \"applied\": 2,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 62,\n      \"new_len\": 41,\n      \"before_snippet\": \"…za(i1,i2)*zb(i2,i3);\\n  };\\n\\n  double deltat23 = s(j2,j3) - s(j5,j6) - s(j1,j4);\\n\\n  // @coverage-probe\\n  std::complex<double> FPFMccTtilde_res =\\n      0.5*(t(j1,j2,j4)*deltat23+2*s(j1,j4)*s(j5,j6))/std::pow(t(j1,j2,j4),2)\\"
 
 [tools.args]
 path = "software/mcfm/src/BDK/FPFMccTtilde.cpp"
@@ -369,7 +369,7 @@ newText = "  std::complex<double> FPFMccTtilde_result = FPFMccTtilde_res;  // @c
 [[tools]]
 name = "edit"
 ok = true
-output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/FPFPcc.cpp\",\n  \"applied\": 2,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 56,\n      \"new_len\": 35,\n      \"before_snippet\": \"…uble>>& za, FArray2D<std::complex<double>>& zb) {\\n  double s234 = t(j2,j3,j4);\\n\\n  // @coverage-probe\\n  std::complex<double> FPFPcc_res =\\n      za(j3,j5)*(za(j2,j3)*za(j4,j5)+za(j3,j4)*za(j5,j2))\\n      /(za(j1,j2)*za(…\",\n      \""
+output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/user/JSS-2026-Example/software/mcfm/src/BDK/FPFPcc.cpp\",\n  \"applied\": 2,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 56,\n      \"new_len\": 35,\n      \"before_snippet\": \"…uble>>& za, FArray2D<std::complex<double>>& zb) {\\n  double s234 = t(j2,j3,j4);\\n\\n  // @coverage-probe\\n  std::complex<double> FPFPcc_res =\\n      za(j3,j5)*(za(j2,j3)*za(j4,j5)+za(j3,j4)*za(j5,j2))\\n      /(za(j1,j2)*za(…\",\n      \""
 
 [tools.args]
 path = "software/mcfm/src/BDK/FPFPcc.cpp"
@@ -384,7 +384,7 @@ newText = "  std::complex<double> FPFPcc_result = FPFPcc_res;  // @coverage-prob
 [[tools]]
 name = "edit"
 ok = true
-output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/fvs.cpp\",\n  \"applied\": 1,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 40,\n      \"new_len\": 87,\n      \"before_snippet\": \"…=\\n        +Brackpp(j1,j2,j3,j4,j5,j6)\\n        +Brackpp(j1,j2,j4,j3,j5,j6);\\n  }\\n\\n  // @coverage-probe\\n  return Fvs_res;\\n}\\n\\nnamespace {\\n\\n// This is the whole expression in Eq.(11.6) subject to exchange …\",\n      \"after_snippet\""
+output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/user/JSS-2026-Example/software/mcfm/src/BDK/fvs.cpp\",\n  \"applied\": 1,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 40,\n      \"new_len\": 87,\n      \"before_snippet\": \"…=\\n        +Brackpp(j1,j2,j3,j4,j5,j6)\\n        +Brackpp(j1,j2,j4,j3,j5,j6);\\n  }\\n\\n  // @coverage-probe\\n  return Fvs_res;\\n}\\n\\nnamespace {\\n\\n// This is the whole expression in Eq.(11.6) subject to exchange …\",\n      \"after_snippet\""
 
 [tools.args]
 path = "software/mcfm/src/BDK/fvs.cpp"
