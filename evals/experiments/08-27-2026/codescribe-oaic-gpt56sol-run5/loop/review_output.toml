@@ -1,0 +1,12 @@
+loop = 3
+summary = "The agent translated the five-file W2jet Group 2 (atree.f, ggZZcapture.f, ZZbox1LL.f, a6routine.f, and a6treeg.f) into C++ header/source plus Fortran shims, wired those replacements into W2jet/CMakeLists.txt, and moved all five originals into W2jet/deprecated/. The full MCFM output confirms a successful build and 272/272 PASSED cases. Coverage verification was attempted repeatedly with the required 'u d~ ve e+ g g' process; the log records atree, ggZZcapture, ZZbox1LL, and a6routine as TRANSLATED because the representative process did not cover them. However, the final a6treeg retry occurred only after the log had already recorded that its probe still needed retry, the aggregate helper always exits successfully regardless of individual verification return codes, and the captured output does not establish a6treeg's final result. The promised final full-suite rerun after that last probe was also not executed. Blocked searches and missing-file reads had no workspace effect; the attempted FortranArray.hpp read was not executed, but the verified FArray.hpp read supplied the relevant array implementation instead."
+blocker = "No hard implementation blocker; Group 2 cannot be considered fully settled until a6treeg's final coverage result is captured and logged, followed by a post-probe full-suite pass."
+
+[[pending]]
+item = "Run `python3 dev/workflow.py verify software/mcfm/src/W2jet/a6treeg.cpp -- u d~ ve e+ g g` directly and capture whether it is VERIFIED, TRANSLATED, or FAILED."
+
+[[pending]]
+item = "Update the a6treeg entry and Group 2 session note in agent_log.md to reflect the actual final coverage result rather than saying the probe needs retry."
+
+[[pending]]
+item = "Run `jobrunner submit tests/mcfm` after the final coverage probe and confirm all 272 cases explicitly report PASSED."

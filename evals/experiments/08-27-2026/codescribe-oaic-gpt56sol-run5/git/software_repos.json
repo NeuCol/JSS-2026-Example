@@ -1,0 +1,20 @@
+[
+  {
+    "path": "software/mcfm",
+    "head": "1abdcddaad89582552edc41de68e4a6e1ac75f1d",
+    "branch": "HEAD",
+    "status": "## HEAD (no branch)\n M src/Mods/CMakeLists.txt\n D src/Mods/Modules_Interface.f90\n D src/Mods/mod_qcdloop_c.f\n D src/Mods/pp_mod.f90\n D src/Mods/ppwp2j_mod.f90\n D src/Mods/types_mod.f\n M src/W2jet/CMakeLists.txt\n D src/W2jet/ZZbox1LL.f\n D src/W2jet/a6routine.f\n D src/W2jet/a6treeg.f\n D src/W2jet/atree.f\n D src/W2jet/ggZZcapture.f\n?? Bin/lib/\n?? Bin/test\n?? doxygen_dep/\n?? install/\n?? src/Mods/Modules_Interface.cpp\n?? src/Mods/Modules_Interface.hpp\n?? src/Mods/Modules_Interface_fi.F90\n?? src/Mods/deprecated/Modules_Interface.f90\n?? src/Mods/deprecated/mod_qcdloop_c.f\n?? src/Mods/deprecated/types_mod.f\n?? src/Mods/mod_qcdloop_c.cpp\n?? src/Mods/mod_qcdloop_c.hpp\n?? src/Mods/mod_qcdloop_c_fi.F90\n?? src/Mods/pp_mod.cpp\n?? src/Mods/pp_mod.hpp\n?? src/Mods/pp_mod_fi.F90\n?? src/Mods/ppwp2j_mod.cpp\n?? src/Mods/ppwp2j_mod.hpp\n?? src/Mods/ppwp2j_mod_fi.F90\n?? src/Mods/types_mod.cpp\n?? src/Mods/types_mod.hpp\n?? src/Mods/types_mod_fi.F90\n?? src/W2jet/ZZbox1LL.cpp\n?? src/W2jet/ZZbox1LL.hpp\n?? src/W2jet/ZZbox1LL_fi.F90\n?? src/W2jet/a6routine.cpp\n?? src/W2jet/a6routine.hpp\n?? src/W2jet/a6routine_fi.F90\n?? src/W2jet/a6treeg.cpp\n?? src/W2jet/a6treeg.hpp\n?? src/W2jet/a6treeg_fi.F90\n?? src/W2jet/atree.cpp\n?? src/W2jet/atree.hpp\n?? src/W2jet/atree_fi.F90\n?? src/W2jet/deprecated/\n?? src/W2jet/ggZZcapture.cpp\n?? src/W2jet/ggZZcapture.hpp\n?? src/W2jet/ggZZcapture_fi.F90\n"
+  },
+  {
+    "path": "software/pepper",
+    "head": "67f3acc8756fe6ec4fcc9ea360be08f0bb644711",
+    "branch": "43-add-kokkos-mcfm-interface",
+    "status": "## 43-add-kokkos-mcfm-interface...origin/43-add-kokkos-mcfm-interface\n"
+  },
+  {
+    "path": "software/qcdloop",
+    "head": "c8a05202351ca2e803158e99ae8a1c5c05f1437d",
+    "branch": "master",
+    "status": "## master...origin/master\n"
+  }
+]

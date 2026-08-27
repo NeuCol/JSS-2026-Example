@@ -1,0 +1,18 @@
+# CodeScribe loop for Fortran -> C++.
+#
+# Run from the project root:
+#   code-scribe loop -p dev/transformations/mcfm-translate/loop.toml -m <model>
+
+[tools]
+bash = ["jobrunner", "python3"]
+
+[[chat.user]]
+content = '''
+Each round, follow the round algorithm in dev/transformations/mcfm-translate/current_plan.md and
+the contract in dev/transformations/mcfm-translate/desired_spec.md. Read the plan first, then the
+spec.
+
+Authority: current_plan.md and desired_spec.md are human-owned — read, do not modify.
+agent_log.md is the only file in dev/transformations/mcfm-translate/ that the AI may modify.
+On conflict, the Spec governs.
+'''
