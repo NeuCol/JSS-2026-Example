@@ -1,0 +1,436 @@
+rel	top	deps	blind	fanin	bench
+Mods/types_mod.f	Mods	0	0	8	
+W2jet/ggZZcapture.f	W2jet	0	0	6	u d~ ve e+ g g
+W2jet/atree.f	W2jet	0	0	6	u d~ ve e+ g g
+BDK/Master1.f	BDK	0	0	3	
+W2jet/fvf.f	W2jet	0	0	2	u d~ ve e+ g g
+W2jet/subqcd.f	W2jet	0	0	2	u d~ ve e+ g g
+W2jet/ZZbox1LL.f	W2jet	0	0	2	u d~ ve e+ g g
+W2jet/a6treeg.f	W2jet	0	0	2	u d~ ve e+ g g
+BDK/fvs.f	BDK	0	0	2	
+BDK/Master2a.f	BDK	0	0	2	
+gghgg_dep/gghgg_dep_params.f	gghgg_dep	0	0	2	g g h g g
+W2jet/qqbggAxtri123x4x56.f	W2jet	0	0	1	u d~ ve e+ g g
+BDK/FPFPcc.f	BDK	0	0	1	
+ThreeJets/A5qbmqpgpgpgm.f	ThreeJets	0	0	1	g g g g g
+W2jet/qqbggAxtri12x3x456.f	W2jet	0	0	1	u d~ ve e+ g g
+BDK/FPFMscT.f	BDK	0	0	1	
+W2jet/vv.f	W2jet	0	0	1	u d~ ve e+ g g
+BDK/FFPMccT.f	BDK	0	0	1	
+Z2jet/fzip.f	Z2jet	0	0	1	u u~ e- e+ g g
+W2jet/Ltfunctions.f	W2jet	0	0	1	u d~ ve e+ g g
+ThreeJets/fillEij.f	ThreeJets	0	0	1	g g g g g
+BDK/FPFPsc.f	BDK	0	0	1	
+W2jet/fpm.f	W2jet	0	0	1	u d~ ve e+ g g
+ThreeJets/A5qbmgpqpgpgm.f	ThreeJets	0	0	1	g g g g g
+BDK/FMPFsc.f	BDK	0	0	1	
+W2jet/qqbZggtree.f	W2jet	0	0	1	u d~ ve e+ g g
+Mods/pp_mod.f90	Mods	0	0	1	
+ThreeJets/A5qbmgmqpgpgp.f	ThreeJets	0	0	1	g g g g g
+BDK/FFPMscT.f	BDK	0	0	1	
+ThreeJets/fillDij.f	ThreeJets	0	0	1	g g g g g
+W2jet/ZZtri12_34LL.f	W2jet	0	0	1	u d~ ve e+ g g
+Z2jet/msq_z2jetx.f	Z2jet	0	0	1	u u~ e- e+ g g
+BDK/FFPMccTtilde.f	BDK	0	0	1	
+W2jet/ZZbox2LL.f	W2jet	0	0	1	u d~ ve e+ g g
+ThreeJets/A5qbmqpgpgmgp.f	ThreeJets	0	0	1	g g g g g
+W2jet/fpp.f	W2jet	0	0	1	u d~ ve e+ g g
+W2jet/Acalc.f	W2jet	0	0	1	u d~ ve e+ g g
+W2jet/ZZintegraleval.f	W2jet	0	0	1	u d~ ve e+ g g
+BDK/M3abit2.f	BDK	0	0	1	
+W2jet/Ftexact.f	W2jet	0	0	1	u d~ ve e+ g g
+W2jet/ZZmbc.f	W2jet	0	0	1	u d~ ve e+ g g
+BDK/FFPPcc.f	BDK	0	0	1	
+BDK/FPMFsc.f	BDK	0	0	1	
+ThreeJets/A51mpmpp5g.f	ThreeJets	0	0	1	g g g g g
+W2jet/vvg.f	W2jet	0	0	1	u d~ ve e+ g g
+Z2jet/storecsz.f	Z2jet	0	0	1	u u~ e- e+ g g
+ThreeJets/A5qbmqpgmgpgp.f	ThreeJets	0	0	1	g g g g g
+Z2jet/Bdiff.f	Z2jet	0	0	1	u u~ e- e+ g g
+W2jet/qqbggAxbox3x12x4.f	W2jet	0	0	1	u d~ ve e+ g g
+W2jet/fax.f	W2jet	0	0	1	u d~ ve e+ g g
+BDK/FPFMccTtilde.f	BDK	0	0	1	
+W2jet/ZZtri1_2LL.f	W2jet	0	0	1	u d~ ve e+ g g
+W2jet/faxsl.f	W2jet	0	0	1	u d~ ve e+ g g
+BDK/FFPMscTtilde.f	BDK	0	0	1	
+W2jet/qqbggAxslCoeffs.f	W2jet	0	0	1	u d~ ve e+ g g
+W2jet/qqbw2j_loop.f	W2jet	0	0	1	u d~ ve e+ g g
+W2jet/qqbggAxbox3x4x12.f	W2jet	0	0	1	u d~ ve e+ g g
+ThreeJets/A5qbmgpqpgmgp.f	ThreeJets	0	0	1	g g g g g
+Mods/ppwp2j_mod.f90	Mods	0	0	1	
+BDK/M3abit1.f	BDK	0	0	1	
+W2jet/fsl.f	W2jet	0	0	1	u d~ ve e+ g g
+W2jet/ZZC012x34LLmp.f	W2jet	0	0	1	u d~ ve e+ g g
+ThreeJets/A51mmppp5g.f	ThreeJets	0	0	1	g g g g g
+BDK/FPMFcc.f	BDK	0	0	1	
+BDK/FFPPsc.f	BDK	0	0	1	
+BDK/FFMPcc.f	BDK	0	0	1	
+W2jet/xwqqgg_v.f	W2jet	0	0	1	u d~ ve e+ g g
+Z2jet/fmt.f	Z2jet	0	0	1	u u~ e- e+ g g
+W2jet/LRcalc.f	W2jet	0	0	1	u d~ ve e+ g g
+Z2jet/ampqqb_qqb.f	Z2jet	0	0	1	u u~ e- e+ g g
+gghgg_dep/ppppD1x2x34.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/Inc/pppmD2x3x4_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/aqppC3x412m2.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/pmpmC12x34m0diff.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/ggHgg.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/hgggg_ppmm.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/ppmmC23x41m2.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/precision.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/Inc/fillpenttobox_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/aqpmpmB123.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/Inc/pppmB341_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/aqmpC4x123_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/aqmpD3x21x4_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/pppmC1x234_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/pppmC4x123m0_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/pmpmC1x234m2.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/pppmD1x2x3.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/ppmmB23.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/pppmB341.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/hgggg_mass_tb.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/Inc/scpmpmC12x34m0_unsym_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/pppmB1234.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/Inc/aqpmC4x123_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/aqmpC12x34m0.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/Inc/aqppC3x412_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/hgggg_pmpm_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/haqgg_mass_tb_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/pmcfm_convert.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/pmpmC12x34m2.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/Inc/scpmpmC12x34m0_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/haqaq_mass_tb.f	gghgg_dep	0	0	0	g g h g g
+loop/loopI2pc_inc.f	loop	0	1	0	
+gghgg_dep/ppmmD1x4x32.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/Inc/pppmC4x123_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/aqppC4x123m0_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/aqppC12x34_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/fillformfactor_qp_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/pppmD1x23x4_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/pppmD2x34x1_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/pppmC3x4.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/pppmB234.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/aqmpC12x34.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/Inc/aqppC3x412m2_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/pmpmD1x23x4.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/Inc/ppppD1x23x4_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/pppmB34.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/Inc/ppppD1x2x3_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/scppmmC23x41.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/ppmm.f	gghgg_dep	0	0	0	g g h g g
+ThreeJets/qqb_thrjet_v.f	ThreeJets	0	0	0	g g g g g
+gghgg_dep/aqmpD3x21x4.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/haqgg_pmpp.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/Inc/aqpmmmB123_inc.f	gghgg_dep	0	1	0	g g h g g
+loop/loopI2p_inc.f	loop	0	1	0	
+gghgg_dep/Inc/ppmmD1x4x32_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/hgggg_integralfill_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/ppmmC1x234m0_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/ppmmD2x34x1.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/Inc/setreal_mcfm_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/aqmpC4x123m2_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/scppmmC23x41m0.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/haqgg_mass_tb.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/Inc/aqpmC4x123m0_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/haqgg_pmmp_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/spinor_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/ppmmB23symm_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/haqgg_pmpm.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/Inc/pmpmB34symm_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/ppppC1x234m0_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/ppmmD1x2x34.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/ppmmD1x2x3.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/Inc/pppmB234_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/ppppD1x23x4.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/Inc/consts.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/pmpmC3x4_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/ppmmC1x234.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/Inc/pmpmC12x34_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/haqgg_pmmm_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/fillformfactor_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/ppmmC23x41m2_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/scpmpmC12x34m0.f	gghgg_dep	0	0	0	g g h g g
+loop/loopI1c_inc.f	loop	0	1	0	
+gghgg_dep/pppm.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/pmpmB34symm.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/pppmD1x23x4.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/Inc/hgggg_pppp_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/pmpmC1x234.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/Inc/ppmmC23x41m0diff_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/pppmC4x123m0.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/aqppC12x34.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/Inc/pppmC12x34m2_inc.f	gghgg_dep	0	1	0	g g h g g
+Inc/tri123x4x56coeffs.f	Inc	0	0	0	
+gghgg_dep/aqpmmmB123.f	gghgg_dep	0	0	0	g g h g g
+W2jet/ZZC02x34LLmp.f	W2jet	0	0	0	u d~ ve e+ g g
+loop/loopI4_generic.f	loop	0	0	0	
+gghgg_dep/Inc/haqaq_mass_tb_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/ppmmD2x34x1_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/aqpmpmB123_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/haqgg_mass.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/ppmmB23symm.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/Inc/aqppC12x34m0_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/aqppC3x412m0_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/pppmD1x2x3_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/pppmD1x4x32_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/ppppC1x234m2.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/Inc/hgggg_integralfillqp_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/hgggg_assemble_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/aqpmppB123_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/aqmpC12x34m0unsym_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/scpmpmC12x34_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/aqpmC4x123m2_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/aqmpC12x34m2unsym_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/aqppD3x21x4.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/pppmC4x123.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/Inc/pmpmC1x234m2_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/pppmD3x4x1_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/aqmpB12_unsym.f	gghgg_dep	0	0	0	g g h g g
+loop/loopI4_inc.f	loop	0	1	0	
+gghgg_dep/pppmC1x43.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/Inc/aqmpB12_unsym_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/aqmpD4x3x21_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/pppmD1x2x34_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/hgggglabels.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/aqaqHamp.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/pppmD2x1x43.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/Inc/pmpmB34_inc.f	gghgg_dep	0	1	0	g g h g g
+Mods/mod_qcdloop_c.f	Mods	0	0	0	
+Inc/ppmax.f	Inc	0	0	0	
+gghgg_dep/Inc/testReal_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/aqppC4x123m2_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/ppmmC23x41_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/scppmmC23x41_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/pmpmC2x34_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/aqmpC3x4.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/testReal.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/Inc/ppmmB23_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/pppmD2x3x4.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/pppmC1x234m0.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/aqppC12x34m2.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/pmpmD1x2x3.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/hgggg_pmpm.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/Inc/ggHgg_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/aqpmmpB34_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/hgggg_pppm_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/aqmpC12x34m0unsym.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/Inc/hdecaymode.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/pmpmC12x34m0diff_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/scpmpmC12x34m0_unsym.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/aqppC4x123.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/Inc/aqpmmpB123_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/aqmpC12x34m0_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/pppmB34_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/aqpmmpB412_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/aqppC3x412m0.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/hgggg_integralfill.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/pppmD3x4x1.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/Inc/aqaqH_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/pppmD2x34x1.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/spinor.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/Inc/pmpmD1x2x3_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/pppmD1x2x34.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/Inc/haqaq_mass_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/aqaqHamp_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/hgggglabels_mod.f90	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/pppmC12x34m2.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/Inc/ppmmB234_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/pmpmC3x4.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/aqppC4x123m0.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/Inc/pppmC2x341_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/pmpmC1x234_inc.f	gghgg_dep	0	1	0	g g h g g
+Procdep/chooser.f	Procdep	0	0	0	
+gghgg_dep/Inc/pmpmB234_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/aqpmppB123.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/Inc/aqmpC3x4_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/haqgg_mass_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/hdecaymode_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/hgggg_pppp.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/aqpmC4x123m0.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/pmpmC12x34m2part.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/pppmC2x341m2.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/Inc/pmpmD4x3x21_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/aqppC3x12_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/hgggglabels_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/pppmC2x34.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/hgggg_mass.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/hgggg_assemble.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/pmpmC1x234m0.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/pppmC12x34.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/Inc/aqmpC12x34_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/pmpmD1x23x4_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/ppmmD1x2x3_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/setreal_mcfm.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/aqmpB12.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/Inc/pppmC1x234m2_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/pmpmB234.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/ppmmC2x3.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/Inc/pmcfm_convert_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/haqgg_pmpm_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/aqpmppB412.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/aqppC12x34m0.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/Inc/ppmmC2x3_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/aqmpC4x123.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/pppmC4x123m2.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/pmpmD4x3x21.f	gghgg_dep	0	0	0	g g h g g
+W2jet/A6texact.f	W2jet	0	0	0	u d~ ve e+ g g
+gghgg_dep/Inc/pppmD4x3x21_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/aqpmppB412_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/pppmC12x34m0_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/aqmpC12x34m2.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/pppmC2x341m0.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/Inc/pppmC12x34_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/ppppC1x234.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/Inc/ppppD1x2x34_inc.f	gghgg_dep	0	1	0	g g h g g
+loop/loopI4c_inc.f	loop	0	1	0	
+gghgg_dep/Inc/scppmmC23x41m0_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/ppmmC1x234m0.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/Inc/aqmpC3x12_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/pmpmC2x34.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/Inc/pppmC2x341m0_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/aqpmC4x123.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/Inc/pppmC2x34_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/ppmmD1x23x4.f	gghgg_dep	0	0	0	g g h g g
+loop/loopI1_generic.f	loop	0	0	0	
+gghgg_dep/Inc/aqppD4x3x21_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/pppmC2x341.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/ppmmC23x41m0diff.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/Inc/ppmmC23x41m2_unsym_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/hgggg_mass_tb_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/IntResults.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/aqmpC4x123m2.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/pppmC1x234m2.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/pppmD1x4x32.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/aqppB12.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/Inc/pppmB1234_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/aqppC4x123_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/sprod_com.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/Inc/ppmmC1x234m2_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/aqmpC3x12.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/Inc/zprods_decl.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/aqaqH.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/aqppD4x3x21.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/hgggg_pppm.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/Inc/pentbox_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/aqpmC4x123m2.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/ppmmC1x23.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/Inc/pppmC2x341m2_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/pentbox.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/haqaq_mass.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/Inc/pppmC1x43_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/ppmmC1x234m2.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/Inc/ppmmC1x23_inc.f	gghgg_dep	0	1	0	g g h g g
+loop/loopI2p_generic.f	loop	0	0	0	
+gghgg_dep/ppmmB234.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/Inc/aqppB12_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/aqppC4x123m2.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/Inc/hgggg_mass_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/pmpmC12x34.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/ppmmC23x41m2_unsym.f	gghgg_dep	0	0	0	g g h g g
+Mods/Modules_Interface.f90	Mods	0	0	0	
+gghgg_dep/aqmpC4x123m0.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/Inc/ppppC1x234_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/aqmpB12_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/aqmpC12x34m2unsym.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/haqgg_pmmm.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/Inc/aqppC12x34m2_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/pmpmC1x234m0_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/ppppC1x234m2_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/haqgg_pmmp.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/Inc/hgggg_ppmm_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/scpmpmC12x34.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/Inc/aqmpC12x34m2_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/pppmC4x123m2_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/ppppC1x234m0.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/ppppD1x2x3.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/fillformfactor.f	gghgg_dep	0	0	0	g g h g g
+loop/loopI1_inc.f	loop	0	1	0	
+gghgg_dep/Inc/haqgg_pmpp_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/ppmmD1x23x4_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/aqpmmpB412.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/Inc/aqmpC4x123m0_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/ppmmC1x234_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/pmpmB34.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/Inc/ppmmD1x2x34_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/aqmpD4x3x21.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/pppmD4x3x21.f	gghgg_dep	0	0	0	g g h g g
+W2jet/aqqb_zbb.f	W2jet	0	0	0	u d~ ve e+ g g
+gghgg_dep/aqppC3x12.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/Inc/pmpmC12x34m2part_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/fillpenttobox.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/aqpmmpB34.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/Inc/I5to4.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/pppmC3x4_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/aqppD3x21x4_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/ppmmC23x41.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/Inc/pppmC1x234m0_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/Cred.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/pppmC1x234.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/aqpmmpB123.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/pppmC12x34m0.f	gghgg_dep	0	0	0	g g h g g
+gghgg_dep/Inc/pppmD2x1x43_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/Inc/pmpmC12x34m2_inc.f	gghgg_dep	0	1	0	g g h g g
+gghgg_dep/aqppC3x412.f	gghgg_dep	0	0	0	g g h g g
+BDK/Master2.f	BDK	1	0	3	
+W2jet/w2jetsq.f	W2jet	1	0	2	u d~ ve e+ g g
+BDK/Master3.f	BDK	1	0	2	
+W2jet/a6routine.f	W2jet	1	0	2	u d~ ve e+ g g
+gghgg_dep/gg_hgg_mass.f	gghgg_dep	1	0	1	g g h g g
+W2jet/ZZD062x1x34LLmp.f	W2jet	1	0	1	u d~ ve e+ g g
+W2jet/ZZmassivebub.f	W2jet	1	0	1	u d~ ve e+ g g
+BDK/FPPFsc.f	BDK	1	0	1	
+Z2jet/fmtfull.f	Z2jet	1	0	1	u u~ e- e+ g g
+W2jet/ZZtri1_34LL.f	W2jet	1	0	1	u d~ ve e+ g g
+W2jet/ZZD02x1x34LLmp.f	W2jet	1	0	1	u d~ ve e+ g g
+gghgg_dep/gg_hgg_mass_nodecay.f	gghgg_dep	1	0	1	g g h g g
+W2jet/qqb_w2jet.f	W2jet	1	0	1	u d~ ve e+ g g
+BDK/FPPFcc.f	BDK	1	0	1	
+gghgg_dep/gg_hgg_mass_tb_nodecay.f	gghgg_dep	1	0	1	g g h g g
+Z2jet/z2jetsq.f	Z2jet	1	0	1	u u~ e- e+ g g
+W2jet/ZZC01x2LLmp.f	W2jet	1	0	1	u d~ ve e+ g g
+W2jet/ZZC01x34LLmp.f	W2jet	1	0	1	u d~ ve e+ g g
+Z2jet/a63.f	Z2jet	1	0	1	u u~ e- e+ g g
+BDK/FMPFcc.f	BDK	1	0	1	
+W2jet/a61LRL.f	W2jet	1	0	0	u d~ ve e+ g g
+W2jet/atrLRL.f	W2jet	1	0	0	u d~ ve e+ g g
+Z2jet/a62z.f	Z2jet	1	0	0	u u~ e- e+ g g
+Z2jet/atreez.f	Z2jet	1	0	0	u u~ e- e+ g g
+gghgg_dep/gg_hgg_mass_tb.f	gghgg_dep	1	0	0	g g h g g
+W2jet/atrLLL.f	W2jet	1	0	0	u d~ ve e+ g g
+W2jet/xzqqgg.f	W2jet	1	0	0	u d~ ve e+ g g
+W2jet/A6axBDK.f	W2jet	1	0	0	u d~ ve e+ g g
+gghgg_dep/Inc/run_gghgg_inc.f	gghgg_dep	1	1	0	g g h g g
+Z2jet/a63z.f	Z2jet	1	0	0	u u~ e- e+ g g
+Z2jet/a61z.f	Z2jet	1	0	0	u u~ e- e+ g g
+BDK/Master3a.f	BDK	2	0	2	
+ThreeJets/A5gfill.f	ThreeJets	2	0	1	g g g g g
+BDK/FFMPsc.f	BDK	2	0	1	
+W2jet/ZZmassivebox.f	W2jet	2	0	1	u d~ ve e+ g g
+BDK/FPFMsc.f	BDK	2	0	1	
+ThreeJets/A5NLOggggg.f	ThreeJets	2	0	0	g g g g g
+W2jet/Tri3masscoeff.f	W2jet	2	0	0	u d~ ve e+ g g
+Z2jet/qqb_z2jet_v.f	Z2jet	2	0	0	u u~ e- e+ g g
+ThreeJets/A5NLOqbqggg.f	ThreeJets	2	0	0	g g g g g
+W2jet/a61LLL.f	W2jet	2	0	0	u d~ ve e+ g g
+W2jet/a61.f	W2jet	3	0	3	u d~ ve e+ g g
+W2jet/a62.f	W2jet	3	0	2	u d~ ve e+ g g
+BDK/FPFMcc.f	BDK	3	0	1	
+W2jet/ZZmassivetri.f	W2jet	3	0	1	u d~ ve e+ g g
+BDK/FFPMcc.f	BDK	3	0	1	
+Z2jet/a6ax.f	Z2jet	3	0	1	u u~ e- e+ g g
+W2jet/qqb_wp2jetx_new.f	W2jet	3	0	1	u d~ ve e+ g g
+W2jet/a61g.f	W2jet	3	0	1	u d~ ve e+ g g
+W2jet/qqb_w2jet_v.f	W2jet	3	0	0	u d~ ve e+ g g
+ThreeJets/A5NLO4qg.f	ThreeJets	3	0	0	g g g g g
+W2jet/a6g.f	W2jet	4	0	2	u d~ ve e+ g g
+W2jet/BDKqqbggAxAmp.f	W2jet	4	0	1	u d~ ve e+ g g
+W2jet/qqbZgg_floop.f	W2jet	4	0	1	u d~ ve e+ g g
+W2jet/a6.f	W2jet	5	0	2	u d~ ve e+ g g
+BDK/FFPMsc.f	BDK	5	0	1	
+Z2jet/qqb_z2jetx_new.f	Z2jet	5	0	1	u u~ e- e+ g g
+ThreeJets/fillamps_qbqggg.f	ThreeJets	6	0	1	g g g g g
+W2jet/ZZmassiveboxtri.f	W2jet	7	0	1	u d~ ve e+ g g
+W2jet/ggZZmassamp_new.f	W2jet	7	0	1	u d~ ve e+ g g
+W2jet/fsc.f	W2jet	8	0	1	u d~ ve e+ g g
+W2jet/fcc.f	W2jet	8	0	1	u d~ ve e+ g g
+W2jet/xzqqgg_v.f	W2jet	8	0	1	u d~ ve e+ g g

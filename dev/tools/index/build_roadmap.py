@@ -111,7 +111,7 @@ def build_roadmap():
 
     # ---- Doxygen call graph -> file edges + symbol -> file index ----
     cref2file, symbols, edges = {}, {}, collections.defaultdict(set)
-    xmls = [x for x in glob.glob(XML + "/*.xml") if not x.endswith("index.xml")]
+    xmls = sorted(x for x in glob.glob(XML + "/*.xml") if not x.endswith("index.xml"))
     for x in xmls:
         try: root = ET.parse(x).getroot()
         except ET.ParseError: continue
@@ -164,7 +164,7 @@ def build_roadmap():
     cols = ["rel", "top", "deps", "blind", "fanin", "bench"]
     with open(ASSETS + "/roadmap_metrics.tsv", "w") as fh:
         fh.write("\t".join(cols) + "\n")
-        for r in sorted(untranslated, key=lambda x: (info[x]["deps"], -info[x]["fanin"])):
+        for r in sorted(untranslated, key=lambda x: (info[x]["deps"], -info[x]["fanin"], x)):
             fh.write("\t".join(str(info[r][c]) for c in cols) + "\n")
 
     cleanup_cols = [

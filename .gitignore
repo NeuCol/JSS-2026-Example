@@ -9,6 +9,18 @@
 # roadmap, symbol index, drafts, stage-2 check tables) lands under dev/tmp/.
 *.tsv
 *.scribe
+# ...which is what the two rules above were for, but they miss the JSON assets
+# (symbol_index.json, cleanup_index.json) and those embed the operator's absolute
+# repo root -- so `git add -A` would commit local PII. Anchored to the repo root
+# with a leading slash: an unanchored `dev/tmp/` would also match the archived
+# `evals/**/dev/tmp/` run snapshots and re-hide them.
+/dev/tmp/
+
+# Exception: archived run snapshots under evals/ are evidence, not scratch. The
+# roadmap TSV is the candidate list a run's model actually chose from, so it has
+# to be committed alongside the symbol_index.json that already is. Live scratch in
+# dev/tmp/assets/ stays ignored.
+!evals/**/dev/tmp/assets/*.tsv
 
 # jobrunner run artifacts (scratch of `jobrunner submit`); archived logs under
 # tests/*/jobnode.archive/ are kept and tracked deliberately.
