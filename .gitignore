@@ -14,7 +14,7 @@
 # repo root -- so `git add -A` would commit local PII. Anchored to the repo root
 # with a leading slash: an unanchored `dev/tmp/` would also match the archived
 # `evals/**/dev/tmp/` run snapshots and re-hide them.
-/dev/tmp/
+#/dev/tmp/
 
 # Exception: archived run snapshots under evals/ are evidence, not scratch. The
 # roadmap TSV is the candidate list a run's model actually chose from, so it has
