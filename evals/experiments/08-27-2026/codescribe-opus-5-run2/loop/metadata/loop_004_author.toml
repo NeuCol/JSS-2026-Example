@@ -1,0 +1,614 @@
+run_id = "20260827-163852-7ae966"
+loop_index = 4
+phase = "author"
+model = "anthropic-claude-opus-5"
+task_file = "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/loop.toml"
+workdir = "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example"
+stop_reason = "max_iterations"
+final_text_present = false
+iterations = 30
+duration_s = 577.992
+rejected_calls = []
+created_at = "2026-08-27T22:15:53.536242+00:00"
+[[tools]]
+name = "read"
+ok = true
+output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/current_plan.md\n# lines: 1-210\n0001: # Fortran → C++ plan\n0002: \n0003: This file says how to run step 1. The rewrite rules and correctness bar are in\n0004: `desired_spec.md`.\n0005: \n0006: > This Plan is the policy: it selects and orders the work over the ready set (see *When to\n0007: > stop*). The correctness contract — objective `f`, invariants `I`, oracle `V`, and status set\n0008: > `Σ` — lives in `"
+
+[tools.args]
+path = "dev/transformations/mcfm-translate/current_plan.md"
+[[tools]]
+name = "read"
+ok = true
+output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/desired_spec.md\n# lines: 1-144\n0001: # Fortran → C++: target output for one MCFM file\n0002: \n0003: This file defines the rewrite target and correctness bar for step 1. The workflow lives in\n0004: `current_plan.md`.\n0005: \n0006: Paths are written as `software/mcfm/src/...`.\n0007: \n0008: ---\n0009: \n0010: ## Contract\n0011: \n0012: This step advances by *settling* source files one at a time: each file is r"
+
+[tools.args]
+path = "dev/transformations/mcfm-translate/desired_spec.md"
+[[tools]]
+name = "read"
+ok = true
+output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/current_plan.md\n# lines: 156-210\n0156: 7. After a group is completed, check the gate before opening the next one.\n0157: 8. After any required approval, refresh the roadmap again before picking more work.\n0158: \n0159: The map exists so a file is only rewritten after its callees are already available in C++.\n0160: \n0161: ## Shell notes\n0162: \n0163: CodeScribe bash is restricted to one simple command per"
+
+[tools.args]
+path = "dev/transformations/mcfm-translate/current_plan.md"
+offset = 156
+[[tools]]
+name = "read"
+ok = true
+output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/agent_log.md\n# lines: 1-150\n0001: # mcfm-translate worklist\n0002: \n0003: Status vocabulary and evidence rules come from `desired_spec.md`; the round algorithm comes\n0004: from `current_plan.md`.\n0005: \n0006: ## Group Mods-01 (types, qcdloop interface, pp tables)\n0007: \n0008: Provenance (recorded when the group was opened, before editing):\n0009: \n0010: - `python3 dev/workflow.py status` → `roadmap metr"
+
+[tools.args]
+path = "dev/transformations/mcfm-translate/agent_log.md"
+[[tools]]
+name = "read"
+ok = true
+output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/agent_log.md\n# lines: 130-150\n0130:   Remaining in Mods: only `Modules_Interface.f90`, which must stay Fortran while module shims\n0131:   exist. Next group should start from the current top of\n0132:   `python3 dev/workflow.py next mcfm-translate` (W2jet: `atree.f`, `ggZZcapture.f`, ...).\n0133:   No human decision needed; the group is complete and unblocked (1 of 3 allowed before\n0134:   approval).\n013"
+
+[tools.args]
+path = "dev/transformations/mcfm-translate/agent_log.md"
+offset = 130
+[[tools]]
+name = "bash"
+ok = true
+output_preview = "exit_code: 0\nSTDOUT:\nGATE: OK — completed groups do not yet require approval (2 waiting, limit 3).\n\nSTDERR:\n"
+
+[tools.args]
+command = "python3 dev/workflow.py gate mcfm-translate"
+[[tools]]
+name = "bash"
+ok = true
+output_preview = "exit_code: 0\nSTDOUT:\nGenerating Doxygen XML for /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src -> /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/doxygen_dep/xml\nwrote 1137 XML file(s) to /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/doxygen_dep/xml\nsource 526  translated 90  untranslated 436\nready leaves (deps=0, non-blind): 234\nsymbol index: 920 symbol(s)\ncleanup candidates: move 76  shim-delete 15  merge 37\nwrote roadmap_metrics."
+
+[tools.args]
+command = "python3 dev/workflow.py refresh"
+[[tools]]
+name = "bash"
+ok = true
+output_preview = "exit_code: 0\nSTDOUT:\n# workflow status\nassets: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tmp/assets\nroadmap metrics: 436 untranslated file rows, 234 ready leaves\ncleanup index: 569 families, move 76, shim-delete 15, merge 37\n\n- mcfm-translate: groups: 2 total, 0 open, 2 completed, 2 pending approval\n- mcfm-cleanup: groups: 7 total, 0 open, 7 completed, 7 pending approval\n- pepper-kokkos-port: no agent_log.md yet\n\nSTDERR:\n"
+
+[tools.args]
+command = "python3 dev/workflow.py status"
+[[tools]]
+name = "bash"
+ok = true
+output_preview = "exit_code: 0\nSTDOUT:\n# next translation candidates\n- BDK/fvs.f  (fanin=2, bench=)\n- W2jet/ZZbox1LL.f  (fanin=2, bench=u d~ ve e+ g g)\n- W2jet/a6routine.f  (fanin=2, bench=u d~ ve e+ g g)\n- W2jet/w2jetsq.f  (fanin=2, bench=u d~ ve e+ g g)\n- gghgg_dep/gghgg_dep_params.f  (fanin=2, bench=g g h g g)\n- BDK/FFMPcc.f  (fanin=1, bench=)\n- BDK/FFPMccT.f  (fanin=1, bench=)\n- BDK/FFPMccTtilde.f  (fanin=1, bench=)\n- BDK/FFPMscT.f  (fanin=1, bench=)\n- BDK/FFPMscTtilde.f  (fanin=1, bench=)\n\nSTDERR:\n"
+
+[tools.args]
+command = "python3 dev/workflow.py next mcfm-translate"
+[[tools]]
+name = "bash"
+ok = true
+output_preview = "exit_code: 0\nSTDOUT:\na61.f\na61g.f\na61LLL.f\na61LRL.f\na62.f\nA6axBDK.f\na6.f\na6g.f\na6routine.f\nA6texact.f\na6treeg.cpp\na6treeg_fi.F90\na6treeg.hpp\nAcalc.f\naqqb_zbb.f\natree.cpp\natree_fi.F90\natree.hpp\natrLLL.f\natrLRL.f\nBDKqqbggAxAmp.f\nCMakeLists.txt\ndeprecated\nfax.f\nfaxsl.f\nfcc.f\nfpm.f\nfpp.f\nfsc.f\nfsl.f\nFtexact.f\nfvf.cpp\nfvf_fi.F90\nfvf.hpp\nggZZcapture.cpp\nggZZcapture_fi.F90\nggZZcapture.hpp\nggZZmassamp_new.f\nLRcalc.f\nLtfunctions.f\nqqbggAxbox3x12x4.f\nqqbggAxbox3x4x12.f\nqqbggAxslCoeffs.f\nqqbggAxtri123x4x56"
+
+[tools.args]
+command = "ls software/mcfm/src/W2jet/"
+[[tools]]
+name = "bash"
+ok = true
+output_preview = "exit_code: 0\nSTDOUT:\nBDK/fvs.f\tBDK\t0\t0\t2\t\nBDK/FFMPcc.f\tBDK\t0\t0\t1\t\nBDK/FFPMccT.f\tBDK\t0\t0\t1\t\nBDK/FFPMccTtilde.f\tBDK\t0\t0\t1\t\nBDK/FFPMscT.f\tBDK\t0\t0\t1\t\nBDK/FFPMscTtilde.f\tBDK\t0\t0\t1\t\nBDK/FFPPcc.f\tBDK\t0\t0\t1\t\nBDK/FFPPsc.f\tBDK\t0\t0\t1\t\nBDK/FMPFsc.f\tBDK\t0\t0\t1\t\nBDK/FPFMccTtilde.f\tBDK\t0\t0\t1\t\nBDK/FPFMscT.f\tBDK\t0\t0\t1\t\nBDK/FPFPcc.f\tBDK\t0\t0\t1\t\nBDK/FPFPsc.f\tBDK\t0\t0\t1\t\nBDK/FPMFcc.f\tBDK\t0\t0\t1\t\nBDK/FPMFsc.f\tBDK\t0\t0\t1\t\nBDK/FPPFcc.f\tBDK\t0\t0\t1\t\nBDK/FPPFsc.f\tBDK\t0\t0\t1\t\nBDK/M1bit1.f\tBDK\t0\t0\t1\t\nBDK/M2abit1.f\tBDK\t0\t0\t1\t\nBDK/"
+
+[tools.args]
+command = "grep -P \"\\tBDK\\t0\\t0\\t\" dev/tmp/assets/roadmap_metrics.tsv"
+[[tools]]
+name = "bash"
+ok = true
+output_preview = "exit_code: 0\nSTDOUT:\nAAAREADME.txt\nCMakeLists.txt\nFFMPcc.f\nFFMPsc.f\nFFPMcc.f\nFFPMccT.f\nFFPMccTtilde.f\nFFPMsc.f\nFFPMscT.f\nFFPMscTtilde.f\nFFPPcc.f\nFFPPsc.f\nFMPFcc.f\nFMPFsc.f\nFPFMcc.f\nFPFMccTtilde.f\nFPFMsc.f\nFPFMscT.f\nFPFPcc.f\nFPFPsc.f\nFPMFcc.f\nFPMFsc.f\nFPPFcc.f\nFPPFsc.f\nfvs.f\nM1bit1.f\nM2abit1.f\nM2abit2.f\nM2bit1.f\nM2bit2.f\nM2bit3.f\nM3abit1.f\nM3abit2.f\nM3bit1.f\nM3bit2.f\nM3bit3.f\nM3bit4.f\nMaster1.f\nMaster2a.f\nMaster2.f\nMaster3a.f\nMaster3.f\n\nSTDERR:\n"
+
+[tools.args]
+command = "ls software/mcfm/src/BDK/"
+[[tools]]
+name = "read"
+ok = true
+output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/fvs.f\n# lines: 1-178\n0001: !\n0002: !  SPDX-License-Identifier: GPL-3.0-or-later\n0003: !  Copyright (C) 2019-2022, respective authors of MCFM.\n0004: !\n0005:       function Fvs(st,j1,j2,j3,j4,j5,j6,za,zb)\n0006:       use types\n0007:       use mxpart_mod\n0008:       use sprods_com_mod\n0009:       use heldefs_mod\n0010:       implicit none\n0011:       complex(dp):: Fvs\n0012: c--- This function returns the result of BDK"
+
+[tools.args]
+path = "software/mcfm/src/BDK/fvs.f"
+[[tools]]
+name = "read"
+ok = true
+output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/FFMPcc.f\n# lines: 1-185\n0001: !\n0002: !  SPDX-License-Identifier: GPL-3.0-or-later\n0003: !  Copyright (C) 2019-2022, respective authors of MCFM.\n0004: !\n0005:       function FFMPcc(j1,j2,j3,j4,j5,j6,za,zb)\n0006: c     Z. Bern, L. Dixon, D.A. Kosower, e-Print:hep-ph/9708239\n0007: c     Eq10.10\n0008:       use types\n0009:       use mxpart_mod\n0010:       implicit none\n0011:       complex(dp):: za(mxpart,mxpart),zb(m"
+
+[tools.args]
+path = "software/mcfm/src/BDK/FFMPcc.f"
+[[tools]]
+name = "read"
+ok = true
+output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/FFPMccT.f\n# lines: 1-73\n0001: !\n0002: !  SPDX-License-Identifier: GPL-3.0-or-later\n0003: !  Copyright (C) 2019-2022, respective authors of MCFM.\n0004: !\n0005:       function FFPMccT(j1,j2,j3,j4,j5,j6,za,zb)\n0006: c     Z. Bern, L. Dixon, D.A. Kosower, e-Print:hep-ph/9708239\n0007: c     Eq.10.17\n0008:       use types\n0009:       use mxpart_mod\n0010:       use sprods_com_mod\n0011:       implicit none\n0012:       com"
+
+[tools.args]
+path = "software/mcfm/src/BDK/FFPMccT.f"
+[[tools]]
+name = "read"
+ok = true
+output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/CMakeLists.txt\n# lines: 1-44\n0001: target_sources(objlib PRIVATE\n0002: FFPPsc.f\n0003: M2abit2.f\n0004: FFMPsc.f\n0005: FFPMcc.f\n0006: FMPFsc.f\n0007: CMakeLists.txt\n0008: FFPMscT.f\n0009: M3bit4.f\n0010: FFPMsc.f\n0011: Master3a.f\n0012: FPFMccTtilde.f\n0013: FFMPcc.f\n0014: FFPPcc.f\n0015: M2abit1.f\n0016: AAAREADME.txt\n0017: Master2a.f\n0018: FMPFcc.f\n0019: M3bit3.f\n0020: FFPMscTtilde.f\n0021: M3abit1.f\n0022: FPFMsc.f\n0023: "
+
+[tools.args]
+path = "software/mcfm/src/BDK/CMakeLists.txt"
+[[tools]]
+name = "read"
+ok = true
+output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/W2jet/fvf.cpp\n# lines: 1-68\n0001: //\n0002: //  SPDX-License-Identifier: GPL-3.0-or-later\n0003: //  Copyright (C) 2019-2022, respective authors of MCFM.\n0004: //\n0005: #include <fvf.hpp>\n0006: #include <cmath>\n0007: #include <complex>\n0008: #include <FArray.hpp>\n0009: #include <mxpart_mod.hpp>\n0010: #include <sprods_com_mod.hpp>\n0011: #include <heldefs_mod.hpp>\n0012: #include <Need.hpp>\n0013: #include <W1jet.hpp>\n0014:"
+
+[tools.args]
+path = "software/mcfm/src/W2jet/fvf.cpp"
+[[tools]]
+name = "read"
+ok = true
+output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/W2jet/fvf.hpp\n# lines: 1-17\n0001: #ifndef FVF_HPP\n0002: #define FVF_HPP\n0003: \n0004: #include <FArray.hpp>\n0005: #include <complex>\n0006: \n0007: extern std::complex<double> Fvf(int st, int j1, int j2, int j3, int j4, int j5, int j6,\n0008:                                 FArray2D<std::complex<double>>& za, FArray2D<std::complex<double>>& zb);\n0009: \n0010: extern \"C\" {\n0011: \n0012:   extern std::complex<double> Fvf_wrap"
+
+[tools.args]
+path = "software/mcfm/src/W2jet/fvf.hpp"
+[[tools]]
+name = "read"
+ok = true
+output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/W2jet/fvf_fi.F90\n# lines: 1-28\n0001: !\n0002: !  SPDX-License-Identifier: GPL-3.0-or-later\n0003: !  Copyright (C) 2019-2022, respective authors of MCFM.\n0004: !\n0005: function Fvf(st,j1,j2,j3,j4,j5,j6,za,zb) result(res)\n0006:   use, intrinsic :: iso_c_binding\n0007:   use types\n0008:   use mxpart_mod\n0009: \n0010:   implicit none\n0011: \n0012:   integer:: st\n0013:   integer:: j1,j2,j3,j4,j5,j6\n0014:   complex(dp):: za(mxp"
+
+[tools.args]
+path = "software/mcfm/src/W2jet/fvf_fi.F90"
+[[tools]]
+name = "bash"
+ok = true
+output_preview = "exit_code: 0\nSTDOUT:\nb0_mod.cpp\nb0_mod.f90\nb0_mod.hpp\nblabels_mod.f90\nblabels_mod.hpp\nblha_mod.cpp\nblha_mod.f90\nblha_mod.hpp\nbreit_mod.cpp\nbreit_mod.f90\nbreit_mod.hpp\nCabibbo_mod.cpp\nCabibbo_mod.f90\nCabibbo_mod.hpp\nckm1_mod.cpp\nckm1_mod.f90\nckm1_mod.hpp\nckm_mod.cpp\nckm_mod.f90\nckm_mod.hpp\nCMakeLists.txt\nconstants_mod.f90\nconstants_mod.hpp\ncouple_mod.cpp\ncouple_mod.f90\ncouple_mod.hpp\ndeprecated\ndocheck_mod.cpp\ndocheck_mod.f90\ndocheck_mod.hpp\nepinv2_mod.cpp\nepinv2_mod.f90\nepinv2_mod.hpp\nepinv_mod."
+
+[tools.args]
+command = "ls software/mcfm/src/Mods/"
+[[tools]]
+name = "bash"
+ok = true
+output_preview = "exit_code: 0\nSTDOUT:\nsoftware/mcfm/install/include/Need.hpp\nsoftware/mcfm/install/include/FArray.hpp\nsoftware/mcfm/install/include/W1jet.hpp\nsoftware/mcfm/src/W1jet/W1jet.hpp\nsoftware/mcfm/src/Inc/FArray.hpp\nsoftware/mcfm/src/Need/Need.hpp\n\nSTDERR:\n"
+
+[tools.args]
+command = "find software/mcfm -name \"Need.hpp\" -o -name \"W1jet.hpp\" -o -name \"FArray.hpp\""
+[[tools]]
+name = "read"
+ok = true
+output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Mods/sprods_com_mod.hpp\n# lines: 1-10\n0001: #ifndef SPRODS_COM_MOD\n0002: #define SPRODS_COM_MOD\n0003: \n0004: #include <FArray.hpp>\n0005: \n0006: namespace sprods_com_mod {\n0007:   extern FArray2D<double> s;\n0008: }\n0009: \n0010: #endif\n"
+
+[tools.args]
+path = "software/mcfm/src/Mods/sprods_com_mod.hpp"
+[[tools]]
+name = "bash"
+ok = false
+output_preview = "Error: blocked shell syntax detected"
+
+[tools.args]
+command = "grep -n \"L0\\|L1\\|Lnrat\\|Lsm1\\|i3m\\|I3m\\|double t(\" software/mcfm/src/Need/Need.hpp software/mcfm/src/W1jet/W1jet.hpp"
+[[tools]]
+name = "bash"
+ok = true
+output_preview = "exit_code: 0\nSTDOUT:\n70:class FArray2D {\n71-\n72-  private:\n73-    bool ownsData;\n74-    int start_i, start_j;\n75-\n76-  public:\n77-    size_t ni, nj;\n78-    T* data;\n79-\n80-    // Constructor to allocate memory\n81-    FArray2D(size_t ni, size_t nj, int start_i=1, int start_j=1)\n82-        : ni(ni), nj(nj), start_i(start_i), start_j(start_j), data(new T[ni * nj]), ownsData(true) {}\n83-\n84-    // Constructor to use existing Fortran array\n85-    FArray2D(T* fortranArray, size_t ni, size_t nj, int st"
+
+[tools.args]
+command = "grep -rn \"class FArray2D\" -A 30 software/mcfm/src/Inc/FArray.hpp"
+[[tools]]
+name = "bash"
+ok = true
+output_preview = "exit_code: 0\nSTDOUT:\n  46 software/mcfm/src/Need/Need.hpp\n  34 software/mcfm/src/W1jet/W1jet.hpp\n  80 total\n\nSTDERR:\n"
+
+[tools.args]
+command = "wc -l software/mcfm/src/Need/Need.hpp software/mcfm/src/W1jet/W1jet.hpp"
+[[tools]]
+name = "bash"
+ok = true
+output_preview = "exit_code: 0\nSTDOUT:\nsoftware/mcfm/src/Need/Need.hpp:35:extern std::complex<double> Lsm1(double x1, double y1, double x2, double y2);\nsoftware/mcfm/src/Need/Need.hpp:40:extern std::complex<double> Lsm1_2mht(double s, double t, double m1sq, double m2sq);\nsoftware/mcfm/src/Need/Need.hpp:41:extern std::complex<double> Lsm1_2mh(double s, double t, double m1sq, double m2sq);\nsoftware/mcfm/src/Need/Need.hpp:42:extern std::complex<double> Lsm1_2me(double s, double t, double m1sq, double m3sq);\n\nSTDERR:"
+
+[tools.args]
+command = "grep -n \"Lsm1\" software/mcfm/src/Need/Need.hpp software/mcfm/src/W1jet/W1jet.hpp"
+[[tools]]
+name = "read"
+ok = true
+output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Need/Need.hpp\n# lines: 1-46\n0001: #ifndef NEED_H\n0002: #define NEED_H\n0003: \n0004: #include <FArray.hpp>\n0005: #include <complex>\n0006: \n0007: extern void coupling();\n0008: \n0009: extern void couplz(double xw);\n0010: extern void couplz_cms(std::complex<double> zxw_in);\n0011: \n0012: extern void spinoru(int N, const FArray2D<double>& p, FArray2D<std::complex<double>>& za, FArray2D<std::complex<double>>& zb);\n0013: \n0014"
+
+[tools.args]
+path = "software/mcfm/src/Need/Need.hpp"
+[[tools]]
+name = "read"
+ok = true
+output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/W1jet/W1jet.hpp\n# lines: 1-34\n0001: #ifndef W1JET_H\n0002: #define W1JET_H\n0003: \n0004: #include <FArray.hpp>\n0005: #include <complex>\n0006: \n0007: extern double t(int j1, int j2, int j3);\n0008: extern std::complex<double> A52(int j1, int j2, int j3, int j4, int j5, FArray2D<std::complex<double>>& za, FArray2D<std::complex<double>>& zb);\n0009: extern std::complex<double> A51(int j1, int j2, int j3, int j4, int j5, FArr"
+
+[tools.args]
+path = "software/mcfm/src/W1jet/W1jet.hpp"
+[[tools]]
+name = "read"
+ok = true
+output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/FFPMccTtilde.f\n# lines: 1-31\n0001: !\n0002: !  SPDX-License-Identifier: GPL-3.0-or-later\n0003: !  Copyright (C) 2019-2022, respective authors of MCFM.\n0004: !\n0005:       function FFPMccTtilde(j1,j2,j3,j4,j5,j6,za,zb)\n0006: c     Z. Bern, L. Dixon, D.A. Kosower, e-Print:hep-ph/9708239\n0007: c     Eq.10.18\n0008:       use types\n0009:       use mxpart_mod\n0010:       implicit none\n0011:       complex(dp):: za(mxpart,"
+
+[tools.args]
+path = "software/mcfm/src/BDK/FFPMccTtilde.f"
+[[tools]]
+name = "read"
+ok = true
+output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/FFPMscT.f\n# lines: 1-71\n0001: !\n0002: !  SPDX-License-Identifier: GPL-3.0-or-later\n0003: !  Copyright (C) 2019-2022, respective authors of MCFM.\n0004: !\n0005:       function FFPMscT(j1,j2,j3,j4,j5,j6,za,zb)\n0006: c     Z. Bern, L. Dixon, D.A. Kosower, e-Print:hep-ph/9708239\n0007: c     Eq10.21\n0008:       use types\n0009:       use mxpart_mod\n0010:       use sprods_com_mod\n0011:       implicit none\n0012:       comp"
+
+[tools.args]
+path = "software/mcfm/src/BDK/FFPMscT.f"
+[[tools]]
+name = "bash"
+ok = true
+output_preview = "exit_code: 0\nSTDOUT:\nsoftware/mcfm/src/BDK/FFMPcc.f:12:      complex(dp)::FFMPcc,FFMPcc_unsym\nsoftware/mcfm/src/BDK/FFMPcc.f:14:      FFMPcc=FFMPcc_unsym(j1,j2,j3,j4,j5,j6,za,zb)\nsoftware/mcfm/src/BDK/FFMPcc.f:15:     &      +FFMPcc_unsym(j2,j1,j4,j3,j6,j5,zb,za)\nsoftware/mcfm/src/BDK/FFMPcc.f:19:      function FFMPcc_unsym(j1,j2,j3,j4,j5,j6,za,zb)\nsoftware/mcfm/src/BDK/FFMPcc.f:27:      complex(dp):: FFMPcc_unsym,zab2,zba2,zab,za22a,zb21b,za21a\nsoftware/mcfm/src/BDK/FFMPcc.f:49:      FFMPcc_uns"
+
+[tools.args]
+command = "grep -rn \"FFMPcc_unsym\" software/mcfm/src --include=*.f --include=*.f90 --include=*.F90 --include=*.cpp"
+[[tools]]
+name = "bash"
+ok = true
+output_preview = "exit_code: 0\nSTDOUT:\nsoftware/mcfm/src/BDK/fvs.f\n\nSTDERR:\n"
+
+[tools.args]
+command = "grep -rln \"Brackpm\" software/mcfm/src"
+[[tools]]
+name = "read"
+ok = true
+output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/W2jet/CMakeLists.txt\n# lines: 1-74\n0001: target_sources(objlib PRIVATE\n0002: aqqb_zbb.f\n0003: atree.cpp\n0004: atree_fi.F90\n0005: a61LLL.f\n0006: a61LRL.f\n0007: a61g.f\n0008: atrLLL.f\n0009: atrLRL.f\n0010: a6g.f\n0011: a6treeg.cpp\n0012: a6treeg_fi.F90\n0013: a6.f\n0014: a61.f\n0015: a62.f\n0016: a6routine.f\n0017: Acalc.f\n0018: A6axBDK.f\n0019: A6texact.f\n0020: BDKqqbggAxAmp.f\n0021: fax.f\n0022: faxsl.f\n0023: fcc.f\n0024: fpm.f\n00"
+
+[tools.args]
+path = "software/mcfm/src/W2jet/CMakeLists.txt"
+[[tools]]
+name = "bash"
+ok = false
+output_preview = "Error: blocked shell syntax detected"
+
+[tools.args]
+command = "grep -n \"include_directories\\|W2jet\\|BDK\" software/mcfm/CMakeLists.txt"
+[[tools]]
+name = "bash"
+ok = true
+output_preview = "exit_code: 0\nSTDOUT:\n42:include(ExternalProject)\n62:#     INSTALL_COMMAND mkdir -p ${CMAKE_BINARY_DIR}/local/include && cp ${CMAKE_BINARY_DIR}/lib/oneloop/avh_olo.mod ${CMAKE_BINARY_DIR}/local/include \n71:option(lhapdf_include_path \"LHAPDF include path\" OFF)\n97:target_include_directories(objlib PRIVATE src/Inc src/Mods src/Need src/loop src/Z src/W src/Z1jet src/W1jet src/W2jet lib/SpecialFunctions src/ggH .)\n116:    target_include_directories(libmcfm PUBLIC src/Inc src/Mods src/Need src/loop sr"
+
+[tools.args]
+command = "grep -n \"include\" software/mcfm/CMakeLists.txt"
+[[tools]]
+name = "read"
+ok = true
+output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/CMakeLists.txt\n# lines: 90-129\n0090: \n0091: add_compile_definitions(HAVE_LHAPDF=1)\n0092: \n0093: ### main MCFM code below\n0094: \n0095: add_library(objlib OBJECT)\n0096: set_property(TARGET objlib PROPERTY POSITION_INDEPENDENT_CODE ON)\n0097: target_include_directories(objlib PRIVATE src/Inc src/Mods src/Need src/loop src/Z src/W src/Z1jet src/W1jet src/W2jet lib/SpecialFunctions src/ggH .)\n0098: \n0099: ## MCFM as a library\n0"
+
+[tools.args]
+path = "software/mcfm/CMakeLists.txt"
+offset = 90
+limit = 40
+[[tools]]
+name = "read"
+ok = true
+output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/CMakeLists.txt\n# lines: 244-278\n0244:     # Install the library\n0245:     install(TARGETS libmcfm LIBRARY DESTINATION lib ARCHIVE DESTINATION lib RUNTIME DESTINATION bin)\n0246: \n0247:     # Install header files with specific extensions (.h, .H, .hpp)\n0248:     install(DIRECTORY src/Inc/ DESTINATION include/\n0249:             FILES_MATCHING PATTERN \"*.h\" PATTERN \"*.H\" PATTERN \"*.hpp\"\n0250:            )\n0251:     install(DI"
+
+[tools.args]
+path = "software/mcfm/CMakeLists.txt"
+offset = 244
+limit = 40
+[[tools]]
+name = "bash"
+ok = true
+output_preview = "exit_code: 0\nSTDOUT:\nsoftware/mcfm/src/W1jet/gpt-4o-conversions/t.cpp:10:double t(int j1, int j2, int j3) {\nsoftware/mcfm/src/W1jet/W1jet.hpp:7:extern double t(int j1, int j2, int j3);\nsoftware/mcfm/src/W1jet/t.cpp:10:double t(int j1, int j2, int j3) {\n\nSTDERR:\n"
+
+[tools.args]
+command = "grep -rn \"double t(int\" software/mcfm/src/W1jet/"
+[[tools]]
+name = "write"
+ok = true
+output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/fvs.hpp (495 bytes)"
+
+[tools.args]
+path = "software/mcfm/src/BDK/fvs.hpp"
+content = "#ifndef FVS_HPP\n#define FVS_HPP\n\n#include <FArray.hpp>\n#include <complex>\n\nextern std::complex<double> Fvs(int st, int j1, int j2, int j3, int j4, int j5, int j6,\n                                FArray2D<std::complex<double>>& za, FArray2D<std::complex<double>>& zb);\n\nextern \"C\" {\n\n  extern std::complex<double> Fvs_wrapper(int st, int j1, int j2, int j3, int j4, int j5, int j6,\n                                          std::complex<double>* za_ptr, std::complex<double>* zb_ptr);\n\n}\n\n#endif\n"
+[[tools]]
+name = "write"
+ok = true
+output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/fvs.cpp (7089 bytes)"
+
+[tools.args]
+path = "software/mcfm/src/BDK/fvs.cpp"
+content = "//\n//  SPDX-License-Identifier: GPL-3.0-or-later\n//  Copyright (C) 2019-2022, respective authors of MCFM.\n//\n#include <fvs.hpp>\n#include <cmath>\n#include <complex>\n#include <FArray.hpp>\n#include <mxpart_mod.hpp>\n#include <sprods_com_mod.hpp>\n#include <heldefs_mod.hpp>\n#include <Need.hpp>\n#include <W1jet.hpp>\n\nusing namespace mxpart_mod;\nusing namespace sprods_com_mod;\nusing namespace heldefs_mod;\n\n//---This is the curly braces expression in Eq.(11.6) subject to flip_3\n//---ie  flip3:( 1<-->5, 2<... [truncated, 7089 chars total]"
+[[tools]]
+name = "write"
+ok = true
+output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/fvs_fi.F90 (791 bytes)"
+
+[tools.args]
+path = "software/mcfm/src/BDK/fvs_fi.F90"
+content = "!\n!  SPDX-License-Identifier: GPL-3.0-or-later\n!  Copyright (C) 2019-2022, respective authors of MCFM.\n!\nfunction Fvs(st,j1,j2,j3,j4,j5,j6,za,zb) result(res)\n  use, intrinsic :: iso_c_binding\n  use types\n  use mxpart_mod\n\n  implicit none\n\n  integer:: st\n  integer:: j1,j2,j3,j4,j5,j6\n  complex(dp):: za(mxpart,mxpart),zb(mxpart,mxpart)\n  complex(dp):: res\n\n  interface\n    function Fvs_wrapper(st,j1,j2,j3,j4,j5,j6,za,zb) bind(C, name=\"Fvs_wrapper\")\n      import :: c_int, c_double_complex\n      inte... [truncated, 791 chars total]"
+[[tools]]
+name = "write"
+ok = true
+output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/FFMPcc.hpp (497 bytes)"
+
+[tools.args]
+path = "software/mcfm/src/BDK/FFMPcc.hpp"
+content = "#ifndef FFMPCC_HPP\n#define FFMPCC_HPP\n\n#include <FArray.hpp>\n#include <complex>\n\nextern std::complex<double> FFMPcc(int j1, int j2, int j3, int j4, int j5, int j6,\n                                   FArray2D<std::complex<double>>& za, FArray2D<std::complex<double>>& zb);\n\nextern \"C\" {\n\n  extern std::complex<double> FFMPcc_wrapper(int j1, int j2, int j3, int j4, int j5, int j6,\n                                             std::complex<double>* za_ptr, std::complex<double>* zb_ptr);\n\n}\n\n#endif\n"
+[[tools]]
+name = "write"
+ok = true
+output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/FFMPcc.cpp (7259 bytes)"
+
+[tools.args]
+path = "software/mcfm/src/BDK/FFMPcc.cpp"
+content = "//\n//  SPDX-License-Identifier: GPL-3.0-or-later\n//  Copyright (C) 2019-2022, respective authors of MCFM.\n//\n#include <FFMPcc.hpp>\n#include <cmath>\n#include <complex>\n#include <FArray.hpp>\n#include <mxpart_mod.hpp>\n#include <sprods_com_mod.hpp>\n#include <Need.hpp>\n#include <W1jet.hpp>\n\nusing namespace mxpart_mod;\nusing namespace sprods_com_mod;\n\nstatic std::complex<double> FFMPcc1(int j1, int j2, int j3, int j4, int j5, int j6,\n                                    FArray2D<std::complex<double>>& ... [truncated, 7259 chars total]"
+[[tools]]
+name = "write"
+ok = true
+output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/FFMPcc_fi.F90 (754 bytes)"
+
+[tools.args]
+path = "software/mcfm/src/BDK/FFMPcc_fi.F90"
+content = "!\n!  SPDX-License-Identifier: GPL-3.0-or-later\n!  Copyright (C) 2019-2022, respective authors of MCFM.\n!\nfunction FFMPcc(j1,j2,j3,j4,j5,j6,za,zb) result(res)\n  use, intrinsic :: iso_c_binding\n  use types\n  use mxpart_mod\n\n  implicit none\n\n  integer:: j1,j2,j3,j4,j5,j6\n  complex(dp):: za(mxpart,mxpart),zb(mxpart,mxpart)\n  complex(dp):: res\n\n  interface\n    function FFMPcc_wrapper(j1,j2,j3,j4,j5,j6,za,zb) bind(C, name=\"FFMPcc_wrapper\")\n      import :: c_int, c_double_complex\n      integer(c_int), ... [truncated, 754 chars total]"
+[[tools]]
+name = "write"
+ok = true
+output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/FFPMccT.hpp (503 bytes)"
+
+[tools.args]
+path = "software/mcfm/src/BDK/FFPMccT.hpp"
+content = "#ifndef FFPMCCT_HPP\n#define FFPMCCT_HPP\n\n#include <FArray.hpp>\n#include <complex>\n\nextern std::complex<double> FFPMccT(int j1, int j2, int j3, int j4, int j5, int j6,\n                                    FArray2D<std::complex<double>>& za, FArray2D<std::complex<double>>& zb);\n\nextern \"C\" {\n\n  extern std::complex<double> FFPMccT_wrapper(int j1, int j2, int j3, int j4, int j5, int j6,\n                                              std::complex<double>* za_ptr, std::complex<double>* zb_ptr);\n\n}\n\n#end... [truncated, 503 chars total]"
+[[tools]]
+name = "write"
+ok = true
+output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/FFPMccT.cpp (3308 bytes)"
+
+[tools.args]
+path = "software/mcfm/src/BDK/FFPMccT.cpp"
+content = "//\n//  SPDX-License-Identifier: GPL-3.0-or-later\n//  Copyright (C) 2019-2022, respective authors of MCFM.\n//\n#include <FFPMccT.hpp>\n#include <cmath>\n#include <complex>\n#include <FArray.hpp>\n#include <mxpart_mod.hpp>\n#include <sprods_com_mod.hpp>\n#include <W1jet.hpp>\n\nusing namespace mxpart_mod;\nusing namespace sprods_com_mod;\n\n//     Z. Bern, L. Dixon, D.A. Kosower, e-Print:hep-ph/9708239\n//     Eq.10.17\nstd::complex<double> FFPMccT(int j1, int j2, int j3, int j4, int j5, int j6,\n               ... [truncated, 3308 chars total]"
+[[tools]]
+name = "write"
+ok = true
+output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/FFPMccT_fi.F90 (761 bytes)"
+
+[tools.args]
+path = "software/mcfm/src/BDK/FFPMccT_fi.F90"
+content = "!\n!  SPDX-License-Identifier: GPL-3.0-or-later\n!  Copyright (C) 2019-2022, respective authors of MCFM.\n!\nfunction FFPMccT(j1,j2,j3,j4,j5,j6,za,zb) result(res)\n  use, intrinsic :: iso_c_binding\n  use types\n  use mxpart_mod\n\n  implicit none\n\n  integer:: j1,j2,j3,j4,j5,j6\n  complex(dp):: za(mxpart,mxpart),zb(mxpart,mxpart)\n  complex(dp):: res\n\n  interface\n    function FFPMccT_wrapper(j1,j2,j3,j4,j5,j6,za,zb) bind(C, name=\"FFPMccT_wrapper\")\n      import :: c_int, c_double_complex\n      integer(c_int... [truncated, 761 chars total]"
+[[tools]]
+name = "write"
+ok = true
+output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/FFPMccTtilde.hpp (533 bytes)"
+
+[tools.args]
+path = "software/mcfm/src/BDK/FFPMccTtilde.hpp"
+content = "#ifndef FFPMCCTTILDE_HPP\n#define FFPMCCTTILDE_HPP\n\n#include <FArray.hpp>\n#include <complex>\n\nextern std::complex<double> FFPMccTtilde(int j1, int j2, int j3, int j4, int j5, int j6,\n                                         FArray2D<std::complex<double>>& za, FArray2D<std::complex<double>>& zb);\n\nextern \"C\" {\n\n  extern std::complex<double> FFPMccTtilde_wrapper(int j1, int j2, int j3, int j4, int j5, int j6,\n                                                   std::complex<double>* za_ptr, std::comp... [truncated, 533 chars total]"
+[[tools]]
+name = "write"
+ok = true
+output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/FFPMccTtilde.cpp (1638 bytes)"
+
+[tools.args]
+path = "software/mcfm/src/BDK/FFPMccTtilde.cpp"
+content = "//\n//  SPDX-License-Identifier: GPL-3.0-or-later\n//  Copyright (C) 2019-2022, respective authors of MCFM.\n//\n#include <FFPMccTtilde.hpp>\n#include <cmath>\n#include <complex>\n#include <FArray.hpp>\n#include <mxpart_mod.hpp>\n#include <W1jet.hpp>\n\nusing namespace mxpart_mod;\n\n//     Z. Bern, L. Dixon, D.A. Kosower, e-Print:hep-ph/9708239\n//     Eq.10.18\nstd::complex<double> FFPMccTtilde(int j1, int j2, int j3, int j4, int j5, int j6,\n                                  FArray2D<std::complex<double>>& z... [truncated, 1638 chars total]"
+[[tools]]
+name = "write"
+ok = true
+output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/FFPMccTtilde_fi.F90 (796 bytes)"
+
+[tools.args]
+path = "software/mcfm/src/BDK/FFPMccTtilde_fi.F90"
+content = "!\n!  SPDX-License-Identifier: GPL-3.0-or-later\n!  Copyright (C) 2019-2022, respective authors of MCFM.\n!\nfunction FFPMccTtilde(j1,j2,j3,j4,j5,j6,za,zb) result(res)\n  use, intrinsic :: iso_c_binding\n  use types\n  use mxpart_mod\n\n  implicit none\n\n  integer:: j1,j2,j3,j4,j5,j6\n  complex(dp):: za(mxpart,mxpart),zb(mxpart,mxpart)\n  complex(dp):: res\n\n  interface\n    function FFPMccTtilde_wrapper(j1,j2,j3,j4,j5,j6,za,zb) bind(C, name=\"FFPMccTtilde_wrapper\")\n      import :: c_int, c_double_complex\n    ... [truncated, 796 chars total]"
+[[tools]]
+name = "write"
+ok = true
+output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/FFPMscT.hpp (503 bytes)"
+
+[tools.args]
+path = "software/mcfm/src/BDK/FFPMscT.hpp"
+content = "#ifndef FFPMSCT_HPP\n#define FFPMSCT_HPP\n\n#include <FArray.hpp>\n#include <complex>\n\nextern std::complex<double> FFPMscT(int j1, int j2, int j3, int j4, int j5, int j6,\n                                    FArray2D<std::complex<double>>& za, FArray2D<std::complex<double>>& zb);\n\nextern \"C\" {\n\n  extern std::complex<double> FFPMscT_wrapper(int j1, int j2, int j3, int j4, int j5, int j6,\n                                              std::complex<double>* za_ptr, std::complex<double>* zb_ptr);\n\n}\n\n#end... [truncated, 503 chars total]"
+[[tools]]
+name = "write"
+ok = true
+output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/FFPMscT.cpp (3361 bytes)"
+
+[tools.args]
+path = "software/mcfm/src/BDK/FFPMscT.cpp"
+content = "//\n//  SPDX-License-Identifier: GPL-3.0-or-later\n//  Copyright (C) 2019-2022, respective authors of MCFM.\n//\n#include <FFPMscT.hpp>\n#include <cmath>\n#include <complex>\n#include <FArray.hpp>\n#include <mxpart_mod.hpp>\n#include <sprods_com_mod.hpp>\n#include <W1jet.hpp>\n\nusing namespace mxpart_mod;\nusing namespace sprods_com_mod;\n\n//     Z. Bern, L. Dixon, D.A. Kosower, e-Print:hep-ph/9708239\n//     Eq10.21\nstd::complex<double> FFPMscT(int j1, int j2, int j3, int j4, int j5, int j6,\n                ... [truncated, 3361 chars total]"
+[[tools]]
+name = "write"
+ok = true
+output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/FFPMscT_fi.F90 (761 bytes)"
+
+[tools.args]
+path = "software/mcfm/src/BDK/FFPMscT_fi.F90"
+content = "!\n!  SPDX-License-Identifier: GPL-3.0-or-later\n!  Copyright (C) 2019-2022, respective authors of MCFM.\n!\nfunction FFPMscT(j1,j2,j3,j4,j5,j6,za,zb) result(res)\n  use, intrinsic :: iso_c_binding\n  use types\n  use mxpart_mod\n\n  implicit none\n\n  integer:: j1,j2,j3,j4,j5,j6\n  complex(dp):: za(mxpart,mxpart),zb(mxpart,mxpart)\n  complex(dp):: res\n\n  interface\n    function FFPMscT_wrapper(j1,j2,j3,j4,j5,j6,za,zb) bind(C, name=\"FFPMscT_wrapper\")\n      import :: c_int, c_double_complex\n      integer(c_int... [truncated, 761 chars total]"
+[[tools]]
+name = "edit"
+ok = true
+output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/CMakeLists.txt\",\n  \"applied\": 5,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 10,\n      \"new_len\": 27,\n      \"before_snippet\": \"…ces(objlib PRIVATE\\nFFPPsc.f\\nM2abit2.f\\nFFMPsc.f\\nFFPMcc.f\\nFMPFsc.f\\nCMakeLists.txt\\nFFPMscT.f\\nM3bit4.f\\nFFPMsc.f\\nMaster3a.f\\nFPFMccTtilde.f\\nFFMPcc.f\\nFFPPcc.f\\nM2abit1.f\\nAAAREADM…\",\n      \"after_snippet\": \"…ces(objlib PRIV"
+
+[tools.args]
+path = "software/mcfm/src/BDK/CMakeLists.txt"
+[[tools.args.edits]]
+oldText = "FFPMscT.f\n"
+newText = "FFPMscT.cpp\nFFPMscT_fi.F90\n"
+
+[[tools.args.edits]]
+oldText = "FFMPcc.f\n"
+newText = "FFMPcc.cpp\nFFMPcc_fi.F90\n"
+
+[[tools.args.edits]]
+oldText = "FFPMccT.f\n"
+newText = "FFPMccT.cpp\nFFPMccT_fi.F90\n"
+
+[[tools.args.edits]]
+oldText = "fvs.f\n"
+newText = "fvs.cpp\nfvs_fi.F90\n"
+
+[[tools.args.edits]]
+oldText = "FFPMccTtilde.f\n"
+newText = "FFPMccTtilde.cpp\nFFPMccTtilde_fi.F90\n"
+
+[[tools]]
+name = "edit"
+ok = true
+output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/CMakeLists.txt\",\n  \"applied\": 3,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 150,\n      \"new_len\": 158,\n      \"before_snippet\": \"…bjlib OBJECT)\\nset_property(TARGET objlib PROPERTY POSITION_INDEPENDENT_CODE ON)\\ntarget_include_directories(objlib PRIVATE src/Inc src/Mods src/Need src/loop src/Z src/W src/Z1jet src/W1jet src/W2jet lib/SpecialFunctions src/ggH .)\\n\\"
+
+[tools.args]
+path = "software/mcfm/CMakeLists.txt"
+[[tools.args.edits]]
+oldText = "target_include_directories(objlib PRIVATE src/Inc src/Mods src/Need src/loop src/Z src/W src/Z1jet src/W1jet src/W2jet lib/SpecialFunctions src/ggH .)"
+newText = "target_include_directories(objlib PRIVATE src/Inc src/Mods src/Need src/loop src/Z src/W src/Z1jet src/W1jet src/W2jet src/BDK lib/SpecialFunctions src/ggH .)"
+
+[[tools.args.edits]]
+oldText = "    target_include_directories(libmcfm PUBLIC src/Inc src/Mods src/Need src/loop src/Z src/W src/Z1jet src/W1jet src/W2jet lib/SpecialFunctions src/ggH)"
+newText = "    target_include_directories(libmcfm PUBLIC src/Inc src/Mods src/Need src/loop src/Z src/W src/Z1jet src/W1jet src/W2jet src/BDK lib/SpecialFunctions src/ggH)"
+
+[[tools.args.edits]]
+oldText = "    target_include_directories(test PRIVATE src/Inc src/Mods src/Need src/loop src/Z src/W src/Z1jet src/W1jet src/W2jet lib/SpecialFunctions src/ggH)"
+newText = "    target_include_directories(test PRIVATE src/Inc src/Mods src/Need src/loop src/Z src/W src/Z1jet src/W1jet src/W2jet src/BDK lib/SpecialFunctions src/ggH)"
+
+[[tools]]
+name = "bash"
+ok = true
+output_preview = "exit_code: 0\nSTDOUT:\nx1b[95mROOT:x1b[0m /home/akash/Desktop/Akash/Projects/JSS-Paper-Example\nx1b[95mNODE:x1b[0m <ROOT>/tests/mcfm\n\nx1b[95mSCRIPTS: x1b[0m\n    - <ROOT>/config.sh\n    - <ROOT>/environment.sh\n    - <ROOT>/tests/mcfm/test.sh\n\nx1b[95mEXECUTE:x1b[0m <ROOT>/tests/mcfm/job.submit\nin 1:33.9 \nx1b[92mSUCCESS x1b[0m\n\nx1b[95mOUTPUT:x1b[0m <ROOT>/tests/mcfm/job.output\n\nSTDERR:\n"
+
+[tools.args]
+command = "jobrunner submit tests/mcfm"
+timeout = 3000
+[[tools]]
+name = "bash"
+ok = true
+output_preview = "exit_code: 0\nSTDOUT:\n272\n\nSTDERR:\n"
+
+[tools.args]
+command = "grep -c \"PASSED\" tests/mcfm/job.output"
+[[tools]]
+name = "bash"
+ok = true
+output_preview = "exit_code: 0\nSTDOUT:\n954:SUMMARY: pass rate 272/272\n\nSTDERR:\n"
+
+[tools.args]
+command = "grep -n \"SUMMARY\" tests/mcfm/job.output"
+[[tools]]
+name = "bash"
+ok = true
+output_preview = "exit_code: 1\nSTDOUT:\n0\n\nSTDERR:\n"
+
+[tools.args]
+command = "grep -c \"FAILED\" tests/mcfm/job.output"
+[[tools]]
+name = "bash"
+ok = true
+output_preview = "exit_code: 0\nSTDOUT:\n462:[ 83%] Building CXX object CMakeFiles/objlib.dir/src/BDK/FFPMscT.cpp.o\n\nSTDERR:\n"
+
+[tools.args]
+command = "grep -n \"FFPMscT.cpp\" tests/mcfm/job.output"
+[[tools]]
+name = "read"
+ok = true
+output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tmp/run_verify.py\n# lines: 1-18\n0001: \"\"\"Run `dev/workflow.py verify` with MCFM_HOME set (the agent shell cannot `source`).\n0002: \n0003: usage: python3 dev/tmp/run_verify.py <target.cpp> -- <process args>\n0004: \"\"\"\n0005: import os\n0006: import subprocess\n0007: import sys\n0008: \n0009: ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))\n0010: env = dict(os.environ)\n0011: env[\"PROJECT_HOME\"] = ROOT\n0012"
+
+[tools.args]
+path = "dev/tmp/run_verify.py"
+[[tools]]
+name = "bash"
+ok = true
+output_preview = "exit_code: 2\nSTDOUT:\n+ /usr/bin/python3 /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/workflow.py verify software/mcfm/src/BDK/fvs.cpp -- u d~ ve e+ g g\n== coverage check: software/mcfm/src/BDK/fvs.cpp ==\nprocess : u d~ ve e+ g g\nfactor  : 1.5\n-- baseline build + test --\n-- scaling the marked output by 1.5 --\n\nSTDERR:\nerror: could not scale the marked line — is it a plain 'lhs = rhs;   // @coverage-probe' statement?\n"
+
+[tools.args]
+command = "python3 dev/tmp/run_verify.py software/mcfm/src/BDK/fvs.cpp -- u d~ ve e+ g g"
+timeout = 2400
+[[tools]]
+name = "bash"
+ok = true
+output_preview = "exit_code: 0\nSTDOUT:\n9:Mark exactly one output statement with `// @coverage-probe`.\n50:    if text.count(\"@coverage-probe\") == 0:\n51:        die(f\"no '// @coverage-probe' marker in {target} — mark the statement that writes the main output\")\n52:    if text.count(\"@coverage-probe\") != 1:\n53:        die(f\"found more than one '@coverage-probe' marker in {target} — keep exactly one\")\n68:        # On the marked line only: lhs = rhs;  // @coverage-probe -> lhs = (rhs) * FACTOR;  // ...\n69:        scale"
+
+[tools.args]
+command = "grep -rn \"coverage-probe\" dev/tools/coverage/coverage_check.py"
+[[tools]]
+name = "edit"
+ok = true
+output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/fvs.cpp\",\n  \"applied\": 2,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 61,\n      \"new_len\": 40,\n      \"before_snippet\": \"…3<-->4, 5<-->6, za<-->zb)\\n    Fvs_res =\\n      +Brackpm(j1,j2,j3,j4,j5,j6,za,zb)\\n      +Brackpm(j2,j1,j4,j3,j6,j5,zb,za);   // @coverage-probe\\n\\n  } else if (st == hqpqbmgpgp) {\\n\\n//---exch34:(3<-->4)\\n    Fvs_res =\\n      +Br…\",\n  "
+
+[tools.args]
+path = "software/mcfm/src/BDK/fvs.cpp"
+[[tools.args.edits]]
+oldText = "      +Brackpm(j2,j1,j4,j3,j6,j5,zb,za);   // @coverage-probe"
+newText = "      +Brackpm(j2,j1,j4,j3,j6,j5,zb,za);"
+
+[[tools.args.edits]]
+oldText = "    return Fvs(st, j1, j2, j3, j4, j5, j6, za, zb);"
+newText = "    std::complex<double> res = Fvs(st, j1, j2, j3, j4, j5, j6, za, zb);   // @coverage-probe\n    return res;"
+
+[[tools]]
+name = "edit"
+ok = true
+output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/FFMPcc.cpp\",\n  \"applied\": 2,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 95,\n      \"new_len\": 74,\n      \"before_snippet\": \"…b) {\\n\\n  std::complex<double> FFMPcc_res = FFMPcc_unsym(j1,j2,j3,j4,j5,j6,za,zb)\\n                                   +FFMPcc_unsym(j2,j1,j4,j3,j6,j5,zb,za);   // @coverage-probe\\n\\n  return FFMPcc_res;\\n}\\n\\nextern \\\"C\\\" {\\n\\n  std:"
+
+[tools.args]
+path = "software/mcfm/src/BDK/FFMPcc.cpp"
+[[tools.args.edits]]
+oldText = "                                   +FFMPcc_unsym(j2,j1,j4,j3,j6,j5,zb,za);   // @coverage-probe"
+newText = "                                   +FFMPcc_unsym(j2,j1,j4,j3,j6,j5,zb,za);"
+
+[[tools.args.edits]]
+oldText = "    return FFMPcc(j1, j2, j3, j4, j5, j6, za, zb);"
+newText = "    std::complex<double> res = FFMPcc(j1, j2, j3, j4, j5, j6, za, zb);   // @coverage-probe\n    return res;"
+
+[[tools]]
+name = "edit"
+ok = true
+output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/FFPMccT.cpp\",\n  \"applied\": 2,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 70,\n      \"new_len\": 49,\n      \"before_snippet\": \"…,j6)\\n     -zab(j5,j3,j6)*s(j2,j4))\\n     -2.0*(zab(j5,j1,j6)*(s(j1,j4)+s(j2,j4))\\n     +za(j5,j1)*zb(j1,j4)*za(j4,j3)*zb(j3,j6))));   // @coverage-probe\\n\\n  return FFPMccT_res;\\n}\\n\\nextern \\\"C\\\" {\\n\\n  std::complex<double> FFPMcc"
+
+[tools.args]
+path = "software/mcfm/src/BDK/FFPMccT.cpp"
+[[tools.args.edits]]
+oldText = "     +za(j5,j1)*zb(j1,j4)*za(j4,j3)*zb(j3,j6))));   // @coverage-probe"
+newText = "     +za(j5,j1)*zb(j1,j4)*za(j4,j3)*zb(j3,j6))));"
+
+[[tools.args.edits]]
+oldText = "    return FFPMccT(j1, j2, j3, j4, j5, j6, za, zb);"
+newText = "    std::complex<double> res = FFPMccT(j1, j2, j3, j4, j5, j6, za, zb);   // @coverage-probe\n    return res;"
+
+[[tools]]
+name = "edit"
+ok = true
+output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/FFPMccTtilde.cpp\",\n  \"applied\": 2,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 59,\n      \"new_len\": 38,\n      \"before_snippet\": \"…j4)*(zab(j5,j2,j6)-zab(j5,j3,j6))))\\n     -zb(j1,j3)*za(j4,j5)*zab2(j2,j1,j3,j6)\\n     /(zab2(j3,j1,j2,j4)*t(j1,j2,j3));   // @coverage-probe\\n\\n  return FFPMccTtilde_res;\\n}\\n\\nextern \\\"C\\\" {\\n\\n  std::complex<double> FFPMccTt"
+
+[tools.args]
+path = "software/mcfm/src/BDK/FFPMccTtilde.cpp"
+[[tools.args.edits]]
+oldText = "     /(zab2(j3,j1,j2,j4)*t(j1,j2,j3));   // @coverage-probe"
+newText = "     /(zab2(j3,j1,j2,j4)*t(j1,j2,j3));"
+
+[[tools.args.edits]]
+oldText = "    return FFPMccTtilde(j1, j2, j3, j4, j5, j6, za, zb);"
+newText = "    std::complex<double> res = FFPMccTtilde(j1, j2, j3, j4, j5, j6, za, zb);   // @coverage-probe\n    return res;"
+
+[[tools]]
+name = "edit"
+ok = true
+output_preview = "{\n  \"ok\": true,\n  \"path\": \"/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/FFPMscT.cpp\",\n  \"applied\": 2,\n  \"replacements\": [\n    {\n      \"index\": 0,\n      \"match_count\": 1,\n      \"old_len\": 47,\n      \"new_len\": 26,\n      \"before_snippet\": \"…(j4,j1,j2,j3)\\n     +zb(j2,j3)*za(j1,j4)*zab(j1,j5,j6)*(t(j2,j3,j4)-t(j1,j3,j4))\\n     /zab2(j1,j3,j4,j2)));   // @coverage-probe\\n\\n  return FFPMscT_res;\\n}\\n\\nextern \\\"C\\\" {\\n\\n  std::complex<double> FFPMscT_wrapper(…\",\n      \"aft"
+
+[tools.args]
+path = "software/mcfm/src/BDK/FFPMscT.cpp"
+[[tools.args.edits]]
+oldText = "     /zab2(j1,j3,j4,j2)));   // @coverage-probe"
+newText = "     /zab2(j1,j3,j4,j2)));"
+
+[[tools.args.edits]]
+oldText = "    return FFPMscT(j1, j2, j3, j4, j5, j6, za, zb);"
+newText = "    std::complex<double> res = FFPMscT(j1, j2, j3, j4, j5, j6, za, zb);   // @coverage-probe\n    return res;"
+
+[[tools]]
+name = "bash"
+ok = true
+output_preview = "exit_code: 1\nSTDOUT:\n+ /usr/bin/python3 /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/workflow.py verify software/mcfm/src/BDK/fvs.cpp -- u d~ ve e+ g g\n== coverage check: software/mcfm/src/BDK/fvs.cpp ==\nprocess : u d~ ve e+ g g\nfactor  : 1.5\n-- baseline build + test --\n-- scaling the marked output by 1.5 --\n-- probed build + test --\n\nRESULT: NOT COVERED — the numbers did not change, so the test never ran this file.\n  Mark it TRANSLATED. Check again after a routine that calls it is r"
+
+[tools.args]
+command = "python3 dev/tmp/run_verify.py software/mcfm/src/BDK/fvs.cpp -- u d~ ve e+ g g"
+timeout = 3000
+[[tools]]
+name = "write"
+ok = true
+output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tmp/run_verify_bdk_group.py (1038 bytes)"
+
+[tools.args]
+path = "dev/tmp/run_verify_bdk_group.py"
+content = "\"\"\"Run the coverage probe for the remaining BDK-01 group files (MCFM_HOME injected).\n\nusage: python3 dev/tmp/run_verify_bdk_group.py\n\"\"\"\nimport os\nimport subprocess\nimport sys\n\nROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))\nenv = dict(os.environ)\nenv[\"PROJECT_HOME\"] = ROOT\nenv[\"MCFM_HOME\"] = os.path.join(ROOT, \"software\", \"mcfm\")\nenv[\"PEPPER_HOME\"] = os.path.join(ROOT, \"software\", \"pepper\")\nenv[\"QCDLOOP_HOME\"] = os.path.join(ROOT, \"software\", \"qcdloop\")\n\nTARG... [truncated, 1038 chars total]"
+
+[usage]
+input = 38841
+output = 41541
+reasoning = 0
+cache_write = 138957
+cache_read = 2174704
+cache_write_5m = 138957
+cache_write_1h = 0
+
+[tool_calls]
+executed = 70
+rejected = 0
+errors = 2
+ok = 68

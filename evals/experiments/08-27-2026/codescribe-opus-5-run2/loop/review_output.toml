@@ -1,0 +1,38 @@
+loop = 4
+
+summary = """
+Loop 4 opened a new BDK group and did the bulk of the translation work, but ran out of \
+iterations before closing it. Verified: the agent ran `gate`, `refresh`, `status` and \
+`next mcfm-translate`, then translated five BDK files — fvs, FFMPcc, FFPMccT, FFPMccTtilde, \
+FFPMscT — writing `.hpp`, `.cpp` and `_fi.F90` for each and editing \
+`software/mcfm/src/BDK/CMakeLists.txt` plus `software/mcfm/CMakeLists.txt` to wire them in. \
+`jobrunner submit tests/mcfm` succeeded with PASSED lines present and zero FAILED lines, so \
+the build and benchmark are green. The first coverage probe attempt failed (exit 2) because the \
+`@coverage-probe` marker must sit on a single-line `lhs = rhs;` statement; the agent inspected \
+`dev/tools/coverage/coverage_check.py`, moved the marker into the `extern \"C\"` wrapper of all \
+five `.cpp` files, and re-ran the probe for `fvs.cpp`, which reported `NOT COVERED` (i.e. \
+TRANSLATED, not VERIFIED). Two bash calls were blocked by shell-syntax policy but were later \
+worked around. What did NOT happen: the probes for FFMPcc/FFPMccT/FFPMccTtilde/FFPMscT were \
+never executed — `dev/tmp/run_verify_bdk_group.py` was written on the final iteration but never \
+run; the five original `.f` files are still in `software/mcfm/src/BDK/` (no `deprecated/` \
+subdirectory exists); and `agent_log.md` was never modified, so the new BDK group has no \
+heading, no provenance block (status ready-leaf count + first five `next` lines) and no \
+per-file `- [x] ... — TRANSLATED` entries. The group is therefore still open and unrecorded.
+"""
+
+blocker = "The BDK group is unfinished and unrecorded: four of five coverage probes were never run, the original .f files were not moved to BDK/deprecated/, and agent_log.md contains no entry for this group (required by the Plan's Log file / Resolution steps)."
+
+[[pending]]
+item = "Run `python3 dev/tmp/run_verify_bdk_group.py` (or `python3 dev/tmp/run_verify.py <file>.cpp -- u d~ ve e+ g g` per file) to obtain coverage results for FFMPcc.cpp, FFPMccT.cpp, FFPMccTtilde.cpp and FFPMscT.cpp; record VERIFIED (with worst Δrel) or TRANSLATED accordingly."
+
+[[pending]]
+item = "Move the five translated originals (software/mcfm/src/BDK/fvs.f, FFMPcc.f, FFPMccT.f, FFPMccTtilde.f, FFPMscT.f) into software/mcfm/src/BDK/deprecated/ using a helper script under dev/tmp (inline shell moves are blocked), then re-run `jobrunner submit tests/mcfm` and confirm 272/272 with zero FAILED."
+
+[[pending]]
+item = "Add the `## Group BDK-01 ...` section to dev/transformations/mcfm-translate/agent_log.md with the provenance recorded this loop (ready-leaf count from `python3 dev/workflow.py status` and the first five lines of `python3 dev/workflow.py next mcfm-translate`), a note on why the group was filled from src/BDK, the five file list, and one `- [x] <path> — TRANSLATED/VERIFIED (<evidence>)` line per file."
+
+[[pending]]
+item = "Append a session-log entry to agent_log.md covering the coverage-probe marker constraint (marker must be on a single-line `lhs = rhs;` statement, hence the wrapper-level probe) and the fvs.cpp `NOT COVERED` result, plus post-group roadmap numbers from `python3 dev/workflow.py refresh`."
+
+[[pending]]
+item = "After the group is closed and logged, run `python3 dev/workflow.py gate mcfm-translate`; with three completed unapproved groups the gate will likely block, so stop for human approval rather than opening a fourth group."
