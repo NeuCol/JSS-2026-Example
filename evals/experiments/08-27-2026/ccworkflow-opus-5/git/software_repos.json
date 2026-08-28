@@ -1,0 +1,20 @@
+[
+  {
+    "path": "software/mcfm",
+    "head": "1abdcddaad89582552edc41de68e4a6e1ac75f1d",
+    "branch": "HEAD",
+    "status": "## HEAD (no branch)\n M src/Mods/CMakeLists.txt\n M src/Mods/Modules_Interface.f90\n M src/Mods/pp_mod.f90\n M src/Mods/ppwp2j_mod.f90\n?? Bin/lib/\n?? Bin/test\n?? doxygen_dep/\n?? install/\n?? src/Mods/deprecated/mod_qcdloop_c.f\n?? src/Mods/mod_qcdloop_c.hpp\n?? src/Mods/pp_mod.cpp\n?? src/Mods/pp_mod.hpp\n?? src/Mods/ppwp2j_mod.cpp\n?? src/Mods/ppwp2j_mod.hpp\n"
+  },
+  {
+    "path": "software/pepper",
+    "head": "67f3acc8756fe6ec4fcc9ea360be08f0bb644711",
+    "branch": "43-add-kokkos-mcfm-interface",
+    "status": "## 43-add-kokkos-mcfm-interface...origin/43-add-kokkos-mcfm-interface\n"
+  },
+  {
+    "path": "software/qcdloop",
+    "head": "c8a05202351ca2e803158e99ae8a1c5c05f1437d",
+    "branch": "master",
+    "status": "## master...origin/master\n"
+  }
+]

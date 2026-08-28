@@ -1,0 +1,26 @@
+{
+  "experiment_name": "ccworkflow-opus-5",
+  "archive_created_at": "2026-08-28T00:33:20.771593+00:00",
+  "loop_source": ".claude",
+  "transformation_source": "dev/transformations/mcfm-translate",
+  "submodules": [
+    "software/mcfm"
+  ],
+  "archive_branch": "evals/08-27-2026/ccworkflow-opus-5",
+  "submodule_results": [
+    {
+      "repo": "software/mcfm",
+      "branch": "evals/08-27-2026/ccworkflow-opus-5",
+      "branch_action": "created",
+      "excluded_paths": [
+        "Bin",
+        "install"
+      ],
+      "committed": true,
+      "head": "ef56c7712980ffae07f40d2bccd323c191a50b85"
+    }
+  ],
+  "session_logs": "/home/akash/.claude/projects/-home-akash-Desktop-Akash-Projects-JSS-Paper-Example/6f861ad2-1dcb-4c23-bf32-9011cda35df4",
+  "included_dev_tmp": true,
+  "cleanup_performed": true
+}
