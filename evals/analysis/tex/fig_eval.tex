@@ -8,68 +8,67 @@
 %% Six-panel evaluation figure. Requires pgfplots + the groupplots
 %% library and the evalXxx colors, both set up in jss-submission.sty.
 \begin{tikzpicture}
-\begin{groupplot}[group style={group size=3 by 2, horizontal sep=1.3cm,
-    vertical sep=2.1cm}]
-\nextgroupplot[width=0.29\textwidth, height=3.7cm,
+\begin{groupplot}[group style={group size=3 by 2, horizontal sep=1.15cm,
+    vertical sep=2.35cm}]
+\nextgroupplot[width=0.305\textwidth, height=4.4cm,
   axis lines=left, axis line style={draw=evalAxis, line width=0.4pt},
   ymajorgrids, grid style={draw=evalGrid, line width=0.4pt},
-  tick label style={font=\scriptsize, /pgf/number format/assume math mode=true},
-  label style={font=\scriptsize, color=evalInk},
+  tick label style={font=\footnotesize, /pgf/number format/assume math mode=true},
+  label style={font=\footnotesize, color=evalInk},
   ylabel near ticks,
-  ylabel style={font=\scriptsize, yshift=-6pt},
-  title style={font=\scriptsize\bfseries, yshift=-1pt},
-  legend style={font=\tiny, draw=none, fill=none, inner sep=1pt},
+  ylabel style={font=\footnotesize, yshift=-7pt},
+  title style={font=\small\bfseries, yshift=-1pt},
+  legend style={font=\scriptsize, draw=none, fill=none, inner sep=1pt},
   legend image code/.code={\draw[##1] (0cm,-0.05cm) rectangle (0.18cm,0.09cm);},
-  every axis plot/.append style={line width=0.4pt},
+  every axis plot/.append style={line width=0.5pt},
   xtick style={draw=none}, ytick style={draw=none},
   enlarge x limits=0.08, ymin=0,
 symbolic x coords={R1,R2,R3,R4,R5,R6,R7}, xtick={R1,R2,R3,R4,R5,R6,R7},
-  x tick label style={rotate=90, anchor=east, font=\tiny, yshift=1pt},
-  ybar, bar width=3pt, area legend,
+  x tick label style={rotate=90, anchor=east, font=\scriptsize, yshift=1pt},
+  ybar, bar width=5pt, area legend,
   title={(a) Files settled (git-exact)},
   ylabel={Files}, ymax=20,
-  nodes near coords, nodes near coords style={font=\tiny, color=evalInk,
+  nodes near coords, nodes near coords style={font=\scriptsize, color=evalInk,
     rotate=90, anchor=west},
   legend style={at={(0.5,-0.42)}, anchor=north}, legend columns=2,
 ]
 \addplot[fill=evalBlue, draw=none, bar shift=0pt] coordinates {(R1,2) (R2,13)};
 \addplot[fill=evalOrange, draw=none, bar shift=0pt] coordinates {(R3,15) (R4,14) (R5,2) (R6,5) (R7,10)};
 \legend{ccworkflow, csloop}
-\nextgroupplot[width=0.29\textwidth, height=3.7cm,
+\nextgroupplot[width=0.305\textwidth, height=4.4cm,
   axis lines=left, axis line style={draw=evalAxis, line width=0.4pt},
   ymajorgrids, grid style={draw=evalGrid, line width=0.4pt},
-  tick label style={font=\scriptsize, /pgf/number format/assume math mode=true},
-  label style={font=\scriptsize, color=evalInk},
+  tick label style={font=\footnotesize, /pgf/number format/assume math mode=true},
+  label style={font=\footnotesize, color=evalInk},
   ylabel near ticks,
-  ylabel style={font=\scriptsize, yshift=-6pt},
-  title style={font=\scriptsize\bfseries, yshift=-1pt},
-  legend style={font=\tiny, draw=none, fill=none, inner sep=1pt},
+  ylabel style={font=\footnotesize, yshift=-7pt},
+  title style={font=\small\bfseries, yshift=-1pt},
+  legend style={font=\scriptsize, draw=none, fill=none, inner sep=1pt},
   legend image code/.code={\draw[##1] (0cm,-0.05cm) rectangle (0.18cm,0.09cm);},
-  every axis plot/.append style={line width=0.4pt},
+  every axis plot/.append style={line width=0.5pt},
   xtick style={draw=none}, ytick style={draw=none},
   enlarge x limits=0.08, ymin=0,
 symbolic x coords={R1,R2,R3,R4,R5,R6,R7}, xtick={R1,R2,R3,R4,R5,R6,R7},
-  x tick label style={rotate=90, anchor=east, font=\tiny, yshift=1pt},
-  ybar stacked, bar width=3pt, title={(b) Total cost by model tier},
+  x tick label style={rotate=90, anchor=east, font=\scriptsize, yshift=1pt},
+  ybar stacked, bar width=5pt, title={(b) Total cost by model tier},
   ylabel={USD}, ymax=91,
-  legend style={at={(0.5,-0.42)}, anchor=north}, legend columns=2,
+  legend style={at={(0.5,-0.42)}, anchor=north}, legend columns=3,
 ]
 \addplot[fill=evalBlue, draw=none] coordinates {(R1,0.00) (R2,46.74) (R3,0.00) (R4,0.00) (R5,5.83) (R6,0.00) (R7,0.00)};
 \addplot[fill=evalViolet, draw=none] coordinates {(R1,46.85) (R2,31.64) (R3,15.69) (R4,13.32) (R5,0.00) (R6,0.00) (R7,0.00)};
-\legend{sonnet-5, opus-5}
-\node[font=\tiny, color=evalInk, rotate=90, anchor=west] at (axis cs:R6,0) {\,unpriced};
-\node[font=\tiny, color=evalInk, rotate=90, anchor=west] at (axis cs:R7,0) {\,unpriced};
-\nextgroupplot[width=0.29\textwidth, height=3.7cm,
+\addplot[fill=evalAqua, draw=none] coordinates {(R1,0.00) (R2,0.00) (R3,0.00) (R4,0.00) (R5,0.00) (R6,6.38) (R7,9.59)};
+\legend{sonnet-5, opus-5, gpt56sol}
+\nextgroupplot[width=0.305\textwidth, height=4.4cm,
   axis lines=left, axis line style={draw=evalAxis, line width=0.4pt},
   ymajorgrids, grid style={draw=evalGrid, line width=0.4pt},
-  tick label style={font=\scriptsize, /pgf/number format/assume math mode=true},
-  label style={font=\scriptsize, color=evalInk},
+  tick label style={font=\footnotesize, /pgf/number format/assume math mode=true},
+  label style={font=\footnotesize, color=evalInk},
   ylabel near ticks,
-  ylabel style={font=\scriptsize, yshift=-6pt},
-  title style={font=\scriptsize\bfseries, yshift=-1pt},
-  legend style={font=\tiny, draw=none, fill=none, inner sep=1pt},
+  ylabel style={font=\footnotesize, yshift=-7pt},
+  title style={font=\small\bfseries, yshift=-1pt},
+  legend style={font=\scriptsize, draw=none, fill=none, inner sep=1pt},
   legend image code/.code={\draw[##1] (0cm,-0.05cm) rectangle (0.18cm,0.09cm);},
-  every axis plot/.append style={line width=0.4pt},
+  every axis plot/.append style={line width=0.5pt},
   xtick style={draw=none}, ytick style={draw=none},
   enlarge x limits=0.08, ymin=0,
   title={(c) Cost--time frontier},
@@ -77,57 +76,61 @@ symbolic x coords={R1,R2,R3,R4,R5,R6,R7}, xtick={R1,R2,R3,R4,R5,R6,R7},
   xmin=0.4, xmax=19.4, ymin=0, ymax=6.75, enlarge x limits=false,
 ]
 \addplot[only marks, mark=*, mark size=1.7pt, color=evalBlue] coordinates {(6.44,6.03)};
-\node[font=\tiny, color=evalInk, anchor=north, yshift=-3pt, inner sep=0.8pt]
-  at (axis cs:6.44,6.03) {2};
-\addplot[only marks, mark=*, mark size=1.7pt, color=evalOrange] coordinates {(2.9,1.05) (3.01,0.951) (17.3,2.91)};
-\node[font=\tiny, color=evalInk, anchor=south, yshift=3pt, inner sep=0.8pt]
-  at (axis cs:2.9,1.05) {3};
-\node[font=\tiny, color=evalInk, anchor=north, yshift=-3pt, inner sep=0.8pt]
-  at (axis cs:3.01,0.951) {4};
-\node[font=\tiny, color=evalInk, anchor=north, yshift=-3pt, inner sep=0.8pt]
-  at (axis cs:17.3,2.91) {5};
-\node[font=\tiny, color=evalInk, anchor=north west, align=left]
-  at (axis cs:0.55,6.69)
-  {R1 off scale:\\17\,min, \$23/file\\not plotted:\\6--7 (unpriced)};
-\nextgroupplot[width=0.29\textwidth, height=3.7cm,
+\node[font=\scriptsize\bfseries, color=evalInk, anchor=south, xshift=0pt, yshift=2.2pt, inner sep=0.8pt]
+  at (axis cs:6.44,6.03) {R2};
+\addplot[only marks, mark=*, mark size=1.7pt, color=evalOrange] coordinates {(2.54,0.959) (2.9,1.05) (3.01,0.951) (4.35,1.28) (17.3,2.91)};
+\node[font=\scriptsize\bfseries, color=evalInk, anchor=east, xshift=-2.2pt, yshift=0pt, inner sep=0.8pt]
+  at (axis cs:2.54,0.959) {R7};
+\node[font=\scriptsize\bfseries, color=evalInk, anchor=south, xshift=0pt, yshift=2.2pt, inner sep=0.8pt]
+  at (axis cs:2.9,1.05) {R3};
+\node[font=\scriptsize\bfseries, color=evalInk, anchor=north, xshift=0pt, yshift=-2.2pt, inner sep=0.8pt]
+  at (axis cs:3.01,0.951) {R4};
+\node[font=\scriptsize\bfseries, color=evalInk, anchor=west, xshift=2.2pt, yshift=0pt, inner sep=0.8pt]
+  at (axis cs:4.35,1.28) {R6};
+\node[font=\scriptsize\bfseries, color=evalInk, anchor=south, xshift=0pt, yshift=2.2pt, inner sep=0.8pt]
+  at (axis cs:17.3,2.91) {R5};
+\node[font=\scriptsize, color=evalInk, anchor=north east, align=right]
+  at (axis cs:19.2,6.69)
+  {R1 off scale:\\17\,min, \$23/file};
+\nextgroupplot[width=0.305\textwidth, height=4.4cm,
   axis lines=left, axis line style={draw=evalAxis, line width=0.4pt},
   ymajorgrids, grid style={draw=evalGrid, line width=0.4pt},
-  tick label style={font=\scriptsize, /pgf/number format/assume math mode=true},
-  label style={font=\scriptsize, color=evalInk},
+  tick label style={font=\footnotesize, /pgf/number format/assume math mode=true},
+  label style={font=\footnotesize, color=evalInk},
   ylabel near ticks,
-  ylabel style={font=\scriptsize, yshift=-6pt},
-  title style={font=\scriptsize\bfseries, yshift=-1pt},
-  legend style={font=\tiny, draw=none, fill=none, inner sep=1pt},
+  ylabel style={font=\footnotesize, yshift=-7pt},
+  title style={font=\small\bfseries, yshift=-1pt},
+  legend style={font=\scriptsize, draw=none, fill=none, inner sep=1pt},
   legend image code/.code={\draw[##1] (0cm,-0.05cm) rectangle (0.18cm,0.09cm);},
-  every axis plot/.append style={line width=0.4pt},
+  every axis plot/.append style={line width=0.5pt},
   xtick style={draw=none}, ytick style={draw=none},
   enlarge x limits=0.08, ymin=0,
 symbolic x coords={R1,R2,R3,R4,R5,R6,R7}, xtick={R1,R2,R3,R4,R5,R6,R7},
-  x tick label style={rotate=90, anchor=east, font=\tiny, yshift=1pt},
+  x tick label style={rotate=90, anchor=east, font=\scriptsize, yshift=1pt},
   point meta=explicit symbolic,
   nodes near coords={\pgfplotspointmeta},
-  nodes near coords style={font=\tiny, color=evalInk, rotate=90, anchor=west},
-  ybar, bar width=3pt, title={(d) Tool calls per file settled},
+  nodes near coords style={font=\scriptsize, color=evalInk, rotate=90, anchor=west},
+  ybar, bar width=5pt, title={(d) Tool calls per file settled},
   ylabel={Calls / file}, ymax=283,
 ]
 \addplot[fill=evalBlue, draw=none, bar shift=0pt] coordinates {(R1,149.5) [150] (R2,75.92) [76]};
 \addplot[fill=evalOrange, draw=none, bar shift=0pt] coordinates {(R3,29.93) [30] (R4,25.29) [25] (R5,195.5) [196] (R6,61.2) [61] (R7,38.1) [38]};
-\nextgroupplot[width=0.29\textwidth, height=3.7cm,
+\nextgroupplot[width=0.305\textwidth, height=4.4cm,
   axis lines=left, axis line style={draw=evalAxis, line width=0.4pt},
   ymajorgrids, grid style={draw=evalGrid, line width=0.4pt},
-  tick label style={font=\scriptsize, /pgf/number format/assume math mode=true},
-  label style={font=\scriptsize, color=evalInk},
+  tick label style={font=\footnotesize, /pgf/number format/assume math mode=true},
+  label style={font=\footnotesize, color=evalInk},
   ylabel near ticks,
-  ylabel style={font=\scriptsize, yshift=-6pt},
-  title style={font=\scriptsize\bfseries, yshift=-1pt},
-  legend style={font=\tiny, draw=none, fill=none, inner sep=1pt},
+  ylabel style={font=\footnotesize, yshift=-7pt},
+  title style={font=\small\bfseries, yshift=-1pt},
+  legend style={font=\scriptsize, draw=none, fill=none, inner sep=1pt},
   legend image code/.code={\draw[##1] (0cm,-0.05cm) rectangle (0.18cm,0.09cm);},
-  every axis plot/.append style={line width=0.4pt},
+  every axis plot/.append style={line width=0.5pt},
   xtick style={draw=none}, ytick style={draw=none},
   enlarge x limits=0.08, ymin=0,
 symbolic x coords={R1,R2,R3,R4,R5,R6,R7}, xtick={R1,R2,R3,R4,R5,R6,R7},
-  x tick label style={rotate=90, anchor=east, font=\tiny, yshift=1pt},
-  ybar stacked, bar width=3pt, title={(e) Input-side token mix},
+  x tick label style={rotate=90, anchor=east, font=\scriptsize, yshift=1pt},
+  ybar stacked, bar width=5pt, title={(e) Input-side token mix},
   ylabel={Input share (\%)}, ymax=104, ytick={0,25,50,75,100},
   legend style={at={(0.5,-0.30)}, anchor=north}, legend columns=3,
 ]
@@ -135,25 +138,25 @@ symbolic x coords={R1,R2,R3,R4,R5,R6,R7}, xtick={R1,R2,R3,R4,R5,R6,R7},
 \addplot[fill=evalViolet, draw=none] coordinates {(R1,9.03) (R2,5.69) (R3,6.92) (R4,7.41) (R5,7.15) (R6,21.33) (R7,18.39)};
 \addplot[fill=evalOrange, draw=none] coordinates {(R1,0.41) (R2,0.45) (R3,1.88) (R4,2.06) (R5,1.84) (R6,0.01) (R7,0.01)};
 \legend{cache read, cache write, uncached}
-\nextgroupplot[width=0.29\textwidth, height=3.7cm,
+\nextgroupplot[width=0.305\textwidth, height=4.4cm,
   axis lines=left, axis line style={draw=evalAxis, line width=0.4pt},
   ymajorgrids, grid style={draw=evalGrid, line width=0.4pt},
-  tick label style={font=\scriptsize, /pgf/number format/assume math mode=true},
-  label style={font=\scriptsize, color=evalInk},
+  tick label style={font=\footnotesize, /pgf/number format/assume math mode=true},
+  label style={font=\footnotesize, color=evalInk},
   ylabel near ticks,
-  ylabel style={font=\scriptsize, yshift=-6pt},
-  title style={font=\scriptsize\bfseries, yshift=-1pt},
-  legend style={font=\tiny, draw=none, fill=none, inner sep=1pt},
+  ylabel style={font=\footnotesize, yshift=-7pt},
+  title style={font=\small\bfseries, yshift=-1pt},
+  legend style={font=\scriptsize, draw=none, fill=none, inner sep=1pt},
   legend image code/.code={\draw[##1] (0cm,-0.05cm) rectangle (0.18cm,0.09cm);},
-  every axis plot/.append style={line width=0.4pt},
+  every axis plot/.append style={line width=0.5pt},
   xtick style={draw=none}, ytick style={draw=none},
   enlarge x limits=0.08, ymin=0,
 symbolic x coords={R1,R2,R3,R4,R5,R6,R7}, xtick={R1,R2,R3,R4,R5,R6,R7},
-  x tick label style={rotate=90, anchor=east, font=\tiny, yshift=1pt},
+  x tick label style={rotate=90, anchor=east, font=\scriptsize, yshift=1pt},
   point meta=explicit symbolic,
   nodes near coords={\pgfplotspointmeta},
-  nodes near coords style={font=\tiny, color=evalInk, rotate=90, anchor=west},
-  ybar, bar width=3pt,
+  nodes near coords style={font=\scriptsize, color=evalInk, rotate=90, anchor=west},
+  ybar, bar width=5pt,
   title={(f) Input tokens per file settled},
   ylabel={M tok / file}, ymax=25.6,
 ]
