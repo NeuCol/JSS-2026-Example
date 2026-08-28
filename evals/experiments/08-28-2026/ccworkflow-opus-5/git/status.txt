@@ -1,0 +1,6 @@
+## main...origin/main [ahead 3]
+ M dev/tools/coverage/coverage_check.py
+ m software/mcfm
+?? dev/tmp/
+?? dev/transformations/mcfm-translate/agent_log.md
+?? evals/experiments/08-28-2026/ccworkflow-opus-5/
