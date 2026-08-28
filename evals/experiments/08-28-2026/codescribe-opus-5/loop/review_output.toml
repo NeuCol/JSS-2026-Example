@@ -1,0 +1,33 @@
+loop = 3
+summary = """
+Loop 3 was a finish-and-log round for Group 2 (W2jet atree family), and the author's report matches the harness-verified record. \
+`python3 dev/workflow.py refresh`, `status`, and `next mcfm-translate` all ran (exit 0) and their quoted output is consistent with the \
+provenance block now present in agent_log.md. The two coverage probes that had failed in loop 2 (`a6treeg.cpp`, `fvf.cpp`) were fixed by \
+joining the marked assignments onto a single `lhs = rhs;   // @coverage-probe` line — both files were edited, `dev/tools/coverage/coverage_check.py` \
+was read to confirm the single-line requirement, and the re-run of `dev/tmp/verify_all.py` (exit 0) reported `RESULT: NOT COVERED` for both, \
+matching atree/a6routine/ZZbox1LL. The oracle was re-run: `jobrunner submit tests/mcfm` succeeded, `grep -c PASSED tests/mcfm/job.output` = 272, \
+`SUMMARY: pass rate 272/272` at line 949, and the FAILED/error grep returned exit 1 (no matches). agent_log.md was edited three times to add the \
+`## Group 2 — W2jet (atree family)` heading with a reconstructed provenance block, the five TRANSLATED status lines in the Plan's exact format, \
+the completion line, and the loop-3 session entry. `python3 dev/workflow.py gate mcfm-translate` returned `GATE: OK ... (2 waiting, limit 3)`. \
+Two bash calls were rejected for blocked shell syntax (`;` and `\\|`) but both were immediately re-run in allowed form, so no claimed result rests \
+on a non-executed call. The scouting notes for Group 3 (ggZZ_mod.f90 copy-instead-of-alias hazard; Ftexact.f loopI2/loopI3 generics with no C binding) \
+are backed by verified reads of ggZZ_mod.f90, ggZZintegrals_mod.f90, Ftexact.f and the W2jet folder listing, and were recorded in the log without \
+opening a group. The only deviation from the Plan is the stopping condition: the Plan says to stop only when the gate blocks, the ready set is empty, \
+or a real blocker exists — none of which held (gate OK, 227 ready leaves), yet the round ended without opening Group 3.
+"""
+blocker = "No technical blocker: build and oracle are green (272/272) and the gate is OK (2 of 3 pending approvals). The round stopped early per the Plan's stop rules — Group 3 must be opened next."
+
+[[pending]]
+item = "Open `## Group 3 — W2jet` in agent_log.md with the provenance block written BEFORE any code edit: ready-leaf count from `python3 dev/workflow.py refresh`/`status` and the first five verbatim lines of `python3 dev/workflow.py next mcfm-translate`, plus the one-line note that `W2jet/ggZZcapture.f` (top entry) and `W2jet/Ftexact.f` are deferred."
+
+[[pending]]
+item = "Fix `software/mcfm/src/Mods/ggZZ_mod.f90` so `res` is a true rank-remapping pointer association (`res(1:2,1:4,1:10,1:3) => temp_ptr`) instead of `allocate` + copy from `temp_ptr`; rebuild and confirm 272/272 before any translation that writes `res`."
+
+[[pending]]
+item = "Translate the hazard-free W2jet set `subqcd.f`, `Acalc.f`, `LRcalc.f`, `fpp.f`, `vv.f` into `<base>.hpp` / `<base>.cpp` (with `extern \"C\" <base>_wrapper`) / `<base>_fi.F90`, wire them into `software/mcfm/src/W2jet/CMakeLists.txt`, and move the originals to `software/mcfm/src/W2jet/deprecated/`."
+
+[[pending]]
+item = "Mark exactly one single-line `lhs = rhs;   // @coverage-probe` statement per new file (multi-line assignments make coverage_check.py exit 2), update the target list in `dev/tmp/verify_all.py`, run it, and record VERIFIED/TRANSLATED per file in the Plan's exact format."
+
+[[pending]]
+item = "Re-run `jobrunner submit tests/mcfm` after the Group 3 edits, confirm `SUMMARY: pass rate 272/272` with 272 `PASSED` lines and no FAILED/error lines, add the session-log entry, then run `python3 dev/workflow.py gate mcfm-translate` — a third unapproved completed group will hit the limit and require human approval before Group 4."

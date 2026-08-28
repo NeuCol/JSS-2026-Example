@@ -1,0 +1,21 @@
+phase_files = [ "loop_001_author.toml", "loop_001_review.toml", "loop_002_author.toml", "loop_002_review.toml", "loop_003_author.toml", "loop_003_review.toml", "loop_004_author.toml",]
+updated_at = "2026-08-28T17:20:56.113377+00:00"
+
+[run]
+run_id = "20260828-114319-d99e5c"
+created_at = "2026-08-28T16:43:19.010001+00:00"
+workdir = "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example"
+task_file = "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/loop.toml"
+model = "anthropic-claude-opus-5"
+agent_loops = 5
+agent_iterations = 30
+reason = true
+max_tokens = 32768
+reasoning_config = "thinking=display:summarized,type:adaptive"
+cumulative_input_tokens = 166146
+cumulative_output_tokens = 141257
+cumulative_cache_creation_tokens = 644517
+cumulative_cache_read_tokens = 8840717
+cumulative_cache_creation_5m_tokens = 629288
+cumulative_cache_creation_1h_tokens = 15229
+loops_completed = 4
