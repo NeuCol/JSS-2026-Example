@@ -1,0 +1,18 @@
+loop = 5
+summary = "The agent edited software/mcfm/src/W2jet/qqb_wp2jetx_new.f and software/mcfm/src/Z2jet/qqb_z2jetx_new.f to drop references to the deprecated ppmax_mod/ppwp2j_mod Fortran modules in favor of pp_mod, then ran the full MCFM test suite twice via 'jobrunner submit tests/mcfm'. The resulting job.output (944 lines) shows every listed process, including the two directly relevant ones ('u d~ ve e+ g g' and 'u u~ e- e+ g g'), as PASSED, with no FAILED entries anywhere in the log. However, the plan-mandated verification step ('python3 dev/workflow.py verify <file.cpp> -- <process>') was invoked twice for pp_mod.cpp and ppwp2j_mod.cpp and both attempts exited with code 2 (failure), and follow-up attempts to fix this by inlining MCFM_HOME=software/mcfm on the command line were rejected by the bash tool's syntax restrictions, so the verify step never actually succeeded. Several other diagnostic commands (grep with '|' alternation, ls with pipes) were also blocked by the sandboxed bash tool and did not run. No agent_log.md exists yet in dev/transformations/mcfm-translate/, so the required per-round provenance (ready-leaf count, 'next' output, per-file VERIFIED/TRANSLATED/FAILED status) has not been recorded despite the plan requiring it every round."
+blocker = "dev/workflow.py verify fails (exit 2) for pp_mod.cpp and ppwp2j_mod.cpp, and the bash tool rejects inline env-var assignment (e.g. MCFM_HOME=... cmd), so the agent has no working way to run the required verify step and formally classify the edited files as VERIFIED vs TRANSLATED."
+
+[[pending]]
+item = "Find a bash-tool-compatible way to supply MCFM_HOME (e.g. 'source environment.sh' as a standalone allowed command, or check whether workflow.py already reads it from a config file) so 'python3 dev/workflow.py verify' can run without inline VAR=value prefixes."
+
+[[pending]]
+item = "Re-run 'python3 dev/workflow.py verify software/mcfm/src/Mods/pp_mod.cpp -- u u~ e- e+ g g' and the ppwp2j_mod.cpp equivalent once the environment issue is resolved, and capture the actual failure reason (exit 2) rather than assuming it is only an env problem."
+
+[[pending]]
+item = "Create dev/transformations/mcfm-translate/agent_log.md and record the open group's provenance (ready-leaf count from 'workflow.py status', first five lines of 'workflow.py next mcfm-translate') plus per-file status lines for qqb_wp2jetx_new.f and qqb_z2jetx_new.f per the plan's Log file section."
+
+[[pending]]
+item = "Confirm pp_mod and ppwp2j_mod are correctly wired into software/mcfm/src/Mods/CMakeLists.txt and Modules_Interface.f90 (grep calls succeeded but results were not captured in the summary) and record the outcome."
+
+[[pending]]
+item = "Move the now-superseded Fortran originals into deprecated/ if not already done, per step 6 of the Resolution section, and confirm via 'grep -n use ppmax_mod' / 'use ppwp2j_mod' across the whole src tree that no other file still references the deprecated modules."

@@ -1,0 +1,5 @@
+## main...origin/main [ahead 2]
+ m software/mcfm
+?? .codescribe/
+?? dev/tmp/
+?? evals/experiments/08-28-2026/codescribe-sonnet-5-run3/
