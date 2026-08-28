@@ -3,17 +3,49 @@ cross-checked against the self-reported `- [x]` checklist counts in
 agent_log.md (parse_coverage.coverage_for_run), which can drift from what
 actually landed in the submodule (see MISMATCHES below).
 
-Each translated routine in software/mcfm follows one of two patterns relative
-to the shared fork point (BASE_REF):
-  - rename:  src/<mod>/X.f -> src/<mod>/deprecated/X.f   (git sees this as R100)
-  - delete:  src/<mod>/X.f removed outright (no matching rename pair, but a
-             new src/<mod>/X.cpp appears alongside it)
-Both replace the original with new src/<mod>/{X.cpp, X_fi.F90, and often a
-shared X.hpp or per-module .hpp}. We count ONE original file's removal as ONE
-translated file — the new .cpp/.hpp/_fi.F90 outputs of that same translation
-are not counted again, and shared-infrastructure edits (CMakeLists.txt,
-Modules_Interface.f90 etc., which never remove an original source file) count
-as zero.
+A translated routine in software/mcfm reaches the run's archival branch in one
+of three shapes, relative to the shared fork point (BASE_REF). All three count
+as one translated file; the new src/<mod>/{X.cpp, X_fi.F90, X.hpp} outputs of
+that same translation are never counted again, and shared-infrastructure edits
+(CMakeLists.txt, Inc/FArray.hpp, BLHA/CXX_Interface.cxx) count as zero:
+
+  retired / rename   src/<mod>/X.f -> src/<mod>/deprecated/X.f
+  retired / delete   src/<mod>/X.f removed outright, a new src/<mod>/X.cpp
+                     appearing alongside it
+  shadowed           src/<mod>/X.cpp added while src/<mod>/X.{f,f90} is STILL
+                     PRESENT on the branch — the translation landed but the
+                     original was never retired
+
+Two things about this that earlier versions of this module got wrong, both of
+which changed the numbers:
+
+  1. Renames are matched on their DESTINATION, not on their similarity index.
+     The previous rule counted only R100 and skipped anything below it as "not
+     seen in practice". It is seen in practice: 08-27-2026's two gpt56sol runs
+     move a lightly-edited original into deprecated/ (R095 W2jet/atree.f, R096
+     Mods/Modules_Interface.f90), which is the retirement pattern exactly, just
+     with the file touched on the way. Both were silently dropped. Any rename
+     whose destination lands under a deprecated/ directory is a retirement now;
+     a rename to anywhere else is still skipped, since that is a move, not a
+     translation.
+
+  2. Shadowed translations count. A run that writes X.cpp and leaves X.f90 in
+     the tree did the translation work and pays for it in tokens, so scoring it
+     zero makes cost-per-file meaningless for that run — 08-27-2026's
+     ccworkflow-opus-5 and codescribe-sonnet-5-run2 each land two such units
+     (Mods/pp_mod, Mods/ppwp2j_mod) and used to report 0 files settled apiece.
+     THE CAVEAT MATTERS THOUGH, and callers should surface it: the original is
+     still compiled, so the module has two live implementations and the
+     transformation is not actually finished for that unit. `unit_breakdown`
+     keeps the two sets apart so a table can report "13 (2 not retired)"
+     instead of burying it; only `translated_file_units` unions them.
+     A .cpp with no surviving original AND no retirement record is not a
+     shadow — it is a new file, and it counts for nothing.
+
+Note that a .hpp alone is never a translation. 08-27-2026/ccworkflow-opus-5
+copies Mods/mod_qcdloop_c.f into deprecated/ (git sees an ADD, not a rename,
+because the original is still there) and writes mod_qcdloop_c.hpp with no .cpp
+behind it. That unit is neither retired nor shadowed and is counted nowhere.
 
 Do not trust archive_summary.json's "archive_branch" field as the branch
 name — for at least one run (08-11-2026/csloop-opus-5) it names a branch that
@@ -27,6 +59,12 @@ from pathlib import Path
 
 MCFM_DIR = Path(__file__).parent.parent.parent / "software" / "mcfm"
 BASE_REF = "1abdcddaad89582552edc41de68e4a6e1ac75f1d"  # shared fork point for every evals/* branch seen so far
+
+# Extensions that make a path an original Fortran source. Matched
+# case-insensitively — the corpus mixes .f, .f90 and .F90 for the same role.
+FORTRAN_EXTS = (".f", ".f90")
+# The directory a retired original is moved into.
+DEPRECATED_SEGMENT = "/deprecated/"
 
 
 def _git(*args):
@@ -49,44 +87,87 @@ def _resolve_branch_ref(day, run_name):
     return None
 
 
-def translated_file_units(day, run_name):
-    """Sorted list of unit identifiers for original Fortran files retired
-    (renamed to deprecated/ or deleted outright) under src/, relative to
-    BASE_REF — e.g. "BDK/M1bit1", "W2jet/fpp". One entry per translated file;
-    the .cpp/.hpp/_fi.F90 outputs of that translation are not separate
-    entries. Returns None if the branch can't be found."""
+def _unit_id(path):
+    """Path -> stable unit identifier: "src/W2jet/atree.f" -> "W2jet/atree".
+
+    Extension-insensitive on purpose, so the same routine is one unit whether
+    it was found as a retired .f, a deleted .f90 or an added .cpp.
+    """
+    unit = path[len("src/"):] if path.startswith("src/") else path
+    lowered = unit.lower()
+    for ext in (".f90", ".f", ".cpp"):
+        if lowered.endswith(ext):
+            return unit[: -len(ext)]
+    return unit
+
+
+def _is_fortran(path):
+    return path.rstrip().lower().endswith(FORTRAN_EXTS)
+
+
+def unit_breakdown(day, run_name):
+    """The run's translated units, split by whether the original was retired.
+
+    Returns {"retired": [...], "shadowed": [...]} with both lists sorted and
+    disjoint, or None if the run has no archival branch in this clone. Units
+    are built from the PRE-rename path, so the module in a unit id is always
+    where the file lived before translation, never "deprecated".
+    """
     ref = _resolve_branch_ref(day, run_name)
     if ref is None:
         return None
-    diff = _git("diff", "--name-status", BASE_REF, ref, "--", "src/")
-    units = []
-    for line in diff.splitlines():
+
+    retired, added_cpp = set(), set()
+    for line in _git("diff", "--name-status", "-M", BASE_REF, ref, "--", "src/").splitlines():
         parts = line.split("\t")
+        if len(parts) < 2:
+            continue
         status, path = parts[0], parts[1]
-        if status.startswith("R") and status != "R100":
-            continue  # partial-similarity renames aren't seen in practice; be conservative
-        if status == "R100":
-            units.append(path)
-        elif status == "D" and path.rstrip().lower().endswith((".f", ".f90")):
-            units.append(path)
-    # Strip "src/" prefix and extension so the identifier is stable whether
-    # the file was found via a deprecated/ rename or a plain delete.
-    cleaned = []
-    for u in units:
-        u = u[len("src/"):] if u.startswith("src/") else u
-        for ext in (".f90", ".F90", ".f"):
-            if u.endswith(ext):
-                u = u[: -len(ext)]
-                break
-        cleaned.append(u)
-    return sorted(cleaned)
+        if status.startswith("R"):
+            # Matched on destination, not similarity — see the module docstring.
+            if len(parts) > 2 and DEPRECATED_SEGMENT in parts[2]:
+                retired.add(_unit_id(path))
+        elif status == "D" and _is_fortran(path):
+            retired.add(_unit_id(path))
+        elif status == "A" and path.lower().endswith(".cpp"):
+            added_cpp.add(path)
+
+    # A .cpp whose Fortran original is still on the branch is a translation
+    # that landed without retiring what it replaced.
+    tree = set(_git("ls-tree", "-r", "--name-only", ref, "--", "src/").splitlines())
+    shadowed = set()
+    for path in added_cpp:
+        unit = _unit_id(path)
+        if unit in retired:
+            continue
+        if any(f"src/{unit}{ext}" in tree for ext in (".f", ".f90", ".F", ".F90")):
+            shadowed.add(unit)
+
+    return {"retired": sorted(retired), "shadowed": sorted(shadowed)}
+
+
+def translated_file_units(day, run_name):
+    """Sorted list of every unit the run translated — retired originals and
+    shadowed ones together (see unit_breakdown for the split, which callers
+    reporting a headline count should surface). None if there is no branch."""
+    breakdown = unit_breakdown(day, run_name)
+    if breakdown is None:
+        return None
+    return sorted(set(breakdown["retired"]) | set(breakdown["shadowed"]))
 
 
 def translated_file_count(day, run_name):
-    """Exact count of original Fortran files retired, relative to BASE_REF.
+    """Exact count of files translated, relative to BASE_REF.
     Returns None if the branch can't be found."""
     units = translated_file_units(day, run_name)
     return None if units is None else len(units)
+
+
+def shadowed_file_count(day, run_name):
+    """How many of translated_file_count's units left their original in place.
+    Returns None if the branch can't be found."""
+    breakdown = unit_breakdown(day, run_name)
+    return None if breakdown is None else len(breakdown["shadowed"])
 
 
 def module_of(unit):
@@ -123,8 +204,11 @@ if __name__ == "__main__":
     runs = [tuple(a.split("/", 1)) for a in args] if args else discover_runs(experiments)
 
     for day, run_name in runs:
-        units = translated_file_units(day, run_name)
-        if units is None:
+        breakdown = unit_breakdown(day, run_name)
+        if breakdown is None:
             print(f"{day}/{run_name}: no archival branch — no git-exact count")
-        else:
-            print(f"{day}/{run_name}: {len(units)} {units}")
+            continue
+        retired, shadowed = breakdown["retired"], breakdown["shadowed"]
+        total = len(retired) + len(shadowed)
+        suffix = f"  [{len(shadowed)} not retired: {', '.join(shadowed)}]" if shadowed else ""
+        print(f"{day}/{run_name}: {total} {sorted(retired + shadowed)}{suffix}")

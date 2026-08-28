@@ -29,12 +29,12 @@ here. It is a *floor*, not a certainty, for any archive that mixes TTLs without
 saying so: parse_csloop marks each row with cache_write_ttl_attributed so a
 run priced on that fallback can be told from one priced on recorded data.
 
-Kimi K3 (model id oaic-moonshotai/Kimi-K3; the run directory is named
-codescribe-kimi-k3-5, which is a naming slip -- the model is K3, not K3.5) and
-the gateway-hosted gpt56sol / gpt56terra deployments are not Anthropic models
+The gateway-hosted gpt56sol / gpt56terra deployments are not Anthropic models
 and have no entry here on purpose — cost() raises KeyError for them, and
 callers must treat those runs' USD cost as not applicable rather than silently
-pricing them off someone else's rate card.
+pricing them off someone else's rate card. The same applies to Kimi K3
+(oaic-moonshotai/Kimi-K3), which appears in the archived corpus but not in the
+current figure scope.
 """
 
 PRICING = {

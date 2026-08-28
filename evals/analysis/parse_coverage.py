@@ -52,9 +52,10 @@ def _run_produced_artifacts(run_dir):
     """Whether the archive contains engine output for this run at all.
 
     A run directory can carry a full loop/metadata (or workflow-wf_*) record and
-    still have no agent_log.md, when the log was not copied in at archive time —
-    08-26-2026/codescribe-sonnet-5 is that case. That is a missing *log*, not a
-    run that never happened, and the two must not report the same status.
+    still have no agent_log.md, when the log was not copied in at archive time
+    (08-26-2026/codescribe-sonnet-5, outside the current figure scope, is that
+    case). That is a missing *log*, not a run that never happened, and the two
+    must not report the same status. Every 08-27-2026 run archived its log.
     """
     run_dir = Path(run_dir)
     return (run_dir / "loop" / "metadata" / "manifest.toml").exists() or any(

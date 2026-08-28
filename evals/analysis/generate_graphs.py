@@ -1,40 +1,46 @@
 #!/usr/bin/env python3.10
-"""Generate the paper figures + summary tables for the 08-11-2026 → 08-26-2026
-evaluation of the mcfm-translate transformation.
+"""Generate the paper figures + summary tables for the 08-27-2026 evaluation of
+the mcfm-translate transformation.
 
-Runs covered (see RUNS below for the authoritative list): ccworkflow (sonnet-5
-author / opus-5 integrate) vs. csloop across opus-5, sonnet-5, Kimi K3 and the
-two oaic-gpt56 variants (sol / terra). Only
-the layouts written from 08-11-2026 onward are parseable — the 07-24/07-25-2026
-run directories use the older on-disk layout and are deliberately out of scope.
+Scope is one day on purpose, and it is what makes the cost comparison mean
+anything. All seven branches in RUNS below fork from the same submodule commit
+(git merge-base against git_file_counts.BASE_REF is that commit exactly for
+every one of them), and their fork-point roadmaps reconstruct to the same
+445-file candidate set, agreeing to within three rows run-to-run. So cost, wall
+time and tokens divide by a files-settled number drawn from one shared pool of
+work, which is the premise a cost-per-file number needs and does not survive
+being computed across days. The
+earlier corpus (07-24/07-25-2026 and 08-11-2026 through 08-26-2026) is still on
+disk under experiments/ and still parses where its layout allows, but it is out
+of scope here: those days forked from different roadmap states, so a
+cost-per-file computed across them compares unlike work and the comparison the
+paper makes would not hold.
 
-Three further runs are excluded from RUNS on data-quality grounds, not because
-their archives are unreadable:
-  - csloop opus-5 (08-11) and csloop opus-5 (run2, 08-12) logged no model
-    reasoning text at all in logs/toolusage.toml (zero model_reasoning entries,
-    against 78-136 for every other Anthropic run), so they cannot be compared
-    against the runs that did.
-  - csloop Kimi K3 (08-14) has no archival git branch in this clone, so it has
-    no git-exact files-settled count and no per-file metric of any kind.
-  - ccworkflow opus-5 (single session, 08-13) and csloop sonnet-5 +reasoning
-    (08-12) were withdrawn from the comparison. Both archives are intact and
-    still parse; nothing here judges them unusable.
-Dropping the opus-5 run2 arm also retires the "+reasoning vs. run2" figure that
-used to sit at panels (c)/(d): its control condition is one of the excluded
-runs, and no surviving run pairs against the +reasoning arm.
+Runs covered: two ccworkflow arms (opus-5 triage/dispatch; sonnet-5
+triage/dispatch with opus-5 integrate) against five csloop arms (opus-5 x2,
+sonnet-5, oaic-gpt56sol x2). Nothing is excluded on data-quality grounds — all
+seven archives carry a complete loop/metadata or workflow-wf_* record, an
+agent_log.md, and an archival git branch in this clone. The two gpt56sol runs
+log no model reasoning text, which is a property of the OpenAI-compatible
+gateway rather than of the run, and is true of every gpt56 run in the corpus.
 
-"Files settled" throughout is the exact count from git_file_counts.py (the
+"Files settled" throughout is the git-exact count from git_file_counts.py (the
 software/mcfm submodule branch for each run), not the agent's own in-loop
 checklist in agent_log.md — the two can disagree (see git_file_counts.py's
-docstring), and the submodule diff is ground truth. Two consequences visible in
-the output, both deliberate:
-  - a run whose archival branch never reached this clone has *no* git-exact
-    count. That is None, not zero, and is drawn as an explicit "n/a (no branch)"
-    everywhere rather than as an empty bar.
-  - a round that adds a .cpp beside a *retained* Fortran original retires no
-    file, so it can settle 4 units by its own checklist and 1 by git. A run in
-    that position gets correspondingly extreme per-file metrics, and the
-    per-file panels clip it with its true value printed (see capped_limit).
+docstring), and the submodule diff is ground truth. That count unions two
+shapes of translation, and the difference is reported rather than buried:
+  - retired: the Fortran original was moved into deprecated/ or deleted, which
+    is the transformation actually completing for that unit.
+  - shadowed: the .cpp landed but the original is still in the tree, so the
+    module now has two live implementations. The work was done and paid for in
+    tokens, so it counts toward files settled and the run's cost-per-file; but
+    the unit is not finished, and the `not retired` column in the coverage
+    table is where that shows up. Five of the seven runs shadow exactly the
+    same two units (Mods/pp_mod, Mods/ppwp2j_mod), so this is a property of how
+    that pair of Fortran modules is written, not a per-model failure.
+A run whose archival branch never reached this clone would have no git-exact
+count at all — None, not zero, drawn as an explicit "n/a (no branch)". No run
+in the current scope is in that position.
 
 Run with: python3.10 analysis/generate_graphs.py
 (Needs Python 3.10+ for tomllib, or `pip install tomli` on older Pythons.)
@@ -45,19 +51,24 @@ Reads only from experiments/ (read-only). Writes, under analysis/figures/:
   fig4_wall_time.png             - standalone, compact
   fig5_tool_calls_per_file.png   - standalone, compact
   fig_combined.png               - the six panels used as the paper's single figure
-(the fig2 slot held the retired reasoning comparison; the remaining files keep
+(the fig2 slot held a retired reasoning comparison; the remaining files keep
 their names so existing \includegraphics paths in the paper still resolve)
 and analysis/summary_tables.md (the numeric source of truth behind every panel).
 
-fig_combined.png deliberately does NOT mirror the summary table column-for-
-column. A table already reports per-run totals better than a bar chart can, so
-the combined figure carries only what a table reads poorly: normalized cost and
-throughput, the cost/speed frontier, the cost split by model tier, and the
-input-token composition that explains the cache-share differences. One panel
-that earlier versions carried was dropped on purpose:
-  - self-reported correctness: 272/272 for every run that reported at all,
-    including a run that translated zero files (the suite passes trivially when
-    nothing changed), so the bar chart was flat and the metric near-vacuous.
+There are two six-panel figures and they are not the same figure. The PNG
+(fig_combined.png) shows per-run totals: cost by model, cache share, files,
+wall time, tool calls per file, and self-reported correctness. The pgfplots
+version the paper actually renders (write_tikz_figure -> tex/fig_eval.tex)
+deliberately does NOT mirror those, because a table already reports per-run
+totals better than a bar chart can; it carries what a table reads poorly, namely
+normalized cost and throughput, the cost/speed frontier, the cost split by model
+tier, and the input-token composition behind the cache-share differences.
+
+The PNG keeps its self-reported-correctness panel, and it should be read for
+what it is worth, which is little: every run that reported at all reported
+272/272, including two runs that retired no Fortran source, so the suite is
+passing because nothing it covers changed. The panel is flat by construction.
+The pgfplots figure omits it for that reason.
 
 Every plotting function below draws onto an Axes it's given (draw_*), so the
 same code builds both the small standalone figures and the one combined
@@ -79,7 +90,8 @@ from parse_ccworkflow import parse_all_ccworkflow
 from parse_csloop import parse_all_csloop
 from parse_coverage import coverage_for_run
 from pricing import cost, PRICING
-from git_file_counts import translated_file_count, translated_file_units, module_of
+from git_file_counts import (translated_file_count, translated_file_units, module_of,
+                             unit_breakdown)
 from parse_roadmap import (fork_point_roadmap, ready_pool, post_run_ready,
                            roadmap_is_post_run)
 
@@ -154,33 +166,37 @@ plt.rcParams.update(
 )
 
 # ---------------------------------------------------------------------------
-# Run identity / labeling — 08-11-2026 through 08-26-2026
+# Run identity / labeling — the 08-27-2026 corpus
 #
 # One ordered registry of (day, run_dir, code, label); KEYS, RUN_LABELS,
 # RUN_CODES and the figure captions are all derived from it, so adding a run is
 # a one-line change here and nowhere else.
 #
-# The codes are stable identifiers quoted by the paper text: APPEND new runs,
-# never renumber the existing ones. Runs are grouped by day and, within a day,
-# by model family rather than by wall-clock start, so neighbouring bars compare
-# like with like.
+# Codes were renumbered R1..R7 when the corpus narrowed to 08-27-2026. The old
+# R1..R12 numbered runs from 08-11 through 08-26 that are no longer plotted, so
+# keeping their numbering would have left the axis starting at R13 to protect
+# references to runs the paper no longer makes. Within this corpus the codes are
+# stable identifiers quoted by the paper text: APPEND new runs, never renumber.
+#
+# Ordered ccworkflow first, then csloop, and within each harness by model
+# family rather than by wall-clock start, so neighbouring bars compare like
+# with like.
+#
+# The ccworkflow labels name the TRIAGE model, because triage is what picks the
+# files (see DECIDING_PHASE below). R2 also runs opus-5 as its integrate model,
+# which is where most of its cost lands but none of its file choices; R1 runs
+# opus-5 for every phase.
 # ---------------------------------------------------------------------------
 RUNS = [
-    ("08-11-2026", "csloop-opus-5-with-reasoning", "R1", "csloop opus-5 +reasoning (08-11)"),
-    ("08-12-2026", "ccworkflow-sonnet-5-opus-5-integrate", "R2",
-     "ccworkflow (sonnet-5 author, opus-5 integrate)"),
-    ("08-12-2026", "ccworkflow-sonnet-5-opus-5-integrate-run2", "R3",
-     "ccworkflow (sonnet-5 author, opus-5 integrate, run2)"),
-    ("08-12-2026", "codescribe-opus-5-with-reasoning", "R4", "csloop opus-5 +reasoning (08-12)"),
-    ("08-12-2026", "codescribe-sonnet-5-with-reasoning-run2", "R5",
-     "csloop sonnet-5 +reasoning (run2, 08-12)"),
-    ("08-12-2026", "codescribe-kimi-k3-5", "R6", "csloop Kimi K3 (08-12)"),
-    ("08-26-2026", "codescribe-opus-5", "R7", "csloop opus-5 (08-26)"),
-    ("08-26-2026", "codescribe-opus-5-run2", "R12", "csloop opus-5 (run2, 08-26)"),
-    ("08-26-2026", "codescribe-sonnet-5", "R8", "csloop sonnet-5 (08-26)"),
-    ("08-26-2026", "codescribe-oaic-gpt56sol", "R9", "csloop oaic-gpt56sol (08-26)"),
-    ("08-26-2026", "codescribe-oaic-gpt56sol-run2", "R10", "csloop oaic-gpt56sol (run2, 08-26)"),
-    ("08-26-2026", "codescribe-oaic-gpt56terra", "R11", "csloop oaic-gpt56terra (08-26)"),
+    ("08-27-2026", "ccworkflow-opus-5", "R1",
+     "ccworkflow (opus-5 triage and dispatch)"),
+    ("08-27-2026", "ccworkflow-sonnet-5-opus-5-integrate-run3", "R2",
+     "ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate)"),
+    ("08-27-2026", "codescribe-opus-5", "R3", "csloop opus-5"),
+    ("08-27-2026", "codescribe-opus-5-run2", "R4", "csloop opus-5 (run2)"),
+    ("08-27-2026", "codescribe-sonnet-5-run2", "R5", "csloop sonnet-5 (run2)"),
+    ("08-27-2026", "codescribe-oaic-gpt56sol-run4", "R6", "csloop oaic-gpt56sol (run4)"),
+    ("08-27-2026", "codescribe-oaic-gpt56sol-run5", "R7", "csloop oaic-gpt56sol (run5)"),
 ]
 
 KEYS = [(day, run_name) for day, run_name, _, _ in RUNS]
@@ -208,23 +224,26 @@ def run_code_caption(fig_width_in, fontsize=None):
     return textwrap.wrap(text, chars)
 
 
-# Every Anthropic csloop run in this table ran with adaptive thinking active:
-# Opus 5 and Sonnet 5 both think by default when the thinking parameter is
-# omitted, so none of these runs is a reasoning-OFF arm. "+reasoning" in a label
-# therefore means only that CODESCRIBE_AGENT_REASONING was set explicitly for
-# that run, and the runs without the suffix are not its control.
+# Every Anthropic run in this table ran with adaptive thinking active: Opus 5
+# and Sonnet 5 both think by default when the thinking parameter is omitted, so
+# there is no reasoning-OFF arm here and no run is another run's control for it.
+# The gpt56sol runs emit no reasoning text at all, which is the OpenAI-compatible
+# gateway's behaviour rather than a setting on the run.
 REASONING_NOTE = (
-    "All Anthropic csloop runs think adaptively (on by default); \"+reasoning\" marks runs that "
-    "set the flag explicitly, not an ON/OFF pair."
+    "All Anthropic runs think adaptively (on by default); no run here is a reasoning ON/OFF "
+    "control. The gpt56sol gateway returns no reasoning text at all."
 )
-EXCLUDED_NOTE = (
-    "Excluded: csloop opus-5 (08-11) and (run2, 08-12) logged no model reasoning text; "
-    "csloop Kimi K3 (08-14) has no archival git branch; ccworkflow opus-5 (single session, "
-    "08-13) and csloop sonnet-5 +reasoning (08-12) withdrawn from the comparison."
+SCOPE_NOTE = (
+    "Scope: the seven 08-27-2026 runs. All fork from one submodule commit and one 445-file "
+    "roadmap, so per-file cost divides comparable work; earlier days did not and are out of scope."
+)
+SHADOW_NOTE = (
+    "Files settled counts a unit whose .cpp landed but whose Fortran original was never retired; "
+    "the coverage table's \"not retired\" column says how many of a run\'s units are in that state."
 )
 UNPRICED_NOTE = (
-    "Kimi K3 and the oaic-gpt56 deployments are not Anthropic models and carry no rate card, so "
-    "they are excluded from every USD figure."
+    "The oaic-gpt56 deployments are not Anthropic models and carry no rate card, so they are "
+    "excluded from every USD figure."
 )
 
 MODEL_COLOR = {
@@ -249,10 +268,10 @@ def _title(text, letter):
 # ---------------------------------------------------------------------------
 # Shared bar-panel mechanics
 #
-# Sixteen runs no longer fit the "one horizontal label per bar" layout the
-# nine-run version used: both the tick labels and the value annotations are set
-# vertically now, which costs nothing in legibility for three-character codes
-# and keeps every panel readable at the printed size.
+# Tick labels and value annotations are both set vertically. At seven runs the
+# codes would fit horizontally, but the value annotations above the bars do not,
+# and mixing the two orientations reads worse than committing to one. Vertical
+# costs nothing in legibility for two-character codes.
 # ---------------------------------------------------------------------------
 def _run_xticks(ax, keys=None):
     keys = keys if keys is not None else KEYS
@@ -280,13 +299,13 @@ def _annotate_bars(ax, values, labels, top, fontsize=None, inside=()):
 def capped_limit(values, headroom=1.45, clip_ratio=2.0):
     """Axis maximum for a bar panel, plus the values it deliberately clips.
 
-    A single run (R10) settled one git-exact file, so every per-file metric it
-    appears in is several times the next largest value. Scaling those panels to
-    it would flatten the fifteen bars the panel exists to compare, so when the
-    largest value is more than `clip_ratio` times the second largest, the axis
-    is scaled to the second largest instead and the outlier is drawn clipped
-    with its true value printed above it. Panels of plain per-run totals pass
-    clip_ratio=None and are never clipped.
+    A run that settles very few files has per-file metrics several times the
+    next largest value (in this corpus R1 and R5, at two units apiece). Scaling
+    those panels to it would flatten the bars the panel exists to compare, so
+    when the largest value is more than `clip_ratio` times the second largest,
+    the axis is scaled to the second largest instead and the outlier is drawn
+    clipped with its true value printed above it. Panels of plain per-run totals
+    pass clip_ratio=None and are never clipped.
 
     Returns (ymax, {index: value}) for the clipped entries.
     """
@@ -422,6 +441,21 @@ def load_translated_units():
     """Exact list of translated-file identities per run (e.g. "BDK/M1bit1"),
     used to compare which specific files different runs picked."""
     return {key: translated_file_units(*key) for key in KEYS}
+
+
+def load_shadowed_units():
+    """{run: [unit]} — the subset of a run's translated units whose Fortran
+    original is still in the tree, so the module carries two live
+    implementations and the unit is not actually finished. Counted in files
+    settled (the work was done and billed) but reported separately, because a
+    run that shadows most of its units has not delivered what its file count
+    suggests. Empty list, not None, for a run with an archival branch and no
+    shadowed units; None when there is no branch."""
+    out = {}
+    for key in KEYS:
+        breakdown = unit_breakdown(*key)
+        out[key] = None if breakdown is None else breakdown["shadowed"]
+    return out
 
 
 def modules_touched(translated_units):
@@ -772,8 +806,8 @@ def draw_tool_calls_per_file_panel(ax, tool_calls_per_file, letter=None):
         mpatches.Patch(color=harness_color["ccworkflow"], label="ccworkflow"),
         mpatches.Patch(color=harness_color["csloop"], label="csloop"),
     ]
-    # Upper-left: the clipped R10 bar owns the middle and the gpt56 runs on the
-    # right are tall, so the short early runs are the only clear space left.
+    # Upper-left: the clipped low-throughput bars own the middle and the gpt56
+    # runs on the right are tall, so this is the only reliably clear space.
     ax.legend(handles=handles, loc="upper left", frameon=False, ncol=2)
 
 
@@ -808,7 +842,7 @@ def make_standalone_figures(runs, coverage, files_settled, wall_times, tool_call
     fig.suptitle("Token cost & cache efficiency", fontsize=SUPTITLE_SIZE)
     draw_cost_panel(a1, runs)
     draw_cache_panel(a2, runs)
-    caption = run_code_caption(9.4) + [UNPRICED_NOTE, REASONING_NOTE, EXCLUDED_NOTE]
+    caption = run_code_caption(9.4) + [UNPRICED_NOTE, REASONING_NOTE, SCOPE_NOTE, SHADOW_NOTE]
     fig.tight_layout(rect=_caption_rect(len(caption)))
     save_fig(fig, "fig1_cost_and_cache.png", caption)
 
@@ -820,7 +854,8 @@ def make_standalone_figures(runs, coverage, files_settled, wall_times, tool_call
     caption = run_code_caption(9.4) + [
         "No human_review files exist for these runs, so only self-reported pass rates are shown; "
         "runs that reported none are omitted from the right-hand panel.",
-        EXCLUDED_NOTE,
+        SCOPE_NOTE,
+        SHADOW_NOTE,
     ]
     fig.tight_layout(rect=_caption_rect(len(caption)))
     save_fig(fig, "fig3_coverage.png", caption)
@@ -832,7 +867,8 @@ def make_standalone_figures(runs, coverage, files_settled, wall_times, tool_call
     a1.set_title("")
     caption = run_code_caption(7.2) + [
         "ccworkflow: span of first-to-last agent timestamp. csloop: sum of per-loop duration_s.",
-        EXCLUDED_NOTE,
+        SCOPE_NOTE,
+        SHADOW_NOTE,
     ]
     fig.tight_layout(rect=_caption_rect(len(caption)))
     save_fig(fig, "fig4_wall_time.png", caption)
@@ -845,7 +881,8 @@ def make_standalone_figures(runs, coverage, files_settled, wall_times, tool_call
     caption = run_code_caption(7.2) + [
         "Executed tool calls (ok + error) divided by files settled (git-exact count, git_file_counts.py).",
         "↑ marks a bar clipped by the axis; its true value is printed above it.",
-        EXCLUDED_NOTE,
+        SCOPE_NOTE,
+        SHADOW_NOTE,
     ]
     fig.tight_layout(rect=_caption_rect(len(caption)))
     save_fig(fig, "fig5_tool_calls_per_file.png", caption)
@@ -885,12 +922,12 @@ def make_combined_figure(runs, coverage, files_settled, wall_times, tool_calls_p
     draw_correctness_panel(fig.add_subplot(gs[2, 1]), coverage, letter="(f)")
 
     fig.suptitle(
-        "08-11-2026 → 08-26-2026: ccworkflow vs. csloop on mcfm-translate — cost, cache, tool calls & coverage",
+        "08-27-2026: ccworkflow vs. csloop on mcfm-translate — cost, cache, tool calls & coverage",
         fontsize=SUPTITLE_SIZE + 2,
         y=0.985,
     )
     caption_size = CAPTION_SIZE * 1.35
-    caption = run_code_caption(10.4, caption_size) + [UNPRICED_NOTE, REASONING_NOTE, EXCLUDED_NOTE]
+    caption = run_code_caption(10.4, caption_size) + [UNPRICED_NOTE, REASONING_NOTE, SCOPE_NOTE, SHADOW_NOTE]
     for i, line in enumerate(reversed(caption)):
         fig.text(0.5, 0.008 + i * 0.0135, line, ha="center", fontsize=caption_size, color=INK)
 
@@ -1142,11 +1179,12 @@ def _files_cell(files):
 
 
 def write_summary_tables(runs, coverage, files_settled, translated_units, wall_times, tool_calls_per_file,
-                         decision_models):
+                         decision_models, shadowed_units):
     lines = ["# Summary tables (generated by analysis/generate_graphs.py — do not hand-edit)\n"]
     lines.append(f"{UNPRICED_NOTE}\n")
     lines.append(f"{REASONING_NOTE}\n")
-    lines.append(f"{EXCLUDED_NOTE}\n")
+    lines.append(f"{SCOPE_NOTE}\n")
+    lines.append(f"{SHADOW_NOTE}\n")
 
     lines.append("## Run comparison: cost, cache, wall time, tool calls & files settled\n")
     lines.append(
@@ -1208,22 +1246,36 @@ def write_summary_tables(runs, coverage, files_settled, translated_units, wall_t
 
     lines.append("## Status, coverage claim & self-reported correctness\n")
     lines.append(
-        "`Files (git)` is ground truth — originals actually retired on the run's archival branch. "
-        "`Checklist` is the run's own `- [x]` count in agent_log.md. They diverge when a round adds a "
-        "`.cpp` beside a Fortran original it keeps (no file retired, so git counts none of it) or when "
-        "the log was not archived with the run.\n"
+        "`Files (git)` is ground truth — every unit the run translated on its archival branch. "
+        "`Not retired` is how many of those left the Fortran original in the tree beside the new "
+        "`.cpp`: the work was done and billed, so it counts, but the module now has two live "
+        "implementations and the unit is not finished. `Checklist` is the run's own `- [x]` count in "
+        "agent_log.md; it diverges from git when the run claimed a unit it did not land, or when the "
+        "log was not archived with the run.\n"
     )
-    lines.append("| Run | Status | Files (git) | Checklist | Open | Self-reported pass |")
-    lines.append("|---|---|---:|---:|---:|---|")
+    lines.append("| Run | Status | Files (git) | of which not retired | Checklist | Open | Self-reported pass |")
+    lines.append("|---|---|---:|---:|---:|---:|---|")
     for k in KEYS:
         c = coverage[k]
         sp = f"{c['self_reported_pass'][0]}/{c['self_reported_pass'][1]}" if c["self_reported_pass"] else "—"
         has_log = c["final_status"] != "not-executed" and (c["files_settled"] or c["files_open"] or sp != "—")
+        shadowed = shadowed_units[k]
+        shadow_cell = "n/a" if shadowed is None else (str(len(shadowed)) if shadowed else "—")
         lines.append(
-            f"| {_row_label(k)} | {c['final_status']} | {_files_cell(files_settled[k])} | "
+            f"| {_row_label(k)} | {c['final_status']} | {_files_cell(files_settled[k])} | {shadow_cell} | "
             f"{c['files_settled'] if has_log else '—'} | {c['files_open'] if has_log else '—'} | {sp} |"
         )
     lines.append("")
+
+    shadow_rows = {k: v for k, v in shadowed_units.items() if v}
+    if shadow_rows:
+        every = set.intersection(*(set(v) for v in shadow_rows.values()))
+        lines.append(
+            f"{len(shadow_rows)} of {len(KEYS)} runs left at least one original in place. "
+            + (f"All of them shadow the same units (`{'`, `'.join(sorted(every))}`), which points at "
+               "those Fortran modules rather than at any one model.\n" if every else
+               "They do not agree on which units, so this is per-run behaviour.\n")
+        )
 
     mods = modules_touched(translated_units)
     all_modules = sorted({m for counts in mods.values() for m in counts})
@@ -1268,9 +1320,10 @@ def write_summary_tables(runs, coverage, files_settled, translated_units, wall_t
     universal = by_count.get(n_measured, [])
     lines.append("## How many runs settled each file (git-exact)\n")
     lines.append(
-        f"Every distinct file any run retired ({total_distinct} of them), bucketed by how many of the "
-        f"{n_measured} measured runs retired it. The module table above shows whether runs landed in the "
-        "same *area*; this shows whether they landed on the same *files*, which is the stricter question.\n"
+        f"Every distinct file any run translated ({total_distinct} of them), bucketed by how many of the "
+        f"{n_measured} measured runs translated it. The module table above shows whether runs landed in "
+        "the same *area*; this shows whether they landed on the same *files*, which is the stricter "
+        "question.\n"
     )
     if universal:
         lines.append(
@@ -1278,11 +1331,18 @@ def write_summary_tables(runs, coverage, files_settled, translated_units, wall_t
             f"({', '.join('`' + u + '`' for u in universal)}).\n"
         )
     else:
+        # How close the top bucket came matters more than the bare fact that
+        # the intersection is empty: "no file in all 7, but 2 files in 6 of 7"
+        # is convergence, while a top bucket of 2 of 7 is not. Derived, because
+        # a sentence hardcoding either reading goes stale the next time the run
+        # set changes.
+        best = max(by_count)
         lines.append(
-            f"**No file was settled by all {n_measured} runs — the all-run intersection is empty.** That is "
-            "a property of the corpus rather than a near-miss: the runs split across top-level modules that "
-            "do not overlap at all, so most pairs had no opportunity to agree. Read the rows below as "
-            "levels of partial agreement, not as a ranking against a reachable maximum.\n"
+            f"**No file was settled by all {n_measured} runs.** The intersection is empty because the "
+            f"smallest runs settled only a handful of files each, not because the runs worked on unrelated "
+            f"things: the top bucket is {len(by_count[best])} file(s) settled by {best} of {n_measured} "
+            "runs, and the module table above shows where the rest of the disagreement sits. Read the rows "
+            "below as levels of partial agreement.\n"
         )
     # Naming files is only useful while the list is short enough to scan; past
     # that the cell is a wall of identifiers that hides the distribution the
@@ -1306,9 +1366,9 @@ def write_summary_tables(runs, coverage, files_settled, translated_units, wall_t
     lines.append(
         "Runs grouped by the model that made the file-selection decision, not by harness. For csloop that "
         "is the run's only model. For ccworkflow it is the **triage** model — triage reads the plan and "
-        f"picks the round's units, while author agents are handed units already chosen and integrate only "
-        "lands them. So R2/R3 count as sonnet-5 decisions despite their labels leading with "
-        "\"opus-5 integrate\": opus-5 never picked a file in those runs.\n"
+        "picks the round's units, while author agents are handed units already chosen and integrate only "
+        "lands them. So R2 counts as a sonnet-5 decision even though opus-5 is its integrate model and "
+        "carries most of its cost: opus-5 never picked a file in that run.\n"
     )
     lines.append(
         "`Core` is the set of files settled in *every* run of that model — intra-model reproducibility. "
@@ -1333,8 +1393,8 @@ def write_summary_tables(runs, coverage, files_settled, translated_units, wall_t
     lines.append("## How many *models* settled each file (git-exact)\n")
     lines.append(
         "The stricter companion to the run-level table above. A file settled by four runs of one model is "
-        "that model reproducing itself; a file settled by four models is cross-model agreement. The "
-        "run-level counts cannot separate those, and with opus-5 supplying four of the twelve runs they "
+        "that model reproducing itself; a file settled by three models is cross-model agreement. The "
+        "run-level counts cannot separate those, and with opus-5 deciding three of the seven runs they "
         "will read the first as though it were the second.\n"
     )
     lines.append("| Models settling it | Files | Share | Which files |")
@@ -1368,10 +1428,10 @@ TEX_BANNER = (
 # Only the data-bearing .tex files carry this; the colour definitions have no
 # run set to qualify.
 TEX_DATA_BANNER = TEX_BANNER + (
-    "%% Excluded runs: csloop opus-5 (08-11) and (run2, 08-12) logged no model\n"
-    "%% reasoning text; csloop Kimi K3 (08-14) has no archival git branch;\n"
-    "%% ccworkflow opus-5 (single session, 08-13) and csloop sonnet-5\n"
-    "%% +reasoning (08-12) withdrawn from the comparison.\n"
+    "%% Corpus: the seven 08-27-2026 runs, all forked from one submodule commit\n"
+    "%% and one 445-file roadmap. No run is excluded on data-quality grounds.\n"
+    "%% Earlier days (07-24/07-25, 08-11..08-26) forked from different roadmap\n"
+    "%% states and are deliberately out of scope -- see generate_graphs.py.\n"
 )
 
 # Palette mirrored into LaTeX so the figure matches the PNG version exactly.
@@ -1636,8 +1696,8 @@ def _panel_cost_by_model(metrics):
         pts = [(metrics[k]["code"], metrics[k]["cost_by_model"].get(m, 0.0)) for k in KEYS]
         lines.append(f"\\addplot[fill={colors[m]}, draw=none] coordinates {{" + _coord_str(pts, "{:.2f}") + "};\n")
     lines.append("\\legend{sonnet-5, opus-5}\n")
-    # Kimi and the two gpt56 deployments carry no rate card; mark them so a
-    # zero-height stack is not read as "this run was free".
+    # The gpt56 deployments carry no rate card; mark them so a zero-height
+    # stack is not read as "this run was free".
     unpriced = [metrics[k]["code"] for k in KEYS if not metrics[k]["priced"]]
     lines.append(_na_nodes(unpriced, "unpriced"))
     return "".join(lines)
@@ -1670,10 +1730,11 @@ def _panel_frontier(metrics):
         key=lambda p: p[0],
     )
 
-    # R10 settled a single git-exact file, which puts it an order of magnitude
-    # out on both axes. Scaling to it would collapse the other points into one
-    # blob in the corner, so the axes are scaled to the rest and it is called
-    # out by name as off-scale instead of being silently clipped away.
+    # A run that settles very few files lands an order of magnitude out on both
+    # axes (here R1 and R5, at two units each). Scaling to it would collapse the
+    # other points into one blob in the corner, so the axes are scaled to the
+    # rest and the outlier is called out by name as off-scale instead of being
+    # silently clipped away.
     def _limit(values):
         ymax, clipped = capped_limit(values, headroom=1.12)
         return ymax, clipped
@@ -2180,6 +2241,12 @@ def main():
         print(f"{k}: files settled (git-exact) = {f}")
 
     translated_units = load_translated_units()
+    shadowed_units = load_shadowed_units()
+    for k in KEYS:
+        shadowed = shadowed_units[k]
+        if shadowed:
+            print(f"{k}: {len(shadowed)} translated but not retired: {', '.join(shadowed)}")
+
     decision_models = decision_model_per_run(cc_rows, cs_rows)
     for k in KEYS:
         print(f"{k}: decided by {decision_models[k]}")
@@ -2199,7 +2266,7 @@ def main():
     make_combined_figure(runs, coverage, files_settled, wall_times, tool_calls_per_file)
     make_decision_figure(translated_units, decision_models)
     write_summary_tables(runs, coverage, files_settled, translated_units, wall_times, tool_calls_per_file,
-                         decision_models)
+                         decision_models, shadowed_units)
 
     # LaTeX/TikZ artifacts consumed directly by the paper.
     write_tikz_colors()

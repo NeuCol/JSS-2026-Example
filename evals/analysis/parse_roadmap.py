@@ -12,16 +12,20 @@ WHY THIS MODULE EXISTS, rather than just reading a run's archived TSV:
 Every run archives its own copy, but `dev/tmp` is captured *after* the run
 finishes, so the archived map has already dropped the files that run just
 settled. Using a run's own map as "the map the model saw" is therefore exactly
-backwards -- it is missing precisely the rows you want to ask about. Empirically
-the archived maps are post-run for every run but the three earliest, whose maps
-were refreshed once mid-run and so are partially stale.
+backwards -- it is missing precisely the rows you want to ask about. Some runs
+refresh the map once mid-run rather than at the end, leaving it partially stale;
+`roadmap_is_post_run` is how a caller tells those apart, and in the 08-27-2026
+corpus two runs are in that state (ccworkflow-sonnet-5-opus-5-integrate-run3 and
+codescribe-opus-5, whose maps still list 5 and 6 units they went on to settle).
 
-All evals/* branches share one fork point (git_file_counts.BASE_REF), so the
-pre-run map is identical for every run and can be recovered instead of
-re-derived: `archived rows ∪ that run's settled files`. Eight of the eleven runs
-carrying a map reconstruct to exactly the same 445 files, and that set is also
-the union across all of them -- the three that fall short are the mid-run
-refreshes, which lost rows no reconstruction can restore. So the union is used.
+All evals/* branches share one fork point (git_file_counts.BASE_REF) -- verified,
+not assumed: `git merge-base` against BASE_REF returns BASE_REF exactly for every
+branch. So the pre-run map is identical for every run and can be recovered
+instead of re-derived: `archived rows ∪ that run's settled files`. Across the
+08-27-2026 runs those reconstructions agree to within three rows and their union
+is 445 files, with per-file attributes recovered for all 445. The union is what
+is used, since a run whose own map dropped a row it never settled cannot restore
+it alone.
 
 Per-file attributes are recovered the same way, by observing each file across
 every archived map:
