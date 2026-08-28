@@ -1,0 +1,26 @@
+{
+  "experiment_name": "codescribe-oaic-gpt56sol-run6",
+  "archive_created_at": "2026-08-28T20:34:50.304144+00:00",
+  "loop_source": ".codescribe",
+  "transformation_source": "dev/transformations/mcfm-translate",
+  "submodules": [
+    "software/mcfm"
+  ],
+  "archive_branch": "evals/08-28-2026/codescribe-oaic-gpt56sol-run6",
+  "submodule_results": [
+    {
+      "repo": "software/mcfm",
+      "branch": "evals/08-28-2026/codescribe-oaic-gpt56sol-run6",
+      "branch_action": "created",
+      "excluded_paths": [
+        "Bin",
+        "install"
+      ],
+      "committed": true,
+      "head": "14f395f53bb196747208ec4d5eb261afe392c478"
+    }
+  ],
+  "session_logs": null,
+  "included_dev_tmp": true,
+  "cleanup_performed": true
+}

@@ -1,0 +1,15 @@
+loop = 4
+summary = "The agent refreshed readiness, confirmed the approval gate was open, and opened a folder-coherent five-file Group 3 for BDK/fvs.f, FFMPcc.f, FFPMccT.f, FFPMccTtilde.f, and FFPMscT.f with the required provenance recorded in agent_log.md. Draft generation was actually executed for all five files (the later harness-rejected duplicate draft attempts do not invalidate those successful calls), and the agent generated and worked on the C++/header/Fortran-shim translations and BDK CMake wiring. The full MCFM job was run twice, but the latest completed run failed while compiling FFPMscT.cpp because of a std::pow type mismatch. A corrective fix_delta.py script was then executed successfully, but the suite was not rerun, no per-file coverage verification was performed, and all five Group 3 entries remain unchecked without a contract status. Consequently, the translations are not yet settled and there is no verified build or numerical-test result after the final correction."
+blocker = "The last completed full MCFM build/test run failed compiling FFPMscT.cpp, and the final corrective edit has not been validated by a subsequent full suite run."
+
+[[pending]]
+item = "Run jobrunner submit tests/mcfm after the FFPMscT.cpp correction; resolve any remaining compile, link, runtime, or numerical failures and confirm every test case explicitly reports passed."
+
+[[pending]]
+item = "Audit all five generated BDK translations against their original Fortran sources, checking arithmetic grouping, pow argument types, wrapper signatures, required own/sibling headers, and CMake/shim wiring."
+
+[[pending]]
+item = "After the full suite passes, run python3 dev/workflow.py verify for fvs.cpp, FFMPcc.cpp, FFPMccT.cpp, FFPMccTtilde.cpp, and FFPMscT.cpp using the mapped BDK process `u d~ ve e+ g g`."
+
+[[pending]]
+item = "Update each unchecked Group 3 entry in agent_log.md to VERIFIED, TRANSLATED, or FAILED with the required evidence, and append the final full-suite outcome to the session log."
