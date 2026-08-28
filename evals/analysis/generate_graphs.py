@@ -1401,7 +1401,7 @@ def write_summary_tables(runs, coverage, files_settled, translated_units, wall_t
     lines.append("|---|---|---|---|---:|---:|---|")
     for model, info in sorted(by_model.items(), key=lambda kv: (-len(kv[1]["runs"]), kv[0])):
         codes = ", ".join(RUN_CODES[k] for k in info["runs"])
-        mods = ", ".join(f"{m} ({n})" for m, n in sorted(info["modules"].items(), key=lambda kv: -kv[1]))
+        mods = ", ".join(f"{m} ({n})" for m, n in sorted(info["modules"].items(), key=lambda kv: (-kv[1], kv[0])))
         core = ", ".join(f"`{f}`" for f in sorted(info["core"])) if info["core"] else "—"
         if len(info["core"]) > 6:
             core = f"{len(info['core'])} files"
@@ -1467,6 +1467,9 @@ TEX_COLORS = [
     ("evalGrid", GRID),
     ("evalAxis", AXIS),
     ("evalInk", INK_SECONDARY),
+    # Primary ink, for value labels sitting on a mid-tone fill where the
+    # secondary ink drops under 3:1 (the decision figure's module heatmap).
+    ("evalInkStrong", INK),
     # Used for value labels printed inside a bar, where ink-on-fill would not read.
     ("evalSurface", SURFACE),
     # Sequential + ordinal steps for the decision figure's heatmap and bins.
@@ -2149,7 +2152,11 @@ def _tikz_panel_model_module(by_model, attrs):
                 continue
             step = min(int(round((0.34 + 0.66 * v / vmax) * (len(SEQ_BLUE) - 1))),
                        len(SEQ_BLUE) - 1)
-            ink = "evalSurface" if step >= 8 else "evalInk"
+            # evalInkStrong, not evalInk: the secondary ink reads at 1.8:1 on
+            # evalSeq7, where the primary holds 4.4:1. The >= 8 cutover below
+            # is the point where the primary ink finally loses to the surface,
+            # and matches the matplotlib heatmap.
+            ink = "evalSurface" if step >= 8 else "evalInkStrong"
             cells.append(
                 f"\\draw[fill=evalSeq{step}, draw=none] (axis cs:{j + 0.04:.2f},{i + 0.04:.2f})"
                 f" rectangle (axis cs:{j + 0.96:.2f},{i + 0.96:.2f});\n"

@@ -55,10 +55,11 @@ readings:
     context is not archived (the loop records per-phase aggregates, not
     per-request), but it can be bounded: cache reads chain monotonically
     within a phase, so summing them over a phase's N iterations puts the final
-    request near 2*sum/N, which across every gpt56sol phase in the corpus tops
-    out around 134K tokens. That is below the only boundary the page hints at,
-    so the short column is used. If some request did cross into long context,
-    these figures are a floor.
+    request near 2*sum/N, which tops out around 134K tokens across the two
+    gpt56sol runs in the current figure scope (and around 141K across every
+    gpt56sol phase in the wider archived corpus). Both are below the only
+    boundary the page hints at, so the short column is used. If some request
+    did cross into long context, these figures are a floor.
   - Cache-write TTL. OpenAI publishes one cache-write rate with no TTL split,
     so cache_write_5m and cache_write_1h are set to the same value below and
     the attribution logic in cost() cannot change the answer for these models.

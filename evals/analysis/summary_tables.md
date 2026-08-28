@@ -126,7 +126,7 @@ Runs grouped by the model that made the file-selection decision, not by harness.
 | Decision model | Runs | Harness | Modules entered | Files (union) | Core | Core files |
 |---|---|---|---|---:|---:|---|
 | opus-5 | R1, R3, R4 | ccworkflow, csloop | W2jet (11), BDK (5), Mods (4) | 20 | 2 | `Mods/pp_mod`, `Mods/ppwp2j_mod` |
-| sonnet-5 | R2, R5 | ccworkflow, csloop | W2jet (5), BDK (5), Mods (3) | 13 | 2 | `Mods/pp_mod`, `Mods/ppwp2j_mod` |
+| sonnet-5 | R2, R5 | ccworkflow, csloop | BDK (5), W2jet (5), Mods (3) | 13 | 2 | `Mods/pp_mod`, `Mods/ppwp2j_mod` |
 | gpt56sol | R6, R7 | csloop | W2jet (6), Mods (5) | 11 | 4 | `Mods/types_mod`, `W2jet/a6treeg`, `W2jet/atree`, `W2jet/ggZZcapture` |
 
 ## How many *models* settled each file (git-exact)
