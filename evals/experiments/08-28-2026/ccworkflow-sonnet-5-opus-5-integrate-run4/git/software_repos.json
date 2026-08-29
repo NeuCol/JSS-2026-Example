@@ -1,0 +1,20 @@
+[
+  {
+    "path": "software/mcfm",
+    "head": "1abdcddaad89582552edc41de68e4a6e1ac75f1d",
+    "branch": "HEAD",
+    "status": "## HEAD (no branch)\nM  CMakeLists.txt\nM  src/BDK/CMakeLists.txt\nA  src/BDK/FFMPcc.cpp\nA  src/BDK/FFMPcc.hpp\nA  src/BDK/FFMPcc_fi.F90\nA  src/BDK/FFPMccT.cpp\nA  src/BDK/FFPMccT.hpp\nA  src/BDK/FFPMccT_fi.F90\nA  src/BDK/FFPMccTtilde.cpp\nA  src/BDK/FFPMccTtilde.hpp\nA  src/BDK/FFPMccTtilde_fi.F90\nA  src/BDK/FFPMscT.cpp\nA  src/BDK/FFPMscT.hpp\nA  src/BDK/FFPMscT_fi.F90\nR  src/BDK/FFMPcc.f -> src/BDK/deprecated/FFMPcc.f\nR  src/BDK/FFPMccT.f -> src/BDK/deprecated/FFPMccT.f\nR  src/BDK/FFPMccTtilde.f -> src/BDK/deprecated/FFPMccTtilde.f\nR  src/BDK/FFPMscT.f -> src/BDK/deprecated/FFPMscT.f\nR  src/BDK/fvs.f -> src/BDK/deprecated/fvs.f\nA  src/BDK/fvs.cpp\nA  src/BDK/fvs.hpp\nA  src/BDK/fvs_fi.F90\nM  src/Inc/FArray.hpp\nA  src/W2jet/Acalc.cpp\nA  src/W2jet/Acalc.hpp\nA  src/W2jet/Acalc_fi.F90\nM  src/W2jet/CMakeLists.txt\nA  src/W2jet/Ftexact.cpp\nA  src/W2jet/Ftexact_fi.F90\nA  src/W2jet/LRcalc.cpp\nA  src/W2jet/LRcalc.hpp\nA  src/W2jet/LRcalc_fi.F90\nA  src/W2jet/Ltfunctions.cpp\nA  src/W2jet/Ltfunctions_fi.F90\nA  src/W2jet/ZZbox1LL.cpp\nA  src/W2jet/ZZbox1LL_fi.F90\nA  src/W2jet/a6treeg.cpp\nA  src/W2jet/a6treeg.hpp\nA  src/W2jet/a6treeg_fi.F90\nA  src/W2jet/atree.cpp\nA  src/W2jet/atree_fi.F90\nR  src/W2jet/Acalc.f -> src/W2jet/deprecated/Acalc.f\nR  src/W2jet/Ftexact.f -> src/W2jet/deprecated/Ftexact.f\nR  src/W2jet/LRcalc.f -> src/W2jet/deprecated/LRcalc.f\nR  src/W2jet/Ltfunctions.f -> src/W2jet/deprecated/Ltfunctions.f\nR  src/W2jet/ZZbox1LL.f -> src/W2jet/deprecated/ZZbox1LL.f\nR  src/W2jet/a6treeg.f -> src/W2jet/deprecated/a6treeg.f\nR  src/W2jet/atree.f -> src/W2jet/deprecated/atree.f\nR  src/W2jet/fvf.f -> src/W2jet/deprecated/fvf.f\nR  src/W2jet/ggZZcapture.f -> src/W2jet/deprecated/ggZZcapture.f\nR  src/W2jet/subqcd.f -> src/W2jet/deprecated/subqcd.f\nR  src/W2jet/w2jetsq.f -> src/W2jet/deprecated/w2jetsq.f\nA  src/W2jet/fvf.cpp\nA  src/W2jet/fvf.hpp\nA  src/W2jet/fvf_fi.F90\nA  src/W2jet/ggZZcapture.cpp\nA  src/W2jet/ggZZcapture.hpp\nA  src/W2jet/ggZZcapture_fi.F90\nA  src/W2jet/subqcd.cpp\nA  src/W2jet/subqcd.hpp\nA  src/W2jet/subqcd_fi.F90\nA  src/W2jet/w2jetsq.cpp\nA  src/W2jet/w2jetsq_fi.F90\n?? Bin/lib/\n?? Bin/test\n?? doxygen_dep/\n?? install/\n"
+  },
+  {
+    "path": "software/pepper",
+    "head": "67f3acc8756fe6ec4fcc9ea360be08f0bb644711",
+    "branch": "43-add-kokkos-mcfm-interface",
+    "status": "## 43-add-kokkos-mcfm-interface...origin/43-add-kokkos-mcfm-interface\n"
+  },
+  {
+    "path": "software/qcdloop",
+    "head": "c8a05202351ca2e803158e99ae8a1c5c05f1437d",
+    "branch": "master",
+    "status": "## master...origin/master\n"
+  }
+]
