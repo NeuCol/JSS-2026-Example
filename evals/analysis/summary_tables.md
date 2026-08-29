@@ -4,7 +4,7 @@ USD figures mix two rate cards: Anthropic's for Opus 5 / Sonnet 5, OpenAI's gpt-
 
 All Anthropic runs think adaptively (on by default); no run here is a reasoning ON/OFF control. The gpt56sol gateway returns no reasoning text at all.
 
-Scope: the seven 08-27-2026 runs. All fork from one submodule commit and one 445-file roadmap, so per-file cost divides comparable work; earlier days did not and are out of scope.
+Scope: the eleven 08-27/08-28-2026 runs. All fork from one submodule commit and one 445-file roadmap, so per-file cost divides comparable work; earlier days did not and are out of scope.
 
 Files settled counts a unit whose .cpp landed but whose Fortran original was never retired; the coverage table's "not retired" column says how many of a run's units are in that state.
 
@@ -12,37 +12,49 @@ Files settled counts a unit whose .cpp landed but whose Fortran original was nev
 
 | Run | Cost (USD, proxy rates) | Cache-read share | Wall time | Tool calls / file | Files settled (git-exact) | Time / file | Cost / file |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| R1 — ccworkflow (opus-5 triage and dispatch) | $46.85 | 91% | 34 min | 149.5 | 2 | 17.1 min | $23.43 |
 | R2 — ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate) | $78.38 | 94% | 84 min | 75.9 | 13 | 6.4 min | $6.03 |
+| R8 — ccworkflow (opus-5 triage and dispatch) | $104.43 | 92% | 69 min | 47.7 | 15 | 4.6 min | $6.96 |
+| R9 — ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate, run2) | $73.67 | 94% | 89 min | 66.8 | 16 | 5.5 min | $4.60 |
 | R3 — csloop opus-5 | $15.69 | 91% | 43 min | 29.9 | 15 | 2.9 min | $1.05 |
 | R4 — csloop opus-5 (run2) | $13.32 | 91% | 42 min | 25.3 | 14 | 3.0 min | $0.95 |
+| R10 — csloop opus-5 (run3) | $12.87 | 92% | 38 min | 27.5 | 12 | 3.1 min | $1.07 |
 | R5 — csloop sonnet-5 (run2) | $5.83 | 91% | 35 min | 195.5 | 2 | 17.3 min | $2.91 |
+| R12 — csloop sonnet-5 (run3, incomplete — no agent_log archived) | $6.27 | 91% | 34 min | 222.0 | 2 | 17.2 min | $3.13 |
 | R6 — csloop oaic-gpt56sol (run4) | $6.38 | 79% | 22 min | 61.2 | 5 | 4.4 min | $1.28 |
 | R7 — csloop oaic-gpt56sol (run5) | $9.59 | 82% | 25 min | 38.1 | 10 | 2.5 min | $0.96 |
+| R11 — csloop oaic-gpt56sol (run6) | $10.06 | 83% | 38 min | 44.4 | 11 | 3.4 min | $0.91 |
 
 ## Token usage, cost, cache & wall time detail
 
 | Run | Input | Output | Cache write | Cache read | Cache-read share | Cost (USD, proxy rates) | Wall time |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| R1 — ccworkflow (opus-5 triage and dispatch) | 146,171 | 407,775 | 3,188,802 | 31,994,377 | 91% | $46.85 | 34 min |
 | R2 — ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate) | 599,895 | 1,404,654 | 7,613,231 | 125,565,613 | 94% | $78.38 | 84 min |
+| R8 — ccworkflow (opus-5 triage and dispatch) | 85,690 | 1,074,648 | 6,278,795 | 75,786,425 | 92% | $104.43 | 69 min |
+| R9 — ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate, run2) | 163,629 | 1,406,038 | 8,438,044 | 128,502,259 | 94% | $73.67 | 89 min |
 | R3 — csloop opus-5 | 221,504 | 161,008 | 816,646 | 10,763,686 | 91% | $15.69 | 43 min |
 | R4 — csloop opus-5 (run2) | 190,819 | 153,308 | 687,505 | 8,402,314 | 91% | $13.32 | 42 min |
+| R10 — csloop opus-5 (run3) | 166,146 | 141,257 | 644,517 | 8,840,717 | 92% | $12.87 | 38 min |
 | R5 — csloop sonnet-5 (run2) | 210,786 | 124,612 | 820,252 | 10,439,776 | 91% | $5.83 | 35 min |
+| R12 — csloop sonnet-5 (run3, incomplete — no agent_log archived) | 228,834 | 125,004 | 908,694 | 11,309,440 | 91% | $6.27 | 34 min |
 | R6 — csloop oaic-gpt56sol (run4) | 318 | 38,515 | 866,327 | 3,194,506 | 79% | $6.38 | 22 min |
 | R7 — csloop oaic-gpt56sol (run5) | 363 | 49,811 | 1,268,255 | 5,628,943 | 82% | $9.59 | 25 min |
+| R11 — csloop oaic-gpt56sol (run6) | 450 | 61,845 | 1,260,024 | 6,310,940 | 83% | $10.06 | 38 min |
 
 ## Cost by model
 
 | Run | claude-opus-5 | claude-sonnet-5 | oaic-gpt56sol |
 |---|---:|---:|---:|
-| R1 — ccworkflow (opus-5 triage and dispatch) | $46.85 | $0.00 | $0.00 |
 | R2 — ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate) | $31.64 | $46.74 | $0.00 |
+| R8 — ccworkflow (opus-5 triage and dispatch) | $104.43 | $0.00 | $0.00 |
+| R9 — ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate, run2) | $20.81 | $52.86 | $0.00 |
 | R3 — csloop opus-5 | $15.69 | $0.00 | $0.00 |
 | R4 — csloop opus-5 (run2) | $13.32 | $0.00 | $0.00 |
+| R10 — csloop opus-5 (run3) | $12.87 | $0.00 | $0.00 |
 | R5 — csloop sonnet-5 (run2) | $0.00 | $5.83 | $0.00 |
+| R12 — csloop sonnet-5 (run3, incomplete — no agent_log archived) | $0.00 | $6.27 | $0.00 |
 | R6 — csloop oaic-gpt56sol (run4) | $0.00 | $0.00 | $6.38 |
 | R7 — csloop oaic-gpt56sol (run5) | $0.00 | $0.00 | $9.59 |
+| R11 — csloop oaic-gpt56sol (run6) | $0.00 | $0.00 | $10.06 |
 
 ## Status, coverage claim & self-reported correctness
 
@@ -50,15 +62,19 @@ Files settled counts a unit whose .cpp landed but whose Fortran original was nev
 
 | Run | Status | Files (git) | of which not retired | Checklist | Open | Self-reported pass |
 |---|---|---:|---:|---:|---:|---|
-| R1 — ccworkflow (opus-5 triage and dispatch) | stopped-at-gate | 2 | 2 | 3 | 2 | 272/272 |
 | R2 — ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate) | stopped-at-gate | 13 | 2 | 15 | 0 | 272/272 |
+| R8 — ccworkflow (opus-5 triage and dispatch) | stopped-at-gate | 15 | — | 15 | 0 | 272/272 |
+| R9 — ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate, run2) | stopped-at-gate | 16 | — | 16 | 0 | 272/272 |
 | R3 — csloop opus-5 | stopped-at-gate | 15 | 2 | 9 | 0 | 272/272 |
 | R4 — csloop opus-5 (run2) | stopped-at-gate | 14 | 2 | 14 | 0 | 272/272 |
+| R10 — csloop opus-5 (run3) | stopped-at-gate | 12 | 2 | 14 | 0 | 272/272 |
 | R5 — csloop sonnet-5 (run2) | stopped-at-gate | 2 | 2 | 4 | 0 | 272/272 |
+| R12 — csloop sonnet-5 (run3, incomplete — no agent_log archived) | no agent_log archived | 2 | 2 | — | — | — |
 | R6 — csloop oaic-gpt56sol (run4) | stopped-at-gate | 5 | — | 5 | 0 | — |
 | R7 — csloop oaic-gpt56sol (run5) | stopped-at-gate | 10 | — | 10 | 0 | 272/272 |
+| R11 — csloop oaic-gpt56sol (run6) | stopped-at-gate | 11 | — | 11 | 0 | 272/272 |
 
-5 of 7 runs left at least one original in place. All of them shadow the same units (`Mods/pp_mod`, `Mods/ppwp2j_mod`), which points at those Fortran modules rather than at any one model.
+6 of 11 runs left at least one original in place. All of them shadow the same units (`Mods/pp_mod`, `Mods/ppwp2j_mod`), which points at those Fortran modules rather than at any one model.
 
 ## Which src/ module each run translated files from (git-exact)
 
@@ -66,13 +82,17 @@ Which top-level `software/mcfm/src/` directory each run's translated files came 
 
 | Run | BDK | Mods | W2jet | Total |
 |---|---:|---:|---:|---:|
-| R1 — ccworkflow (opus-5 triage and dispatch) |  | 2 |  | 2 |
 | R2 — ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate) | 5 | 3 | 5 | 13 |
+| R8 — ccworkflow (opus-5 triage and dispatch) | 5 |  | 10 | 15 |
+| R9 — ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate, run2) | 5 |  | 11 | 16 |
 | R3 — csloop opus-5 |  | 4 | 11 | 15 |
 | R4 — csloop opus-5 (run2) | 5 | 4 | 5 | 14 |
+| R10 — csloop opus-5 (run3) |  | 2 | 10 | 12 |
 | R5 — csloop sonnet-5 (run2) |  | 2 |  | 2 |
+| R12 — csloop sonnet-5 (run3, incomplete — no agent_log archived) |  | 2 |  | 2 |
 | R6 — csloop oaic-gpt56sol (run4) |  | 1 | 4 | 5 |
 | R7 — csloop oaic-gpt56sol (run5) |  | 5 | 5 | 10 |
+| R11 — csloop oaic-gpt56sol (run6) | 5 | 1 | 5 | 11 |
 
 ## File-level overlap between runs sharing a module (git-exact)
 
@@ -80,42 +100,75 @@ For every pair of runs that translated files from at least one of the same modul
 
 | Run A | Run B | Shared module(s) | Files (A) | Files (B) | Overlap | Overlap / min(A,B) |
 |---|---|---|---:|---:|---:|---:|
+| R8 — ccworkflow (opus-5 triage and dispatch) | R9 — ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate, run2) | BDK, W2jet | 15 | 16 | 15 | 100% |
 | R2 — ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate) | R4 — csloop opus-5 (run2) | BDK, Mods, W2jet | 13 | 14 | 11 | 85% |
+| R2 — ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate) | R8 — ccworkflow (opus-5 triage and dispatch) | BDK, W2jet | 13 | 15 | 10 | 77% |
+| R2 — ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate) | R9 — ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate, run2) | BDK, W2jet | 13 | 16 | 10 | 77% |
+| R8 — ccworkflow (opus-5 triage and dispatch) | R4 — csloop opus-5 (run2) | BDK, W2jet | 15 | 14 | 10 | 71% |
+| R9 — ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate, run2) | R4 — csloop opus-5 (run2) | BDK, W2jet | 16 | 14 | 10 | 71% |
+| R2 — ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate) | R11 — csloop oaic-gpt56sol (run6) | BDK, Mods, W2jet | 13 | 11 | 9 | 82% |
+| R8 — ccworkflow (opus-5 triage and dispatch) | R11 — csloop oaic-gpt56sol (run6) | BDK, W2jet | 15 | 11 | 9 | 82% |
+| R9 — ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate, run2) | R3 — csloop opus-5 | W2jet | 16 | 15 | 9 | 60% |
+| R9 — ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate, run2) | R11 — csloop oaic-gpt56sol (run6) | BDK, W2jet | 16 | 11 | 9 | 82% |
 | R3 — csloop opus-5 | R4 — csloop opus-5 (run2) | Mods, W2jet | 15 | 14 | 9 | 64% |
+| R3 — csloop opus-5 | R10 — csloop opus-5 (run3) | Mods, W2jet | 15 | 12 | 9 | 75% |
 | R3 — csloop opus-5 | R7 — csloop oaic-gpt56sol (run5) | Mods, W2jet | 15 | 10 | 9 | 90% |
+| R4 — csloop opus-5 (run2) | R11 — csloop oaic-gpt56sol (run6) | BDK, Mods, W2jet | 14 | 11 | 9 | 82% |
+| R8 — ccworkflow (opus-5 triage and dispatch) | R3 — csloop opus-5 | W2jet | 15 | 15 | 8 | 53% |
 | R2 — ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate) | R3 — csloop opus-5 | Mods, W2jet | 13 | 15 | 7 | 54% |
 | R2 — ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate) | R7 — csloop oaic-gpt56sol (run5) | Mods, W2jet | 13 | 10 | 7 | 70% |
+| R8 — ccworkflow (opus-5 triage and dispatch) | R10 — csloop opus-5 (run3) | W2jet | 15 | 12 | 7 | 58% |
+| R9 — ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate, run2) | R10 — csloop opus-5 (run3) | W2jet | 16 | 12 | 7 | 58% |
 | R4 — csloop opus-5 (run2) | R7 — csloop oaic-gpt56sol (run5) | Mods, W2jet | 14 | 10 | 7 | 70% |
+| R2 — ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate) | R10 — csloop opus-5 (run3) | Mods, W2jet | 13 | 12 | 6 | 50% |
+| R3 — csloop opus-5 | R11 — csloop oaic-gpt56sol (run6) | Mods, W2jet | 15 | 11 | 6 | 55% |
+| R4 — csloop opus-5 (run2) | R10 — csloop opus-5 (run3) | Mods, W2jet | 14 | 12 | 6 | 50% |
+| R10 — csloop opus-5 (run3) | R7 — csloop oaic-gpt56sol (run5) | Mods, W2jet | 12 | 10 | 6 | 60% |
+| R7 — csloop oaic-gpt56sol (run5) | R11 — csloop oaic-gpt56sol (run6) | Mods, W2jet | 10 | 11 | 6 | 60% |
 | R3 — csloop opus-5 | R6 — csloop oaic-gpt56sol (run4) | Mods, W2jet | 15 | 5 | 5 | 100% |
 | R4 — csloop opus-5 (run2) | R6 — csloop oaic-gpt56sol (run4) | Mods, W2jet | 14 | 5 | 5 | 100% |
+| R8 — ccworkflow (opus-5 triage and dispatch) | R6 — csloop oaic-gpt56sol (run4) | W2jet | 15 | 5 | 4 | 80% |
+| R8 — ccworkflow (opus-5 triage and dispatch) | R7 — csloop oaic-gpt56sol (run5) | W2jet | 15 | 10 | 4 | 40% |
+| R9 — ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate, run2) | R6 — csloop oaic-gpt56sol (run4) | W2jet | 16 | 5 | 4 | 80% |
+| R9 — ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate, run2) | R7 — csloop oaic-gpt56sol (run5) | W2jet | 16 | 10 | 4 | 40% |
+| R10 — csloop opus-5 (run3) | R11 — csloop oaic-gpt56sol (run6) | Mods, W2jet | 12 | 11 | 4 | 36% |
 | R6 — csloop oaic-gpt56sol (run4) | R7 — csloop oaic-gpt56sol (run5) | Mods, W2jet | 5 | 10 | 4 | 80% |
+| R6 — csloop oaic-gpt56sol (run4) | R11 — csloop oaic-gpt56sol (run6) | Mods, W2jet | 5 | 11 | 4 | 80% |
 | R2 — ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate) | R6 — csloop oaic-gpt56sol (run4) | Mods, W2jet | 13 | 5 | 3 | 60% |
-| R1 — ccworkflow (opus-5 triage and dispatch) | R2 — ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate) | Mods | 2 | 13 | 2 | 100% |
-| R1 — ccworkflow (opus-5 triage and dispatch) | R3 — csloop opus-5 | Mods | 2 | 15 | 2 | 100% |
-| R1 — ccworkflow (opus-5 triage and dispatch) | R4 — csloop opus-5 (run2) | Mods | 2 | 14 | 2 | 100% |
-| R1 — ccworkflow (opus-5 triage and dispatch) | R5 — csloop sonnet-5 (run2) | Mods | 2 | 2 | 2 | 100% |
-| R1 — ccworkflow (opus-5 triage and dispatch) | R7 — csloop oaic-gpt56sol (run5) | Mods | 2 | 10 | 2 | 100% |
+| R10 — csloop opus-5 (run3) | R6 — csloop oaic-gpt56sol (run4) | Mods, W2jet | 12 | 5 | 3 | 60% |
 | R2 — ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate) | R5 — csloop sonnet-5 (run2) | Mods | 13 | 2 | 2 | 100% |
+| R2 — ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate) | R12 — csloop sonnet-5 (run3, incomplete — no agent_log archived) | Mods | 13 | 2 | 2 | 100% |
 | R3 — csloop opus-5 | R5 — csloop sonnet-5 (run2) | Mods | 15 | 2 | 2 | 100% |
+| R3 — csloop opus-5 | R12 — csloop sonnet-5 (run3, incomplete — no agent_log archived) | Mods | 15 | 2 | 2 | 100% |
 | R4 — csloop opus-5 (run2) | R5 — csloop sonnet-5 (run2) | Mods | 14 | 2 | 2 | 100% |
+| R4 — csloop opus-5 (run2) | R12 — csloop sonnet-5 (run3, incomplete — no agent_log archived) | Mods | 14 | 2 | 2 | 100% |
+| R10 — csloop opus-5 (run3) | R5 — csloop sonnet-5 (run2) | Mods | 12 | 2 | 2 | 100% |
+| R10 — csloop opus-5 (run3) | R12 — csloop sonnet-5 (run3, incomplete — no agent_log archived) | Mods | 12 | 2 | 2 | 100% |
+| R5 — csloop sonnet-5 (run2) | R12 — csloop sonnet-5 (run3, incomplete — no agent_log archived) | Mods | 2 | 2 | 2 | 100% |
 | R5 — csloop sonnet-5 (run2) | R7 — csloop oaic-gpt56sol (run5) | Mods | 2 | 10 | 2 | 100% |
-| R1 — ccworkflow (opus-5 triage and dispatch) | R6 — csloop oaic-gpt56sol (run4) | Mods | 2 | 5 | 0 | 0% |
+| R12 — csloop sonnet-5 (run3, incomplete — no agent_log archived) | R7 — csloop oaic-gpt56sol (run5) | Mods | 2 | 10 | 2 | 100% |
 | R5 — csloop sonnet-5 (run2) | R6 — csloop oaic-gpt56sol (run4) | Mods | 2 | 5 | 0 | 0% |
+| R5 — csloop sonnet-5 (run2) | R11 — csloop oaic-gpt56sol (run6) | Mods | 2 | 11 | 0 | 0% |
+| R12 — csloop sonnet-5 (run3, incomplete — no agent_log archived) | R6 — csloop oaic-gpt56sol (run4) | Mods | 2 | 5 | 0 | 0% |
+| R12 — csloop sonnet-5 (run3, incomplete — no agent_log archived) | R11 — csloop oaic-gpt56sol (run6) | Mods | 2 | 11 | 0 | 0% |
 
 ## How many runs settled each file (git-exact)
 
-Every distinct file any run translated (21 of them), bucketed by how many of the 7 measured runs translated it. The module table above shows whether runs landed in the same *area*; this shows whether they landed on the same *files*, which is the stricter question.
+Every distinct file any run translated (25 of them), bucketed by how many of the 11 measured runs translated it. The module table above shows whether runs landed in the same *area*; this shows whether they landed on the same *files*, which is the stricter question.
 
-**No file was settled by all 7 runs.** The intersection is empty because the smallest runs settled only a handful of files each, not because the runs worked on unrelated things: the top bucket is 2 file(s) settled by 6 of 7 runs, and the module table above shows where the rest of the disagreement sits. Read the rows below as levels of partial agreement.
+**No file was settled by all 11 runs.** The intersection is empty because the smallest runs settled only a handful of files each, not because the runs worked on unrelated things: the top bucket is 2 file(s) settled by 9 of 11 runs, and the module table above shows where the rest of the disagreement sits. Read the rows below as levels of partial agreement.
 
 | Runs settling it | Files | Share | Cumulative | Which files |
 |---:|---:|---:|---:|---|
-| 6 | 2 | 10% | 10% | `Mods/pp_mod`, `Mods/ppwp2j_mod` |
-| 5 | 3 | 14% | 24% | `W2jet/a6treeg`, `W2jet/atree`, `W2jet/ggZZcapture` |
-| 4 | 1 | 5% | 29% | `Mods/types_mod` |
-| 3 | 4 | 19% | 48% | `Mods/mod_qcdloop_c`, `W2jet/ZZbox1LL`, `W2jet/fvf`, `W2jet/subqcd` |
-| 2 | 7 | 33% | 81% | `BDK/FFMPcc`, `BDK/FFPMccT`, `BDK/FFPMccTtilde`, `BDK/FFPMscT`, `BDK/fvs`, `Mods/Modules_Interface`, `W2jet/a6routine` |
-| 1 | 4 | 19% | 100% | `W2jet/A6texact`, `W2jet/Acalc`, `W2jet/Ftexact`, `W2jet/w2jetsq` |
+| 9 | 2 | 8% | 8% | `W2jet/a6treeg`, `W2jet/atree` |
+| 8 | 1 | 4% | 12% | `W2jet/ggZZcapture` |
+| 7 | 3 | 12% | 24% | `Mods/pp_mod`, `Mods/ppwp2j_mod`, `W2jet/ZZbox1LL` |
+| 6 | 2 | 8% | 32% | `W2jet/fvf`, `W2jet/subqcd` |
+| 5 | 6 | 24% | 56% | `BDK/FFMPcc`, `BDK/FFPMccT`, `BDK/FFPMccTtilde`, `BDK/FFPMscT`, `BDK/fvs`, `Mods/types_mod` |
+| 4 | 2 | 8% | 64% | `W2jet/Acalc`, `W2jet/a6routine` |
+| 3 | 3 | 12% | 76% | `Mods/mod_qcdloop_c`, `W2jet/Ftexact`, `W2jet/LRcalc` |
+| 2 | 3 | 12% | 88% | `Mods/Modules_Interface`, `W2jet/Ltfunctions`, `W2jet/w2jetsq` |
+| 1 | 3 | 12% | 100% | `W2jet/A6texact`, `W2jet/fpp`, `W2jet/vv` |
 
 ## Which files each *model* chose (git-exact)
 
@@ -125,16 +178,46 @@ Runs grouped by the model that made the file-selection decision, not by harness.
 
 | Decision model | Runs | Harness | Modules entered | Files (union) | Core | Core files |
 |---|---|---|---|---:|---:|---|
-| opus-5 | R1, R3, R4 | ccworkflow, csloop | W2jet (11), BDK (5), Mods (4) | 20 | 2 | `Mods/pp_mod`, `Mods/ppwp2j_mod` |
-| sonnet-5 | R2, R5 | ccworkflow, csloop | BDK (5), W2jet (5), Mods (3) | 13 | 2 | `Mods/pp_mod`, `Mods/ppwp2j_mod` |
-| gpt56sol | R6, R7 | csloop | W2jet (6), Mods (5) | 11 | 4 | `Mods/types_mod`, `W2jet/a6treeg`, `W2jet/atree`, `W2jet/ggZZcapture` |
+| opus-5 | R8, R3, R4, R10 | ccworkflow, csloop | W2jet (15), BDK (5), Mods (4) | 24 | 4 | `W2jet/a6treeg`, `W2jet/atree`, `W2jet/fvf`, `W2jet/subqcd` |
+| sonnet-5 | R2, R9, R5, R12 | ccworkflow, csloop | W2jet (11), BDK (5), Mods (3) | 19 | 0 | — |
+| gpt56sol | R6, R7, R11 | csloop | W2jet (6), BDK (5), Mods (5) | 16 | 4 | `Mods/types_mod`, `W2jet/a6treeg`, `W2jet/atree`, `W2jet/ggZZcapture` |
 
 ## How many *models* settled each file (git-exact)
 
-The stricter companion to the run-level table above. A file settled by four runs of one model is that model reproducing itself; a file settled by three models is cross-model agreement. The run-level counts cannot separate those, and with opus-5 deciding three of the seven runs they will read the first as though it were the second.
+The stricter companion to the run-level table above. A file settled by several runs of one model is that model reproducing itself; a file settled by several distinct models is cross-model agreement. The run-level counts cannot separate those, and with one model deciding more runs than the others they will read the first as though it were the second.
 
 | Models settling it | Files | Share | Which files |
 |---:|---:|---:|---|
-| 3 of 3 | 6 | 29% | `Mods/pp_mod`, `Mods/ppwp2j_mod`, `W2jet/ZZbox1LL`, `W2jet/a6treeg`, `W2jet/atree`, `W2jet/ggZZcapture` |
-| 2 of 3 | 11 | 52% | — |
-| 1 of 3 | 4 | 19% | `W2jet/A6texact`, `W2jet/Acalc`, `W2jet/Ftexact`, `W2jet/w2jetsq` |
+| 3 of 3 | 12 | 48% | — |
+| 2 of 3 | 10 | 40% | — |
+| 1 of 3 | 3 | 12% | `W2jet/A6texact`, `W2jet/fpp`, `W2jet/vv` |
+
+## Module entry order, tooling & doxygen position at fork (first tool-touch)
+
+Per run, the order it first touched a file it actually went on to settle in each module — not the order it merely explored, so a candidate it read and rejected does not date a module's entry. `Elapsed` is minutes since the run's first tool call of any kind. `Ready leaves / settled` counts, of the units the run settled in that module, how many were ready to rewrite (deps=0, blind=0) at the shared fork point versus how many it entered while something else there was still untranslated. `Rationale` is the model's own text immediately before the first such tool call, truncated; empty for a tool call with no preceding assistant text.
+
+| Run | # | Module | Elapsed | Tool | First unit touched | Ready leaves / settled | Mean fan-in | Rationale |
+|---|---:|---|---:|---|---|---:|---:|---|
+| R2 — ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate) | 1 | Mods | 0.7 min | StructuredOutput | `Mods/pp_mod` | 3/3 | 0.7 | — |
+| R2 — ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate) | 2 | BDK | 4.1 min | Bash | `BDK/fvs` | 5/5 | 1.2 | — |
+| R2 — ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate) | 3 | W2jet | 26.0 min | StructuredOutput | `W2jet/atree` | 5/5 | 3.6 | — |
+| R8 — ccworkflow (opus-5 triage and dispatch) | 1 | W2jet | 0.8 min | Bash | `W2jet/atree` | 10/10 | 2.4 | — |
+| R8 — ccworkflow (opus-5 triage and dispatch) | 2 | BDK | 23.7 min | StructuredOutput | `BDK/fvs` | 5/5 | 1.2 | — |
+| R9 — ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate, run2) | 1 | W2jet | 1.4 min | StructuredOutput | `W2jet/atree` | 10/11 | 2.4 | — |
+| R9 — ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate, run2) | 2 | BDK | 24.1 min | StructuredOutput | `BDK/fvs` | 5/5 | 1.2 | — |
+| R3 — csloop opus-5 | 1 | Mods | 0.7 min | read | `Mods/types_mod` | 4/4 | 2.5 | — |
+| R3 — csloop opus-5 | 2 | W2jet | 16.6 min | read | `W2jet/atree` | 9/11 | 2.4 | — |
+| R4 — csloop opus-5 (run2) | 1 | Mods | 4.1 min | bash | `Mods/pp_mod` | 4/4 | 2.5 | — |
+| R4 — csloop opus-5 (run2) | 2 | W2jet | 20.7 min | bash | `W2jet/atree` | 5/5 | 3.6 | — |
+| R4 — csloop opus-5 (run2) | 3 | BDK | 28.2 min | read | `BDK/fvs` | 5/5 | 1.2 | — |
+| R10 — csloop opus-5 (run3) | 1 | Mods | 1.3 min | bash | `Mods/pp_mod` | 2/2 | 1.0 | — |
+| R10 — csloop opus-5 (run3) | 2 | W2jet | 19.0 min | bash | `W2jet/atree` | 9/10 | 2.0 | — |
+| R5 — csloop sonnet-5 (run2) | 1 | Mods | 3.3 min | read | `Mods/pp_mod` | 2/2 | 1.0 | — |
+| R12 — csloop sonnet-5 (run3, incomplete — no agent_log archived) | 1 | Mods | 5.4 min | read | `Mods/pp_mod` | 2/2 | 1.0 | — |
+| R6 — csloop oaic-gpt56sol (run4) | 1 | Mods | 0.4 min | bash | `Mods/types_mod` | 1/1 | 8.0 | — |
+| R6 — csloop oaic-gpt56sol (run4) | 2 | W2jet | 5.5 min | bash | `W2jet/atree` | 4/4 | 4.0 | The W2jet translation builds successfully. I am now recording the passing suite and the remaining required coverage verification so the o... |
+| R7 — csloop oaic-gpt56sol (run5) | 1 | Mods | 0.7 min | bash | `Mods/pp_mod` | 5/5 | 2.0 | — |
+| R7 — csloop oaic-gpt56sol (run5) | 2 | W2jet | 12.6 min | bash | `W2jet/ggZZcapture` | 4/5 | 3.6 | — |
+| R11 — csloop oaic-gpt56sol (run6) | 1 | Mods | 0.6 min | bash | `Mods/types_mod` | 1/1 | 8.0 | — |
+| R11 — csloop oaic-gpt56sol (run6) | 2 | W2jet | 4.6 min | bash | `W2jet/ggZZcapture` | 4/5 | 3.6 | — |
+| R11 — csloop oaic-gpt56sol (run6) | 3 | BDK | 22.5 min | bash | `BDK/FFMPcc` | 5/5 | 1.2 | — |

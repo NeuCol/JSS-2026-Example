@@ -1,28 +1,37 @@
 #!/usr/bin/env python3.10
-"""Generate the paper figures + summary tables for the 08-27-2026 evaluation of
-the mcfm-translate transformation.
+"""Generate the paper figures + summary tables for the 08-27/08-28-2026
+evaluation of the mcfm-translate transformation.
 
-Scope is one day on purpose, and it is what makes the cost comparison mean
-anything. All seven branches in RUNS below fork from the same submodule commit
+Scope is two days on purpose, and it is what makes the cost comparison mean
+anything. All eleven branches in RUNS below fork from the same submodule commit
 (git merge-base against git_file_counts.BASE_REF is that commit exactly for
 every one of them), and their fork-point roadmaps reconstruct to the same
 445-file candidate set, agreeing to within three rows run-to-run. So cost, wall
 time and tokens divide by a files-settled number drawn from one shared pool of
 work, which is the premise a cost-per-file number needs and does not survive
-being computed across days. The
+being computed across days that forked from different roadmap states. The
 earlier corpus (07-24/07-25-2026 and 08-11-2026 through 08-26-2026) is still on
 disk under experiments/ and still parses where its layout allows, but it is out
-of scope here: those days forked from different roadmap states, so a
-cost-per-file computed across them compares unlike work and the comparison the
-paper makes would not hold.
+of scope here for exactly that reason.
 
-Runs covered: two ccworkflow arms (opus-5 triage/dispatch; sonnet-5
-triage/dispatch with opus-5 integrate) against five csloop arms (opus-5 x2,
-sonnet-5, oaic-gpt56sol x2). Nothing is excluded on data-quality grounds — all
-seven archives carry a complete loop/metadata or workflow-wf_* record, an
-agent_log.md, and an archival git branch in this clone. The two gpt56sol runs
-log no model reasoning text, which is a property of the OpenAI-compatible
-gateway rather than of the run, and is true of every gpt56 run in the corpus.
+Runs covered: three ccworkflow arms (opus-5 triage/dispatch x2, sonnet-5
+triage/dispatch with opus-5 integrate x2 -- one of each is 08-27, one is
+08-28) against eight csloop arms (opus-5 x3, sonnet-5 x2, oaic-gpt56sol x3).
+08-27-2026/ccworkflow-opus-5 ("R1" in the original single-day corpus) was
+dropped from this set: at 2 files settled it was a clear outlier for its own
+config, and 08-28-2026/ccworkflow-opus-5 -- same triage/dispatch model, same
+fork point -- settled 15, which is what motivated pulling in the whole
+08-28-2026 day rather than trying to patch the one run. Every other archive
+carries a complete loop/metadata or workflow-wf_* record, an agent_log.md, and
+an archival git branch in this clone; the one exception is
+08-28-2026/codescribe-sonnet-5-run3, which ran five loop iterations but never
+had an agent_log.md archived (`parse_coverage.coverage_for_run` reports it as
+"no agent_log archived", the same status the corpus already has a code path
+for). It is kept in the corpus rather than dropped, since its git-exact count
+is still real ground truth (2 files, both shadowed -- see SHADOW_NOTE), but it
+carries no self-reported checklist or pass rate. The two gpt56sol runs log no
+model reasoning text, which is a property of the OpenAI-compatible gateway
+rather than of the run, and is true of every gpt56 run in the corpus.
 
 "Files settled" throughout is the git-exact count from git_file_counts.py (the
 software/mcfm submodule branch for each run), not the agent's own in-loop
@@ -35,9 +44,11 @@ shapes of translation, and the difference is reported rather than buried:
     module now has two live implementations. The work was done and paid for in
     tokens, so it counts toward files settled and the run's cost-per-file; but
     the unit is not finished, and the `not retired` column in the coverage
-    table is where that shows up. Five of the seven runs shadow exactly the
-    same two units (Mods/pp_mod, Mods/ppwp2j_mod), so this is a property of how
-    that pair of Fortran modules is written, not a per-model failure.
+    table is where that shows up. Most runs that shadow anything shadow exactly
+    the same two units (Mods/pp_mod, Mods/ppwp2j_mod) — see summary_tables.md
+    for the exact count, which is generated, not hand-maintained here — so this
+    is a property of how that pair of Fortran modules is written, not a
+    per-model failure.
 A run whose archival branch never reached this clone would have no git-exact
 count at all — None, not zero, drawn as an explicit "n/a (no branch)". No run
 in the current scope is in that position.
@@ -83,6 +94,7 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
+from matplotlib.lines import Line2D
 
 sys.path.insert(0, str(Path(__file__).parent))
 
@@ -94,6 +106,7 @@ from git_file_counts import (translated_file_count, translated_file_units, modul
                              unit_breakdown)
 from parse_roadmap import (fork_point_roadmap, ready_pool, post_run_ready,
                            roadmap_is_post_run)
+from parse_decision_timeline import module_entry_order
 
 REPO_ROOT = Path(__file__).parent.parent
 EXPERIMENTS = REPO_ROOT / "experiments"
@@ -166,7 +179,7 @@ plt.rcParams.update(
 )
 
 # ---------------------------------------------------------------------------
-# Run identity / labeling — the 08-27-2026 corpus
+# Run identity / labeling — the 08-27/08-28-2026 corpus
 #
 # One ordered registry of (day, run_dir, code, label); KEYS, RUN_LABELS,
 # RUN_CODES and the figure captions are all derived from it, so adding a run is
@@ -177,26 +190,36 @@ plt.rcParams.update(
 # keeping their numbering would have left the axis starting at R13 to protect
 # references to runs the paper no longer makes. Within this corpus the codes are
 # stable identifiers quoted by the paper text: APPEND new runs, never renumber.
+# R1 (08-27-2026/ccworkflow-opus-5) was subsequently REMOVED rather than
+# renumbered — see the module docstring — which is why the codes below start
+# at R2 and the 08-28-2026 additions pick up at R8 rather than filling the gap.
 #
 # Ordered ccworkflow first, then csloop, and within each harness by model
 # family rather than by wall-clock start, so neighbouring bars compare like
-# with like.
+# with like; a same-config replicate sits immediately next to the run(s) it
+# replicates regardless of which day it was archived on.
 #
 # The ccworkflow labels name the TRIAGE model, because triage is what picks the
-# files (see DECIDING_PHASE below). R2 also runs opus-5 as its integrate model,
-# which is where most of its cost lands but none of its file choices; R1 runs
-# opus-5 for every phase.
+# files (see DECIDING_PHASE below). R2/R9 also run opus-5 as their integrate
+# model, which is where most of their cost lands but none of their file
+# choices; R8 runs opus-5 for every phase.
 # ---------------------------------------------------------------------------
 RUNS = [
-    ("08-27-2026", "ccworkflow-opus-5", "R1",
-     "ccworkflow (opus-5 triage and dispatch)"),
     ("08-27-2026", "ccworkflow-sonnet-5-opus-5-integrate-run3", "R2",
      "ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate)"),
+    ("08-28-2026", "ccworkflow-opus-5", "R8",
+     "ccworkflow (opus-5 triage and dispatch)"),
+    ("08-28-2026", "ccworkflow-sonnet-5-opus-5-integrate-run4", "R9",
+     "ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate, run2)"),
     ("08-27-2026", "codescribe-opus-5", "R3", "csloop opus-5"),
     ("08-27-2026", "codescribe-opus-5-run2", "R4", "csloop opus-5 (run2)"),
+    ("08-28-2026", "codescribe-opus-5", "R10", "csloop opus-5 (run3)"),
     ("08-27-2026", "codescribe-sonnet-5-run2", "R5", "csloop sonnet-5 (run2)"),
+    ("08-28-2026", "codescribe-sonnet-5-run3", "R12",
+     "csloop sonnet-5 (run3, incomplete — no agent_log archived)"),
     ("08-27-2026", "codescribe-oaic-gpt56sol-run4", "R6", "csloop oaic-gpt56sol (run4)"),
     ("08-27-2026", "codescribe-oaic-gpt56sol-run5", "R7", "csloop oaic-gpt56sol (run5)"),
+    ("08-28-2026", "codescribe-oaic-gpt56sol-run6", "R11", "csloop oaic-gpt56sol (run6)"),
 ]
 
 KEYS = [(day, run_name) for day, run_name, _, _ in RUNS]
@@ -234,8 +257,9 @@ REASONING_NOTE = (
     "control. The gpt56sol gateway returns no reasoning text at all."
 )
 SCOPE_NOTE = (
-    "Scope: the seven 08-27-2026 runs. All fork from one submodule commit and one 445-file "
-    "roadmap, so per-file cost divides comparable work; earlier days did not and are out of scope."
+    "Scope: the eleven 08-27/08-28-2026 runs. All fork from one submodule commit and one "
+    "445-file roadmap, so per-file cost divides comparable work; earlier days did not and are "
+    "out of scope."
 )
 SHADOW_NOTE = (
     "Files settled counts a unit whose .cpp landed but whose Fortran original was never retired; "
@@ -266,6 +290,19 @@ MODEL_COLOR = {
     "oaic-gpt56terra": CAT["yellow"],
 }
 UNPRICED_COLOR = MUTED
+
+# Categorical, fixed order (never assigned by a module's rank in a given run) —
+# every top-level src/ module the corpus has ever entered gets a slot here, so
+# a run entering a new one needs a one-line addition rather than a fallback
+# hue. Assigned in the module-timeline figure and its .tex twin.
+MODULE_COLOR = {
+    "BDK": CAT["blue"],
+    "Mods": CAT["orange"],
+    "W2jet": CAT["aqua"],
+    "Z2jet": CAT["magenta"],
+    "W1jet": CAT["green"],
+    "Z": CAT["yellow"],
+}
 
 
 def normalize_model(model):
@@ -315,7 +352,7 @@ def capped_limit(values, headroom=1.45, clip_ratio=2.0):
     """Axis maximum for a bar panel, plus the values it deliberately clips.
 
     A run that settles very few files has per-file metrics several times the
-    next largest value (in this corpus R1 and R5, at two units apiece). Scaling
+    next largest value (in this corpus R5 and R12, at two units apiece). Scaling
     those panels to it would flatten the bars the panel exists to compare, so
     when the largest value is more than `clip_ratio` times the second largest,
     the axis is scaled to the second largest instead and the outlier is drawn
@@ -938,7 +975,7 @@ def make_combined_figure(runs, coverage, files_settled, wall_times, tool_calls_p
     draw_correctness_panel(fig.add_subplot(gs[2, 1]), coverage, letter="(f)")
 
     fig.suptitle(
-        "08-27-2026: ccworkflow vs. csloop on mcfm-translate — cost, cache, tool calls & coverage",
+        "08-27/08-28-2026: ccworkflow vs. csloop on mcfm-translate — cost, cache, tool calls & coverage",
         fontsize=SUPTITLE_SIZE + 2,
         y=0.985,
     )
@@ -1185,6 +1222,154 @@ def make_decision_figure(translated_units, decision_models):
     print(f"wrote {out}")
 
 
+# ---------------------------------------------------------------------------
+# Module-entry timeline
+#
+# fig6/fig_decision answer "what did the model choose". This answers "when,
+# with what tool, and having entered a module how ready was it" -- order and
+# timing, which the per-run totals elsewhere in this file cannot show.
+#
+# A run's transcript never tags "this tool call is about module X" as
+# structured metadata (see parse_decision_timeline's module docstring for why
+# both harnesses have to be pattern-matched instead), so the WHEN/WHAT here is
+# necessarily best-effort: it is the first tool call in the run's own
+# transcript that names a file inside a module the run went on to settle
+# something in. The doxygen position, in contrast, is exact -- it is looked up
+# against the same fork_point_roadmap map fig6 already uses, for the units
+# git_file_counts confirms the run actually settled there.
+# ---------------------------------------------------------------------------
+def load_module_timelines(translated_units, attrs):
+    """{run: [{"module", "unit_hint", "elapsed_min", "tool", "rationale",
+               "n_settled", "n_ready_leaf", "fanin_mean"}, ...]}, sorted by
+    elapsed_min. Empty list for a run that settled nothing, or whose
+    transcript this parser could not establish a start time for.
+    """
+    import statistics
+
+    out = {}
+    for key in KEYS:
+        day, run_name = key
+        units = translated_units[key] or []
+        if not units:
+            out[key] = []
+            continue
+        entries = module_entry_order(EXPERIMENTS, day, run_name, units)
+        for e in entries:
+            mod_units = [u for u in units if module_of(u) == e["module"]]
+            known = [attrs[u] for u in mod_units if attrs.get(u)]
+            e["n_settled"] = len(mod_units)
+            e["n_ready_leaf"] = sum(1 for a in known if a["deps"] == 0 and a["blind"] == 0)
+            e["fanin_mean"] = statistics.mean(a["fanin"] for a in known) if known else None
+        out[key] = entries
+    return out
+
+
+def _timeline_marker_size(fanin_mean):
+    """Scatter `s` (an AREA in points^2) from mean fan-in, sqrt-scaled so the
+    drawn area — not the radius — tracks the value. A module whose settled
+    units carry no recovered doxygen attributes at all draws at the floor size
+    rather than vanishing."""
+    return 34 if fanin_mean is None else 34 + 46 * (fanin_mean ** 0.5)
+
+
+def draw_module_timeline_panel(ax, timelines, letter=None):
+    modules_seen = sorted({e["module"] for v in timelines.values() for e in v})
+    all_x = [e["elapsed_min"] for v in timelines.values() for e in v]
+    xmax = (max(all_x) if all_x else 1.0) * 1.14
+
+    ax.grid(False)
+    ax.xaxis.grid(True)
+    ax.set_axisbelow(True)
+
+    for row, k in enumerate(KEYS):
+        y = len(KEYS) - 1 - row
+        entries = timelines[k]
+        if not entries:
+            ax.text(xmax * 0.98, y, "n/a", va="center", ha="right",
+                     fontsize=ANNOT_SIZE, color=MUTED)
+            continue
+        xs = [e["elapsed_min"] for e in entries]
+        ax.plot(xs, [y] * len(xs), color=AXIS, lw=0.8, zorder=1)
+        for e in entries:
+            color = MODULE_COLOR.get(e["module"], MUTED)
+            size = _timeline_marker_size(e["fanin_mean"])
+            all_ready = e["n_settled"] > 0 and e["n_ready_leaf"] == e["n_settled"]
+            if all_ready:
+                ax.scatter([e["elapsed_min"]], [y], s=size, color=color, zorder=3,
+                           edgecolor=SURFACE, linewidth=0.8)
+            else:
+                ax.scatter([e["elapsed_min"]], [y], s=size, facecolor=SURFACE, zorder=3,
+                           edgecolor=color, linewidth=1.6)
+
+    ax.set_yticks(range(len(KEYS)))
+    ax.set_yticklabels([RUN_CODES[k] for k in reversed(KEYS)])
+    ax.set_ylim(-0.7, len(KEYS) - 0.3)
+    ax.set_xlim(0, xmax)
+    ax.set_xlabel("Elapsed minutes since run start")
+    ax.set_title(_title("Module entry order over time", letter))
+
+    # Every row has a marker within the first few minutes (Mods/W2jet both tend
+    # to be entered early — see the figure), so the top-left corner a legend
+    # would normally take is the densest part of the plot, not the emptiest.
+    # Both legends go outside the axes instead: the module key above (in the
+    # margin `tight_layout` already reserves for the axis title), the style
+    # key below the x-axis label, mirroring how the harness legend sits under
+    # the axis in the pgfplots panels elsewhere in this file.
+    module_handles = [mpatches.Patch(color=MODULE_COLOR.get(m, MUTED), label=m) for m in modules_seen]
+    style_handles = [
+        Line2D([0], [0], marker="o", linestyle="none", markerfacecolor=INK_SECONDARY,
+               markeredgecolor=SURFACE, markersize=7,
+               label="all settled units there were ready leaves at fork"),
+        Line2D([0], [0], marker="o", linestyle="none", markerfacecolor=SURFACE,
+               markeredgecolor=INK_SECONDARY, markersize=7,
+               label="≥ 1 settled unit was still blocked at fork"),
+    ]
+    leg1 = ax.legend(handles=module_handles, title="Module", loc="lower center",
+                      bbox_to_anchor=(0.24, 1.0), ncol=len(module_handles),
+                      frameon=False, fontsize=LEGEND_SIZE)
+    ax.add_artist(leg1)
+    ax.legend(handles=style_handles, loc="lower center", bbox_to_anchor=(0.78, 1.0),
+              ncol=1, frameon=False, fontsize=LEGEND_SIZE * 0.92)
+
+
+def _wrap_caption_text(text, fig_width_in, fontsize=None):
+    """Manual line breaks for one long caption sentence — save_fig draws each
+    caption_lines entry as one unwrapped fig.text call, so a sentence this
+    long has to be pre-wrapped the same way run_code_caption wraps the
+    code->configuration mapping."""
+    import textwrap
+
+    fontsize = fontsize or CAPTION_SIZE
+    chars = max(40, int(fig_width_in * 72 / (0.52 * fontsize)))
+    return textwrap.wrap(text, chars)
+
+
+def make_module_timeline_figure(timelines):
+    fig, ax = plt.subplots(figsize=(9.6, 0.42 * len(KEYS) + 2.6))
+    fig.suptitle("Module entry order, timing & fork-point doxygen position", fontsize=SUPTITLE_SIZE)
+    draw_module_timeline_panel(ax, timelines)
+    ax.set_title("")  # redundant with the suptitle on a single-panel figure; the
+                       # space it would occupy is where the two legends sit instead
+    caption = (
+        run_code_caption(9.6)
+        + _wrap_caption_text(
+            "Marker = first tool call in the run's own transcript that names a file inside that module "
+            "(Bash command text for ccworkflow -- every ccworkflow tool call observed here is Bash, there "
+            "is no structured file-path tool -- or a read/write/edit path argument for csloop).", 9.6)
+        + _wrap_caption_text(
+            "Marker area is proportional to the mean doxygen fan-in of the units that module's run actually "
+            "settled (git-exact, not the file that made first contact); filled vs. hollow marks whether "
+            "every settled unit there was a ready leaf (deps=0, blind=0) at the shared fork point, or the "
+            "run entered while at least one of them still had an untranslated callee.", 9.6)
+        + [
+            "n/a: the run settled no files in any module, or its transcript could not be parsed for a start time.",
+            SCOPE_NOTE,
+        ]
+    )
+    fig.tight_layout(rect=_caption_rect(len(caption)))
+    save_fig(fig, "fig7_module_timeline.png", caption)
+
+
 def _row_label(k):
     """Run code + configuration, so a table row can be matched to a figure bar."""
     return f"{RUN_CODES[k]} — {RUN_LABELS[k]}".replace(chr(10), " ")
@@ -1196,7 +1381,7 @@ def _files_cell(files):
 
 
 def write_summary_tables(runs, coverage, files_settled, translated_units, wall_times, tool_calls_per_file,
-                         decision_models, shadowed_units):
+                         decision_models, shadowed_units, module_timelines):
     lines = ["# Summary tables (generated by analysis/generate_graphs.py — do not hand-edit)\n"]
     for note in unpriced_caption(runs):
         lines.append(f"{note}\n")
@@ -1415,10 +1600,10 @@ def write_summary_tables(runs, coverage, files_settled, translated_units, wall_t
     m_total = sum(len(v) for v in mbuckets.values())
     lines.append("## How many *models* settled each file (git-exact)\n")
     lines.append(
-        "The stricter companion to the run-level table above. A file settled by four runs of one model is "
-        "that model reproducing itself; a file settled by three models is cross-model agreement. The "
-        "run-level counts cannot separate those, and with opus-5 deciding three of the seven runs they "
-        "will read the first as though it were the second.\n"
+        "The stricter companion to the run-level table above. A file settled by several runs of one model "
+        "is that model reproducing itself; a file settled by several distinct models is cross-model "
+        "agreement. The run-level counts cannot separate those, and with one model deciding more runs "
+        "than the others they will read the first as though it were the second.\n"
     )
     lines.append("| Models settling it | Files | Share | Which files |")
     lines.append("|---:|---:|---:|---|")
@@ -1426,6 +1611,34 @@ def write_summary_tables(runs, coverage, files_settled, translated_units, wall_t
         units = mbuckets[n]
         named = ", ".join(f"`{u}`" for u in units) if len(units) <= NAME_LIMIT else "—"
         lines.append(f"| {n} of {n_models} | {len(units)} | {100*len(units)/m_total:.0f}% | {named} |")
+    lines.append("")
+
+    lines.append("## Module entry order, tooling & doxygen position at fork (first tool-touch)\n")
+    lines.append(
+        "Per run, the order it first touched a file it actually went on to settle in each module — not "
+        "the order it merely explored, so a candidate it read and rejected does not date a module's entry. "
+        "`Elapsed` is minutes since the run's first tool call of any kind. `Ready leaves / settled` counts, "
+        "of the units the run settled in that module, how many were ready to rewrite (deps=0, blind=0) at "
+        "the shared fork point versus how many it entered while something else there was still untranslated. "
+        "`Rationale` is the model's own text immediately before the first such tool call, truncated; empty "
+        "for a tool call with no preceding assistant text.\n"
+    )
+    lines.append("| Run | # | Module | Elapsed | Tool | First unit touched | Ready leaves / settled | Mean fan-in | Rationale |")
+    lines.append("|---|---:|---|---:|---|---|---:|---:|---|")
+    for k in KEYS:
+        entries = module_timelines[k]
+        if not entries:
+            lines.append(f"| {_row_label(k)} | — | — | — | — | — | — | — | n/a |")
+            continue
+        for i, e in enumerate(entries, 1):
+            fanin = f"{e['fanin_mean']:.1f}" if e["fanin_mean"] is not None else "—"
+            rationale = e["rationale"].replace("\n", " ").replace("|", "/").strip() or "—"
+            if len(rationale) > 140:
+                rationale = rationale[:137] + "..."
+            lines.append(
+                f"| {_row_label(k)} | {i} | {e['module']} | {e['elapsed_min']:.1f} min | {e['tool']} | "
+                f"`{e['module']}/{e['unit_hint']}` | {e['n_ready_leaf']}/{e['n_settled']} | {fanin} | {rationale} |"
+            )
     lines.append("")
 
     out = Path(__file__).parent / "summary_tables.md"
@@ -1451,10 +1664,11 @@ TEX_BANNER = (
 # Only the data-bearing .tex files carry this; the colour definitions have no
 # run set to qualify.
 TEX_DATA_BANNER = TEX_BANNER + (
-    "%% Corpus: the seven 08-27-2026 runs, all forked from one submodule commit\n"
-    "%% and one 445-file roadmap. No run is excluded on data-quality grounds.\n"
-    "%% Earlier days (07-24/07-25, 08-11..08-26) forked from different roadmap\n"
-    "%% states and are deliberately out of scope -- see generate_graphs.py.\n"
+    "%% Corpus: the eleven 08-27/08-28-2026 runs, all forked from one submodule\n"
+    "%% commit and one 445-file roadmap. One run (08-28-2026/codescribe-sonnet-5-run3)\n"
+    "%% has no archived agent_log.md and is kept with its git-exact count only --\n"
+    "%% see generate_graphs.py. Earlier days (07-24/07-25, 08-11..08-26) forked\n"
+    "%% from different roadmap states and are deliberately out of scope.\n"
 )
 
 # Palette mirrored into LaTeX so the figure matches the PNG version exactly.
@@ -1464,6 +1678,8 @@ TEX_COLORS = [
     ("evalAqua", CAT["aqua"]),
     ("evalViolet", CAT["violet"]),
     ("evalYellow", CAT["yellow"]),
+    ("evalMagenta", CAT["magenta"]),
+    ("evalGreen", CAT["green"]),
     ("evalGrid", GRID),
     ("evalAxis", AXIS),
     ("evalInk", INK_SECONDARY),
@@ -1714,6 +1930,16 @@ TEX_MODEL_COLOR = {
     "oaic-gpt56terra": "evalYellow",
 }
 
+# Mirrors MODULE_COLOR (module-timeline figure) into LaTeX colour names.
+TEX_MODULE_COLOR = {
+    "BDK": "evalBlue",
+    "Mods": "evalOrange",
+    "W2jet": "evalAqua",
+    "Z2jet": "evalMagenta",
+    "W1jet": "evalGreen",
+    "Z": "evalYellow",
+}
+
 
 def _panel_cost_by_model(metrics):
     # Derived, not hardcoded: a hardcoded ["sonnet","opus"] silently drew a
@@ -1777,7 +2003,7 @@ def _panel_frontier(metrics):
     )
 
     # A run that settles very few files lands an order of magnitude out on both
-    # axes (here R1 and R5, at two units each). Scaling to it would collapse the
+    # axes (here R5 and R12, at two units each). Scaling to it would collapse the
     # other points into one blob in the corner, so the axes are scaled to the
     # rest and the outlier is called out by name as off-scale instead of being
     # silently clipped away.
@@ -2331,6 +2557,92 @@ def write_tikz_decision_figure(translated_units, decision_models):
     print(f"wrote {out}")
 
 
+def _tikz_timeline_marker_size_pt(fanin_mean):
+    """Node `minimum size` in pt (an absolute unit, unlike an axis-cs circle,
+    which would draw as an ellipse here since minutes and run-rows are on
+    wildly different scales) -- mirrors _timeline_marker_size's sqrt scaling."""
+    return 5.0 if fanin_mean is None else 5.0 + 3.2 * (fanin_mean ** 0.5)
+
+
+def write_tikz_timeline_figure(module_timelines):
+    """The module-entry timeline as pgfplots, mirroring fig7_module_timeline.png.
+
+    Drawn with raw \\node/\\draw primitives at `axis cs` coordinates rather than
+    pgfplots' own scatter machinery, the same approach _tikz_panel_model_module
+    and _tikz_panel_targeting already use for this file's other hand-built
+    panels -- pgfplots has no first-class per-point variable marker size
+    outside its `scatter` mode, and standalone timeline correctness matters
+    more here than fitting that mode.
+    """
+    keys_order = list(reversed(KEYS))  # row 0 at the bottom, run 1 (R2/R8/R9...) at the top
+    n = len(KEYS)
+    all_x = [e["elapsed_min"] for v in module_timelines.values() for e in v]
+    xmax = (max(all_x) if all_x else 1.0) * 1.14
+    modules_seen = sorted({e["module"] for v in module_timelines.values() for e in v})
+
+    body_lines = []
+    for row, k in enumerate(keys_order):
+        y = row
+        entries = module_timelines[k]
+        if not entries:
+            body_lines.append(
+                f"\\node[font=\\scriptsize, color=evalInk, anchor=east] "
+                f"at (axis cs:{xmax * 0.98:.3g},{y}) {{n/a}};\n"
+            )
+            continue
+        if len(entries) > 1:
+            coord_str = " -- ".join(f"(axis cs:{e['elapsed_min']:.3g},{y})" for e in entries)
+            body_lines.append(f"\\draw[evalAxis, line width=0.5pt] {coord_str};\n")
+        for e in entries:
+            color = TEX_MODULE_COLOR.get(e["module"], "evalInkStrong")
+            size = _tikz_timeline_marker_size_pt(e["fanin_mean"])
+            all_ready = e["n_settled"] > 0 and e["n_ready_leaf"] == e["n_settled"]
+            style = (f"fill={color}, draw=evalSurface, line width=0.6pt" if all_ready
+                     else f"fill=evalSurface, draw={color}, line width=1.1pt")
+            body_lines.append(
+                f"\\node[circle, {style}, minimum size={size:.2f}pt, inner sep=0pt] "
+                f"at (axis cs:{e['elapsed_min']:.3g},{y}) {{}};\n"
+            )
+
+    legend_lines = "".join(
+        f"\\node[circle, fill={TEX_MODULE_COLOR.get(m, 'evalInkStrong')}, minimum size=7pt, inner sep=0pt] "
+        f"at (rel axis cs:0.90,{0.95 - 0.08 * i:.3f}) {{}};\n"
+        f"\\node[font=\\scriptsize, color=evalInk, anchor=west, xshift=6pt] "
+        f"at (rel axis cs:0.90,{0.95 - 0.08 * i:.3f}) {{{_tex_escape(m)}}};\n"
+        for i, m in enumerate(modules_seen)
+    )
+
+    yticklabels = ",".join(_tex_escape(RUN_CODES[k]) for k in keys_order)
+    body = [
+        TEX_DATA_BANNER,
+        "%% Module-entry timeline. Requires pgfplots + the evalXxx colours, both\n"
+        "%% set up in jss-submission.sty. Marker area is proportional to the mean\n"
+        "%% doxygen fan-in of the units that module's run actually settled (never\n"
+        "%% a merely-explored candidate -- see parse_decision_timeline.py); filled\n"
+        "%% = every settled unit there was a ready leaf (deps=0, blind=0) at the\n"
+        "%% shared fork point, hollow = at least one was entered while something\n"
+        "%% else there still had an untranslated callee.\n",
+        "\\begin{tikzpicture}\n",
+        "\\begin{axis}[\n",
+        "  width=0.92\\textwidth, height=" + f"{0.34 * n + 1.6:.2f}cm,\n",
+        "  axis lines=left, axis line style={draw=evalAxis, line width=0.4pt},\n",
+        "  xmajorgrids, grid style={draw=evalGrid, line width=0.4pt},\n",
+        "  tick label style={font=\\footnotesize}, label style={font=\\footnotesize, color=evalInk},\n",
+        f"  xmin=0, xmax={xmax:.3g}, ymin=-0.7, ymax={n - 0.3:.2f},\n",
+        f"  ytick={{{','.join(str(i) for i in range(n))}}}, yticklabels={{{yticklabels}}},\n",
+        "  y tick label style={font=\\scriptsize}, xtick style={draw=none}, ytick style={draw=none},\n",
+        "  xlabel={Elapsed minutes since run start},\n",
+        "]\n",
+        *body_lines,
+        legend_lines,
+        "\\end{axis}\n",
+        "\\end{tikzpicture}\n",
+    ]
+    out = TEX_DIR / "fig_timeline.tex"
+    out.write_text("".join(body))
+    print(f"wrote {out}")
+
+
 def main():
     runs, cc_rows, cs_rows = load_run_aggregates()
     print(f"ccworkflow rows: {len(cc_rows)}, csloop rows: {len(cs_rows)}")
@@ -2364,17 +2676,24 @@ def main():
 
     metrics = derived_metrics(runs, files_settled, wall_times, tool_calls_per_file)
 
+    attrs = fork_point_roadmap(EXPERIMENTS, RUNS, translated_units)
+    module_timelines = load_module_timelines(translated_units, attrs)
+    for k, entries in module_timelines.items():
+        print(f"{k}: module entry order = {[(e['module'], round(e['elapsed_min'], 1)) for e in entries]}")
+
     make_standalone_figures(runs, coverage, files_settled, wall_times, tool_calls_per_file)
     _bump_fonts_for_combined()
     make_combined_figure(runs, coverage, files_settled, wall_times, tool_calls_per_file)
     make_decision_figure(translated_units, decision_models)
+    make_module_timeline_figure(module_timelines)
     write_summary_tables(runs, coverage, files_settled, translated_units, wall_times, tool_calls_per_file,
-                         decision_models, shadowed_units)
+                         decision_models, shadowed_units, module_timelines)
 
     # LaTeX/TikZ artifacts consumed directly by the paper.
     write_tikz_colors()
     write_tikz_figure(metrics)
     write_tikz_decision_figure(translated_units, decision_models)
+    write_tikz_timeline_figure(module_timelines)
     write_tex_tables(metrics, coverage, translated_units, decision_models)
 
 
