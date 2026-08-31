@@ -24,7 +24,7 @@
   every axis plot/.append style={line width=0.5pt},
   xtick style={draw=none}, ytick style={draw=none},
   enlarge x limits=0.08, ymin=0,
-symbolic x coords={R2,R8,R9,R3,R4,R10,R5,R12,R6,R7,R11}, xtick={R2,R8,R9,R3,R4,R10,R5,R12,R6,R7,R11},
+symbolic x coords={R1,R2,R3,R4,R5,R6,R7,R8,R9,R10,R11}, xtick={R1,R2,R3,R4,R5,R6,R7,R8,R9,R10,R11},
   x tick label style={rotate=90, anchor=east, font=\scriptsize, yshift=1pt},
   ybar, bar width=5pt, area legend,
   title={(a) Files settled (git-exact)},
@@ -33,8 +33,8 @@ symbolic x coords={R2,R8,R9,R3,R4,R10,R5,R12,R6,R7,R11}, xtick={R2,R8,R9,R3,R4,R
     rotate=90, anchor=west},
   legend style={at={(0.5,-0.42)}, anchor=north}, legend columns=2,
 ]
-\addplot[fill=evalBlue, draw=none, bar shift=0pt] coordinates {(R2,13) (R8,15) (R9,16)};
-\addplot[fill=evalOrange, draw=none, bar shift=0pt] coordinates {(R3,15) (R4,14) (R10,12) (R5,2) (R12,2) (R6,5) (R7,10) (R11,11)};
+\addplot[fill=evalBlue, draw=none, bar shift=0pt] coordinates {(R1,13) (R2,15) (R3,16)};
+\addplot[fill=evalOrange, draw=none, bar shift=0pt] coordinates {(R4,15) (R5,14) (R6,12) (R7,2) (R8,2) (R9,5) (R10,10) (R11,11)};
 \legend{ccworkflow, csloop}
 \nextgroupplot[width=0.305\textwidth, height=4.4cm,
   axis lines=left, axis line style={draw=evalAxis, line width=0.4pt},
@@ -49,16 +49,16 @@ symbolic x coords={R2,R8,R9,R3,R4,R10,R5,R12,R6,R7,R11}, xtick={R2,R8,R9,R3,R4,R
   every axis plot/.append style={line width=0.5pt},
   xtick style={draw=none}, ytick style={draw=none},
   enlarge x limits=0.08, ymin=0,
-symbolic x coords={R2,R8,R9,R3,R4,R10,R5,R12,R6,R7,R11}, xtick={R2,R8,R9,R3,R4,R10,R5,R12,R6,R7,R11},
+symbolic x coords={R1,R2,R3,R4,R5,R6,R7,R8,R9,R10,R11}, xtick={R1,R2,R3,R4,R5,R6,R7,R8,R9,R10,R11},
   x tick label style={rotate=90, anchor=east, font=\scriptsize, yshift=1pt},
   ybar stacked, bar width=5pt, title={(b) Total cost by model tier},
   ylabel={USD}, ymax=121,
   legend style={at={(0.5,-0.42)}, anchor=north}, legend columns=3,
 ]
-\addplot[fill=evalBlue, draw=none] coordinates {(R2,46.74) (R8,0.00) (R9,52.86) (R3,0.00) (R4,0.00) (R10,0.00) (R5,5.83) (R12,6.27) (R6,0.00) (R7,0.00) (R11,0.00)};
-\addplot[fill=evalViolet, draw=none] coordinates {(R2,31.64) (R8,104.43) (R9,20.81) (R3,15.69) (R4,13.32) (R10,12.87) (R5,0.00) (R12,0.00) (R6,0.00) (R7,0.00) (R11,0.00)};
-\addplot[fill=evalAqua, draw=none] coordinates {(R2,0.00) (R8,0.00) (R9,0.00) (R3,0.00) (R4,0.00) (R10,0.00) (R5,0.00) (R12,0.00) (R6,6.38) (R7,9.59) (R11,10.06)};
-\legend{sonnet-5, opus-5, gpt56sol}
+\addplot[fill=evalBlue, draw=none] coordinates {(R1,46.74) (R2,0.00) (R3,52.86) (R4,0.00) (R5,0.00) (R6,0.00) (R7,5.83) (R8,6.27) (R9,0.00) (R10,0.00) (R11,0.00)};
+\addplot[fill=evalViolet, draw=none] coordinates {(R1,31.64) (R2,104.43) (R3,20.81) (R4,15.69) (R5,13.32) (R6,12.87) (R7,0.00) (R8,0.00) (R9,0.00) (R10,0.00) (R11,0.00)};
+\addplot[fill=evalAqua, draw=none] coordinates {(R1,0.00) (R2,0.00) (R3,0.00) (R4,0.00) (R5,0.00) (R6,0.00) (R7,0.00) (R8,0.00) (R9,6.38) (R10,9.59) (R11,10.06)};
+\legend{sonnet-5, opus-5, gpt-5.6}
 \nextgroupplot[width=0.305\textwidth, height=4.4cm,
   axis lines=left, axis line style={draw=evalAxis, line width=0.4pt},
   ymajorgrids, grid style={draw=evalGrid, line width=0.4pt},
@@ -78,28 +78,28 @@ symbolic x coords={R2,R8,R9,R3,R4,R10,R5,R12,R6,R7,R11}, xtick={R2,R8,R9,R3,R4,R
 ]
 \addplot[only marks, mark=*, mark size=1.7pt, color=evalBlue] coordinates {(4.61,6.96) (5.55,4.6) (6.44,6.03)};
 \node[font=\scriptsize\bfseries, color=evalInk, anchor=south, xshift=0pt, yshift=2.2pt, inner sep=0.8pt]
-  at (axis cs:4.61,6.96) {R8};
+  at (axis cs:4.61,6.96) {R2};
 \node[font=\scriptsize\bfseries, color=evalInk, anchor=south, xshift=0pt, yshift=2.2pt, inner sep=0.8pt]
-  at (axis cs:5.55,4.6) {R9};
+  at (axis cs:5.55,4.6) {R3};
 \node[font=\scriptsize\bfseries, color=evalInk, anchor=south, xshift=0pt, yshift=2.2pt, inner sep=0.8pt]
-  at (axis cs:6.44,6.03) {R2};
+  at (axis cs:6.44,6.03) {R1};
 \addplot[only marks, mark=*, mark size=1.7pt, color=evalOrange] coordinates {(2.54,0.959) (2.9,1.05) (3.01,0.951) (3.13,1.07) (3.42,0.915) (4.35,1.28) (17.2,3.13) (17.3,2.91)};
 \node[font=\scriptsize\bfseries, color=evalInk, anchor=east, xshift=-2.2pt, yshift=0pt, inner sep=0.8pt]
-  at (axis cs:2.54,0.959) {R7};
+  at (axis cs:2.54,0.959) {R10};
 \node[font=\scriptsize\bfseries, color=evalInk, anchor=south, xshift=0pt, yshift=2.2pt, inner sep=0.8pt]
-  at (axis cs:2.9,1.05) {R3};
+  at (axis cs:2.9,1.05) {R4};
 \node[font=\scriptsize\bfseries, color=evalInk, anchor=north, xshift=0pt, yshift=-2.2pt, inner sep=0.8pt]
-  at (axis cs:3.01,0.951) {R4};
+  at (axis cs:3.01,0.951) {R5};
 \node[font=\scriptsize\bfseries, color=evalInk, anchor=south, xshift=0pt, yshift=2.2pt, inner sep=0.8pt]
-  at (axis cs:3.13,1.07) {R10};
+  at (axis cs:3.13,1.07) {R6};
 \node[font=\scriptsize\bfseries, color=evalInk, anchor=north, xshift=0pt, yshift=-2.2pt, inner sep=0.8pt]
   at (axis cs:3.42,0.915) {R11};
 \node[font=\scriptsize\bfseries, color=evalInk, anchor=west, xshift=2.2pt, yshift=0pt, inner sep=0.8pt]
-  at (axis cs:4.35,1.28) {R6};
+  at (axis cs:4.35,1.28) {R9};
 \node[font=\scriptsize\bfseries, color=evalInk, anchor=south, xshift=0pt, yshift=2.2pt, inner sep=0.8pt]
-  at (axis cs:17.2,3.13) {R12};
+  at (axis cs:17.2,3.13) {R8};
 \node[font=\scriptsize\bfseries, color=evalInk, anchor=north, xshift=0pt, yshift=-2.2pt, inner sep=0.8pt]
-  at (axis cs:17.3,2.91) {R5};
+  at (axis cs:17.3,2.91) {R7};
 \nextgroupplot[width=0.305\textwidth, height=4.4cm,
   axis lines=left, axis line style={draw=evalAxis, line width=0.4pt},
   ymajorgrids, grid style={draw=evalGrid, line width=0.4pt},
@@ -113,7 +113,7 @@ symbolic x coords={R2,R8,R9,R3,R4,R10,R5,R12,R6,R7,R11}, xtick={R2,R8,R9,R3,R4,R
   every axis plot/.append style={line width=0.5pt},
   xtick style={draw=none}, ytick style={draw=none},
   enlarge x limits=0.08, ymin=0,
-symbolic x coords={R2,R8,R9,R3,R4,R10,R5,R12,R6,R7,R11}, xtick={R2,R8,R9,R3,R4,R10,R5,R12,R6,R7,R11},
+symbolic x coords={R1,R2,R3,R4,R5,R6,R7,R8,R9,R10,R11}, xtick={R1,R2,R3,R4,R5,R6,R7,R8,R9,R10,R11},
   x tick label style={rotate=90, anchor=east, font=\scriptsize, yshift=1pt},
   point meta=explicit symbolic,
   nodes near coords={\pgfplotspointmeta},
@@ -121,8 +121,8 @@ symbolic x coords={R2,R8,R9,R3,R4,R10,R5,R12,R6,R7,R11}, xtick={R2,R8,R9,R3,R4,R
   ybar, bar width=5pt, title={(d) Tool calls per file settled},
   ylabel={Calls / file}, ymax=322,
 ]
-\addplot[fill=evalBlue, draw=none, bar shift=0pt] coordinates {(R2,75.92) [76] (R8,47.67) [48] (R9,66.81) [67]};
-\addplot[fill=evalOrange, draw=none, bar shift=0pt] coordinates {(R3,29.93) [30] (R4,25.29) [25] (R10,27.5) [28] (R5,195.5) [196] (R12,222) [222] (R6,61.2) [61] (R7,38.1) [38] (R11,44.36) [44]};
+\addplot[fill=evalBlue, draw=none, bar shift=0pt] coordinates {(R1,75.92) [76] (R2,47.67) [48] (R3,66.81) [67]};
+\addplot[fill=evalOrange, draw=none, bar shift=0pt] coordinates {(R4,29.93) [30] (R5,25.29) [25] (R6,27.5) [28] (R7,195.5) [196] (R8,222) [222] (R9,61.2) [61] (R10,38.1) [38] (R11,44.36) [44]};
 \nextgroupplot[width=0.305\textwidth, height=4.4cm,
   axis lines=left, axis line style={draw=evalAxis, line width=0.4pt},
   ymajorgrids, grid style={draw=evalGrid, line width=0.4pt},
@@ -136,15 +136,15 @@ symbolic x coords={R2,R8,R9,R3,R4,R10,R5,R12,R6,R7,R11}, xtick={R2,R8,R9,R3,R4,R
   every axis plot/.append style={line width=0.5pt},
   xtick style={draw=none}, ytick style={draw=none},
   enlarge x limits=0.08, ymin=0,
-symbolic x coords={R2,R8,R9,R3,R4,R10,R5,R12,R6,R7,R11}, xtick={R2,R8,R9,R3,R4,R10,R5,R12,R6,R7,R11},
+symbolic x coords={R1,R2,R3,R4,R5,R6,R7,R8,R9,R10,R11}, xtick={R1,R2,R3,R4,R5,R6,R7,R8,R9,R10,R11},
   x tick label style={rotate=90, anchor=east, font=\scriptsize, yshift=1pt},
   ybar stacked, bar width=5pt, title={(e) Input-side token mix},
   ylabel={Input share (\%)}, ymax=104, ytick={0,25,50,75,100},
   legend style={at={(0.5,-0.30)}, anchor=north}, legend columns=3,
 ]
-\addplot[fill=evalAqua, draw=none] coordinates {(R2,93.86) (R8,92.25) (R9,93.73) (R3,91.20) (R4,90.54) (R10,91.60) (R5,91.01) (R12,90.86) (R6,78.66) (R7,81.61) (R11,83.35)};
-\addplot[fill=evalViolet, draw=none] coordinates {(R2,5.69) (R8,7.64) (R9,6.15) (R3,6.92) (R4,7.41) (R10,6.68) (R5,7.15) (R12,7.30) (R6,21.33) (R7,18.39) (R11,16.64)};
-\addplot[fill=evalOrange, draw=none] coordinates {(R2,0.45) (R8,0.10) (R9,0.12) (R3,1.88) (R4,2.06) (R10,1.72) (R5,1.84) (R12,1.84) (R6,0.01) (R7,0.01) (R11,0.01)};
+\addplot[fill=evalAqua, draw=none] coordinates {(R1,93.86) (R2,92.25) (R3,93.73) (R4,91.20) (R5,90.54) (R6,91.60) (R7,91.01) (R8,90.86) (R9,78.66) (R10,81.61) (R11,83.35)};
+\addplot[fill=evalViolet, draw=none] coordinates {(R1,5.69) (R2,7.64) (R3,6.15) (R4,6.92) (R5,7.41) (R6,6.68) (R7,7.15) (R8,7.30) (R9,21.33) (R10,18.39) (R11,16.64)};
+\addplot[fill=evalOrange, draw=none] coordinates {(R1,0.45) (R2,0.10) (R3,0.12) (R4,1.88) (R5,2.06) (R6,1.72) (R7,1.84) (R8,1.84) (R9,0.01) (R10,0.01) (R11,0.01)};
 \legend{cache read, cache write, uncached}
 \nextgroupplot[width=0.305\textwidth, height=4.4cm,
   axis lines=left, axis line style={draw=evalAxis, line width=0.4pt},
@@ -159,7 +159,7 @@ symbolic x coords={R2,R8,R9,R3,R4,R10,R5,R12,R6,R7,R11}, xtick={R2,R8,R9,R3,R4,R
   every axis plot/.append style={line width=0.5pt},
   xtick style={draw=none}, ytick style={draw=none},
   enlarge x limits=0.08, ymin=0,
-symbolic x coords={R2,R8,R9,R3,R4,R10,R5,R12,R6,R7,R11}, xtick={R2,R8,R9,R3,R4,R10,R5,R12,R6,R7,R11},
+symbolic x coords={R1,R2,R3,R4,R5,R6,R7,R8,R9,R10,R11}, xtick={R1,R2,R3,R4,R5,R6,R7,R8,R9,R10,R11},
   x tick label style={rotate=90, anchor=east, font=\scriptsize, yshift=1pt},
   point meta=explicit symbolic,
   nodes near coords={\pgfplotspointmeta},
@@ -168,7 +168,7 @@ symbolic x coords={R2,R8,R9,R3,R4,R10,R5,R12,R6,R7,R11}, xtick={R2,R8,R9,R3,R4,R
   title={(f) Input tokens per file settled},
   ylabel={M tok / file}, ymax=14.9,
 ]
-\addplot[fill=evalBlue, draw=none, bar shift=0pt] coordinates {(R2,10.29) [10.29] (R8,5.477) [5.48] (R9,8.569) [8.57]};
-\addplot[fill=evalOrange, draw=none, bar shift=0pt] coordinates {(R3,0.7868) [0.79] (R4,0.6629) [0.66] (R10,0.8043) [0.80] (R5,5.735) [5.74] (R12,6.223) [6.22] (R6,0.8122) [0.81] (R7,0.6898) [0.69] (R11,0.6883) [0.69]};
+\addplot[fill=evalBlue, draw=none, bar shift=0pt] coordinates {(R1,10.29) [10.29] (R2,5.477) [5.48] (R3,8.569) [8.57]};
+\addplot[fill=evalOrange, draw=none, bar shift=0pt] coordinates {(R4,0.7868) [0.79] (R5,0.6629) [0.66] (R6,0.8043) [0.80] (R7,5.735) [5.74] (R8,6.223) [6.22] (R9,0.8122) [0.81] (R10,0.6898) [0.69] (R11,0.6883) [0.69]};
 \end{groupplot}
 \end{tikzpicture}

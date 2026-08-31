@@ -16,12 +16,13 @@ of scope here for exactly that reason.
 
 Runs covered: three ccworkflow arms (opus-5 triage/dispatch x2, sonnet-5
 triage/dispatch with opus-5 integrate x2 -- one of each is 08-27, one is
-08-28) against eight csloop arms (opus-5 x3, sonnet-5 x2, oaic-gpt56sol x3).
-08-27-2026/ccworkflow-opus-5 ("R1" in the original single-day corpus) was
-dropped from this set: at 2 files settled it was a clear outlier for its own
-config, and 08-28-2026/ccworkflow-opus-5 -- same triage/dispatch model, same
-fork point -- settled 15, which is what motivated pulling in the whole
-08-28-2026 day rather than trying to patch the one run. Every other archive
+08-28) against eight csloop arms (opus-5 x3, sonnet-5 x2, gpt-5.6 x3).
+08-27-2026/ccworkflow-opus-5 ("R1" in that older single-day corpus's own
+numbering -- NOT the current R1 below, which is a different run) was dropped
+from this set: at 2 files settled it was a clear outlier for its own config,
+and 08-28-2026/ccworkflow-opus-5 -- same triage/dispatch model, same fork
+point -- settled 15, which is what motivated pulling in the whole 08-28-2026
+day rather than trying to patch the one run. Every other archive
 carries a complete loop/metadata or workflow-wf_* record, an agent_log.md, and
 an archival git branch in this clone; the one exception is
 08-28-2026/codescribe-sonnet-5-run3, which ran five loop iterations but never
@@ -29,7 +30,7 @@ had an agent_log.md archived (`parse_coverage.coverage_for_run` reports it as
 "no agent_log archived", the same status the corpus already has a code path
 for). It is kept in the corpus rather than dropped, since its git-exact count
 is still real ground truth (2 files, both shadowed -- see SHADOW_NOTE), but it
-carries no self-reported checklist or pass rate. The two gpt56sol runs log no
+carries no self-reported checklist or pass rate. The two gpt-5.6 runs log no
 model reasoning text, which is a property of the OpenAI-compatible gateway
 rather than of the run, and is true of every gpt56 run in the corpus.
 
@@ -104,8 +105,7 @@ from parse_coverage import coverage_for_run
 from pricing import cost, PRICING, NON_ANTHROPIC
 from git_file_counts import (translated_file_count, translated_file_units, module_of,
                              unit_breakdown)
-from parse_roadmap import (fork_point_roadmap, ready_pool, post_run_ready,
-                           roadmap_is_post_run)
+from parse_roadmap import fork_point_roadmap
 from parse_decision_timeline import module_entry_order
 
 REPO_ROOT = Path(__file__).parent.parent
@@ -183,43 +183,52 @@ plt.rcParams.update(
 #
 # One ordered registry of (day, run_dir, code, label); KEYS, RUN_LABELS,
 # RUN_CODES and the figure captions are all derived from it, so adding a run is
-# a one-line change here and nowhere else.
+# a one-line change here and nowhere else. Each run's folder (day/run_dir under
+# experiments/) is also the source of the "Run manifest" table in
+# summary_tables.md, so a reader can go from a bar/row straight back to the
+# archive on disk.
 #
-# Codes were renumbered R1..R7 when the corpus narrowed to 08-27-2026. The old
-# R1..R12 numbered runs from 08-11 through 08-26 that are no longer plotted, so
-# keeping their numbering would have left the axis starting at R13 to protect
-# references to runs the paper no longer makes. Within this corpus the codes are
-# stable identifiers quoted by the paper text: APPEND new runs, never renumber.
-# R1 (08-27-2026/ccworkflow-opus-5) was subsequently REMOVED rather than
-# renumbered — see the module docstring — which is why the codes below start
-# at R2 and the 08-28-2026 additions pick up at R8 rather than filling the gap.
-#
-# Ordered ccworkflow first, then csloop, and within each harness by model
-# family rather than by wall-clock start, so neighbouring bars compare like
-# with like; a same-config replicate sits immediately next to the run(s) it
-# replicates regardless of which day it was archived on.
+# Codes are sequential (R1..R11) and grouped by harness/decision-model rather
+# than by wall-clock start or archival day: all three ccworkflow runs first,
+# then the three csloop opus-5 runs, then the two csloop sonnet-5 runs, then
+# the three csloop gpt-5.6 runs (see RUN_GROUPS) — so a same-config replicate
+# always sits next to the run(s) it replicates, regardless of which day it was
+# archived on. Renumbered to this grouped-sequential scheme on 2026-08-31;
+# earlier revisions of this file used a sparser R2/R8/R9/... scheme left over
+# from when a run was dropped from a larger corpus (see the module docstring)
+# — the codes here are NOT position-comparable with that older scheme.
 #
 # The ccworkflow labels name the TRIAGE model, because triage is what picks the
-# files (see DECIDING_PHASE below). R2/R9 also run opus-5 as their integrate
-# model, which is where most of their cost lands but none of their file
-# choices; R8 runs opus-5 for every phase.
+# files (see DECIDING_PHASE below). R1 and R3 also run opus-5 as their
+# integrate model, which is where most of their cost lands but none of their
+# file choices; R2 runs opus-5 for every phase.
 # ---------------------------------------------------------------------------
 RUNS = [
-    ("08-27-2026", "ccworkflow-sonnet-5-opus-5-integrate-run3", "R2",
+    ("08-27-2026", "ccworkflow-sonnet-5-opus-5-integrate-run3", "R1",
      "ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate)"),
-    ("08-28-2026", "ccworkflow-opus-5", "R8",
+    ("08-28-2026", "ccworkflow-opus-5", "R2",
      "ccworkflow (opus-5 triage and dispatch)"),
-    ("08-28-2026", "ccworkflow-sonnet-5-opus-5-integrate-run4", "R9",
+    ("08-28-2026", "ccworkflow-sonnet-5-opus-5-integrate-run4", "R3",
      "ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate, run2)"),
-    ("08-27-2026", "codescribe-opus-5", "R3", "csloop opus-5"),
-    ("08-27-2026", "codescribe-opus-5-run2", "R4", "csloop opus-5 (run2)"),
-    ("08-28-2026", "codescribe-opus-5", "R10", "csloop opus-5 (run3)"),
-    ("08-27-2026", "codescribe-sonnet-5-run2", "R5", "csloop sonnet-5 (run2)"),
-    ("08-28-2026", "codescribe-sonnet-5-run3", "R12",
+    ("08-27-2026", "codescribe-opus-5", "R4", "csloop opus-5"),
+    ("08-27-2026", "codescribe-opus-5-run2", "R5", "csloop opus-5 (run2)"),
+    ("08-28-2026", "codescribe-opus-5", "R6", "csloop opus-5 (run3)"),
+    ("08-27-2026", "codescribe-sonnet-5-run2", "R7", "csloop sonnet-5 (run2)"),
+    ("08-28-2026", "codescribe-sonnet-5-run3", "R8",
      "csloop sonnet-5 (run3, incomplete — no agent_log archived)"),
-    ("08-27-2026", "codescribe-oaic-gpt56sol-run4", "R6", "csloop oaic-gpt56sol (run4)"),
-    ("08-27-2026", "codescribe-oaic-gpt56sol-run5", "R7", "csloop oaic-gpt56sol (run5)"),
-    ("08-28-2026", "codescribe-oaic-gpt56sol-run6", "R11", "csloop oaic-gpt56sol (run6)"),
+    ("08-27-2026", "codescribe-oaic-gpt56sol-run4", "R9", "csloop gpt-5.6 (run4)"),
+    ("08-27-2026", "codescribe-oaic-gpt56sol-run5", "R10", "csloop gpt-5.6 (run5)"),
+    ("08-28-2026", "codescribe-oaic-gpt56sol-run6", "R11", "csloop gpt-5.6 (run6)"),
+]
+
+# Group boundaries, in the same order as RUNS above — used to build the
+# "Run manifest" table in summary_tables.md. A run's folder path lets a reader
+# go straight from a table row or figure bar back to the archive on disk.
+RUN_GROUPS = [
+    ("ccworkflow", 3),
+    ("csloop opus-5", 3),
+    ("csloop sonnet-5", 2),
+    ("csloop gpt-5.6", 3),
 ]
 
 KEYS = [(day, run_name) for day, run_name, _, _ in RUNS]
@@ -250,11 +259,11 @@ def run_code_caption(fig_width_in, fontsize=None):
 # Every Anthropic run in this table ran with adaptive thinking active: Opus 5
 # and Sonnet 5 both think by default when the thinking parameter is omitted, so
 # there is no reasoning-OFF arm here and no run is another run's control for it.
-# The gpt56sol runs emit no reasoning text at all, which is the OpenAI-compatible
+# The gpt-5.6 runs emit no reasoning text at all, which is the OpenAI-compatible
 # gateway's behaviour rather than a setting on the run.
 REASONING_NOTE = (
     "All Anthropic runs think adaptively (on by default); no run here is a reasoning ON/OFF "
-    "control. The gpt56sol gateway returns no reasoning text at all."
+    "control. The gpt-5.6 gateway returns no reasoning text at all."
 )
 SCOPE_NOTE = (
     "Scope: the eleven 08-27/08-28-2026 runs. All fork from one submodule commit and one "
@@ -274,7 +283,7 @@ UNPRICED_NOTE = (
 )
 RATE_CARD_NOTE = (
     "USD figures mix two rate cards: Anthropic's for Opus 5 / Sonnet 5, OpenAI's gpt-5.6-sol "
-    "standard short-context rates for the gpt56sol runs (see pricing.py for the tier assumptions). "
+    "standard short-context rates for the gpt-5.6 runs (see pricing.py for the tier assumptions). "
     "Reference costs for comparison, not charges incurred."
 )
 
@@ -352,7 +361,7 @@ def capped_limit(values, headroom=1.45, clip_ratio=2.0):
     """Axis maximum for a bar panel, plus the values it deliberately clips.
 
     A run that settles very few files has per-file metrics several times the
-    next largest value (in this corpus R5 and R12, at two units apiece). Scaling
+    next largest value (in this corpus R7 and R8, at two units apiece). Scaling
     those panels to it would flatten the bars the panel exists to compare, so
     when the largest value is more than `clip_ratio` times the second largest,
     the axis is scaled to the second largest instead and the outlier is drawn
@@ -531,7 +540,7 @@ MODEL_DISPLAY = {
     "claude-opus-5": "opus-5",
     "claude-sonnet-5": "sonnet-5",
     "oaic-moonshotai/Kimi-K3": "Kimi K3",
-    "oaic-gpt56sol": "gpt56sol",
+    "oaic-gpt56sol": "gpt-5.6",
     "oaic-gpt56terra": "gpt56terra",
 }
 
@@ -995,124 +1004,32 @@ def make_combined_figure(runs, coverage, files_settled, wall_times, tool_calls_p
 # Summary tables (markdown) — single source of numeric truth for the write-up
 # ---------------------------------------------------------------------------
 # ---------------------------------------------------------------------------
-# Decision-making figure
+# Decision-making + module-entry timeline figure
 #
-# The question these panels answer is not "how much did a run get through"
+# The question this figure answers is not "how much did a run get through"
 # (tab_runs and the cost/throughput panels already do that) but "what did the
-# model CHOOSE, and was the choice a good one". Runs are therefore collapsed to
-# their deciding model -- for ccworkflow that is the triage model, see
-# decision_model_per_run -- and every quantity is over DISTINCT files, so a
-# model with four runs cannot out-vote one with a single run by repeating
-# itself.
+# model CHOOSE, when, and did other models agree". Two panel ideas that also
+# answer that question -- a model x module heatmap of where each deciding
+# model chose to work, and a dumbbell of chosen-file fan-in against the ready
+# pool -- were tried and dropped from this figure for being harder to read at
+# a glance than the two kept below; the data behind them
+# (files_by_decision_model, fork_point_roadmap/ready_pool) still backs the
+# "Which files each model chose" table in summary_tables.md. Runs are
+# collapsed to their deciding model -- for ccworkflow that is the triage
+# model, see decision_model_per_run -- and every quantity is over DISTINCT
+# files, so a model with four runs cannot out-vote one with a single run by
+# repeating itself.
 #
-# Sequential blue (one hue, light->dark) for magnitude in (a); one accent hue
-# plus a gray reference in (b); the ordinal ramp for the three ordered bins in
-# (c). Palette steps are the dataviz reference instance, and the (c) ramp was
-# checked with validate_palette.js --ordinal.
+# The ordinal ramp below is the dataviz reference instance for three ordered
+# bins, checked with validate_palette.js --ordinal.
 # ---------------------------------------------------------------------------
-SEQ_BLUE = ["#cde2fb", "#b7d3f6", "#9ec5f4", "#86b6ef", "#6da7ec", "#5598e7",
-            "#3987e5", "#2a78d6", "#256abf", "#1c5cab", "#184f95", "#104281", "#0d366b"]
 # Ordinal steps 250/400/550 -- the light end clears the 2:1 floor against the
 # light surface, so the lightest bin is still visible rather than receding.
 ORD_BLUE = ["#86b6ef", "#3987e5", "#1c5cab"]
 
 
-def _seq_color(value, vmax):
-    """Sequential step for `value`. Zero is not a step -- an empty cell means
-    "this model never entered this module", which is categorically different
-    from "entered it and settled nothing" and is drawn as bare surface."""
-    if not value:
-        return None
-    frac = value / vmax if vmax else 0.0
-    # Start a third of the way up the ramp: the palest steps are reserved for
-    # near-zero, and every cell drawn here is a nonzero count.
-    idx = int(round((0.34 + 0.66 * frac) * (len(SEQ_BLUE) - 1)))
-    return SEQ_BLUE[min(idx, len(SEQ_BLUE) - 1)]
-
-
-def draw_model_module_panel(ax, by_model, attrs, letter=None):
-    """(a) Which part of the tree each deciding model chose to work in."""
-    models = sorted(by_model, key=lambda m: -len(by_model[m]["union"]))
-    modules = sorted({attrs[u]["top"] for i in by_model.values() for u in i["union"]
-                      if attrs.get(u)})
-    counts = [[sum(1 for u in by_model[m]["union"] if attrs.get(u) and attrs[u]["top"] == mod)
-               for mod in modules] for m in models]
-    vmax = max(max(row) for row in counts)
-
-    ax.grid(False)
-    ax.set_xlim(0, len(modules))
-    ax.set_ylim(0, len(models))
-    ax.invert_yaxis()
-    for i, row in enumerate(counts):
-        for j, v in enumerate(row):
-            color = _seq_color(v, vmax)
-            if color is None:
-                continue
-            # 2px surface gap between fills: inset each cell rather than tiling.
-            ax.add_patch(mpatches.Rectangle((j + 0.04, i + 0.04), 0.92, 0.92,
-                                            facecolor=color, edgecolor="none"))
-            # Value labels wear ink tokens, not the fill colour -- except where
-            # the fill is dark enough that ink would not read.
-            dark = SEQ_BLUE.index(color) >= 8
-            ax.text(j + 0.5, i + 0.5, str(v), ha="center", va="center",
-                    fontsize=ANNOT_SIZE, color=SURFACE if dark else INK)
-    ax.set_xticks([j + 0.5 for j in range(len(modules))])
-    ax.set_xticklabels(modules, rotation=45, ha="right")
-    ax.set_yticks([i + 0.5 for i in range(len(models))])
-    ax.set_yticklabels([_display_model(m) for m in models])
-    for spine in ax.spines.values():
-        spine.set_visible(False)
-    ax.tick_params(length=0)
-    ax.set_title(_title("Where each model chose to work", letter))
-    return models
-
-
-def draw_targeting_panel(ax, by_model, attrs, pool, letter=None):
-    """(b) Fan-in of the files a model chose, against the pool it chose from.
-
-    Fan-in is how many still-untranslated files depend on this one, so it is
-    the roadmap's own notion of value: `dev/workflow.py next` sorts ready files
-    by it. Each row is a dumbbell from the mean over every ready file available
-    at the fork point (the gray reference every model faced) to the mean over
-    the files that model actually took. Right of the reference means the model
-    picked higher-leverage work than drawing at random from the pool would.
-    """
-    import statistics
-
-    pool_mean = statistics.mean(attrs[u]["fanin"] for u in pool)
-    models = sorted(by_model, key=lambda m: -len(by_model[m]["union"]))
-    ax.grid(False)
-    ax.xaxis.grid(True)
-    ax.set_axisbelow(True)
-    ax.axvline(pool_mean, color=MUTED, lw=0.8, zorder=1)
-
-    for i, m in enumerate(models):
-        units = [u for u in by_model[m]["union"] if attrs.get(u)]
-        mean = statistics.mean(attrs[u]["fanin"] for u in units)
-        y = len(models) - 1 - i
-        ax.plot([pool_mean, mean], [y, y], color=CAT["blue"], lw=1.6, zorder=2,
-                solid_capstyle="round")
-        ax.plot([pool_mean], [y], "o", ms=5, color=MUTED, zorder=3)
-        # 2px surface ring so the accent mark reads where it overlaps the line.
-        ax.plot([mean], [y], "o", ms=8, color=CAT["blue"], zorder=4,
-                markeredgecolor=SURFACE, markeredgewidth=1.4)
-        ax.annotate(f"{mean/pool_mean:.1f}x  (n={len(units)})", (mean, y),
-                    textcoords="offset points", xytext=(11, 0), va="center",
-                    fontsize=ANNOT_SIZE, color=INK_SECONDARY)
-
-    ax.set_yticks(range(len(models)))
-    ax.set_yticklabels([_display_model(m) for m in reversed(models)])
-    ax.set_ylim(-0.7, len(models) - 0.3)
-    ax.set_xlim(0, max(6.2, ax.get_xlim()[1] * 1.5))
-    ax.set_xlabel("Mean fan-in of files chosen")
-    ax.annotate("ready pool\n(all models)", (pool_mean, len(models) - 0.62),
-                textcoords="offset points", xytext=(4, 0), va="center",
-                fontsize=CAPTION_SIZE, color=MUTED)
-    ax.set_title(_title("Was the choice well-targeted?", letter))
-
-
 def draw_agreement_panel(ax, buckets, n_models, letter=None):
-    """(c) How many distinct models independently settled the same file."""
+    """How many distinct models independently settled the same file."""
     ns = sorted(buckets, reverse=True)
     total = sum(len(v) for v in buckets.values())
     ax.grid(False)
@@ -1134,100 +1051,12 @@ def draw_agreement_panel(ax, buckets, n_models, letter=None):
     ax.set_title(_title("Do models agree on files?", letter))
 
 
-def unblocking_per_run(translated_units):
-    """{run: (settled, newly_ready, trustworthy)} -- the outcome measure.
-
-    Every run started from the same fork-point pool, so a file that was not
-    ready then and is ready in the run's own post-run map was unblocked BY that
-    run. This is the only outcome in the corpus not defined by the same map it
-    scores: fan-in is the roadmap's own notion of value, so scoring choices by
-    fan-in and then rewarding high fan-in is circular. Unblocking is downstream
-    of the choice and measured independently of it.
-
-    `trustworthy` is False where the archived map was refreshed mid-run, which
-    makes the count a lower bound rather than a measurement.
-    """
-    attrs = fork_point_roadmap(EXPERIMENTS, RUNS, translated_units)
-    pre = ready_pool(attrs)
-    out = {}
-    for key in KEYS:
-        run_dir = EXPERIMENTS / key[0] / key[1]
-        post = post_run_ready(run_dir)
-        settled = translated_units[key] or []
-        if post is None or not settled:
-            continue
-        out[key] = (len(settled), len(post - pre),
-                    roadmap_is_post_run(run_dir, settled))
-    return out
-
-
-def draw_unblocking_panel(ax, unblocking, decision_models, letter=None):
-    """(d) Files unblocked downstream, per file settled -- the outcome."""
-    order = [k for k in KEYS if k in unblocking]
-    rates, labels, hollow = [], [], []
-    for k in order:
-        settled, newly, ok = unblocking[k]
-        rates.append(newly / settled)
-        labels.append(RUN_CODES[k])
-        hollow.append(not ok)
-    ax.grid(False)
-    ax.yaxis.grid(True)
-    ax.set_axisbelow(True)
-    for i, (v, faded) in enumerate(zip(rates, hollow)):
-        # A partial "after" state is a lower bound, not a measurement; drawn
-        # hollow so it cannot be read as a low outcome.
-        ax.bar(i, v, width=0.62, facecolor=SURFACE if faded else CAT["blue"],
-               edgecolor=CAT["blue"] if faded else "none", linewidth=1.1)
-    ax.set_xticks(range(len(order)))
-    ax.set_xticklabels(labels, rotation=90)
-    ax.set_ylabel("Files unblocked / file settled")
-    ax.set_xlim(-0.7, len(order) - 0.3)
-    ax.set_title(_title("Did the choice unblock work?", letter))
-    ax.set_ylim(0, max(rates) * 1.18)
-
-
-def make_decision_figure(translated_units, decision_models):
-    by_model = files_by_decision_model(translated_units, decision_models)
-    attrs = fork_point_roadmap(EXPERIMENTS, RUNS, translated_units)
-    pool = ready_pool(attrs)
-    buckets, n_models = model_settlement_frequency(translated_units, decision_models)
-
-    unblocking = unblocking_per_run(translated_units)
-    fig, axes = plt.subplots(2, 2, figsize=(11.2, 7.4))
-    draw_model_module_panel(axes[0][0], by_model, attrs, letter="(a)")
-    draw_targeting_panel(axes[0][1], by_model, attrs, pool, letter="(b)")
-    draw_agreement_panel(axes[1][0], buckets, n_models, letter="(c)")
-    draw_unblocking_panel(axes[1][1], unblocking, decision_models, letter="(d)")
-
-    caption = [
-        "In (a) an empty cell means the model never entered that module at all -- not that it entered "
-        "and settled nothing.",
-        "Runs collapsed to the model that CHOSE the files: the run's own model for csloop, the triage "
-        "model for ccworkflow (author/integrate agents do not select).",
-        "In (d), open bars are runs whose map was refreshed mid-run: "
-        "their after-state is partial, so the value is a lower bound, not a measurement.",
-        "(d) is the one outcome measure here: fan-in in (b) is the roadmap's own notion of value, so it "
-        "cannot also score adherence to that roadmap without circularity.",
-        "Counts are over distinct files, so a model with four runs cannot out-vote one with a single run "
-        f"by repeating itself. Fan-in and readiness come from the doxygen map reconstructed at the shared "
-        f"fork point ({len(attrs)} untranslated files, {len(pool)} ready leaves).",
-    ]
-    line_h = 0.042
-    fig.tight_layout(rect=(0, line_h * len(caption) + 0.02, 1, 1))
-    for i, line in enumerate(reversed(caption)):
-        fig.text(0.5, 0.018 + i * line_h, line, ha="center", fontsize=CAPTION_SIZE, color=INK)
-    out = FIGURES_DIR / "fig6_decision_making.png"
-    fig.savefig(out, dpi=200, bbox_inches="tight", facecolor=SURFACE)
-    plt.close(fig)
-    print(f"wrote {out}")
-
-
 # ---------------------------------------------------------------------------
 # Module-entry timeline
 #
-# fig6/fig_decision answer "what did the model choose". This answers "when,
-# with what tool, and having entered a module how ready was it" -- order and
-# timing, which the per-run totals elsewhere in this file cannot show.
+# Answers "when, with what tool, and having entered a module how ready was
+# it" -- order and timing, which the per-run totals elsewhere in this file
+# cannot show, and the companion half of the decision-making figure below.
 #
 # A run's transcript never tags "this tool call is about module X" as
 # structured metadata (see parse_decision_timeline's module docstring for why
@@ -1235,8 +1064,9 @@ def make_decision_figure(translated_units, decision_models):
 # necessarily best-effort: it is the first tool call in the run's own
 # transcript that names a file inside a module the run went on to settle
 # something in. The doxygen position, in contrast, is exact -- it is looked up
-# against the same fork_point_roadmap map fig6 already uses, for the units
-# git_file_counts confirms the run actually settled there.
+# against the same fork_point_roadmap map used for the "Which files each
+# model chose" table, for the units git_file_counts confirms the run actually
+# settled there.
 # ---------------------------------------------------------------------------
 def load_module_timelines(translated_units, attrs):
     """{run: [{"module", "unit_hint", "elapsed_min", "tool", "rationale",
@@ -1344,35 +1174,86 @@ def _wrap_caption_text(text, fig_width_in, fontsize=None):
     return textwrap.wrap(text, chars)
 
 
-def make_module_timeline_figure(timelines):
-    fig, ax = plt.subplots(figsize=(9.6, 0.42 * len(KEYS) + 2.6))
-    fig.suptitle("Module entry order, timing & fork-point doxygen position", fontsize=SUPTITLE_SIZE)
-    draw_module_timeline_panel(ax, timelines)
-    ax.set_title("")  # redundant with the suptitle on a single-panel figure; the
-                       # space it would occupy is where the two legends sit instead
+def make_decision_figure(translated_units, decision_models, module_timelines):
+    """Top: module-entry timeline. Bottom: cross-model file agreement.
+
+    The two decision-making measures kept as a single straightforward figure:
+    the timeline is ground truth per run (when its own transcript first
+    touched a module it went on to settle in), and agreement is the
+    strictest cross-run comparison in the corpus (distinct files, not
+    distinct runs, so a model that ran four times cannot out-vote one that
+    ran once). See the module comment above for the two panel ideas this
+    figure tried and dropped.
+    """
+    buckets, n_models = model_settlement_frequency(translated_units, decision_models)
+
+    n = len(KEYS)
+    fig = plt.figure(figsize=(9.6, 0.42 * n + 2.6 + 3.2))
+
     caption = (
         run_code_caption(9.6)
+        + [
+            "Top: module-entry timeline. Runs collapsed to the model that CHOSE the files: the run's own "
+            "model for csloop, the triage model for ccworkflow (author/integrate agents do not select).",
+        ]
         + _wrap_caption_text(
             "Marker = first tool call in the run's own transcript that names a file inside that module "
             "(Bash command text for ccworkflow -- every ccworkflow tool call observed here is Bash, there "
-            "is no structured file-path tool -- or a read/write/edit path argument for csloop).", 9.6)
-        + _wrap_caption_text(
-            "Marker area is proportional to the mean doxygen fan-in of the units that module's run actually "
+            "is no structured file-path tool -- or a read/write/edit path argument for csloop). Marker "
+            "area is proportional to the mean doxygen fan-in of the units that module's run actually "
             "settled (git-exact, not the file that made first contact); filled vs. hollow marks whether "
             "every settled unit there was a ready leaf (deps=0, blind=0) at the shared fork point, or the "
-            "run entered while at least one of them still had an untranslated callee.", 9.6)
+            "run entered while at least one of them still had an untranslated callee. n/a: the run "
+            "settled no files in any module, or its transcript could not be parsed for a start time.", 9.6)
         + [
-            "n/a: the run settled no files in any module, or its transcript could not be parsed for a start time.",
+            "Bottom: how many distinct models independently settled the same file. Counts are over "
+            "distinct files, so a model with four runs cannot out-vote one with a single run by "
+            "repeating itself.",
             SCOPE_NOTE,
         ]
     )
-    fig.tight_layout(rect=_caption_rect(len(caption)))
-    save_fig(fig, "fig7_module_timeline.png", caption)
+
+    # Manual axis placement rather than tight_layout: the timeline panel's two
+    # legends are separate artists placed via bbox_to_anchor above its own
+    # axes box (see draw_module_timeline_panel), which tight_layout cannot
+    # account for across a multi-axes figure -- it warns "not compatible" and
+    # produces a huge blank gap between the two panels instead.
+    top_margin, gap = 0.12, 0.11
+    bottom_margin = _caption_rect(len(caption))[1] + 0.03
+    plot_h = (1 - top_margin) - bottom_margin
+    h1 = plot_h * n / (n + 4.2) - gap / 2
+    h2 = plot_h * 4.2 / (n + 4.2) - gap / 2
+    ax_timeline = fig.add_axes((0.09, 1 - top_margin - h1, 0.88, h1))
+    ax_agree = fig.add_axes((0.09, bottom_margin, 0.88, h2))
+
+    fig.suptitle("Model decision-making: module-entry timing & cross-model agreement",
+                 fontsize=SUPTITLE_SIZE, y=0.995)
+    draw_module_timeline_panel(ax_timeline, module_timelines)
+    ax_timeline.set_title("")  # redundant with the suptitle; the space it would
+                               # occupy is where the two legends sit instead
+    draw_agreement_panel(ax_agree, buckets, n_models)
+
+    save_fig(fig, "fig6_decision_making.png", caption)
 
 
 def _row_label(k):
     """Run code + configuration, so a table row can be matched to a figure bar."""
     return f"{RUN_CODES[k]} — {RUN_LABELS[k]}".replace(chr(10), " ")
+
+
+def _run_group_label(idx):
+    """Which RUN_GROUPS bucket the idx-th (0-based) entry of RUNS falls in."""
+    i = idx
+    for name, count in RUN_GROUPS:
+        if i < count:
+            return name
+        i -= count
+    return "?"
+
+
+def _run_folder(day, run_name):
+    """Path to the run's archive, relative to the repository root."""
+    return f"evals/experiments/{day}/{run_name}"
 
 
 def _files_cell(files):
@@ -1389,6 +1270,25 @@ def write_summary_tables(runs, coverage, files_settled, translated_units, wall_t
     lines.append(f"{REASONING_NOTE}\n")
     lines.append(f"{SCOPE_NOTE}\n")
     lines.append(f"{SHADOW_NOTE}\n")
+
+    lines.append("## Run manifest\n")
+    lines.append(
+        "Runs grouped sequentially by harness and decision model — all ccworkflow runs, then all "
+        "csloop opus-5 runs, then all csloop sonnet-5 runs, then all csloop gpt-5.6 runs — so R1..R11 "
+        "read as one block per group rather than by archival day. `Model` is the decision model (the "
+        "model that chose which files the run translated; see \"Which files each model chose\" below). "
+        "`Folder` is the run's archive, relative to the repository root.\n"
+    )
+    lines.append("| Run | Group | Model | Folder |")
+    lines.append("|---|---|---|---|")
+    for idx, (day, run_name, code, _label) in enumerate(RUNS):
+        k = (day, run_name)
+        model = decision_models.get(k)
+        lines.append(
+            f"| {code} | {_run_group_label(idx)} | {_display_model(model) if model else '—'} | "
+            f"`{_run_folder(day, run_name)}` |"
+        )
+    lines.append("")
 
     lines.append("## Run comparison: cost, cache, wall time, tool calls & files settled\n")
     lines.append(
@@ -1575,7 +1475,7 @@ def write_summary_tables(runs, coverage, files_settled, translated_units, wall_t
         "Runs grouped by the model that made the file-selection decision, not by harness. For csloop that "
         "is the run's only model. For ccworkflow it is the **triage** model — triage reads the plan and "
         "picks the round's units, while author agents are handed units already chosen and integrate only "
-        "lands them. So R2 counts as a sonnet-5 decision even though opus-5 is its integrate model and "
+        "lands them. So R1 counts as a sonnet-5 decision even though opus-5 is its integrate model and "
         "carries most of its cost: opus-5 never picked a file in that run.\n"
     )
     lines.append(
@@ -1684,14 +1584,14 @@ TEX_COLORS = [
     ("evalAxis", AXIS),
     ("evalInk", INK_SECONDARY),
     # Primary ink, for value labels sitting on a mid-tone fill where the
-    # secondary ink drops under 3:1 (the decision figure's module heatmap).
+    # secondary ink drops under 3:1, and the fallback module colour in the
+    # decision figure's timeline panel.
     ("evalInkStrong", INK),
     # Used for value labels printed inside a bar, where ink-on-fill would not read.
     ("evalSurface", SURFACE),
-    # Sequential + ordinal steps for the decision figure's heatmap and bins.
+    # Ordinal steps for the decision figure's cross-model-agreement bins.
     # Emitted in full rather than only the steps this dataset happens to reach,
     # so the .tex stays valid when the run set changes the maxima.
-    *[(f"evalSeq{i}", c) for i, c in enumerate(SEQ_BLUE)],
     *[(f"evalOrd{i}", c) for i, c in enumerate(ORD_BLUE)],
 ]
 
@@ -1954,9 +1854,9 @@ def _panel_cost_by_model(metrics):
         "\\nextgroupplot[" + _axis_common() + _symbolic_x() +
         "  ybar stacked, bar width=5pt, title={(b) Total cost by model tier},\n"
         f"  ylabel={{USD}}, ymax={ymax:.0f},\n"
-        # No interior corner survives: R2 is the tallest stack by a wide margin,
+        # No interior corner survives: R1 is the tallest stack by a wide margin,
         # the right-hand runs may carry vertical "unpriced" marks, and a
-        # top-left legend lands on R2's bar. Below the axis, as in (a).
+        # top-left legend lands on R1's bar. Below the axis, as in (a).
         #
         # One row, however many rate cards the corpus used. At a fixed two
         # columns a third model wrapped onto a second row, which sits low
@@ -2003,7 +1903,7 @@ def _panel_frontier(metrics):
     )
 
     # A run that settles very few files lands an order of magnitude out on both
-    # axes (here R5 and R12, at two units each). Scaling to it would collapse the
+    # axes (here R7 and R8, at two units each). Scaling to it would collapse the
     # other points into one blob in the corner, so the axes are scaled to the
     # rest and the outlier is called out by name as off-scale instead of being
     # silently clipped away.
@@ -2353,107 +2253,8 @@ def _tikz_decision_axis(width, height):
     )
 
 
-def _tikz_panel_model_module(by_model, attrs):
-    """(a) Model x module heatmap, drawn as explicit cells.
-
-    A numeric axis with hand-written tick labels rather than pgfplots'
-    `matrix plot`: cells are inset by 0.04 on each side to keep the 2pt surface
-    gap between fills, and a module a model never entered is simply not drawn.
-    `matrix plot` would tile the grid edge-to-edge and paint those absences as
-    the ramp's lightest step, which is exactly the reading the panel must not
-    allow.
-    """
-    models = sorted(by_model, key=lambda m: -len(by_model[m]["union"]))
-    modules = sorted({attrs[u]["top"] for i in by_model.values() for u in i["union"]
-                      if attrs.get(u)})
-    counts = [[sum(1 for u in by_model[m]["union"]
-                   if attrs.get(u) and attrs[u]["top"] == mod)
-               for mod in modules] for m in models]
-    vmax = max(max(row) for row in counts)
-
-    cells = []
-    for i, row in enumerate(counts):
-        for j, v in enumerate(row):
-            if not v:
-                continue
-            step = min(int(round((0.34 + 0.66 * v / vmax) * (len(SEQ_BLUE) - 1))),
-                       len(SEQ_BLUE) - 1)
-            # evalInkStrong, not evalInk: the secondary ink reads at 1.8:1 on
-            # evalSeq7, where the primary holds 4.4:1. The >= 8 cutover below
-            # is the point where the primary ink finally loses to the surface,
-            # and matches the matplotlib heatmap.
-            ink = "evalSurface" if step >= 8 else "evalInkStrong"
-            cells.append(
-                f"\\draw[fill=evalSeq{step}, draw=none] (axis cs:{j + 0.04:.2f},{i + 0.04:.2f})"
-                f" rectangle (axis cs:{j + 0.96:.2f},{i + 0.96:.2f});\n"
-                f"\\node[font=\\scriptsize, color={ink}] at (axis cs:{j + 0.5:.2f},{i + 0.5:.2f}) {{{v}}};\n"
-            )
-
-    xt = ",".join(f"{j + 0.5:.1f}" for j in range(len(modules)))
-    xl = ",".join(_tex_escape(m) for m in modules)
-    yt = ",".join(f"{i + 0.5:.1f}" for i in range(len(models)))
-    yl = ",".join(_tex_escape(_display_model(m)) for m in models)
-    return (
-        "\\nextgroupplot[" + _tikz_decision_axis("0.305\\textwidth", "4.8cm") +
-        f"  xmin=0, xmax={len(modules)}, ymin=0, ymax={len(models)}, y dir=reverse,\n"
-        f"  xtick={{{xt}}}, xticklabels={{{xl}}},\n"
-        "  x tick label style={rotate=90, anchor=east, font=\\scriptsize},\n"
-        f"  ytick={{{yt}}}, yticklabels={{{yl}}},\n"
-        "  title={(a) Module choice},\n"
-        "]\n" + "".join(cells)
-    )
-
-
-def _tikz_panel_targeting(by_model, attrs, pool):
-    """(b) Dumbbell: the ready pool's mean fan-in vs each model's own."""
-    import statistics
-
-    pool_mean = statistics.mean(attrs[u]["fanin"] for u in pool)
-    models = sorted(by_model, key=lambda m: -len(by_model[m]["union"]))
-    n = len(models)
-    lines, pool_pts, model_pts, labels = [], [], [], []
-    xmax = 0.0
-    for i, m in enumerate(models):
-        units = [u for u in by_model[m]["union"] if attrs.get(u)]
-        mean = statistics.mean(attrs[u]["fanin"] for u in units)
-        y = n - 1 - i
-        xmax = max(xmax, mean)
-        lines.append(f"\\draw[evalBlue, line width=1pt] (axis cs:{pool_mean:.3f},{y})"
-                     f" -- (axis cs:{mean:.3f},{y});\n")
-        pool_pts.append(f"({pool_mean:.3f},{y})")
-        model_pts.append(f"({mean:.3f},{y})")
-        labels.append(
-            f"\\node[font=\\scriptsize, color=evalInk, anchor=west] at (axis cs:{mean:.3f},{y})"
-            f" {{\\hspace{{4pt}}{mean / pool_mean:.1f}$\\times$ (n={len(units)})}};\n"
-        )
-    yl = ",".join(_tex_escape(_display_model(m)) for m in reversed(models))
-    return (
-        "\\nextgroupplot[" + _tikz_decision_axis("0.295\\textwidth", "4.8cm") +
-        "  xmajorgrids, grid style={draw=evalGrid, line width=0.4pt},\n"
-        # ymin is pulled well below the last row on purpose: the reference-line
-        # label lives in that band, and anywhere higher it collides with either
-        # the bottom dumbbell or the title.
-        f"  xmin=0, xmax={max(7.5, xmax * 2.0):.1f}, xtick={{0,2,4,6}}, ymin=-1.25, ymax={n - 0.3},\n"
-        f"  ytick={{{','.join(str(i) for i in range(n))}}}, yticklabels={{{yl}}},\n"
-        "  xlabel={Mean fan-in of files chosen},\n"
-        "  title={(b) Targeting vs.\\ roadmap},\n"
-        "]\n"
-        # Reference first, so the dumbbells sit over it.
-        f"\\draw[evalAxis, line width=0.5pt] (axis cs:{pool_mean:.3f},-1.25)"
-        f" -- (axis cs:{pool_mean:.3f},{n - 0.3});\n"
-        f"\\node[font=\\scriptsize, color=evalInk, anchor=south west, align=left]"
-        f" at (axis cs:{pool_mean:.3f},-1.18) {{\\hspace{{2pt}}ready pool}};\n"
-        + "".join(lines)
-        + "\\addplot[only marks, mark=*, mark size=1.3pt, color=evalAxis, forget plot]\n"
-          "  coordinates {" + " ".join(pool_pts) + "};\n"
-        + "\\addplot[only marks, mark=*, mark size=2.1pt, color=evalBlue, forget plot]\n"
-          "  coordinates {" + " ".join(model_pts) + "};\n"
-        + "".join(labels)
-    )
-
-
 def _tikz_panel_agreement(buckets, n_models):
-    """(c) Distinct files by how many models independently settled them."""
+    """Distinct files by how many models independently settled them."""
     ns = sorted(buckets, reverse=True)
     total = sum(len(v) for v in buckets.values())
     n = len(ns)
@@ -2470,91 +2271,14 @@ def _tikz_panel_agreement(buckets, n_models):
         )
     yl = ",".join(f"{k} of {n_models}" for k in reversed(ns))
     return (
-        "\\nextgroupplot[" + _tikz_decision_axis("0.235\\textwidth", "4.8cm") +
+        "\\nextgroupplot[" + _tikz_decision_axis("0.55\\textwidth", "4.6cm") +
         "  xmajorgrids, grid style={draw=evalGrid, line width=0.4pt},\n"
         f"  xmin=0, xmax={total * 1.55:.0f}, xtick={{0,25,50}}, ymin=-0.7, ymax={n - 0.3},\n"
         f"  ytick={{{','.join(str(i) for i in range(n))}}}, yticklabels={{{yl}}},\n"
         "  xlabel={Distinct files},\n"
-        "  title={(c) Cross-model agreement},\n"
+        "  title={Cross-model agreement},\n"
         "]\n" + "".join(bars) + "".join(labels)
     )
-
-
-def _tikz_panel_unblocking(unblocking):
-    """(d) Files unblocked downstream per file settled -- the outcome panel.
-
-    Open bars rather than a pattern fill for the lower-bound runs: pgfplots
-    would need the patterns library for a hatch, and an unfilled bar carries
-    the same "not a measurement" reading without adding a package the paper
-    would have to load.
-    """
-    order = [k for k in KEYS if k in unblocking]
-    solid, open_ = [], []
-    vmax = 0.0
-    for k in order:
-        settled, newly, ok = unblocking[k]
-        v = newly / settled
-        vmax = max(vmax, v)
-        (solid if ok else open_).append(f"({RUN_CODES[k]},{v:.3f})")
-    codes = ",".join(RUN_CODES[k] for k in order)
-    plots = ""
-    if solid:
-        plots += ("\\addplot[ybar, fill=evalBlue, draw=none, bar width=7pt, bar shift=0pt]\n"
-                  "  coordinates {" + " ".join(solid) + "};\n")
-    if open_:
-        plots += ("\\addplot[ybar, fill=none, draw=evalBlue, line width=0.8pt, bar width=7pt,\n"
-                  "  bar shift=0pt] coordinates {" + " ".join(open_) + "};\n")
-    return (
-        "\\nextgroupplot[" + _tikz_decision_axis("0.305\\textwidth", "4.8cm") +
-        "  ymajorgrids, grid style={draw=evalGrid, line width=0.4pt},\n"
-        f"  symbolic x coords={{{codes}}}, xtick={{{codes}}},\n"
-        "  x tick label style={rotate=90, anchor=east, font=\\scriptsize},\n"
-        f"  ymin=0, ymax={vmax * 1.18:.2f}, enlarge x limits=0.06,\n"
-        "  ylabel={Unblocked / file}, ylabel near ticks,\n"
-        "  ylabel style={font=\\footnotesize, yshift=-7pt},\n"
-        "  title={(d) Did the choice unblock work?},\n"
-        "]\n" + plots
-    )
-
-
-def write_tikz_decision_figure(translated_units, decision_models):
-    """The decision-making figure as pgfplots, mirroring fig6_decision_making.png.
-
-    Same numbers, same palette steps, same panel order as the PNG -- the paper
-    gets a vector copy that picks up the document's fonts, and there is still
-    one source of truth behind both.
-    """
-    by_model = files_by_decision_model(translated_units, decision_models)
-    attrs = fork_point_roadmap(EXPERIMENTS, RUNS, translated_units)
-    pool = ready_pool(attrs)
-    buckets, n_models = model_settlement_frequency(translated_units, decision_models)
-    unblocking = unblocking_per_run(translated_units)
-
-    body = [
-        TEX_DATA_BANNER,
-        "%% Decision-making figure. Requires pgfplots + the groupplots library\n"
-        "%% and the evalXxx colours, both set up in jss-submission.sty.\n"
-        "%% Runs are collapsed to the model that CHOSE the files: the run's own\n"
-        "%% model for csloop, the TRIAGE model for ccworkflow (author and\n"
-        "%% integrate agents do not select). Counts are over DISTINCT files, so a\n"
-        "%% model with four runs cannot out-vote one with a single run by\n"
-        f"%% repeating itself. Fan-in and readiness come from the doxygen map\n"
-        f"%% reconstructed at the shared fork point: {len(attrs)} untranslated files,\n"
-        f"%% {len(pool)} ready leaves. In (a) an empty cell means the model never\n"
-        "%% entered that module at all, not that it entered and settled nothing.\n",
-        "\\begin{tikzpicture}\n",
-        "\\begin{groupplot}[group style={group size=2 by 2, horizontal sep=1.5cm,\n"
-        "    vertical sep=2.1cm}]\n",
-        _tikz_panel_model_module(by_model, attrs),
-        _tikz_panel_targeting(by_model, attrs, pool),
-        _tikz_panel_agreement(buckets, n_models),
-        _tikz_panel_unblocking(unblocking),
-        "\\end{groupplot}\n",
-        "\\end{tikzpicture}\n",
-    ]
-    out = TEX_DIR / "fig_decision.tex"
-    out.write_text("".join(body))
-    print(f"wrote {out}")
 
 
 def _tikz_timeline_marker_size_pt(fanin_mean):
@@ -2564,17 +2288,14 @@ def _tikz_timeline_marker_size_pt(fanin_mean):
     return 5.0 if fanin_mean is None else 5.0 + 3.2 * (fanin_mean ** 0.5)
 
 
-def write_tikz_timeline_figure(module_timelines):
-    """The module-entry timeline as pgfplots, mirroring fig7_module_timeline.png.
-
-    Drawn with raw \\node/\\draw primitives at `axis cs` coordinates rather than
-    pgfplots' own scatter machinery, the same approach _tikz_panel_model_module
-    and _tikz_panel_targeting already use for this file's other hand-built
-    panels -- pgfplots has no first-class per-point variable marker size
-    outside its `scatter` mode, and standalone timeline correctness matters
-    more here than fitting that mode.
+def _tikz_panel_timeline(module_timelines):
+    """Module-entry timeline, drawn with raw \\node/\\draw primitives at `axis
+    cs` coordinates rather than pgfplots' own scatter machinery -- pgfplots
+    has no first-class per-point variable marker size outside its `scatter`
+    mode, and standalone timeline correctness matters more here than fitting
+    that mode.
     """
-    keys_order = list(reversed(KEYS))  # row 0 at the bottom, run 1 (R2/R8/R9...) at the top
+    keys_order = list(reversed(KEYS))  # row 0 at the bottom, R1 at the top
     n = len(KEYS)
     all_x = [e["elapsed_min"] for v in module_timelines.values() for e in v]
     xmax = (max(all_x) if all_x else 1.0) * 1.14
@@ -2606,39 +2327,59 @@ def write_tikz_timeline_figure(module_timelines):
 
     legend_lines = "".join(
         f"\\node[circle, fill={TEX_MODULE_COLOR.get(m, 'evalInkStrong')}, minimum size=7pt, inner sep=0pt] "
-        f"at (rel axis cs:0.90,{0.95 - 0.08 * i:.3f}) {{}};\n"
+        f"at (rel axis cs:0.90,{1.10 - 0.07 * i:.3f}) {{}};\n"
         f"\\node[font=\\scriptsize, color=evalInk, anchor=west, xshift=6pt] "
-        f"at (rel axis cs:0.90,{0.95 - 0.08 * i:.3f}) {{{_tex_escape(m)}}};\n"
+        f"at (rel axis cs:0.90,{1.10 - 0.07 * i:.3f}) {{{_tex_escape(m)}}};\n"
         for i, m in enumerate(modules_seen)
     )
 
     yticklabels = ",".join(_tex_escape(RUN_CODES[k]) for k in keys_order)
+    return (
+        "\\nextgroupplot[\n"
+        "  width=0.92\\textwidth, height=" + f"{0.34 * n + 1.6:.2f}cm,\n"
+        "  axis lines=left, axis line style={draw=evalAxis, line width=0.4pt},\n"
+        "  xmajorgrids, grid style={draw=evalGrid, line width=0.4pt},\n"
+        "  tick label style={font=\\footnotesize}, label style={font=\\footnotesize, color=evalInk},\n"
+        f"  xmin=0, xmax={xmax:.3g}, ymin=-0.7, ymax={n - 0.3:.2f},\n"
+        f"  ytick={{{','.join(str(i) for i in range(n))}}}, yticklabels={{{yticklabels}}},\n"
+        "  y tick label style={font=\\scriptsize}, xtick style={draw=none}, ytick style={draw=none},\n"
+        "  xlabel={Elapsed minutes since run start},\n"
+        "]\n" + "".join(body_lines) + legend_lines
+    )
+
+
+def write_tikz_decision_figure(translated_units, decision_models, module_timelines):
+    """Decision-making figure as pgfplots, mirroring fig6_decision_making.png:
+    the module-entry timeline on top, cross-model file agreement below.
+
+    Same numbers, same palette steps, same panel order as the PNG -- the paper
+    gets a vector copy that picks up the document's fonts, and there is still
+    one source of truth behind both.
+    """
+    buckets, n_models = model_settlement_frequency(translated_units, decision_models)
+
     body = [
         TEX_DATA_BANNER,
-        "%% Module-entry timeline. Requires pgfplots + the evalXxx colours, both\n"
-        "%% set up in jss-submission.sty. Marker area is proportional to the mean\n"
+        "%% Decision-making figure. Requires pgfplots + the groupplots library\n"
+        "%% and the evalXxx colours, both set up in jss-submission.sty. Top panel:\n"
+        "%% module-entry timeline -- marker area is proportional to the mean\n"
         "%% doxygen fan-in of the units that module's run actually settled (never\n"
         "%% a merely-explored candidate -- see parse_decision_timeline.py); filled\n"
         "%% = every settled unit there was a ready leaf (deps=0, blind=0) at the\n"
         "%% shared fork point, hollow = at least one was entered while something\n"
-        "%% else there still had an untranslated callee.\n",
+        "%% else there still had an untranslated callee. Bottom panel: runs are\n"
+        "%% collapsed to the model that CHOSE the files (the run's own model for\n"
+        "%% csloop, the TRIAGE model for ccworkflow), and counts are over DISTINCT\n"
+        "%% files, so a model with four runs cannot out-vote one with a single run\n"
+        "%% by repeating itself.\n",
         "\\begin{tikzpicture}\n",
-        "\\begin{axis}[\n",
-        "  width=0.92\\textwidth, height=" + f"{0.34 * n + 1.6:.2f}cm,\n",
-        "  axis lines=left, axis line style={draw=evalAxis, line width=0.4pt},\n",
-        "  xmajorgrids, grid style={draw=evalGrid, line width=0.4pt},\n",
-        "  tick label style={font=\\footnotesize}, label style={font=\\footnotesize, color=evalInk},\n",
-        f"  xmin=0, xmax={xmax:.3g}, ymin=-0.7, ymax={n - 0.3:.2f},\n",
-        f"  ytick={{{','.join(str(i) for i in range(n))}}}, yticklabels={{{yticklabels}}},\n",
-        "  y tick label style={font=\\scriptsize}, xtick style={draw=none}, ytick style={draw=none},\n",
-        "  xlabel={Elapsed minutes since run start},\n",
-        "]\n",
-        *body_lines,
-        legend_lines,
-        "\\end{axis}\n",
+        "\\begin{groupplot}[group style={group size=1 by 2, vertical sep=2.4cm}]\n",
+        _tikz_panel_timeline(module_timelines),
+        _tikz_panel_agreement(buckets, n_models),
+        "\\end{groupplot}\n",
         "\\end{tikzpicture}\n",
     ]
-    out = TEX_DIR / "fig_timeline.tex"
+    out = TEX_DIR / "fig_decision.tex"
     out.write_text("".join(body))
     print(f"wrote {out}")
 
@@ -2684,16 +2425,14 @@ def main():
     make_standalone_figures(runs, coverage, files_settled, wall_times, tool_calls_per_file)
     _bump_fonts_for_combined()
     make_combined_figure(runs, coverage, files_settled, wall_times, tool_calls_per_file)
-    make_decision_figure(translated_units, decision_models)
-    make_module_timeline_figure(module_timelines)
+    make_decision_figure(translated_units, decision_models, module_timelines)
     write_summary_tables(runs, coverage, files_settled, translated_units, wall_times, tool_calls_per_file,
                          decision_models, shadowed_units, module_timelines)
 
     # LaTeX/TikZ artifacts consumed directly by the paper.
     write_tikz_colors()
     write_tikz_figure(metrics)
-    write_tikz_decision_figure(translated_units, decision_models)
-    write_tikz_timeline_figure(module_timelines)
+    write_tikz_decision_figure(translated_units, decision_models, module_timelines)
     write_tex_tables(metrics, coverage, translated_units, decision_models)
 
 

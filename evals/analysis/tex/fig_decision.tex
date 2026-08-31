@@ -7,73 +7,68 @@
 %% see generate_graphs.py. Earlier days (07-24/07-25, 08-11..08-26) forked
 %% from different roadmap states and are deliberately out of scope.
 %% Decision-making figure. Requires pgfplots + the groupplots library
-%% and the evalXxx colours, both set up in jss-submission.sty.
-%% Runs are collapsed to the model that CHOSE the files: the run's own
-%% model for csloop, the TRIAGE model for ccworkflow (author and
-%% integrate agents do not select). Counts are over DISTINCT files, so a
-%% model with four runs cannot out-vote one with a single run by
-%% repeating itself. Fan-in and readiness come from the doxygen map
-%% reconstructed at the shared fork point: 445 untranslated files,
-%% 229 ready leaves. In (a) an empty cell means the model never
-%% entered that module at all, not that it entered and settled nothing.
+%% and the evalXxx colours, both set up in jss-submission.sty. Top panel:
+%% module-entry timeline -- marker area is proportional to the mean
+%% doxygen fan-in of the units that module's run actually settled (never
+%% a merely-explored candidate -- see parse_decision_timeline.py); filled
+%% = every settled unit there was a ready leaf (deps=0, blind=0) at the
+%% shared fork point, hollow = at least one was entered while something
+%% else there still had an untranslated callee. Bottom panel: runs are
+%% collapsed to the model that CHOSE the files (the run's own model for
+%% csloop, the TRIAGE model for ccworkflow), and counts are over DISTINCT
+%% files, so a model with four runs cannot out-vote one with a single run
+%% by repeating itself.
 \begin{tikzpicture}
-\begin{groupplot}[group style={group size=2 by 2, horizontal sep=1.5cm,
-    vertical sep=2.1cm}]
-\nextgroupplot[width=0.305\textwidth, height=4.8cm,
-  axis lines=left, axis line style={draw=none},
-  tick label style={font=\footnotesize, /pgf/number format/assume math mode=true},
-  label style={font=\footnotesize, color=evalInk},
-  title style={font=\small\bfseries, yshift=-1pt},
-  xtick style={draw=none}, ytick style={draw=none},
-  xmin=0, xmax=3, ymin=0, ymax=3, y dir=reverse,
-  xtick={0.5,1.5,2.5}, xticklabels={BDK,Mods,W2jet},
-  x tick label style={rotate=90, anchor=east, font=\scriptsize},
-  ytick={0.5,1.5,2.5}, yticklabels={opus-5,sonnet-5,gpt56sol},
-  title={(a) Module choice},
-]
-\draw[fill=evalSeq7, draw=none] (axis cs:0.04,0.04) rectangle (axis cs:0.96,0.96);
-\node[font=\scriptsize, color=evalInkStrong] at (axis cs:0.50,0.50) {5};
-\draw[fill=evalSeq6, draw=none] (axis cs:1.04,0.04) rectangle (axis cs:1.96,0.96);
-\node[font=\scriptsize, color=evalInkStrong] at (axis cs:1.50,0.50) {4};
-\draw[fill=evalSeq12, draw=none] (axis cs:2.04,0.04) rectangle (axis cs:2.96,0.96);
-\node[font=\scriptsize, color=evalSurface] at (axis cs:2.50,0.50) {15};
-\draw[fill=evalSeq7, draw=none] (axis cs:0.04,1.04) rectangle (axis cs:0.96,1.96);
-\node[font=\scriptsize, color=evalInkStrong] at (axis cs:0.50,1.50) {5};
-\draw[fill=evalSeq6, draw=none] (axis cs:1.04,1.04) rectangle (axis cs:1.96,1.96);
-\node[font=\scriptsize, color=evalInkStrong] at (axis cs:1.50,1.50) {3};
-\draw[fill=evalSeq10, draw=none] (axis cs:2.04,1.04) rectangle (axis cs:2.96,1.96);
-\node[font=\scriptsize, color=evalSurface] at (axis cs:2.50,1.50) {11};
-\draw[fill=evalSeq7, draw=none] (axis cs:0.04,2.04) rectangle (axis cs:0.96,2.96);
-\node[font=\scriptsize, color=evalInkStrong] at (axis cs:0.50,2.50) {5};
-\draw[fill=evalSeq7, draw=none] (axis cs:1.04,2.04) rectangle (axis cs:1.96,2.96);
-\node[font=\scriptsize, color=evalInkStrong] at (axis cs:1.50,2.50) {5};
-\draw[fill=evalSeq7, draw=none] (axis cs:2.04,2.04) rectangle (axis cs:2.96,2.96);
-\node[font=\scriptsize, color=evalInkStrong] at (axis cs:2.50,2.50) {6};
-\nextgroupplot[width=0.295\textwidth, height=4.8cm,
-  axis lines=left, axis line style={draw=none},
-  tick label style={font=\footnotesize, /pgf/number format/assume math mode=true},
-  label style={font=\footnotesize, color=evalInk},
-  title style={font=\small\bfseries, yshift=-1pt},
-  xtick style={draw=none}, ytick style={draw=none},
+\begin{groupplot}[group style={group size=1 by 2, vertical sep=2.4cm}]
+\nextgroupplot[
+  width=0.92\textwidth, height=5.34cm,
+  axis lines=left, axis line style={draw=evalAxis, line width=0.4pt},
   xmajorgrids, grid style={draw=evalGrid, line width=0.4pt},
-  xmin=0, xmax=7.5, xtick={0,2,4,6}, ymin=-1.25, ymax=2.7,
-  ytick={0,1,2}, yticklabels={gpt56sol,sonnet-5,opus-5},
-  xlabel={Mean fan-in of files chosen},
-  title={(b) Targeting vs.\ roadmap},
+  tick label style={font=\footnotesize}, label style={font=\footnotesize, color=evalInk},
+  xmin=0, xmax=32.1, ymin=-0.7, ymax=10.70,
+  ytick={0,1,2,3,4,5,6,7,8,9,10}, yticklabels={R11,R10,R9,R8,R7,R6,R5,R4,R3,R2,R1},
+  y tick label style={font=\scriptsize}, xtick style={draw=none}, ytick style={draw=none},
+  xlabel={Elapsed minutes since run start},
 ]
-\draw[evalAxis, line width=0.5pt] (axis cs:0.441,-1.25) -- (axis cs:0.441,2.7);
-\node[font=\scriptsize, color=evalInk, anchor=south west, align=left] at (axis cs:0.441,-1.18) {\hspace{2pt}ready pool};
-\draw[evalBlue, line width=1pt] (axis cs:0.441,2) -- (axis cs:1.917,2);
-\draw[evalBlue, line width=1pt] (axis cs:0.441,1) -- (axis cs:1.789,1);
-\draw[evalBlue, line width=1pt] (axis cs:0.441,0) -- (axis cs:2.250,0);
-\addplot[only marks, mark=*, mark size=1.3pt, color=evalAxis, forget plot]
-  coordinates {(0.441,2) (0.441,1) (0.441,0)};
-\addplot[only marks, mark=*, mark size=2.1pt, color=evalBlue, forget plot]
-  coordinates {(1.917,2) (1.789,1) (2.250,0)};
-\node[font=\scriptsize, color=evalInk, anchor=west] at (axis cs:1.917,2) {\hspace{4pt}4.3$\times$ (n=24)};
-\node[font=\scriptsize, color=evalInk, anchor=west] at (axis cs:1.789,1) {\hspace{4pt}4.1$\times$ (n=19)};
-\node[font=\scriptsize, color=evalInk, anchor=west] at (axis cs:2.250,0) {\hspace{4pt}5.1$\times$ (n=16)};
-\nextgroupplot[width=0.235\textwidth, height=4.8cm,
+\draw[evalAxis, line width=0.5pt] (axis cs:0.573,0) -- (axis cs:4.61,0) -- (axis cs:22.5,0);
+\node[circle, fill=evalOrange, draw=evalSurface, line width=0.6pt, minimum size=14.05pt, inner sep=0pt] at (axis cs:0.573,0) {};
+\node[circle, fill=evalSurface, draw=evalAqua, line width=1.1pt, minimum size=11.07pt, inner sep=0pt] at (axis cs:4.61,0) {};
+\node[circle, fill=evalBlue, draw=evalSurface, line width=0.6pt, minimum size=8.51pt, inner sep=0pt] at (axis cs:22.5,0) {};
+\draw[evalAxis, line width=0.5pt] (axis cs:0.724,1) -- (axis cs:12.6,1);
+\node[circle, fill=evalOrange, draw=evalSurface, line width=0.6pt, minimum size=9.53pt, inner sep=0pt] at (axis cs:0.724,1) {};
+\node[circle, fill=evalSurface, draw=evalAqua, line width=1.1pt, minimum size=11.07pt, inner sep=0pt] at (axis cs:12.6,1) {};
+\draw[evalAxis, line width=0.5pt] (axis cs:0.433,2) -- (axis cs:5.49,2);
+\node[circle, fill=evalOrange, draw=evalSurface, line width=0.6pt, minimum size=14.05pt, inner sep=0pt] at (axis cs:0.433,2) {};
+\node[circle, fill=evalAqua, draw=evalSurface, line width=0.6pt, minimum size=11.40pt, inner sep=0pt] at (axis cs:5.49,2) {};
+\node[circle, fill=evalOrange, draw=evalSurface, line width=0.6pt, minimum size=8.20pt, inner sep=0pt] at (axis cs:5.42,3) {};
+\node[circle, fill=evalOrange, draw=evalSurface, line width=0.6pt, minimum size=8.20pt, inner sep=0pt] at (axis cs:3.3,4) {};
+\draw[evalAxis, line width=0.5pt] (axis cs:1.34,5) -- (axis cs:19,5);
+\node[circle, fill=evalOrange, draw=evalSurface, line width=0.6pt, minimum size=8.20pt, inner sep=0pt] at (axis cs:1.34,5) {};
+\node[circle, fill=evalSurface, draw=evalAqua, line width=1.1pt, minimum size=9.53pt, inner sep=0pt] at (axis cs:19,5) {};
+\draw[evalAxis, line width=0.5pt] (axis cs:4.07,6) -- (axis cs:20.7,6) -- (axis cs:28.2,6);
+\node[circle, fill=evalOrange, draw=evalSurface, line width=0.6pt, minimum size=10.06pt, inner sep=0pt] at (axis cs:4.07,6) {};
+\node[circle, fill=evalAqua, draw=evalSurface, line width=0.6pt, minimum size=11.07pt, inner sep=0pt] at (axis cs:20.7,6) {};
+\node[circle, fill=evalBlue, draw=evalSurface, line width=0.6pt, minimum size=8.51pt, inner sep=0pt] at (axis cs:28.2,6) {};
+\draw[evalAxis, line width=0.5pt] (axis cs:0.683,7) -- (axis cs:16.6,7);
+\node[circle, fill=evalOrange, draw=evalSurface, line width=0.6pt, minimum size=10.06pt, inner sep=0pt] at (axis cs:0.683,7) {};
+\node[circle, fill=evalSurface, draw=evalAqua, line width=1.1pt, minimum size=9.92pt, inner sep=0pt] at (axis cs:16.6,7) {};
+\draw[evalAxis, line width=0.5pt] (axis cs:1.41,8) -- (axis cs:24.1,8);
+\node[circle, fill=evalSurface, draw=evalAqua, line width=1.1pt, minimum size=9.92pt, inner sep=0pt] at (axis cs:1.41,8) {};
+\node[circle, fill=evalBlue, draw=evalSurface, line width=0.6pt, minimum size=8.51pt, inner sep=0pt] at (axis cs:24.1,8) {};
+\draw[evalAxis, line width=0.5pt] (axis cs:0.811,9) -- (axis cs:23.7,9);
+\node[circle, fill=evalAqua, draw=evalSurface, line width=0.6pt, minimum size=9.96pt, inner sep=0pt] at (axis cs:0.811,9) {};
+\node[circle, fill=evalBlue, draw=evalSurface, line width=0.6pt, minimum size=8.51pt, inner sep=0pt] at (axis cs:23.7,9) {};
+\draw[evalAxis, line width=0.5pt] (axis cs:0.714,10) -- (axis cs:4.08,10) -- (axis cs:26,10);
+\node[circle, fill=evalOrange, draw=evalSurface, line width=0.6pt, minimum size=7.61pt, inner sep=0pt] at (axis cs:0.714,10) {};
+\node[circle, fill=evalBlue, draw=evalSurface, line width=0.6pt, minimum size=8.51pt, inner sep=0pt] at (axis cs:4.08,10) {};
+\node[circle, fill=evalAqua, draw=evalSurface, line width=0.6pt, minimum size=11.07pt, inner sep=0pt] at (axis cs:26,10) {};
+\node[circle, fill=evalBlue, minimum size=7pt, inner sep=0pt] at (rel axis cs:0.90,1.100) {};
+\node[font=\scriptsize, color=evalInk, anchor=west, xshift=6pt] at (rel axis cs:0.90,1.100) {BDK};
+\node[circle, fill=evalOrange, minimum size=7pt, inner sep=0pt] at (rel axis cs:0.90,1.030) {};
+\node[font=\scriptsize, color=evalInk, anchor=west, xshift=6pt] at (rel axis cs:0.90,1.030) {Mods};
+\node[circle, fill=evalAqua, minimum size=7pt, inner sep=0pt] at (rel axis cs:0.90,0.960) {};
+\node[font=\scriptsize, color=evalInk, anchor=west, xshift=6pt] at (rel axis cs:0.90,0.960) {W2jet};
+\nextgroupplot[width=0.55\textwidth, height=4.6cm,
   axis lines=left, axis line style={draw=none},
   tick label style={font=\footnotesize, /pgf/number format/assume math mode=true},
   label style={font=\footnotesize, color=evalInk},
@@ -83,7 +78,7 @@
   xmin=0, xmax=39, xtick={0,25,50}, ymin=-0.7, ymax=2.7,
   ytick={0,1,2}, yticklabels={1 of 3,2 of 3,3 of 3},
   xlabel={Distinct files},
-  title={(c) Cross-model agreement},
+  title={Cross-model agreement},
 ]
 \addplot[xbar, fill=evalOrd2, draw=none, bar width=10pt, forget plot] coordinates {(12,2)};
 \addplot[xbar, fill=evalOrd1, draw=none, bar width=10pt, forget plot] coordinates {(10,1)};
@@ -91,23 +86,5 @@
 \node[font=\scriptsize, color=evalInk, anchor=west] at (axis cs:12,2) {\hspace{3pt}12 (48\%)};
 \node[font=\scriptsize, color=evalInk, anchor=west] at (axis cs:10,1) {\hspace{3pt}10 (40\%)};
 \node[font=\scriptsize, color=evalInk, anchor=west] at (axis cs:3,0) {\hspace{3pt}3 (12\%)};
-\nextgroupplot[width=0.305\textwidth, height=4.8cm,
-  axis lines=left, axis line style={draw=none},
-  tick label style={font=\footnotesize, /pgf/number format/assume math mode=true},
-  label style={font=\footnotesize, color=evalInk},
-  title style={font=\small\bfseries, yshift=-1pt},
-  xtick style={draw=none}, ytick style={draw=none},
-  ymajorgrids, grid style={draw=evalGrid, line width=0.4pt},
-  symbolic x coords={R2,R8,R3,R4,R10,R5,R12,R6,R7,R11}, xtick={R2,R8,R3,R4,R10,R5,R12,R6,R7,R11},
-  x tick label style={rotate=90, anchor=east, font=\scriptsize},
-  ymin=0, ymax=3.30, enlarge x limits=0.06,
-  ylabel={Unblocked / file}, ylabel near ticks,
-  ylabel style={font=\footnotesize, yshift=-7pt},
-  title={(d) Did the choice unblock work?},
-]
-\addplot[ybar, fill=evalBlue, draw=none, bar width=7pt, bar shift=0pt]
-  coordinates {(R4,1.071) (R5,0.500) (R12,0.500) (R6,2.800) (R7,1.100) (R11,1.000)};
-\addplot[ybar, fill=none, draw=evalBlue, line width=0.8pt, bar width=7pt,
-  bar shift=0pt] coordinates {(R2,0.846) (R8,0.800) (R3,0.600) (R10,0.500)};
 \end{groupplot}
 \end{tikzpicture}
