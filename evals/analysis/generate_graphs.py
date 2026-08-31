@@ -2325,22 +2325,31 @@ def _tikz_panel_timeline(module_timelines):
                 f"at (axis cs:{e['elapsed_min']:.3g},{y}) {{}};\n"
             )
 
+    # Legend swatches drawn in `axis cs` at y > n-1 (a headroom band reserved
+    # in ymax below, above every real row) rather than at `rel axis cs` y>1:
+    # a groupplot's `\node ... at (rel axis cs:x,y>1)` renders outside the
+    # axis's own bounding box, which this document's style clips away, so the
+    # only reliable way to put a legend "above" the data is to reserve real
+    # data-coordinate space for it and never let a marker be plotted there.
+    legend_y0 = n + 0.3
+    legend_x = xmax * 0.72
     legend_lines = "".join(
         f"\\node[circle, fill={TEX_MODULE_COLOR.get(m, 'evalInkStrong')}, minimum size=7pt, inner sep=0pt] "
-        f"at (rel axis cs:0.90,{1.10 - 0.07 * i:.3f}) {{}};\n"
+        f"at (axis cs:{legend_x:.3g},{legend_y0 + 0.7 * i:.3f}) {{}};\n"
         f"\\node[font=\\scriptsize, color=evalInk, anchor=west, xshift=6pt] "
-        f"at (rel axis cs:0.90,{1.10 - 0.07 * i:.3f}) {{{_tex_escape(m)}}};\n"
+        f"at (axis cs:{legend_x:.3g},{legend_y0 + 0.7 * i:.3f}) {{{_tex_escape(m)}}};\n"
         for i, m in enumerate(modules_seen)
     )
 
     yticklabels = ",".join(_tex_escape(RUN_CODES[k]) for k in keys_order)
+    ymax = n + 0.3 + 0.7 * len(modules_seen)
     return (
         "\\nextgroupplot[\n"
-        "  width=0.92\\textwidth, height=" + f"{0.34 * n + 1.6:.2f}cm,\n"
+        "  width=0.92\\textwidth, height=" + f"{0.34 * ymax + 1.6:.2f}cm,\n"
         "  axis lines=left, axis line style={draw=evalAxis, line width=0.4pt},\n"
         "  xmajorgrids, grid style={draw=evalGrid, line width=0.4pt},\n"
         "  tick label style={font=\\footnotesize}, label style={font=\\footnotesize, color=evalInk},\n"
-        f"  xmin=0, xmax={xmax:.3g}, ymin=-0.7, ymax={n - 0.3:.2f},\n"
+        f"  xmin=0, xmax={xmax:.3g}, ymin=-0.7, ymax={ymax:.3f},\n"
         f"  ytick={{{','.join(str(i) for i in range(n))}}}, yticklabels={{{yticklabels}}},\n"
         "  y tick label style={font=\\scriptsize}, xtick style={draw=none}, ytick style={draw=none},\n"
         "  xlabel={Elapsed minutes since run start},\n"

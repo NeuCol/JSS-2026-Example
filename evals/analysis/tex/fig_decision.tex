@@ -21,11 +21,11 @@
 \begin{tikzpicture}
 \begin{groupplot}[group style={group size=1 by 2, vertical sep=2.4cm}]
 \nextgroupplot[
-  width=0.92\textwidth, height=5.34cm,
+  width=0.92\textwidth, height=6.16cm,
   axis lines=left, axis line style={draw=evalAxis, line width=0.4pt},
   xmajorgrids, grid style={draw=evalGrid, line width=0.4pt},
   tick label style={font=\footnotesize}, label style={font=\footnotesize, color=evalInk},
-  xmin=0, xmax=32.1, ymin=-0.7, ymax=10.70,
+  xmin=0, xmax=32.1, ymin=-0.7, ymax=13.400,
   ytick={0,1,2,3,4,5,6,7,8,9,10}, yticklabels={R11,R10,R9,R8,R7,R6,R5,R4,R3,R2,R1},
   y tick label style={font=\scriptsize}, xtick style={draw=none}, ytick style={draw=none},
   xlabel={Elapsed minutes since run start},
@@ -62,12 +62,12 @@
 \node[circle, fill=evalOrange, draw=evalSurface, line width=0.6pt, minimum size=7.61pt, inner sep=0pt] at (axis cs:0.714,10) {};
 \node[circle, fill=evalBlue, draw=evalSurface, line width=0.6pt, minimum size=8.51pt, inner sep=0pt] at (axis cs:4.08,10) {};
 \node[circle, fill=evalAqua, draw=evalSurface, line width=0.6pt, minimum size=11.07pt, inner sep=0pt] at (axis cs:26,10) {};
-\node[circle, fill=evalBlue, minimum size=7pt, inner sep=0pt] at (rel axis cs:0.90,1.100) {};
-\node[font=\scriptsize, color=evalInk, anchor=west, xshift=6pt] at (rel axis cs:0.90,1.100) {BDK};
-\node[circle, fill=evalOrange, minimum size=7pt, inner sep=0pt] at (rel axis cs:0.90,1.030) {};
-\node[font=\scriptsize, color=evalInk, anchor=west, xshift=6pt] at (rel axis cs:0.90,1.030) {Mods};
-\node[circle, fill=evalAqua, minimum size=7pt, inner sep=0pt] at (rel axis cs:0.90,0.960) {};
-\node[font=\scriptsize, color=evalInk, anchor=west, xshift=6pt] at (rel axis cs:0.90,0.960) {W2jet};
+\node[circle, fill=evalBlue, minimum size=7pt, inner sep=0pt] at (axis cs:23.1,11.300) {};
+\node[font=\scriptsize, color=evalInk, anchor=west, xshift=6pt] at (axis cs:23.1,11.300) {BDK};
+\node[circle, fill=evalOrange, minimum size=7pt, inner sep=0pt] at (axis cs:23.1,12.000) {};
+\node[font=\scriptsize, color=evalInk, anchor=west, xshift=6pt] at (axis cs:23.1,12.000) {Mods};
+\node[circle, fill=evalAqua, minimum size=7pt, inner sep=0pt] at (axis cs:23.1,12.700) {};
+\node[font=\scriptsize, color=evalInk, anchor=west, xshift=6pt] at (axis cs:23.1,12.700) {W2jet};
 \nextgroupplot[width=0.55\textwidth, height=4.6cm,
   axis lines=left, axis line style={draw=none},
   tick label style={font=\footnotesize, /pgf/number format/assume math mode=true},
