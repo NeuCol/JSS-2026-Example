@@ -1094,12 +1094,12 @@ def load_module_timelines(translated_units, attrs):
     return out
 
 
-def _timeline_marker_size(fanin_mean):
-    """Scatter `s` (an AREA in points^2) from mean fan-in, sqrt-scaled so the
-    drawn area — not the radius — tracks the value. A module whose settled
-    units carry no recovered doxygen attributes at all draws at the floor size
-    rather than vanishing."""
-    return 34 if fanin_mean is None else 34 + 46 * (fanin_mean ** 0.5)
+TIMELINE_MARKER_SIZE = 60
+"""Scatter `s` (points^2), constant across markers. Fan-in used to set marker
+area (sqrt-scaled) as a third encoded dimension alongside color (module) and
+fill/hollow (ready-leaf); dropped because three simultaneous encodings on one
+small scatter read as clutter rather than signal, and the fan-in values
+themselves are already discussed in the surrounding text."""
 
 
 def draw_module_timeline_panel(ax, timelines, letter=None):
@@ -1122,13 +1122,12 @@ def draw_module_timeline_panel(ax, timelines, letter=None):
         ax.plot(xs, [y] * len(xs), color=AXIS, lw=0.8, zorder=1)
         for e in entries:
             color = MODULE_COLOR.get(e["module"], MUTED)
-            size = _timeline_marker_size(e["fanin_mean"])
             all_ready = e["n_settled"] > 0 and e["n_ready_leaf"] == e["n_settled"]
             if all_ready:
-                ax.scatter([e["elapsed_min"]], [y], s=size, color=color, zorder=3,
+                ax.scatter([e["elapsed_min"]], [y], s=TIMELINE_MARKER_SIZE, color=color, zorder=3,
                            edgecolor=SURFACE, linewidth=0.8)
             else:
-                ax.scatter([e["elapsed_min"]], [y], s=size, facecolor=SURFACE, zorder=3,
+                ax.scatter([e["elapsed_min"]], [y], s=TIMELINE_MARKER_SIZE, facecolor=SURFACE, zorder=3,
                            edgecolor=color, linewidth=1.6)
 
     ax.set_yticks(range(len(KEYS)))
@@ -1199,12 +1198,11 @@ def make_decision_figure(translated_units, decision_models, module_timelines):
         + _wrap_caption_text(
             "Marker = first tool call in the run's own transcript that names a file inside that module "
             "(Bash command text for ccworkflow -- every ccworkflow tool call observed here is Bash, there "
-            "is no structured file-path tool -- or a read/write/edit path argument for csloop). Marker "
-            "area is proportional to the mean doxygen fan-in of the units that module's run actually "
-            "settled (git-exact, not the file that made first contact); filled vs. hollow marks whether "
-            "every settled unit there was a ready leaf (deps=0, blind=0) at the shared fork point, or the "
-            "run entered while at least one of them still had an untranslated callee. n/a: the run "
-            "settled no files in any module, or its transcript could not be parsed for a start time.", 9.6)
+            "is no structured file-path tool -- or a read/write/edit path argument for csloop). Filled vs. "
+            "hollow marks whether every settled unit there was a ready leaf (deps=0, blind=0) at the "
+            "shared fork point, or the run entered while at least one of them still had an untranslated "
+            "callee. n/a: the run settled no files in any module, or its transcript could not be parsed "
+            "for a start time.", 9.6)
         + [
             "Bottom: how many distinct models independently settled the same file. Counts are over "
             "distinct files, so a model with four runs cannot out-vote one with a single run by "
@@ -1924,13 +1922,55 @@ def _panel_frontier(metrics):
         "]\n"
     ]
 
-    # Label placement is a small packing problem, not an alternation. The csloop
-    # points cluster inside about 1mm of each other at the printed panel width,
-    # so a fixed rule (all labels above, or above/below by x order) puts two
-    # labels in the same place whenever the y ordering disagrees with the x
-    # ordering, which it does here. Instead each label tries eight positions
-    # around its mark and takes the first that hits neither another mark nor an
-    # already-placed label.
+    # Six csloop runs land within about a tenth of the axis range of each
+    # other -- individually legible labels for all six is not a placement
+    # problem to solve harder, it is a claim the panel cannot back: at this
+    # scale the six really are indistinguishable, which is exactly what the
+    # text says about them. So a tight group (>=3 points within CLUSTER_TOL
+    # of each other in both dimensions, Chebyshev-style) gets its marks
+    # plotted but not individually labeled; one compact note names the group
+    # instead, the same mechanism already used below for off-scale and
+    # unplotted runs.
+    CLUSTER_TOL = 0.1
+
+    def _norm(x, y):
+        return x / xmax, y / ymax
+
+    def _cluster_group(points):
+        n = len(points)
+        parent = list(range(n))
+
+        def find(a):
+            while parent[a] != a:
+                a = parent[a]
+            return a
+
+        for i in range(n):
+            xi, yi = _norm(points[i][0], points[i][1])
+            for j in range(i + 1, n):
+                xj, yj = _norm(points[j][0], points[j][1])
+                if abs(xi - xj) < CLUSTER_TOL and abs(yi - yj) < CLUSTER_TOL:
+                    ra, rb = find(i), find(j)
+                    if ra != rb:
+                        parent[ra] = rb
+        groups = {}
+        for i in range(n):
+            groups.setdefault(find(i), []).append(i)
+        clustered = set()
+        for g in groups.values():
+            if len(g) >= 3:
+                clustered.update(g)
+        return clustered
+
+    cluster_idx = _cluster_group(on_scale)
+    cluster_pts = [on_scale[i] for i in sorted(cluster_idx)]
+    labeled_scale = [p for i, p in enumerate(on_scale) if i not in cluster_idx]
+
+    # Label placement is a small packing problem, not an alternation. A fixed
+    # rule (all labels above, or above/below by x order) puts two labels in
+    # the same place whenever the y ordering disagrees with the x ordering.
+    # Instead each label tries eight positions around its mark and takes the
+    # first that hits neither another mark nor an already-placed label.
     #
     # Labels carry the full bold run code ("R3", not "3"). An earlier version
     # dropped the "R" to fit sixteen runs into this panel; at seven there is
@@ -1939,8 +1979,13 @@ def _panel_frontier(metrics):
     #
     # Geometry is done in axis fractions so x and y are comparable. The label
     # box is measured for a two-character bold \scriptsize code at the printed
-    # panel size; a three-character code (R10 and up) would need LABEL_W raised.
+    # panel size; a three-character code (R10, R11) gets a proportionally
+    # wider box below so it doesn't sit closer to its neighbors or the axis
+    # than its printed width actually is.
     LABEL_W, LABEL_H, MARK_R = 0.075, 0.085, 0.022
+
+    def _label_w(code):
+        return LABEL_W if len(code) <= 2 else LABEL_W * len(code) / 2
     # (anchor, dx, dy) in half-box units, in preference order: directly above or
     # below first, since those keep the label over its own x position.
     CANDIDATES = [
@@ -1949,9 +1994,14 @@ def _panel_frontier(metrics):
         ("south west", 0.8, 0.8), ("south east", -0.8, 0.8),
         ("north west", 0.8, -0.8), ("north east", -0.8, -0.8),
     ]
-
-    def _norm(x, y):
-        return x / xmax, y / ymax
+    # csloop's opus-5/gpt-5.6 runs (R4, R9, R10, R11) land within a few percent
+    # of xmax/ymax of each other, close enough that no candidate at the base
+    # reach clears both the marks and one another. Rather than accept the
+    # overlap, each ring below pushes the label twice as far from its mark as
+    # the last; a label placed beyond the first ring gets a thin leader line
+    # back to its mark so it still reads as that point's label rather than a
+    # stray number floating nearby.
+    RING_MULTS = [1.0, 2.0, 3.5, 5.0]
 
     marks = [_norm(x, y) for x, y, _, _ in on_scale]
 
@@ -1962,35 +2012,46 @@ def _panel_frontier(metrics):
 
     placed_boxes = []
     place_of = {}
-    for (px, py, code, _) in on_scale:
+    leader_of = {}
+    for (px, py, code, _) in labeled_scale:
         nx, ny = _norm(px, py)
-        best, best_cost = None, None
-        for anchor, dx, dy in CANDIDATES:
-            cx = nx + dx * (LABEL_W / 2 + MARK_R)
-            cy = ny + dy * (LABEL_H / 2 + MARK_R)
-            box = (cx - LABEL_W / 2, cy - LABEL_H / 2, cx + LABEL_W / 2, cy + LABEL_H / 2)
-            # Off-axis placements are unusable: the label gets clipped.
-            if box[0] < 0 or box[2] > 1.0 or box[1] < 0 or box[3] > 1.0:
-                continue
-            hits = sum(1 for m in marks
-                       if _overlaps(box, (m[0] - MARK_R, m[1] - MARK_R,
-                                          m[0] + MARK_R, m[1] + MARK_R)))
-            hits += sum(1 for b in placed_boxes if _overlaps(box, b))
-            if hits == 0:
-                best, best_cost = (anchor, dx, dy, box), 0
+        lw = _label_w(code)
+        best, best_cost, best_mult = None, None, 1.0
+        for mult in RING_MULTS:
+            ring_best, ring_cost = None, None
+            for anchor, dx, dy in CANDIDATES:
+                cx = nx + dx * (lw / 2 + MARK_R) * mult
+                cy = ny + dy * (LABEL_H / 2 + MARK_R) * mult
+                box = (cx - lw / 2, cy - LABEL_H / 2, cx + lw / 2, cy + LABEL_H / 2)
+                # Off-axis placements are unusable: the label gets clipped.
+                if box[0] < 0 or box[2] > 1.0 or box[1] < 0 or box[3] > 1.0:
+                    continue
+                hits = sum(1 for m in marks
+                           if _overlaps(box, (m[0] - MARK_R, m[1] - MARK_R,
+                                              m[0] + MARK_R, m[1] + MARK_R)))
+                hits += sum(1 for b in placed_boxes if _overlaps(box, b))
+                if hits == 0:
+                    ring_best, ring_cost = (anchor, dx, dy, box, cx, cy), 0
+                    break
+                if ring_cost is None or hits < ring_cost:
+                    ring_best, ring_cost = (anchor, dx, dy, box, cx, cy), hits
+            if ring_best is not None and (best_cost is None or ring_cost < best_cost):
+                best, best_cost, best_mult = ring_best, ring_cost, mult
+            if best_cost == 0:
                 break
-            if best_cost is None or hits < best_cost:
-                best, best_cost = (anchor, dx, dy, box), hits
         if best is None:
             best = (CANDIDATES[0][0], 0.0, 1.0,
-                    (nx - LABEL_W / 2, ny, nx + LABEL_W / 2, ny + LABEL_H))
-        anchor, dx, dy, box = best
+                    (nx - lw / 2, ny, nx + lw / 2, ny + LABEL_H),
+                    nx, ny + LABEL_H / 2 + MARK_R)
+        anchor, dx, dy, box, cx, cy = best
         placed_boxes.append(box)
         # pgfplots shifts from the mark, so convert the half-box offset back
         # into points along each axis.
         place_of[code] = (anchor,
-                          f"{dx * 2.2:.2g}pt",
-                          f"{dy * 2.2:.2g}pt")
+                          f"{dx * 2.2 * best_mult:.2g}pt",
+                          f"{dy * 2.2 * best_mult:.2g}pt")
+        if best_mult > 1.0:
+            leader_of[code] = (cx * xmax, cy * ymax)
 
     for harness, color in [("ccworkflow", "evalBlue"), ("csloop", "evalOrange")]:
         pts = [p for p in on_scale if p[3] == harness]
@@ -2000,6 +2061,14 @@ def _panel_frontier(metrics):
             + "};\n"
         )
         for x, y, code, _ in pts:
+            if code not in place_of:
+                continue  # part of the dense cluster; named in the note instead
+            if code in leader_of:
+                lx, ly = leader_of[code]
+                lines.append(
+                    f"\\draw[evalGrid, line width=0.3pt] (axis cs:{x:.3g},{y:.3g}) -- "
+                    f"(axis cs:{lx:.3g},{ly:.3g});\n"
+                )
             anchor, xshift, yshift = place_of[code]
             lines.append(
                 f"\\node[font=\\scriptsize\\bfseries, color=evalInk, anchor={anchor}, "
@@ -2017,6 +2086,15 @@ def _panel_frontier(metrics):
     notes = [
         f"{code} off scale:\\\\{x:.0f}\\,min, \\${y:.0f}/file" for x, y, code, _ in off_scale
     ]
+
+    if cluster_pts:
+        cluster_codes = [code for _, _, code, _ in cluster_pts]
+        cxs = [x for x, _, _, _ in cluster_pts]
+        cys = [y for _, y, _, _ in cluster_pts]
+        notes.append(f"{_compact_codes(cluster_codes)} cluster (not")
+        notes.append("individually labeled):")
+        notes.append(f"{min(cxs):.1f}\\,--\\,{max(cxs):.1f}\\,min,")
+        notes.append(f"\\${min(cys):.2f}\\,--\\,\\${max(cys):.2f}/file")
 
     # A run needs both a per-file cost and a per-file time to be a point here,
     # so runs that settled nothing or carry no rate card cannot appear at all.
@@ -2281,11 +2359,9 @@ def _tikz_panel_agreement(buckets, n_models):
     )
 
 
-def _tikz_timeline_marker_size_pt(fanin_mean):
-    """Node `minimum size` in pt (an absolute unit, unlike an axis-cs circle,
-    which would draw as an ellipse here since minutes and run-rows are on
-    wildly different scales) -- mirrors _timeline_marker_size's sqrt scaling."""
-    return 5.0 if fanin_mean is None else 5.0 + 3.2 * (fanin_mean ** 0.5)
+TIKZ_TIMELINE_MARKER_SIZE_PT = 8.5
+"""Node `minimum size` in pt, constant across markers -- see
+TIMELINE_MARKER_SIZE for why the fan-in-scaled size was dropped."""
 
 
 def _tikz_panel_timeline(module_timelines):
@@ -2316,12 +2392,11 @@ def _tikz_panel_timeline(module_timelines):
             body_lines.append(f"\\draw[evalAxis, line width=0.5pt] {coord_str};\n")
         for e in entries:
             color = TEX_MODULE_COLOR.get(e["module"], "evalInkStrong")
-            size = _tikz_timeline_marker_size_pt(e["fanin_mean"])
             all_ready = e["n_settled"] > 0 and e["n_ready_leaf"] == e["n_settled"]
             style = (f"fill={color}, draw=evalSurface, line width=0.6pt" if all_ready
                      else f"fill=evalSurface, draw={color}, line width=1.1pt")
             body_lines.append(
-                f"\\node[circle, {style}, minimum size={size:.2f}pt, inner sep=0pt] "
+                f"\\node[circle, {style}, minimum size={TIKZ_TIMELINE_MARKER_SIZE_PT:.2f}pt, inner sep=0pt] "
                 f"at (axis cs:{e['elapsed_min']:.3g},{y}) {{}};\n"
             )
 
@@ -2371,12 +2446,11 @@ def write_tikz_decision_figure(translated_units, decision_models, module_timelin
         TEX_DATA_BANNER,
         "%% Decision-making figure. Requires pgfplots + the groupplots library\n"
         "%% and the evalXxx colours, both set up in jss-submission.sty. Top panel:\n"
-        "%% module-entry timeline -- marker area is proportional to the mean\n"
-        "%% doxygen fan-in of the units that module's run actually settled (never\n"
-        "%% a merely-explored candidate -- see parse_decision_timeline.py); filled\n"
-        "%% = every settled unit there was a ready leaf (deps=0, blind=0) at the\n"
-        "%% shared fork point, hollow = at least one was entered while something\n"
-        "%% else there still had an untranslated callee. Bottom panel: runs are\n"
+        "%% module-entry timeline -- marker color is the module; filled = every\n"
+        "%% settled unit there was a ready leaf (deps=0, blind=0) at the shared\n"
+        "%% fork point, hollow = at least one was entered while something else\n"
+        "%% there still had an untranslated callee (see parse_decision_timeline.py\n"
+        "%% for what counts as \"settled\" here). Bottom panel: runs are\n"
         "%% collapsed to the model that CHOSE the files (the run's own model for\n"
         "%% csloop, the TRIAGE model for ccworkflow), and counts are over DISTINCT\n"
         "%% files, so a model with four runs cannot out-vote one with a single run\n"

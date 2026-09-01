@@ -8,12 +8,11 @@
 %% from different roadmap states and are deliberately out of scope.
 %% Decision-making figure. Requires pgfplots + the groupplots library
 %% and the evalXxx colours, both set up in jss-submission.sty. Top panel:
-%% module-entry timeline -- marker area is proportional to the mean
-%% doxygen fan-in of the units that module's run actually settled (never
-%% a merely-explored candidate -- see parse_decision_timeline.py); filled
-%% = every settled unit there was a ready leaf (deps=0, blind=0) at the
-%% shared fork point, hollow = at least one was entered while something
-%% else there still had an untranslated callee. Bottom panel: runs are
+%% module-entry timeline -- marker color is the module; filled = every
+%% settled unit there was a ready leaf (deps=0, blind=0) at the shared
+%% fork point, hollow = at least one was entered while something else
+%% there still had an untranslated callee (see parse_decision_timeline.py
+%% for what counts as "settled" here). Bottom panel: runs are
 %% collapsed to the model that CHOSE the files (the run's own model for
 %% csloop, the TRIAGE model for ccworkflow), and counts are over DISTINCT
 %% files, so a model with four runs cannot out-vote one with a single run
@@ -31,37 +30,37 @@
   xlabel={Elapsed minutes since run start},
 ]
 \draw[evalAxis, line width=0.5pt] (axis cs:0.573,0) -- (axis cs:4.61,0) -- (axis cs:22.5,0);
-\node[circle, fill=evalOrange, draw=evalSurface, line width=0.6pt, minimum size=14.05pt, inner sep=0pt] at (axis cs:0.573,0) {};
-\node[circle, fill=evalSurface, draw=evalAqua, line width=1.1pt, minimum size=11.07pt, inner sep=0pt] at (axis cs:4.61,0) {};
-\node[circle, fill=evalBlue, draw=evalSurface, line width=0.6pt, minimum size=8.51pt, inner sep=0pt] at (axis cs:22.5,0) {};
+\node[circle, fill=evalOrange, draw=evalSurface, line width=0.6pt, minimum size=8.50pt, inner sep=0pt] at (axis cs:0.573,0) {};
+\node[circle, fill=evalSurface, draw=evalAqua, line width=1.1pt, minimum size=8.50pt, inner sep=0pt] at (axis cs:4.61,0) {};
+\node[circle, fill=evalBlue, draw=evalSurface, line width=0.6pt, minimum size=8.50pt, inner sep=0pt] at (axis cs:22.5,0) {};
 \draw[evalAxis, line width=0.5pt] (axis cs:0.724,1) -- (axis cs:12.6,1);
-\node[circle, fill=evalOrange, draw=evalSurface, line width=0.6pt, minimum size=9.53pt, inner sep=0pt] at (axis cs:0.724,1) {};
-\node[circle, fill=evalSurface, draw=evalAqua, line width=1.1pt, minimum size=11.07pt, inner sep=0pt] at (axis cs:12.6,1) {};
+\node[circle, fill=evalOrange, draw=evalSurface, line width=0.6pt, minimum size=8.50pt, inner sep=0pt] at (axis cs:0.724,1) {};
+\node[circle, fill=evalSurface, draw=evalAqua, line width=1.1pt, minimum size=8.50pt, inner sep=0pt] at (axis cs:12.6,1) {};
 \draw[evalAxis, line width=0.5pt] (axis cs:0.433,2) -- (axis cs:5.49,2);
-\node[circle, fill=evalOrange, draw=evalSurface, line width=0.6pt, minimum size=14.05pt, inner sep=0pt] at (axis cs:0.433,2) {};
-\node[circle, fill=evalAqua, draw=evalSurface, line width=0.6pt, minimum size=11.40pt, inner sep=0pt] at (axis cs:5.49,2) {};
-\node[circle, fill=evalOrange, draw=evalSurface, line width=0.6pt, minimum size=8.20pt, inner sep=0pt] at (axis cs:5.42,3) {};
-\node[circle, fill=evalOrange, draw=evalSurface, line width=0.6pt, minimum size=8.20pt, inner sep=0pt] at (axis cs:3.3,4) {};
+\node[circle, fill=evalOrange, draw=evalSurface, line width=0.6pt, minimum size=8.50pt, inner sep=0pt] at (axis cs:0.433,2) {};
+\node[circle, fill=evalAqua, draw=evalSurface, line width=0.6pt, minimum size=8.50pt, inner sep=0pt] at (axis cs:5.49,2) {};
+\node[circle, fill=evalOrange, draw=evalSurface, line width=0.6pt, minimum size=8.50pt, inner sep=0pt] at (axis cs:5.42,3) {};
+\node[circle, fill=evalOrange, draw=evalSurface, line width=0.6pt, minimum size=8.50pt, inner sep=0pt] at (axis cs:3.3,4) {};
 \draw[evalAxis, line width=0.5pt] (axis cs:1.34,5) -- (axis cs:19,5);
-\node[circle, fill=evalOrange, draw=evalSurface, line width=0.6pt, minimum size=8.20pt, inner sep=0pt] at (axis cs:1.34,5) {};
-\node[circle, fill=evalSurface, draw=evalAqua, line width=1.1pt, minimum size=9.53pt, inner sep=0pt] at (axis cs:19,5) {};
+\node[circle, fill=evalOrange, draw=evalSurface, line width=0.6pt, minimum size=8.50pt, inner sep=0pt] at (axis cs:1.34,5) {};
+\node[circle, fill=evalSurface, draw=evalAqua, line width=1.1pt, minimum size=8.50pt, inner sep=0pt] at (axis cs:19,5) {};
 \draw[evalAxis, line width=0.5pt] (axis cs:4.07,6) -- (axis cs:20.7,6) -- (axis cs:28.2,6);
-\node[circle, fill=evalOrange, draw=evalSurface, line width=0.6pt, minimum size=10.06pt, inner sep=0pt] at (axis cs:4.07,6) {};
-\node[circle, fill=evalAqua, draw=evalSurface, line width=0.6pt, minimum size=11.07pt, inner sep=0pt] at (axis cs:20.7,6) {};
-\node[circle, fill=evalBlue, draw=evalSurface, line width=0.6pt, minimum size=8.51pt, inner sep=0pt] at (axis cs:28.2,6) {};
+\node[circle, fill=evalOrange, draw=evalSurface, line width=0.6pt, minimum size=8.50pt, inner sep=0pt] at (axis cs:4.07,6) {};
+\node[circle, fill=evalAqua, draw=evalSurface, line width=0.6pt, minimum size=8.50pt, inner sep=0pt] at (axis cs:20.7,6) {};
+\node[circle, fill=evalBlue, draw=evalSurface, line width=0.6pt, minimum size=8.50pt, inner sep=0pt] at (axis cs:28.2,6) {};
 \draw[evalAxis, line width=0.5pt] (axis cs:0.683,7) -- (axis cs:16.6,7);
-\node[circle, fill=evalOrange, draw=evalSurface, line width=0.6pt, minimum size=10.06pt, inner sep=0pt] at (axis cs:0.683,7) {};
-\node[circle, fill=evalSurface, draw=evalAqua, line width=1.1pt, minimum size=9.92pt, inner sep=0pt] at (axis cs:16.6,7) {};
+\node[circle, fill=evalOrange, draw=evalSurface, line width=0.6pt, minimum size=8.50pt, inner sep=0pt] at (axis cs:0.683,7) {};
+\node[circle, fill=evalSurface, draw=evalAqua, line width=1.1pt, minimum size=8.50pt, inner sep=0pt] at (axis cs:16.6,7) {};
 \draw[evalAxis, line width=0.5pt] (axis cs:1.41,8) -- (axis cs:24.1,8);
-\node[circle, fill=evalSurface, draw=evalAqua, line width=1.1pt, minimum size=9.92pt, inner sep=0pt] at (axis cs:1.41,8) {};
-\node[circle, fill=evalBlue, draw=evalSurface, line width=0.6pt, minimum size=8.51pt, inner sep=0pt] at (axis cs:24.1,8) {};
+\node[circle, fill=evalSurface, draw=evalAqua, line width=1.1pt, minimum size=8.50pt, inner sep=0pt] at (axis cs:1.41,8) {};
+\node[circle, fill=evalBlue, draw=evalSurface, line width=0.6pt, minimum size=8.50pt, inner sep=0pt] at (axis cs:24.1,8) {};
 \draw[evalAxis, line width=0.5pt] (axis cs:0.811,9) -- (axis cs:23.7,9);
-\node[circle, fill=evalAqua, draw=evalSurface, line width=0.6pt, minimum size=9.96pt, inner sep=0pt] at (axis cs:0.811,9) {};
-\node[circle, fill=evalBlue, draw=evalSurface, line width=0.6pt, minimum size=8.51pt, inner sep=0pt] at (axis cs:23.7,9) {};
+\node[circle, fill=evalAqua, draw=evalSurface, line width=0.6pt, minimum size=8.50pt, inner sep=0pt] at (axis cs:0.811,9) {};
+\node[circle, fill=evalBlue, draw=evalSurface, line width=0.6pt, minimum size=8.50pt, inner sep=0pt] at (axis cs:23.7,9) {};
 \draw[evalAxis, line width=0.5pt] (axis cs:0.714,10) -- (axis cs:4.08,10) -- (axis cs:26,10);
-\node[circle, fill=evalOrange, draw=evalSurface, line width=0.6pt, minimum size=7.61pt, inner sep=0pt] at (axis cs:0.714,10) {};
-\node[circle, fill=evalBlue, draw=evalSurface, line width=0.6pt, minimum size=8.51pt, inner sep=0pt] at (axis cs:4.08,10) {};
-\node[circle, fill=evalAqua, draw=evalSurface, line width=0.6pt, minimum size=11.07pt, inner sep=0pt] at (axis cs:26,10) {};
+\node[circle, fill=evalOrange, draw=evalSurface, line width=0.6pt, minimum size=8.50pt, inner sep=0pt] at (axis cs:0.714,10) {};
+\node[circle, fill=evalBlue, draw=evalSurface, line width=0.6pt, minimum size=8.50pt, inner sep=0pt] at (axis cs:4.08,10) {};
+\node[circle, fill=evalAqua, draw=evalSurface, line width=0.6pt, minimum size=8.50pt, inner sep=0pt] at (axis cs:26,10) {};
 \node[circle, fill=evalBlue, minimum size=7pt, inner sep=0pt] at (axis cs:23.1,11.300) {};
 \node[font=\scriptsize, color=evalInk, anchor=west, xshift=6pt] at (axis cs:23.1,11.300) {BDK};
 \node[circle, fill=evalOrange, minimum size=7pt, inner sep=0pt] at (axis cs:23.1,12.000) {};
