@@ -1,0 +1,12 @@
+run,config,harness,method,settled_units,attributed_usd,attributed_minutes,run_usd,author_usd,author_share_of_run_usd,tool_calls_executed,unattributed_tool_fraction
+R1,C1,ccworkflow,exact,13,35.7106,93.2888,78.3788,39.2341,0.5006,,
+R2,C2,ccworkflow,exact,15,72.6779,87.5250,104.4303,72.6779,0.6959,,
+R3,C1,ccworkflow,exact,16,46.1531,120.5268,73.6715,46.1531,0.6265,,
+R4,C3,csloop,apportioned,15,15.6906,43.4642,15.6906,,,449,0.7595
+R5,C3,csloop,apportioned,14,13.3159,42.1791,13.3159,,,354,0.7458
+R6,C3,csloop,apportioned,12,12.8679,37.6180,12.8679,,,330,0.7576
+R7,C4,csloop,apportioned,2,5.8258,34.6844,5.8258,,,391,0.8798
+R8,C4,csloop,apportioned,2,6.2680,34.4162,6.2680,,,444,0.8131
+R9,C5,csloop,apportioned,5,6.3810,21.7739,6.3810,,,306,0.7582
+R10,C5,csloop,apportioned,10,9.5905,25.3793,9.5905,,,381,0.6719
+R11,C5,csloop,apportioned,11,10.0632,37.5740,10.0632,,,488,0.6660

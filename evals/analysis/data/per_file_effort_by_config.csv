@@ -1,0 +1,76 @@
+config,config_label,method,unit,module,n_runs,runs,minutes_mean,usd_mean,tool_calls_mean,shared
+C1,"ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate)",exact,BDK/FFMPcc,BDK,2,R1 R3,10.4208,4.0930,63.0000,True
+C1,"ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate)",exact,BDK/FFPMccT,BDK,2,R1 R3,8.6329,3.2527,63.0000,True
+C1,"ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate)",exact,BDK/FFPMccTtilde,BDK,2,R1 R3,4.7209,1.7068,42.5000,True
+C1,"ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate)",exact,BDK/FFPMscT,BDK,2,R1 R3,5.0939,1.9609,32.5000,True
+C1,"ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate)",exact,BDK/fvs,BDK,2,R1 R3,18.5991,5.6772,91.5000,True
+C1,"ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate)",exact,Mods/Modules_Interface,Mods,1,R1,7.5915,3.1976,43.0000,False
+C1,"ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate)",exact,Mods/pp_mod,Mods,1,R1,7.1201,2.5843,35.0000,True
+C1,"ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate)",exact,Mods/ppwp2j_mod,Mods,1,R1,5.7899,2.4181,29.0000,True
+C1,"ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate)",exact,W2jet/Acalc,W2jet,1,R3,4.1574,1.7069,30.0000,False
+C1,"ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate)",exact,W2jet/Ftexact,W2jet,1,R3,4.2325,2.3649,42.0000,False
+C1,"ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate)",exact,W2jet/LRcalc,W2jet,1,R3,2.7363,1.6258,29.0000,False
+C1,"ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate)",exact,W2jet/Ltfunctions,W2jet,1,R3,3.8546,1.7599,38.0000,False
+C1,"ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate)",exact,W2jet/ZZbox1LL,W2jet,2,R1 R3,8.0653,3.5049,52.0000,True
+C1,"ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate)",exact,W2jet/a6treeg,W2jet,2,R1 R3,7.7525,3.1784,67.0000,True
+C1,"ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate)",exact,W2jet/atree,W2jet,2,R1 R3,8.4423,2.5354,58.5000,True
+C1,"ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate)",exact,W2jet/fvf,W2jet,2,R1 R3,5.4191,2.3802,52.0000,False
+C1,"ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate)",exact,W2jet/ggZZcapture,W2jet,2,R1 R3,7.3548,2.9240,51.0000,True
+C1,"ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate)",exact,W2jet/subqcd,W2jet,1,R3,4.9131,2.2268,49.0000,True
+C1,"ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate)",exact,W2jet/w2jetsq,W2jet,1,R3,4.4168,1.5525,29.0000,False
+C2,ccworkflow (opus-5 all phases),exact,BDK/FFMPcc,BDK,1,R2,6.2365,5.4006,34.0000,True
+C2,ccworkflow (opus-5 all phases),exact,BDK/FFPMccT,BDK,1,R2,5.4796,4.6155,29.0000,True
+C2,ccworkflow (opus-5 all phases),exact,BDK/FFPMccTtilde,BDK,1,R2,3.7030,3.3225,25.0000,True
+C2,ccworkflow (opus-5 all phases),exact,BDK/FFPMscT,BDK,1,R2,6.0002,5.6851,30.0000,True
+C2,ccworkflow (opus-5 all phases),exact,BDK/fvs,BDK,1,R2,7.0131,5.4033,30.0000,True
+C2,ccworkflow (opus-5 all phases),exact,W2jet/Acalc,W2jet,1,R2,4.4290,4.0274,29.0000,False
+C2,ccworkflow (opus-5 all phases),exact,W2jet/Ftexact,W2jet,1,R2,4.2104,4.2083,27.0000,False
+C2,ccworkflow (opus-5 all phases),exact,W2jet/LRcalc,W2jet,1,R2,6.0171,4.9317,33.0000,False
+C2,ccworkflow (opus-5 all phases),exact,W2jet/Ltfunctions,W2jet,1,R2,4.3559,3.2872,32.0000,False
+C2,ccworkflow (opus-5 all phases),exact,W2jet/ZZbox1LL,W2jet,1,R2,7.7513,6.2824,40.0000,True
+C2,ccworkflow (opus-5 all phases),exact,W2jet/a6treeg,W2jet,1,R2,5.9474,4.8417,33.0000,True
+C2,ccworkflow (opus-5 all phases),exact,W2jet/atree,W2jet,1,R2,6.0145,5.1483,36.0000,True
+C2,ccworkflow (opus-5 all phases),exact,W2jet/fvf,W2jet,1,R2,8.0016,5.4625,41.0000,False
+C2,ccworkflow (opus-5 all phases),exact,W2jet/ggZZcapture,W2jet,1,R2,5.5578,4.9993,32.0000,True
+C2,ccworkflow (opus-5 all phases),exact,W2jet/subqcd,W2jet,1,R2,6.8074,5.0621,44.0000,True
+C3,csloop opus-5,apportioned,BDK/FFMPcc,BDK,1,R5,2.5307,0.7990,5.4000,True
+C3,csloop opus-5,apportioned,BDK/FFPMccT,BDK,1,R5,2.5307,0.7990,5.4000,True
+C3,csloop opus-5,apportioned,BDK/FFPMccTtilde,BDK,1,R5,2.5307,0.7990,5.4000,True
+C3,csloop opus-5,apportioned,BDK/FFPMscT,BDK,1,R5,2.5307,0.7990,5.4000,True
+C3,csloop opus-5,apportioned,BDK/fvs,BDK,1,R5,3.4681,1.0949,7.4000,True
+C3,csloop opus-5,apportioned,Mods/mod_qcdloop_c,Mods,2,R4 R5,2.7808,0.9349,6.3750,False
+C3,csloop opus-5,apportioned,Mods/pp_mod,Mods,3,R4 R5 R6,3.5547,1.2165,8.0833,True
+C3,csloop opus-5,apportioned,Mods/ppwp2j_mod,Mods,3,R4 R5 R6,2.5484,0.8662,5.7500,True
+C3,csloop opus-5,apportioned,Mods/types_mod,Mods,2,R4 R5,2.3452,0.7882,5.3750,False
+C3,csloop opus-5,apportioned,W2jet/A6texact,W2jet,1,R4,2.0122,0.7264,5.0000,False
+C3,csloop opus-5,apportioned,W2jet/Acalc,W2jet,2,R4 R6,2.7117,0.9549,6.2833,False
+C3,csloop opus-5,apportioned,W2jet/Ftexact,W2jet,1,R4,2.4818,0.8959,6.1667,False
+C3,csloop opus-5,apportioned,W2jet/LRcalc,W2jet,1,R6,2.5392,0.8686,5.4000,False
+C3,csloop opus-5,apportioned,W2jet/ZZbox1LL,W2jet,2,R4 R6,2.6828,0.9496,6.3083,True
+C3,csloop opus-5,apportioned,W2jet/a6routine,W2jet,2,R4 R6,2.5875,0.9048,5.8750,False
+C3,csloop opus-5,apportioned,W2jet/a6treeg,W2jet,3,R4 R5 R6,2.8214,0.9607,6.3278,True
+C3,csloop opus-5,apportioned,W2jet/atree,W2jet,3,R4 R5 R6,4.7538,1.6225,10.6889,True
+C3,csloop opus-5,apportioned,W2jet/fpp,W2jet,1,R6,2.5392,0.8686,5.4000,False
+C3,csloop opus-5,apportioned,W2jet/fvf,W2jet,3,R4 R5 R6,3.7597,1.2652,8.3278,False
+C3,csloop opus-5,apportioned,W2jet/ggZZcapture,W2jet,2,R4 R5,2.4929,0.8447,5.7667,True
+C3,csloop opus-5,apportioned,W2jet/subqcd,W2jet,3,R4 R5 R6,3.8536,1.3041,8.6556,True
+C3,csloop opus-5,apportioned,W2jet/vv,W2jet,1,R6,2.5392,0.8686,5.4000,False
+C3,csloop opus-5,apportioned,W2jet/w2jetsq,W2jet,1,R4,2.4818,0.8959,6.1667,False
+C4,csloop sonnet-5,apportioned,Mods/pp_mod,Mods,2,R7 R8,19.9494,3.4843,37.0000,True
+C4,csloop sonnet-5,apportioned,Mods/ppwp2j_mod,Mods,2,R7 R8,14.6009,2.5625,28.0000,True
+C5,csloop gpt-5.6,apportioned,BDK/FFMPcc,BDK,1,R11,3.1196,0.8355,13.5333,True
+C5,csloop gpt-5.6,apportioned,BDK/FFPMccT,BDK,1,R11,3.1196,0.8355,13.5333,True
+C5,csloop gpt-5.6,apportioned,BDK/FFPMccTtilde,BDK,1,R11,2.5818,0.6915,11.2000,True
+C5,csloop gpt-5.6,apportioned,BDK/FFPMscT,BDK,1,R11,4.0417,1.0825,17.5333,True
+C5,csloop gpt-5.6,apportioned,BDK/fvs,BDK,1,R11,4.4259,1.1854,19.2000,True
+C5,csloop gpt-5.6,apportioned,Mods/Modules_Interface,Mods,1,R10,1.8781,0.7097,9.2500,False
+C5,csloop gpt-5.6,apportioned,Mods/mod_qcdloop_c,Mods,1,R10,1.2690,0.4795,6.2500,False
+C5,csloop gpt-5.6,apportioned,Mods/pp_mod,Mods,1,R10,2.6902,1.0166,13.2500,True
+C5,csloop gpt-5.6,apportioned,Mods/ppwp2j_mod,Mods,1,R10,2.6902,1.0166,13.2500,True
+C5,csloop gpt-5.6,apportioned,Mods/types_mod,Mods,3,R9 R10 R11,4.1494,1.2825,17.3333,False
+C5,csloop gpt-5.6,apportioned,W2jet/ZZbox1LL,W2jet,2,R10 R11,2.7264,0.8688,12.5667,True
+C5,csloop gpt-5.6,apportioned,W2jet/a6routine,W2jet,2,R10 R11,2.8170,0.8818,12.9000,False
+C5,csloop gpt-5.6,apportioned,W2jet/a6treeg,W2jet,3,R9 R10 R11,3.2083,1.0237,13.6278,True
+C5,csloop gpt-5.6,apportioned,W2jet/atree,W2jet,3,R9 R10 R11,4.3709,1.3052,17.4056,True
+C5,csloop gpt-5.6,apportioned,W2jet/ggZZcapture,W2jet,3,R9 R10 R11,3.2239,0.9923,12.9611,True
+C5,csloop gpt-5.6,apportioned,W2jet/subqcd,W2jet,1,R9,2.9669,0.8695,10.0833,True

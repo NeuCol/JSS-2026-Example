@@ -67,6 +67,17 @@ Reads only from experiments/ (read-only). Writes, under analysis/figures/:
 their names so existing \includegraphics paths in the paper still resolve)
 and analysis/summary_tables.md (the numeric source of truth behind every panel).
 
+Also writes, under analysis/data/, the machine-readable per-file effort tables
+that per_file_effort.py builds -- per_file_effort.csv (one row per run and
+translated file), per_file_effort_by_config.csv (one row per configuration and
+file) and per_file_effort_runs.csv (per-run attribution method and its
+caveats). Those exist so plotting code reads a number rather than re-deriving
+an attribution, and so a figure and a table cannot disagree. Read
+per_file_effort.py before using them: ccworkflow effort is measured per file
+and csloop effort is apportioned to files, the two are not the same
+measurement, and every exported row carries a `method` column saying which it
+is.
+
 There are two six-panel figures and they are not the same figure. The PNG
 (fig_combined.png) shows per-run totals: cost by model, cache share, files,
 wall time, tool calls per file, and self-reported correctness. The pgfplots
@@ -106,12 +117,18 @@ from pricing import cost, PRICING, NON_ANTHROPIC
 from git_file_counts import (translated_file_count, translated_file_units, module_of,
                              unit_breakdown)
 from parse_roadmap import fork_point_roadmap
+from per_file_effort import per_file_effort
 from parse_decision_timeline import module_entry_order
 
 REPO_ROOT = Path(__file__).parent.parent
 EXPERIMENTS = REPO_ROOT / "experiments"
 FIGURES_DIR = Path(__file__).parent / "figures"
 FIGURES_DIR.mkdir(exist_ok=True)
+# Machine-readable exports of numbers the summary tables round for reading.
+# Plotting code (here or elsewhere) should read these rather than re-deriving
+# an attribution, so a figure and a table can never disagree.
+DATA_DIR = Path(__file__).parent / "data"
+DATA_DIR.mkdir(exist_ok=True)
 
 # ---------------------------------------------------------------------------
 # Style — validated default palette from the dataviz skill (references/palette.md)
@@ -231,11 +248,50 @@ RUN_GROUPS = [
     ("csloop gpt-5.6", 3),
 ]
 
+# Replicate sets. RUN_GROUPS above buckets by harness and author model, which
+# puts all three ccworkflow runs in one bucket even though R2 drives every
+# phase with opus-5 while R1/R3 author on sonnet-5 and only integrate on
+# opus-5. Those are different configurations, not replicates of each other, so
+# anything that averages over "the same setup run twice" -- per-file effort in
+# particular -- has to split them. CONFIGS is that finer partition: two runs
+# share a config only if the same models ran the same phases.
+#
+# C2 has a single member. Its would-be replicate, 08-27-2026/ccworkflow-opus-5,
+# is the run the module docstring explains was dropped from the corpus, so
+# "core" or "mean" for C2 is one observation and must be read as such.
+CONFIGS = [
+    ("C1", "ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate)", ["R1", "R3"]),
+    ("C2", "ccworkflow (opus-5 all phases)", ["R2"]),
+    ("C3", "csloop opus-5", ["R4", "R5", "R6"]),
+    ("C4", "csloop sonnet-5", ["R7", "R8"]),
+    ("C5", "csloop gpt-5.6", ["R9", "R10", "R11"]),
+]
+
 KEYS = [(day, run_name) for day, run_name, _, _ in RUNS]
 RUN_LABELS = {(day, run_name): label for day, run_name, _, label in RUNS}
 # Short x-axis codes — keeps bars legible even in the compact standalone
 # figures; each figure captions the full mapping once, below the plot.
 RUN_CODES = {(day, run_name): code for day, run_name, code, _ in RUNS}
+KEY_BY_CODE = {code: (day, run_name) for day, run_name, code, _ in RUNS}
+CONFIG_LABELS = {code: label for code, label, _ in CONFIGS}
+CONFIG_KEYS = {code: [KEY_BY_CODE[r] for r in members] for code, _, members in CONFIGS}
+CONFIG_OF_RUN = {
+    KEY_BY_CODE[r]: code for code, _, members in CONFIGS for r in members
+}
+CONFIGS_BY_CODE = [(code, members) for code, _, members in CONFIGS]
+
+# Which configurations the per-file effort comparison intersects, and which it
+# prints. Both are explicit rather than derived, because the two exclusions are
+# judgements about the corpus and not facts a rule could read off it:
+#   - C2 is printed but not intersected: it has one replicate, so requiring it
+#     would let a single run decide the comparison set. Its column is one
+#     observation and the tables label it as such.
+#   - C4 is neither intersected nor printed: it settled only Mods/pp_mod and
+#     Mods/ppwp2j_mod, so intersecting it collapses the comparison to two rows
+#     and printing it leaves a column that is empty on every other row. Its
+#     per-file numbers are still in both CSV exports.
+PER_FILE_COMPARISON_CONFIGS = ["C1", "C3", "C5"]
+PER_FILE_DISPLAY_CONFIGS = ["C1", "C2", "C3", "C5"]
 
 
 def run_code_caption(fig_width_in, fontsize=None):
@@ -724,6 +780,144 @@ def load_tool_calls_per_file(cc_rows, cs_rows, files_settled):
             "per_file": (calls / files) if files else None,
         }
     return result
+
+
+def load_per_file_effort(translated_units):
+    """{run: per_file_effort record} — wall time, USD and tool calls attributed
+    to individual translated files rather than to the run as a whole.
+
+    Exact for ccworkflow (one AUTHOR subagent per unit, author phase only) and
+    apportioned for csloop (no per-file record exists; run totals split by the
+    tool calls whose arguments name each unit). The two are not the same kind
+    of number and per_file_effort.py's docstring is where that is spelled out;
+    every row and every aggregate below carries `method` so the distinction
+    survives into the tables and, later, into any plot.
+    """
+    return {
+        key: per_file_effort(EXPERIMENTS, key[0], key[1], translated_units[key])
+        for key in KEYS
+    }
+
+
+def per_file_effort_rows(effort_by_run):
+    """Flat, export-shaped rows: one per (run, unit) with a row in `effort_by_run`.
+
+    Sorted by config then run then unit so the CSV reads in the same order as
+    the tables, and so a diff between two regenerations is legible.
+    """
+    rows = []
+    for key in KEYS:
+        record = effort_by_run.get(key)
+        if record is None:
+            continue
+        code = RUN_CODES[key]
+        config = CONFIG_OF_RUN[key]
+        for unit in sorted(record["units"]):
+            entry = record["units"][unit]
+            rows.append({
+                "config": config,
+                "config_label": CONFIG_LABELS[config],
+                "run": code,
+                "day": key[0],
+                "run_name": key[1],
+                "harness": "ccworkflow" if "ccworkflow" in key[1] else "csloop",
+                "method": record["method"],
+                "unit": unit,
+                "module": module_of(unit),
+                "settled": entry["settled"],
+                "model": entry["model"],
+                "minutes": entry["minutes"],
+                "usd": entry["usd"],
+                "tool_calls": entry["tool_calls"],
+                "agents": entry["agents"],
+                "attributed_share": entry["attributed_share"],
+            })
+    rows.sort(key=lambda r: (r["config"], r["run"], r["unit"]))
+    return rows
+
+
+def _config_method(effort_by_run, code):
+    """The attribution method for a configuration — a property of its harness,
+    so it is the same for every replicate; None if none of them was measured."""
+    for run_code in dict(CONFIGS_BY_CODE)[code]:
+        record = effort_by_run.get(KEY_BY_CODE[run_code])
+        if record is not None:
+            return record["method"]
+    return None
+
+
+def per_file_effort_by_config(effort_by_run, units=None):
+    """{config: {unit: {metric: mean over the replicates that settled it}}}.
+
+    A unit is averaged over the replicates of that configuration which actually
+    settled it, NOT over all replicates of the configuration — a run that never
+    picked a file did not do it cheaply, it did not do it at all, and padding
+    the mean with zeros would read as the opposite. `n` on each cell is how
+    many replicates the mean is over, and it has to be printed next to the
+    value: a C2 cell is always one run, and a C1 cell can be either one or two.
+
+    Unsettled rows (a ccworkflow author agent whose unit never landed) are
+    excluded: their cost is real and stays in the flat export, but averaging it
+    in would charge a file that landed with the cost of one that did not.
+
+    `units` optionally restricts the result to a chosen file set; None keeps
+    every unit any replicate of the configuration settled.
+    """
+    out = {}
+    for code, _, members in CONFIGS:
+        method = _config_method(effort_by_run, code)
+        per_unit = {}
+        for run_code in members:
+            record = effort_by_run.get(KEY_BY_CODE[run_code])
+            if record is None:
+                continue
+            for unit, entry in record["units"].items():
+                if not entry["settled"]:
+                    continue
+                if units is not None and unit not in units:
+                    continue
+                per_unit.setdefault(unit, []).append((run_code, entry))
+        out[code] = {
+            unit: {
+                "method": method,
+                "n": len(entries),
+                "runs": [c for c, _ in entries],
+                "minutes": sum(e["minutes"] for _, e in entries) / len(entries),
+                "usd": sum(e["usd"] for _, e in entries) / len(entries),
+                "tool_calls": sum(e["tool_calls"] for _, e in entries) / len(entries),
+            }
+            for unit, entries in sorted(per_unit.items())
+        }
+    return out
+
+
+def config_settled_union(effort_by_run, code):
+    """Every unit at least one replicate of this configuration settled."""
+    union = set()
+    for run_code in dict(CONFIGS_BY_CODE)[code]:
+        record = effort_by_run.get(KEY_BY_CODE[run_code])
+        if record is None:
+            continue
+        union |= {u for u, e in record["units"].items() if e["settled"]}
+    return union
+
+
+def config_shared_units(effort_by_run, codes):
+    """Units settled by at least one replicate of EVERY configuration in `codes`.
+
+    The per-config union is the right thing to intersect here, not the
+    per-config core: the question is which files can be compared across these
+    configurations at all, and a file one replicate settled is a file that
+    configuration produced. Whether its replicates agreed is the separate
+    question the run-level agreement tables already answer.
+
+    C4 (csloop sonnet-5) settles only Mods/pp_mod and Mods/ppwp2j_mod, so
+    including it collapses any intersection to those two files. The comparison
+    tables therefore intersect the configurations that reached the shared body
+    of work and say so, rather than reporting a two-row table.
+    """
+    unions = [config_settled_union(effort_by_run, code) for code in codes]
+    return sorted(set.intersection(*unions)) if unions else []
 
 
 # ---------------------------------------------------------------------------
@@ -1248,6 +1442,115 @@ def make_decision_figure(translated_units, decision_models, module_timelines):
     save_fig(fig, "fig6_decision_making.png", caption)
 
 
+def write_per_file_exports(effort_by_run, effort_by_config, shared_units, runs):
+    """Write the per-file effort data to analysis/data/ as CSV.
+
+    Three files, because they answer three different questions and flattening
+    them into one would force a reader to filter before plotting anything:
+
+      per_file_effort.csv
+          One row per (run, unit). The raw attribution, including ccworkflow
+          author agents whose unit never landed (`settled` = False). This is
+          the file to plot distributions from.
+      per_file_effort_by_config.csv
+          One row per (config, unit): the mean over the replicates of that
+          configuration which settled the unit, with `n` alongside. `shared`
+          marks the units in the cross-configuration comparison set.
+      per_file_effort_runs.csv
+          One row per run: the attribution method, what it captured, and — for
+          csloop — the share of tool calls that named no settled unit and was
+          therefore spread proportionally. Any plot built on the other two
+          files needs these caveats in its caption.
+
+    `method` is on every row of all three. A plot that puts an exact bar next
+    to an apportioned one without saying which is which is a wrong plot; see
+    per_file_effort.py.
+    """
+    import csv
+
+    flat = per_file_effort_rows(effort_by_run)
+    path = DATA_DIR / "per_file_effort.csv"
+    fields = ["config", "config_label", "run", "day", "run_name", "harness", "method",
+              "unit", "module", "settled", "model", "minutes", "usd", "tool_calls",
+              "agents", "attributed_share"]
+    with open(path, "w", newline="") as fh:
+        writer = csv.DictWriter(fh, fieldnames=fields)
+        writer.writeheader()
+        for row in flat:
+            out = dict(row)
+            for field in ("minutes", "usd", "attributed_share"):
+                if out[field] is not None:
+                    out[field] = f"{out[field]:.4f}"
+            out["tool_calls"] = f"{out['tool_calls']:.4f}" if isinstance(out["tool_calls"], float) else out["tool_calls"]
+            writer.writerow(out)
+    print(f"Wrote {path} ({len(flat)} rows)")
+
+    # Reconciliation, printed rather than asserted so a corpus change reports
+    # itself instead of aborting the whole generation. A csloop run's per-file
+    # USD must sum to the run's USD exactly (the apportionment is a partition);
+    # a ccworkflow run's must sum to its author phase, which is strictly less.
+    for key in KEYS:
+        record = effort_by_run.get(key)
+        if record is None or record["method"] != "apportioned":
+            continue
+        total = sum(r["usd"] for r in record["units"].values())
+        if abs(total - runs[key]["cost"]) > 0.01:
+            print(f"  WARNING: {RUN_CODES[key]} per-file USD sums to {total:.2f}, "
+                  f"run total is {runs[key]['cost']:.2f}")
+
+    path = DATA_DIR / "per_file_effort_by_config.csv"
+    shared = set(shared_units)
+    n_rows = 0
+    with open(path, "w", newline="") as fh:
+        writer = csv.writer(fh)
+        writer.writerow(["config", "config_label", "method", "unit", "module",
+                         "n_runs", "runs", "minutes_mean", "usd_mean",
+                         "tool_calls_mean", "shared"])
+        for code, label, _ in CONFIGS:
+            for unit, cell in effort_by_config[code].items():
+                writer.writerow([code, label, cell["method"], unit, module_of(unit),
+                                 cell["n"], " ".join(cell["runs"]),
+                                 f"{cell['minutes']:.4f}", f"{cell['usd']:.4f}",
+                                 f"{cell['tool_calls']:.4f}",
+                                 unit in shared])
+                n_rows += 1
+    print(f"Wrote {path} ({n_rows} rows)")
+
+    path = DATA_DIR / "per_file_effort_runs.csv"
+    with open(path, "w", newline="") as fh:
+        writer = csv.writer(fh)
+        writer.writerow(["run", "config", "harness", "method", "settled_units",
+                         "attributed_usd", "attributed_minutes", "run_usd",
+                         "author_usd", "author_share_of_run_usd",
+                         "tool_calls_executed", "unattributed_tool_fraction"])
+        for key in KEYS:
+            record = effort_by_run.get(key)
+            if record is None:
+                continue
+            info = record["run"]
+            # The run's whole USD comes from the same aggregate the per-run
+            # tables use, so `author_share_of_run_usd` says exactly how much of
+            # a ccworkflow run the exact per-file rows actually cover. For
+            # csloop the attribution spans the whole run and there is no author
+            # phase to separate, so the column is blank rather than 1.0.
+            run_usd = runs[key]["cost"]
+            author_usd = info.get("author_usd")
+            share = (author_usd / run_usd) if (run_usd and author_usd) else ""
+            writer.writerow([
+                RUN_CODES[key], CONFIG_OF_RUN[key],
+                "ccworkflow" if "ccworkflow" in key[1] else "csloop",
+                info["method"], info["settled_units"],
+                f"{info['attributed_usd']:.4f}", f"{info['attributed_minutes']:.4f}",
+                "" if run_usd is None else f"{run_usd:.4f}",
+                "" if author_usd is None else f"{author_usd:.4f}",
+                "" if share == "" else f"{share:.4f}",
+                info.get("tool_calls_executed", ""),
+                "" if info.get("unattributed_tool_fraction") is None
+                else f"{info['unattributed_tool_fraction']:.4f}",
+            ])
+    print(f"Wrote {path}")
+
+
 def _row_label(k):
     """Run code + configuration, so a table row can be matched to a figure bar."""
     return f"{RUN_CODES[k]} — {RUN_LABELS[k]}".replace(chr(10), " ")
@@ -1280,7 +1583,8 @@ def _loops_cell(k, loop_progress_by_run):
 
 
 def write_summary_tables(runs, coverage, files_settled, translated_units, wall_times, tool_calls_per_file,
-                         decision_models, shadowed_units, module_timelines, loop_progress_by_run):
+                         decision_models, shadowed_units, module_timelines, loop_progress_by_run,
+                         effort_by_run, effort_by_config, shared_units):
     lines = ["# Summary tables (generated by analysis/generate_graphs.py — do not hand-edit)\n"]
     for note in unpriced_caption(runs):
         lines.append(f"{note}\n")
@@ -1536,6 +1840,120 @@ def write_summary_tables(runs, coverage, files_settled, translated_units, wall_t
         named = ", ".join(f"`{u}`" for u in units) if len(units) <= NAME_LIMIT else "—"
         lines.append(f"| {n} of {n_models} | {len(units)} | {100*len(units)/m_total:.0f}% | {named} |")
     lines.append("")
+
+    lines.append("## Per-file effort: configurations and how effort is attributed\n")
+    lines.append(
+        "The tables above divide a run total by files settled. The tables below attribute wall time, "
+        "USD and tool calls to *individual files*. Runs are grouped into configurations (two runs share "
+        "one only if the same models ran the same phases), which splits the ccworkflow block: R2 drives "
+        "every phase with opus-5, while R1 and R3 author on sonnet-5 and only integrate on opus-5.\n"
+    )
+    lines.append("| Config | Runs | Harness | Attribution |")
+    lines.append("|---|---|---|---|")
+    for code, label, members in CONFIGS:
+        method = _config_method(effort_by_run, code) or "—"
+        harness = "ccworkflow" if any("ccworkflow" in KEY_BY_CODE[r][1] for r in members) else "csloop"
+        lines.append(f"| {code} — {label} | {', '.join(members)} | {harness} | {method} |")
+    lines.append("")
+    lines.append(
+        "**The two attribution methods are not the same measurement and must not be compared "
+        "column-for-column without this caveat.**\n"
+    )
+    lines.append(
+        "- *exact* (ccworkflow): each unit has its own AUTHOR subagent, so its tokens, tool calls and "
+        "timestamps are its own. It covers the **author phase only** — triage picks the units, serial "
+        "integrate lands them and runs the build and test suite, and a metadata agent writes the log, "
+        "none of which is attributable to one file. `Author phase / run` below sizes what is missing: it "
+        "is every author agent's USD over the run's total, including agents whose unit never landed, so "
+        "it sits slightly above the attributed column beside it. Author agents in a group run in "
+        "parallel, so per-file minutes overlap and do "
+        "not sum to the run's wall clock. A unit retried in a later round is one row, with `agents` "
+        "counting the retries.\n"
+    )
+    lines.append(
+        "- *apportioned* (csloop): a single agent loops over the whole transformation and usage is "
+        "recorded per loop phase, never per file. Each executed tool call is attributed to the settled "
+        "units its arguments name (`X_fi` counts as `X`; a call naming k units splits 1/k to each), and "
+        "the run's USD and minutes are divided in proportion. Because USD and minutes are both "
+        "proportional to the same call counts, those three columns carry one measurement between them, "
+        "not three. `Unattributed` is the share of the run's tool calls that named no settled unit — "
+        "builds, the test suite, roadmap queries, git — which is spread proportionally rather than "
+        "dropped, so run totals still reconcile exactly.\n"
+    )
+    lines.append(
+        "- The tool-call column is not one quantity across methods: *exact* counts every call the unit's "
+        "agent made, *apportioned* counts only calls naming the unit, which is smaller by construction.\n"
+    )
+    lines.append("| Run | Config | Method | Units attributed | Attributed USD | Attributed min | Author phase / run | Unattributed |")
+    lines.append("|---|---|---|---:|---:|---:|---:|---:|")
+    for k in KEYS:
+        record = effort_by_run.get(k)
+        if record is None:
+            lines.append(f"| {RUN_CODES[k]} | {CONFIG_OF_RUN[k]} | n/a (no branch) | — | — | — | — | — |")
+            continue
+        info = record["run"]
+        author_usd = info.get("author_usd")
+        run_usd = runs[k]["cost"]
+        share = f"{100*author_usd/run_usd:.0f}%" if (author_usd and run_usd) else "—"
+        unattr = info.get("unattributed_tool_fraction")
+        lines.append(
+            f"| {RUN_CODES[k]} | {CONFIG_OF_RUN[k]} | {info['method']} | {info['settled_units']} | "
+            f"${info['attributed_usd']:.2f} | {info['attributed_minutes']:.1f} | {share} | "
+            f"{'—' if unattr is None else f'{100*unattr:.0f}%'} |"
+        )
+    lines.append("")
+    lines.append(
+        "Unsettled work is carried but not averaged: R1 spent two full author agents on "
+        "`Mods/mod_qcdloop_c` and `Mods/types_mod` and landed neither (a `.hpp` with no `.cpp` behind it "
+        "is not a translation — see `git_file_counts.py`). Those rows are in `data/per_file_effort.csv` "
+        "with `settled = False` and are excluded from every mean below.\n"
+    )
+
+    lines.append("## Per-file effort by configuration (shared file set)\n")
+    comparison = ", ".join(PER_FILE_COMPARISON_CONFIGS)
+    lines.append(
+        f"Files settled by at least one replicate of every configuration with more than one replicate "
+        f"({comparison}); C2 is shown where it settled the same file but is not required, since one run "
+        f"should not decide the comparison set. C4 is left out entirely: it settled only "
+        f"`Mods/pp_mod` and `Mods/ppwp2j_mod`, so intersecting it would collapse this to two rows. "
+        f"Each cell is the mean over the replicates of that configuration **that settled the file**, with "
+        f"the replicate count in brackets — a file no replicate settled is blank, not zero.\n"
+    )
+    if not shared_units:
+        lines.append("No file is common to those configurations.\n")
+    else:
+        for field, heading, fmt in (
+            ("minutes", "Minutes per file", "{:.1f}"),
+            ("usd", "USD per file", "{:.2f}"),
+            ("tool_calls", "Tool calls per file", "{:.0f}"),
+        ):
+            lines.append(f"### {heading}\n")
+            header = " | ".join(
+                f"{c} ({_config_method(effort_by_run, c)})" for c in PER_FILE_DISPLAY_CONFIGS
+            )
+            lines.append(f"| File | {header} |")
+            lines.append("|---|" + "---:|" * len(PER_FILE_DISPLAY_CONFIGS))
+            for unit in shared_units:
+                cells = []
+                for code in PER_FILE_DISPLAY_CONFIGS:
+                    cell = effort_by_config[code].get(unit)
+                    cells.append("—" if cell is None else f"{fmt.format(cell[field])} ({cell['n']})")
+                lines.append(f"| `{unit}` | " + " | ".join(cells) + " |")
+            means = []
+            for code in PER_FILE_DISPLAY_CONFIGS:
+                vals = [effort_by_config[code][u][field] for u in shared_units
+                        if u in effort_by_config[code]]
+                means.append(fmt.format(sum(vals) / len(vals)) if vals else "—")
+            lines.append("| **Mean over the shared files** | " + " | ".join(means) + " |")
+            lines.append("")
+
+    lines.append(
+        "Machine-readable versions, for plotting: `analysis/data/per_file_effort.csv` (one row per run "
+        "and file, unsettled rows included), `analysis/data/per_file_effort_by_config.csv` (one row per "
+        "configuration and file, with `shared` marking this comparison set) and "
+        "`analysis/data/per_file_effort_runs.csv` (per-run method, coverage and caveats). Every row in "
+        "all three carries `method`.\n"
+    )
 
     lines.append("## Module entry order, tooling & doxygen position at fork (first tool-touch)\n")
     lines.append(
@@ -2576,12 +2994,27 @@ def main():
     for k, entries in module_timelines.items():
         print(f"{k}: module entry order = {[(e['module'], round(e['elapsed_min'], 1)) for e in entries]}")
 
+    effort_by_run = load_per_file_effort(translated_units)
+    shared_units = config_shared_units(effort_by_run, PER_FILE_COMPARISON_CONFIGS)
+    effort_by_config = per_file_effort_by_config(effort_by_run)
+    for k in KEYS:
+        record = effort_by_run.get(k)
+        if record is None:
+            continue
+        info = record["run"]
+        print(f"{k}: per-file effort {info['method']}, {info['settled_units']} units, "
+              f"${info['attributed_usd']:.2f} attributed")
+    print(f"per-file comparison set ({'/'.join(PER_FILE_COMPARISON_CONFIGS)}): "
+          f"{len(shared_units)} files")
+
     make_standalone_figures(runs, coverage, files_settled, wall_times, tool_calls_per_file)
     _bump_fonts_for_combined()
     make_combined_figure(runs, coverage, files_settled, wall_times, tool_calls_per_file)
     make_decision_figure(translated_units, decision_models, module_timelines)
     write_summary_tables(runs, coverage, files_settled, translated_units, wall_times, tool_calls_per_file,
-                         decision_models, shadowed_units, module_timelines, loop_progress_by_run)
+                         decision_models, shadowed_units, module_timelines, loop_progress_by_run,
+                         effort_by_run, effort_by_config, shared_units)
+    write_per_file_exports(effort_by_run, effort_by_config, shared_units, runs)
 
     # LaTeX/TikZ artifacts consumed directly by the paper.
     write_tikz_colors()
