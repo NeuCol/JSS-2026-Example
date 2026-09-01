@@ -33,6 +33,24 @@ from pathlib import Path
 
 _USAGE_LINE = re.compile(r'usage = "(.*)"\s*$')
 
+# logs/toolusage.toml event fields per_file_effort.py's "timed" method reads.
+# Multi-line values (below) are stripped before these run, so each of these
+# only ever needs to match a single line.
+_TOOLUSAGE_MULTILINE = re.compile(
+    r"(?:output_preview|model_text|model_reasoning) = '''.*?'''", re.DOTALL
+)
+_TOOLUSAGE_FIELDS = {
+    "event": re.compile(r'^event = "(.*)"\s*$'),
+    "run_id": re.compile(r'^run_id = "(.*)"\s*$'),
+    "iteration": re.compile(r'^iteration = (\d+)\s*$'),
+    "tool": re.compile(r'^tool = "(.*)"\s*$'),
+    "ok": re.compile(r'^ok = (true|false)\s*$'),
+    "duration_ms": re.compile(r'^duration_ms = ([\d.]+)\s*$'),
+    "args": re.compile(r'^args = "(.*)"\s*$'),
+    "usage": re.compile(r'^usage = "(.*)"\s*$'),
+    "ts": re.compile(r'^ts = "(.*)"\s*$'),
+}
+
 # Written only by the CodeScribe revision that records the cache-write TTL
 # split. That same revision already subtracts cached tokens from OpenAI-style
 # prompt_tokens, so their presence also settles the input convention.
@@ -69,6 +87,58 @@ def _event_log_usage(loop_dir):
                     yield json.loads(match.group(1).encode().decode("unicode_escape"))
                 except (ValueError, UnicodeDecodeError):
                     continue
+
+
+def parse_toolusage(path):
+    """Parse logs/toolusage.toml into a flat, ordered list of event dicts.
+
+    This is the harness's raw tool-call/model-response event log, one
+    `[[event]]` block per iteration_start/model_response/tool_start/tool_end/
+    etc. It is NOT valid TOML as a whole: `output_preview`, `model_text` and
+    `model_reasoning` are triple-quoted blocks that can carry raw terminal
+    escapes (a test suite's PASS/FAIL colouring, for one), which breaks
+    tomllib outright -- the same problem _event_log_usage works around for
+    loop/{author,review}.toml, one level more thoroughly here since those
+    three fields are large enough that skipping single bad lines isn't
+    practical. None of the three is needed by any caller, so they are
+    stripped wholesale before parsing, verified to leave no partial match
+    behind across every archived toolusage.toml.
+
+    Each returned dict has only the keys that field had in that block (e.g. a
+    tool_end block has no `args`). `args` and `usage` are the tool/provider's
+    own JSON, decoded the same way _event_log_usage decodes `usage` lines
+    elsewhere in this file.
+    """
+    with open(path, encoding="utf-8", errors="replace") as fh:
+        text = fh.read()
+    text = _TOOLUSAGE_MULTILINE.sub("", text)
+
+    events = []
+    for block in text.split("[[event]]")[1:]:
+        event = {}
+        for line in block.splitlines():
+            for key, pattern in _TOOLUSAGE_FIELDS.items():
+                match = pattern.match(line)
+                if not match:
+                    continue
+                raw = match.group(1)
+                if key == "iteration":
+                    event[key] = int(raw)
+                elif key == "ok":
+                    event[key] = raw == "true"
+                elif key == "duration_ms":
+                    event[key] = float(raw)
+                elif key in ("args", "usage"):
+                    try:
+                        event[key] = json.loads(raw.encode().decode("unicode_escape"))
+                    except (ValueError, UnicodeDecodeError):
+                        pass
+                else:
+                    event[key] = raw
+                break
+        if event:
+            events.append(event)
+    return events
 
 
 def _detect_input_basis(loop_dir, ttl_aware):

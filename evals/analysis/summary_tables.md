@@ -246,6 +246,29 @@ The tables above divide a run total by files settled. The tables below attribute
 
 Unsettled work is carried but not averaged: R1 spent two full author agents on `Mods/mod_qcdloop_c` and `Mods/types_mod` and landed neither (a `.hpp` with no `.cpp` behind it is not a translation — see `git_file_counts.py`). Those rows are in `data/per_file_effort.csv` with `settled = False` and are excluded from every mean below.
 
+## Per-file effort (timed): csloop with measured tool/model durations
+
+A third, tighter attribution for the csloop runs above, built from `logs/toolusage.toml` instead of the loop-phase totals: it has the real `duration_ms` of every individual tool call and the real token usage behind every model response, so an iteration's cost is split across whatever settled files its own tool calls name, weighted by how long each call actually took — rather than splitting a whole phase's total by raw call count, which treats a `read` and a full test-suite `bash` call as equally expensive. See `per_file_effort.py`'s docstring for the exact method.
+
+It is still not *exact*: `logs/toolusage.toml` records the **author phase only** (review-phase tool calls never appear in it, confirmed against every run below), and a model's "thinking" time between tool calls — the majority of a phase's wall clock — is still not tied to one file; it is split across whichever files that same iteration's tool calls name. Review, plus any iteration whose tool calls name no settled file, are folded into one unattributed pool and spread across files in proportion to each file's *measured* share — the same policy *apportioned* already uses, just with a better weight. `Unattributed` below is how much of the run's USD was spread this way rather than measured.
+
+**The `Total` columns below are a cross-check, not a new number**: *apportioned* and *timed* both reconcile to the same run USD and minutes, so they redistribute the same total across files differently rather than disagreeing on it. Per-file rows differ between `data/per_file_effort.csv` (apportioned) and `data/per_file_effort_timed.csv` (timed).
+
+| Run | Config | Apportioned total | Timed total | Timed: review USD | Timed: review min | Timed: unattributed |
+|---|---|---:|---:|---:|---:|---:|
+| R4 | C3 | $15.69 | $15.69 | $1.78 | 5.1 | 64% |
+| R5 | C3 | $13.32 | $13.32 | $1.25 | 3.4 | 61% |
+| R6 | C3 | $12.87 | $12.87 | $1.03 | 2.6 | 66% |
+| R7 | C4 | $5.83 | $5.83 | $0.78 | 5.1 | 82% |
+| R8 | C4 | $6.27 | $6.27 | $1.05 | 7.0 | 80% |
+| R9 | C5 | $6.38 | $6.38 | $0.94 | 1.6 | 54% |
+| R10 | C5 | $9.59 | $9.59 | $0.69 | 1.1 | 54% |
+| R11 | C5 | $10.06 | $10.06 | $0.90 | 1.9 | 54% |
+
+A run missing from this table has no row because its `logs/toolusage.toml` is either absent or fails the structural sanity check against `loop/metadata` (see `per_file_effort.py`); its `apportioned` row above is unaffected.
+
+Machine-readable versions: `analysis/data/per_file_effort_timed.csv` (one row per run and unit) and `analysis/data/per_file_effort_timed_runs.csv` (per-run measured/review/unattributed split).
+
 ## Per-file effort by configuration (shared file set)
 
 Files settled by at least one replicate of every configuration with more than one replicate (C1, C3, C5); C2 is shown where it settled the same file but is not required, since one run should not decide the comparison set. C4 is left out entirely: it settled only `Mods/pp_mod` and `Mods/ppwp2j_mod`, so intersecting it would collapse this to two rows. Each cell is the mean over the replicates of that configuration **that settled the file**, with the replicate count in brackets — a file no replicate settled is blank, not zero.

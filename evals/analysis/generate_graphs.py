@@ -78,6 +78,14 @@ and csloop effort is apportioned to files, the two are not the same
 measurement, and every exported row carries a `method` column saying which it
 is.
 
+For the csloop runs, per_file_effort.py also has a third, tighter method,
+"timed" -- it reads logs/toolusage.toml for real per-tool-call durations and
+per-iteration token usage instead of splitting a whole loop phase's totals by
+raw call count. It is exported alongside the apportioned tables as
+per_file_effort_timed.csv and per_file_effort_timed_runs.csv, and shown next
+to the apportioned numbers in summary_tables.md's per-file section -- see that
+module's docstring for exactly what "timed" can and can't measure.
+
 There are two six-panel figures and they are not the same figure. The PNG
 (fig_combined.png) shows per-run totals: cost by model, cache share, files,
 wall time, tool calls per file, and self-reported correctness. The pgfplots
@@ -117,7 +125,7 @@ from pricing import cost, PRICING, NON_ANTHROPIC
 from git_file_counts import (translated_file_count, translated_file_units, module_of,
                              unit_breakdown)
 from parse_roadmap import fork_point_roadmap
-from per_file_effort import per_file_effort
+from per_file_effort import per_file_effort, per_file_effort_timed
 from parse_decision_timeline import module_entry_order
 
 REPO_ROOT = Path(__file__).parent.parent
@@ -799,6 +807,19 @@ def load_per_file_effort(translated_units):
     }
 
 
+def load_per_file_effort_timed(translated_units):
+    """{run: per_file_effort_timed record or None} — the "timed" method's
+    tighter csloop apportionment (see per_file_effort.py), keyed the same way
+    as load_per_file_effort(). None for every ccworkflow run (already exact)
+    and for any csloop run whose logs/toolusage.toml is missing or fails the
+    structural sanity check against loop/metadata.
+    """
+    return {
+        key: per_file_effort_timed(EXPERIMENTS, key[0], key[1], translated_units[key])
+        for key in KEYS
+    }
+
+
 def per_file_effort_rows(effort_by_run):
     """Flat, export-shaped rows: one per (run, unit) with a row in `effort_by_run`.
 
@@ -1442,7 +1463,8 @@ def make_decision_figure(translated_units, decision_models, module_timelines):
     save_fig(fig, "fig6_decision_making.png", caption)
 
 
-def write_per_file_exports(effort_by_run, effort_by_config, shared_units, runs):
+def write_per_file_exports(effort_by_run, effort_by_config, shared_units, runs,
+                            effort_by_run_timed=None):
     """Write the per-file effort data to analysis/data/ as CSV.
 
     Three files, because they answer three different questions and flattening
@@ -1465,6 +1487,14 @@ def write_per_file_exports(effort_by_run, effort_by_config, shared_units, runs):
     `method` is on every row of all three. A plot that puts an exact bar next
     to an apportioned one without saying which is which is a wrong plot; see
     per_file_effort.py.
+
+    If `effort_by_run_timed` is given, two more files cover the csloop-only
+    "timed" method (see per_file_effort.py): per_file_effort_timed.csv (same
+    row shape as per_file_effort.csv, one row per run+unit, only for runs
+    where "timed" is available) and per_file_effort_timed_runs.csv (per-run
+    measured vs. spread split). These are additive -- they never replace the
+    three files above, which keep reporting "apportioned" for csloop exactly
+    as before.
     """
     import csv
 
@@ -1550,6 +1580,56 @@ def write_per_file_exports(effort_by_run, effort_by_config, shared_units, runs):
             ])
     print(f"Wrote {path}")
 
+    if effort_by_run_timed is None:
+        return
+
+    timed_flat = per_file_effort_rows(effort_by_run_timed)
+    path = DATA_DIR / "per_file_effort_timed.csv"
+    with open(path, "w", newline="") as fh:
+        writer = csv.DictWriter(fh, fieldnames=fields)
+        writer.writeheader()
+        for row in timed_flat:
+            out = dict(row)
+            for field in ("minutes", "usd", "attributed_share"):
+                if out[field] is not None:
+                    out[field] = f"{out[field]:.4f}"
+            out["tool_calls"] = f"{out['tool_calls']:.4f}" if isinstance(out["tool_calls"], float) else out["tool_calls"]
+            writer.writerow(out)
+    print(f"Wrote {path} ({len(timed_flat)} rows)")
+
+    # Same reconciliation check as the apportioned export above: "timed"
+    # redistributes the same run USD across files differently, it does not
+    # change the total, so this must also sum to the run's whole cost exactly.
+    for key in KEYS:
+        record = effort_by_run_timed.get(key)
+        if record is None:
+            continue
+        total = sum(r["usd"] for r in record["units"].values())
+        if abs(total - runs[key]["cost"]) > 0.01:
+            print(f"  WARNING: {RUN_CODES[key]} timed per-file USD sums to {total:.2f}, "
+                  f"run total is {runs[key]['cost']:.2f}")
+
+    path = DATA_DIR / "per_file_effort_timed_runs.csv"
+    with open(path, "w", newline="") as fh:
+        writer = csv.writer(fh)
+        writer.writerow(["run", "config", "method", "settled_units",
+                         "attributed_usd", "attributed_minutes", "run_usd",
+                         "review_usd", "review_minutes", "unattributed_fraction"])
+        for key in KEYS:
+            record = effort_by_run_timed.get(key)
+            if record is None:
+                continue
+            info = record["run"]
+            writer.writerow([
+                RUN_CODES[key], CONFIG_OF_RUN[key], info["method"], info["settled_units"],
+                f"{info['attributed_usd']:.4f}", f"{info['attributed_minutes']:.4f}",
+                f"{info['run_usd']:.4f}", f"{info['review_usd']:.4f}",
+                f"{info['review_minutes']:.4f}",
+                "" if info.get("unattributed_fraction") is None
+                else f"{info['unattributed_fraction']:.4f}",
+            ])
+    print(f"Wrote {path}")
+
 
 def _row_label(k):
     """Run code + configuration, so a table row can be matched to a figure bar."""
@@ -1584,7 +1664,7 @@ def _loops_cell(k, loop_progress_by_run):
 
 def write_summary_tables(runs, coverage, files_settled, translated_units, wall_times, tool_calls_per_file,
                          decision_models, shadowed_units, module_timelines, loop_progress_by_run,
-                         effort_by_run, effort_by_config, shared_units):
+                         effort_by_run, effort_by_config, shared_units, effort_by_run_timed=None):
     lines = ["# Summary tables (generated by analysis/generate_graphs.py — do not hand-edit)\n"]
     for note in unpriced_caption(runs):
         lines.append(f"{note}\n")
@@ -1908,6 +1988,63 @@ def write_summary_tables(runs, coverage, files_settled, translated_units, wall_t
         "is not a translation — see `git_file_counts.py`). Those rows are in `data/per_file_effort.csv` "
         "with `settled = False` and are excluded from every mean below.\n"
     )
+
+    if effort_by_run_timed is not None:
+        lines.append("## Per-file effort (timed): csloop with measured tool/model durations\n")
+        lines.append(
+            "A third, tighter attribution for the csloop runs above, built from `logs/toolusage.toml` "
+            "instead of the loop-phase totals: it has the real `duration_ms` of every individual tool call "
+            "and the real token usage behind every model response, so an iteration's cost is split across "
+            "whatever settled files its own tool calls name, weighted by how long each call actually took — "
+            "rather than splitting a whole phase's total by raw call count, which treats a `read` and a full "
+            "test-suite `bash` call as equally expensive. See `per_file_effort.py`'s docstring for the exact "
+            "method.\n"
+        )
+        lines.append(
+            "It is still not *exact*: `logs/toolusage.toml` records the **author phase only** (review-phase "
+            "tool calls never appear in it, confirmed against every run below), and a model's \"thinking\" "
+            "time between tool calls — the majority of a phase's wall clock — is still not tied to one file; "
+            "it is split across whichever files that same iteration's tool calls name. Review, plus any "
+            "iteration whose tool calls name no settled file, are folded into one unattributed pool and "
+            "spread across files in proportion to each file's *measured* share — the same policy "
+            "*apportioned* already uses, just with a better weight. `Unattributed` below is how much of the "
+            "run's USD was spread this way rather than measured.\n"
+        )
+        lines.append(
+            "**The `Total` columns below are a cross-check, not a new number**: *apportioned* and *timed* "
+            "both reconcile to the same run USD and minutes, so they redistribute the same total across "
+            "files differently rather than disagreeing on it. Per-file rows differ between "
+            "`data/per_file_effort.csv` (apportioned) and `data/per_file_effort_timed.csv` (timed).\n"
+        )
+        lines.append(
+            "| Run | Config | Apportioned total | Timed total | Timed: review USD | Timed: review min | "
+            "Timed: unattributed |"
+        )
+        lines.append("|---|---|---:|---:|---:|---:|---:|")
+        for k in KEYS:
+            timed = effort_by_run_timed.get(k)
+            if timed is None:
+                continue
+            appt = effort_by_run.get(k)
+            appt_total = f"${appt['run']['attributed_usd']:.2f}" if appt is not None else "—"
+            info = timed["run"]
+            unattr = info.get("unattributed_fraction")
+            lines.append(
+                f"| {RUN_CODES[k]} | {CONFIG_OF_RUN[k]} | {appt_total} | ${info['attributed_usd']:.2f} | "
+                f"${info['review_usd']:.2f} | {info['review_minutes']:.1f} | "
+                f"{'—' if unattr is None else f'{100*unattr:.0f}%'} |"
+            )
+        lines.append("")
+        lines.append(
+            "A run missing from this table has no row because its `logs/toolusage.toml` is either absent "
+            "or fails the structural sanity check against `loop/metadata` (see `per_file_effort.py`); its "
+            "`apportioned` row above is unaffected.\n"
+        )
+        lines.append(
+            "Machine-readable versions: `analysis/data/per_file_effort_timed.csv` (one row per run and "
+            "unit) and `analysis/data/per_file_effort_timed_runs.csv` (per-run measured/review/unattributed "
+            "split).\n"
+        )
 
     lines.append("## Per-file effort by configuration (shared file set)\n")
     comparison = ", ".join(PER_FILE_COMPARISON_CONFIGS)
@@ -3007,14 +3144,23 @@ def main():
     print(f"per-file comparison set ({'/'.join(PER_FILE_COMPARISON_CONFIGS)}): "
           f"{len(shared_units)} files")
 
+    effort_by_run_timed = load_per_file_effort_timed(translated_units)
+    for k in KEYS:
+        record = effort_by_run_timed.get(k)
+        if record is None:
+            continue
+        info = record["run"]
+        print(f"{k}: per-file effort timed, {info['settled_units']} units, "
+              f"${info['attributed_usd']:.2f} attributed, {info['unattributed_fraction']:.0%} unattributed")
+
     make_standalone_figures(runs, coverage, files_settled, wall_times, tool_calls_per_file)
     _bump_fonts_for_combined()
     make_combined_figure(runs, coverage, files_settled, wall_times, tool_calls_per_file)
     make_decision_figure(translated_units, decision_models, module_timelines)
     write_summary_tables(runs, coverage, files_settled, translated_units, wall_times, tool_calls_per_file,
                          decision_models, shadowed_units, module_timelines, loop_progress_by_run,
-                         effort_by_run, effort_by_config, shared_units)
-    write_per_file_exports(effort_by_run, effort_by_config, shared_units, runs)
+                         effort_by_run, effort_by_config, shared_units, effort_by_run_timed)
+    write_per_file_exports(effort_by_run, effort_by_config, shared_units, runs, effort_by_run_timed)
 
     # LaTeX/TikZ artifacts consumed directly by the paper.
     write_tikz_colors()
