@@ -210,6 +210,102 @@ The stricter companion to the run-level table above. A file settled by several r
 | 2 of 3 | 10 | 40% | — |
 | 1 of 3 | 3 | 12% | `W2jet/A6texact`, `W2jet/fpp`, `W2jet/vv` |
 
+## Per-file effort: configurations and how effort is attributed
+
+The tables above divide a run total by files settled. The tables below attribute wall time, USD and tool calls to *individual files*. Runs are grouped into configurations (two runs share one only if the same models ran the same phases), which splits the ccworkflow block: R2 drives every phase with opus-5, while R1 and R3 author on sonnet-5 and only integrate on opus-5.
+
+| Config | Runs | Harness | Attribution |
+|---|---|---|---|
+| C1 — ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate) | R1, R3 | ccworkflow | exact |
+| C2 — ccworkflow (opus-5 all phases) | R2 | ccworkflow | exact |
+| C3 — csloop opus-5 | R4, R5, R6 | csloop | apportioned |
+| C4 — csloop sonnet-5 | R7, R8 | csloop | apportioned |
+| C5 — csloop gpt-5.6 | R9, R10, R11 | csloop | apportioned |
+
+**The two attribution methods are not the same measurement and must not be compared column-for-column without this caveat.**
+
+- *exact* (ccworkflow): each unit has its own AUTHOR subagent, so its tokens, tool calls and timestamps are its own. It covers the **author phase only** — triage picks the units, serial integrate lands them and runs the build and test suite, and a metadata agent writes the log, none of which is attributable to one file. `Author phase / run` below sizes what is missing: it is every author agent's USD over the run's total, including agents whose unit never landed, so it sits slightly above the attributed column beside it. Author agents in a group run in parallel, so per-file minutes overlap and do not sum to the run's wall clock. A unit retried in a later round is one row, with `agents` counting the retries.
+
+- *apportioned* (csloop): a single agent loops over the whole transformation and usage is recorded per loop phase, never per file. Each executed tool call is attributed to the settled units its arguments name (`X_fi` counts as `X`; a call naming k units splits 1/k to each), and the run's USD and minutes are divided in proportion. Because USD and minutes are both proportional to the same call counts, those three columns carry one measurement between them, not three. `Unattributed` is the share of the run's tool calls that named no settled unit — builds, the test suite, roadmap queries, git — which is spread proportionally rather than dropped, so run totals still reconcile exactly.
+
+- The tool-call column is not one quantity across methods: *exact* counts every call the unit's agent made, *apportioned* counts only calls naming the unit, which is smaller by construction.
+
+| Run | Config | Method | Units attributed | Attributed USD | Attributed min | Author phase / run | Unattributed |
+|---|---|---|---:|---:|---:|---:|---:|
+| R1 | C1 | exact | 13 | $35.71 | 93.3 | 50% | — |
+| R2 | C2 | exact | 15 | $72.68 | 87.5 | 70% | — |
+| R3 | C1 | exact | 16 | $46.15 | 120.5 | 63% | — |
+| R4 | C3 | apportioned | 15 | $15.69 | 43.5 | — | 76% |
+| R5 | C3 | apportioned | 14 | $13.32 | 42.2 | — | 75% |
+| R6 | C3 | apportioned | 12 | $12.87 | 37.6 | — | 76% |
+| R7 | C4 | apportioned | 2 | $5.83 | 34.7 | — | 88% |
+| R8 | C4 | apportioned | 2 | $6.27 | 34.4 | — | 81% |
+| R9 | C5 | apportioned | 5 | $6.38 | 21.8 | — | 76% |
+| R10 | C5 | apportioned | 10 | $9.59 | 25.4 | — | 67% |
+| R11 | C5 | apportioned | 11 | $10.06 | 37.6 | — | 67% |
+
+Unsettled work is carried but not averaged: R1 spent two full author agents on `Mods/mod_qcdloop_c` and `Mods/types_mod` and landed neither (a `.hpp` with no `.cpp` behind it is not a translation — see `git_file_counts.py`). Those rows are in `data/per_file_effort.csv` with `settled = False` and are excluded from every mean below.
+
+## Per-file effort by configuration (shared file set)
+
+Files settled by at least one replicate of every configuration with more than one replicate (C1, C3, C5); C2 is shown where it settled the same file but is not required, since one run should not decide the comparison set. C4 is left out entirely: it settled only `Mods/pp_mod` and `Mods/ppwp2j_mod`, so intersecting it would collapse this to two rows. Each cell is the mean over the replicates of that configuration **that settled the file**, with the replicate count in brackets — a file no replicate settled is blank, not zero.
+
+### Minutes per file
+
+| File | C1 (exact) | C2 (exact) | C3 (apportioned) | C5 (apportioned) |
+|---|---:|---:|---:|---:|
+| `BDK/FFMPcc` | 10.4 (2) | 6.2 (1) | 2.5 (1) | 3.1 (1) |
+| `BDK/FFPMccT` | 8.6 (2) | 5.5 (1) | 2.5 (1) | 3.1 (1) |
+| `BDK/FFPMccTtilde` | 4.7 (2) | 3.7 (1) | 2.5 (1) | 2.6 (1) |
+| `BDK/FFPMscT` | 5.1 (2) | 6.0 (1) | 2.5 (1) | 4.0 (1) |
+| `BDK/fvs` | 18.6 (2) | 7.0 (1) | 3.5 (1) | 4.4 (1) |
+| `Mods/pp_mod` | 7.1 (1) | — | 3.6 (3) | 2.7 (1) |
+| `Mods/ppwp2j_mod` | 5.8 (1) | — | 2.5 (3) | 2.7 (1) |
+| `W2jet/ZZbox1LL` | 8.1 (2) | 7.8 (1) | 2.7 (2) | 2.7 (2) |
+| `W2jet/a6treeg` | 7.8 (2) | 5.9 (1) | 2.8 (3) | 3.2 (3) |
+| `W2jet/atree` | 8.4 (2) | 6.0 (1) | 4.8 (3) | 4.4 (3) |
+| `W2jet/ggZZcapture` | 7.4 (2) | 5.6 (1) | 2.5 (2) | 3.2 (3) |
+| `W2jet/subqcd` | 4.9 (1) | 6.8 (1) | 3.9 (3) | 3.0 (1) |
+| **Mean over the shared files** | 8.1 | 6.1 | 3.0 | 3.3 |
+
+### USD per file
+
+| File | C1 (exact) | C2 (exact) | C3 (apportioned) | C5 (apportioned) |
+|---|---:|---:|---:|---:|
+| `BDK/FFMPcc` | 4.09 (2) | 5.40 (1) | 0.80 (1) | 0.84 (1) |
+| `BDK/FFPMccT` | 3.25 (2) | 4.62 (1) | 0.80 (1) | 0.84 (1) |
+| `BDK/FFPMccTtilde` | 1.71 (2) | 3.32 (1) | 0.80 (1) | 0.69 (1) |
+| `BDK/FFPMscT` | 1.96 (2) | 5.69 (1) | 0.80 (1) | 1.08 (1) |
+| `BDK/fvs` | 5.68 (2) | 5.40 (1) | 1.09 (1) | 1.19 (1) |
+| `Mods/pp_mod` | 2.58 (1) | — | 1.22 (3) | 1.02 (1) |
+| `Mods/ppwp2j_mod` | 2.42 (1) | — | 0.87 (3) | 1.02 (1) |
+| `W2jet/ZZbox1LL` | 3.50 (2) | 6.28 (1) | 0.95 (2) | 0.87 (2) |
+| `W2jet/a6treeg` | 3.18 (2) | 4.84 (1) | 0.96 (3) | 1.02 (3) |
+| `W2jet/atree` | 2.54 (2) | 5.15 (1) | 1.62 (3) | 1.31 (3) |
+| `W2jet/ggZZcapture` | 2.92 (2) | 5.00 (1) | 0.84 (2) | 0.99 (3) |
+| `W2jet/subqcd` | 2.23 (1) | 5.06 (1) | 1.30 (3) | 0.87 (1) |
+| **Mean over the shared files** | 3.01 | 5.08 | 1.00 | 0.98 |
+
+### Tool calls per file
+
+| File | C1 (exact) | C2 (exact) | C3 (apportioned) | C5 (apportioned) |
+|---|---:|---:|---:|---:|
+| `BDK/FFMPcc` | 63 (2) | 34 (1) | 5 (1) | 14 (1) |
+| `BDK/FFPMccT` | 63 (2) | 29 (1) | 5 (1) | 14 (1) |
+| `BDK/FFPMccTtilde` | 42 (2) | 25 (1) | 5 (1) | 11 (1) |
+| `BDK/FFPMscT` | 32 (2) | 30 (1) | 5 (1) | 18 (1) |
+| `BDK/fvs` | 92 (2) | 30 (1) | 7 (1) | 19 (1) |
+| `Mods/pp_mod` | 35 (1) | — | 8 (3) | 13 (1) |
+| `Mods/ppwp2j_mod` | 29 (1) | — | 6 (3) | 13 (1) |
+| `W2jet/ZZbox1LL` | 52 (2) | 40 (1) | 6 (2) | 13 (2) |
+| `W2jet/a6treeg` | 67 (2) | 33 (1) | 6 (3) | 14 (3) |
+| `W2jet/atree` | 58 (2) | 36 (1) | 11 (3) | 17 (3) |
+| `W2jet/ggZZcapture` | 51 (2) | 32 (1) | 6 (2) | 13 (3) |
+| `W2jet/subqcd` | 49 (1) | 44 (1) | 9 (3) | 10 (1) |
+| **Mean over the shared files** | 53 | 33 | 7 | 14 |
+
+Machine-readable versions, for plotting: `analysis/data/per_file_effort.csv` (one row per run and file, unsettled rows included), `analysis/data/per_file_effort_by_config.csv` (one row per configuration and file, with `shared` marking this comparison set) and `analysis/data/per_file_effort_runs.csv` (per-run method, coverage and caveats). Every row in all three carries `method`.
+
 ## Module entry order, tooling & doxygen position at fork (first tool-touch)
 
 Per run, the order it first touched a file it actually went on to settle in each module — not the order it merely explored, so a candidate it read and rejected does not date a module's entry. `Elapsed` is minutes since the run's first tool call of any kind. `Ready leaves / settled` counts, of the units the run settled in that module, how many were ready to rewrite (deps=0, blind=0) at the shared fork point versus how many it entered while something else there was still untranslated. `Rationale` is the model's own text immediately before the first such tool call, truncated; empty for a tool call with no preceding assistant text.
