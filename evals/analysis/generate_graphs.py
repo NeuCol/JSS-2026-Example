@@ -2258,7 +2258,8 @@ def write_tikz_colors():
 def write_tex_tables(metrics, coverage, translated_units, decision_models):
     TEX_DIR.mkdir(exist_ok=True)
 
-    # --- Table 1: the per-run numbers the figure deliberately does not repeat.
+    # --- Table 1: the per-run numbers the figure deliberately does not repeat
+    # (tab_runs.tex, unrelated to the coverage split below).
     rows = []
     for k in KEYS:
         m = metrics[k]
@@ -2292,7 +2293,36 @@ def write_tex_tables(metrics, coverage, translated_units, decision_models):
     (TEX_DIR / "tab_runs.tex").write_text("".join(tbl1))
     print(f"wrote {TEX_DIR / 'tab_runs.tex'}")
 
-    # --- Table 2: module coverage (which part of the tree each run reached).
+    # --- Table 2a: run manifest -- links each run code and configuration to
+    # its exact folder in the archived experiment repository (the Zenodo
+    # snapshot cited in the paper as akash_dhruv_2026_21925035), so a reader
+    # can go from a code in Table 2b straight back to the run's own archive.
+    # Paths are relative to that repository's root, e.g.
+    # evals/experiments/08-27-2026/ccworkflow-sonnet-5-opus-5-integrate-run3.
+    map_rows = []
+    for day, run_name, code, label in RUNS:
+        # "evals/" is common to every row and stated once in the caption, so
+        # dropping it from each cell buys back column width for the part that
+        # actually varies (day and run folder).
+        directory = f"experiments/{day}/{run_name}"
+        map_rows.append(
+            f"    {code} & {_tex_escape(label)} & \\texttt{{{_tex_escape(directory)}}} \\\\\n"
+        )
+    tbl_map = [
+        TEX_DATA_BANNER,
+        "\\setlength{\\tabcolsep}{3.2pt}\n",
+        "\\begin{tabular}{@{}lll@{}}\n",
+        "  \\toprule\n",
+        "  Run & Configuration & Directory (under {\\ttfamily evals/} in the archived repository) \\\\\n",
+        "  \\midrule\n",
+        *map_rows,
+        "  \\bottomrule\n",
+        "\\end{tabular}\n",
+    ]
+    (TEX_DIR / "tab_coverage_map.tex").write_text("".join(tbl_map))
+    print(f"wrote {TEX_DIR / 'tab_coverage_map.tex'}")
+
+    # --- Table 2b: module coverage (which part of the tree each run reached).
     mods = modules_touched(translated_units)
     all_modules = sorted({m for counts in mods.values() for m in counts})
     cov_rows = []
