@@ -44,6 +44,11 @@ Keep the changing worklist in `agent_log.md` in this folder. Create it if missin
 keep it current. Use it for ready files, review groups, and per-file status. Keep durable prose
 notes in the session log at the end of this file.
 
+When you open a group, record its provenance directly under the heading, before any editing:
+the ready-leaf count from `python3 dev/workflow.py status`, and the first five lines of the
+`python3 dev/workflow.py next mcfm-miniapp-threejets` output, verbatim. If the group's files
+are not that list's top entries, add one line saying why.
+
 Record each finished file as:
 
 - `- [x] <file> — VERIFIED (worst Δrel <value>)`
@@ -116,6 +121,10 @@ Run these from the project root. Prefer the unified workflow interface:
     untranslated files *inside* the miniapp, so `deps == 0` means "ready within this run".
     Always pass `--scope ThreeJets`; an unscoped refresh reports the whole of MCFM and is not
     this run's work list.
+- `python3 dev/workflow.py next mcfm-miniapp-threejets`
+  - print the miniapp's ready files, already ranked most-unblocking first — this is the
+    candidate list. It is filtered to `ThreeJets`, so it never proposes work outside the
+    miniapp even if the last refresh was unscoped.
 - `python3 dev/workflow.py draft <file.f>`
   - make a rough draft and dependency hints
 - `python3 dev/workflow.py verify <file.cpp> -- g g g g g`
@@ -145,24 +154,35 @@ The work list is fixed. It is every not-yet-translated source file in
 `software/mcfm/src/ThreeJets`, which `python3 dev/workflow.py refresh --scope ThreeJets`
 reports in `dev/tmp/assets/roadmap_metrics.tsv`.
 
-1. Never translate a file outside the miniapp. If a file in the miniapp calls something outside
-   it, that callee is **not** pulled into scope; see rule 3.
-2. Prefer files with `deps == 0` in the scoped map, which means every callee of theirs that is
-   also in the miniapp has already been translated. Work upward from there.
-3. A miniapp file whose remaining untranslated callees are all *outside* the miniapp is ready
+1. The candidate list at any moment is the output of:
+
+   ```
+   python3 dev/workflow.py next mcfm-miniapp-threejets
+   ```
+
+   It prints the miniapp's ready files already ranked, most-unblocking first. Treat that
+   output as the candidate list. Do not re-derive readiness by filtering
+   `dev/tmp/assets/roadmap_metrics.tsv` yourself: `next` already applies `deps == 0` and
+   `blind == 0` on the scoped map, and the index only ever lists files that have no
+   generated `.cpp`.
+2. Never translate a file outside the miniapp. If a file in the miniapp calls something outside
+   it, that callee is **not** pulled into scope; see rule 4.
+3. `deps == 0` in the scoped map means every callee of that file which is *also* in the miniapp
+   has already been translated. Work upward from there; the list refills as files settle.
+4. A miniapp file whose remaining untranslated callees are all *outside* the miniapp is ready
    now. Per the Spec's "never invent a called symbol", declare the still-Fortran callee in
    `extern "C"` and call it with pointer arguments. Do not rewrite it. In this miniapp that
    applies to `spinoru` (in `src/Need`) and `fillperm`.
-4. Group files for review:
+5. Group files for review:
    - about 5 files per group
    - headings must start with `Group`
-5. If there is already an open group, keep filling and fixing that group before opening another.
-6. Rewrite the group, wire it into `src/ThreeJets/CMakeLists.txt`, build, and verify each file.
+6. If there is already an open group, keep filling and fixing that group before opening another.
+7. Rewrite the group, wire it into `src/ThreeJets/CMakeLists.txt`, build, and verify each file.
    - After converting a Fortran source, move the original `.f`/`.F` into
      `src/ThreeJets/deprecated/`.
    - Follow the Spec's Output shape and Header/source structure for the translated files.
-7. After a group is completed, check the gate before opening the next one.
-8. After any required approval, refresh the scoped roadmap again before picking more work.
+8. After a group is completed, check the gate before opening the next one.
+9. After any required approval, refresh the scoped roadmap again before picking more work.
 
 Unlike an open-ended `mcfm-translate` run, the miniapp is not restricted to leaves. Some files
 here have callees inside the miniapp and can only be done after those, so the order matters and
@@ -170,10 +190,15 @@ is yours to work out from the scoped map.
 
 ## Shell notes
 
-CodeScribe bash is restricted. In practice:
+CodeScribe bash is restricted to one simple command per call. In practice:
 
 - use plain relative paths like `software/mcfm/src/...`
-- no `cd`, pipes, redirects, or `$VARIABLES`
+- no `cd`, pipes (`|`), redirects (`>`, `2>`), `&&`, `;`, or `$VARIABLES`
+- no `test -f X && ...`; check for a file with a plain `ls` or `head`
+- `python3 -c` is accepted only as a single line with no embedded newlines — a multi-line
+  inline script is rejected. To read the roadmap, use the `next` command above or a single
+  `grep -P`, never an inline Python script.
+- `python3 dev/workflow.py ...`, `grep`, `head`, `wc`, and `jobrunner ...` are unaffected
 
 ## Verify
 
