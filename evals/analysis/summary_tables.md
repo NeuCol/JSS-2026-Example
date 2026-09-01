@@ -96,21 +96,21 @@ Runs grouped sequentially by harness and decision model — all ccworkflow runs,
 
 ## Which src/ module each run translated files from (git-exact)
 
-Which top-level `software/mcfm/src/` directory each run's translated files came from — shows whether runs converged on the same module or scattered across different ones.
+Which top-level `software/mcfm/src/` directory each run's translated files came from — shows whether runs converged on the same module or scattered across different ones. `Loops` is completed/cap: for the csloop runs this is `run.loops_completed`/`run.agent_loops` from the run's archived `loop/metadata/manifest.toml`; ccworkflow has no configured cap, so it instead reports completed Triage-Author-Integrate rounds against the approval-batch gate limit each run was stopped at (recovered from the blocking event's own message, not a run parameter).
 
-| Run | BDK | Mods | W2jet | Total |
-|---|---:|---:|---:|---:|
-| R1 — ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate) | 5 | 3 | 5 | 13 |
-| R2 — ccworkflow (opus-5 triage and dispatch) | 5 |  | 10 | 15 |
-| R3 — ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate, run2) | 5 |  | 11 | 16 |
-| R4 — csloop opus-5 |  | 4 | 11 | 15 |
-| R5 — csloop opus-5 (run2) | 5 | 4 | 5 | 14 |
-| R6 — csloop opus-5 (run3) |  | 2 | 10 | 12 |
-| R7 — csloop sonnet-5 (run2) |  | 2 |  | 2 |
-| R8 — csloop sonnet-5 (run3, incomplete — no agent_log archived) |  | 2 |  | 2 |
-| R9 — csloop gpt-5.6 (run4) |  | 1 | 4 | 5 |
-| R10 — csloop gpt-5.6 (run5) |  | 5 | 5 | 10 |
-| R11 — csloop gpt-5.6 (run6) | 5 | 1 | 5 | 11 |
+| Run | BDK | Mods | W2jet | Total | Loops |
+|---|---:|---:|---:|---:|---:|
+| R1 — ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate) | 5 | 3 | 5 | 13 | 3/3 |
+| R2 — ccworkflow (opus-5 triage and dispatch) | 5 |  | 10 | 15 | 3/3 |
+| R3 — ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate, run2) | 5 |  | 11 | 16 | 3/3 |
+| R4 — csloop opus-5 |  | 4 | 11 | 15 | 5/5 |
+| R5 — csloop opus-5 (run2) | 5 | 4 | 5 | 14 | 5/5 |
+| R6 — csloop opus-5 (run3) |  | 2 | 10 | 12 | 4/5 |
+| R7 — csloop sonnet-5 (run2) |  | 2 |  | 2 | 5/5 |
+| R8 — csloop sonnet-5 (run3, incomplete — no agent_log archived) |  | 2 |  | 2 | 5/5 |
+| R9 — csloop gpt-5.6 (run4) |  | 1 | 4 | 5 | 5/5 |
+| R10 — csloop gpt-5.6 (run5) |  | 5 | 5 | 10 | 4/5 |
+| R11 — csloop gpt-5.6 (run6) | 5 | 1 | 5 | 11 | 5/5 |
 
 ## File-level overlap between runs sharing a module (git-exact)
 

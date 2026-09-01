@@ -156,6 +156,51 @@ def parse_workflow_dir(workflow_dir):
     return rows
 
 
+_GATE_LIMIT_RE = re.compile(r"limit is (\d+)")
+
+
+def round_summary(run_dir):
+    """How many Triage -> parallel Author -> serial Integrate rounds this
+    ccworkflow run completed, and the cap it was stopped at (if any).
+
+    ccworkflow has no configured round cap the way csloop has `agent_loops`;
+    every run here keeps going until Plan's own approval-batch gate
+    (check_gate.py) blocks a new group. A round is counted from journal.jsonl's
+    Integrate-phase result event, which carries `written` once the group's
+    files land on the branch; Triage's own `opened: true` flag agrees exactly
+    at every archived run, since a round only starts once Triage opens a
+    group. The cap is recovered from the blocking event's `stopReason` text
+    ("... limit is N") rather than hardcoded, so a change to the gate's batch
+    limit shows up here automatically; a run that never hits the gate reports
+    cap=None.
+    """
+    run_dir = Path(run_dir)
+    completed = 0
+    cap = None
+    for workflow_dir in sorted(run_dir.glob("workflow-wf_*")):
+        journal_path = workflow_dir / "journal.jsonl"
+        if not journal_path.exists():
+            continue
+        with open(journal_path) as fh:
+            for line in fh:
+                line = line.strip()
+                if not line:
+                    continue
+                event = json.loads(line)
+                if event.get("type") != "result":
+                    continue
+                result = event.get("result")
+                if not isinstance(result, dict):
+                    continue
+                if "written" in result:
+                    completed += 1
+                if result.get("gateBlocked"):
+                    match = _GATE_LIMIT_RE.search(result.get("stopReason") or "")
+                    if match:
+                        cap = int(match.group(1))
+    return {"rounds_completed": completed, "cap": cap}
+
+
 def parse_ccworkflow_run(run_dir):
     """A ccworkflow run dir may contain one workflow-wf_* subdir. Returns run-level rows."""
     run_dir = Path(run_dir)

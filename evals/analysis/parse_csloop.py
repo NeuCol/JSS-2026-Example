@@ -235,6 +235,21 @@ def parse_csloop_run(run_dir):
     return rows
 
 
+def manifest_run_info(run_dir):
+    """This run's manifest.toml [run] table, or {} if the run has none.
+
+    Carries `agent_loops` (the configured per-run cap) and `loops_completed`
+    (how many author/review cycles actually ran before the loop stopped, self
+    or gate) straight from the archive -- the per-loop rows from
+    parse_metadata_dir don't surface either field, since they only read
+    `run.model`.
+    """
+    manifest_path = Path(run_dir) / "loop" / "metadata" / "manifest.toml"
+    if not manifest_path.exists():
+        return {}
+    return _load_toml(manifest_path).get("run", {})
+
+
 def parse_all_csloop(experiments_root):
     experiments_root = Path(experiments_root)
     all_rows = []

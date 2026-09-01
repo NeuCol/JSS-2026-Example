@@ -6,20 +6,25 @@
 %% has no archived agent_log.md and is kept with its git-exact count only --
 %% see generate_graphs.py. Earlier days (07-24/07-25, 08-11..08-26) forked
 %% from different roadmap states and are deliberately out of scope.
-\begin{tabular}{@{}lrrrr@{}}
+%% Loops: completed/cap. csloop (R4-R11): run.loops_completed / run.agent_loops
+%% from loop/metadata/manifest.toml. ccworkflow (R1-R3): completed
+%% Triage-Author-Integrate rounds counted from journal.jsonl; these runs are
+%% uncapped by configuration, so the cap shown is the approval-batch gate limit
+%% each run was actually stopped at (parsed from the blocking event's own message).
+\begin{tabular}{@{}lrrrrr@{}}
   \toprule
-  & BDK & Mods & W2jet & Total \\
+  & BDK & Mods & W2jet & Total & Loops \\
   \midrule
-    R1 & 5 & 3 & 5 & 13 \\
-    R2 & 5 & -- & 10 & 15 \\
-    R3 & 5 & -- & 11 & 16 \\
-    R4 & -- & 4 & 11 & 15 \\
-    R5 & 5 & 4 & 5 & 14 \\
-    R6 & -- & 2 & 10 & 12 \\
-    R7 & -- & 2 & -- & 2 \\
-    R8 & -- & 2 & -- & 2 \\
-    R9 & -- & 1 & 4 & 5 \\
-    R10 & -- & 5 & 5 & 10 \\
-    R11 & 5 & 1 & 5 & 11 \\
+    R1 & 5 & 3 & 5 & 13 & 3/3 \\
+    R2 & 5 & -- & 10 & 15 & 3/3 \\
+    R3 & 5 & -- & 11 & 16 & 3/3 \\
+    R4 & -- & 4 & 11 & 15 & 5/5 \\
+    R5 & 5 & 4 & 5 & 14 & 5/5 \\
+    R6 & -- & 2 & 10 & 12 & 4/5 \\
+    R7 & -- & 2 & -- & 2 & 5/5 \\
+    R8 & -- & 2 & -- & 2 & 5/5 \\
+    R9 & -- & 1 & 4 & 5 & 5/5 \\
+    R10 & -- & 5 & 5 & 10 & 4/5 \\
+    R11 & 5 & 1 & 5 & 11 & 5/5 \\
   \bottomrule
 \end{tabular}
