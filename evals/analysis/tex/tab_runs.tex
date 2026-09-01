@@ -6,22 +6,27 @@
 %% has no archived agent_log.md and is kept with its git-exact count only --
 %% see generate_graphs.py. Earlier days (07-24/07-25, 08-11..08-26) forked
 %% from different roadmap states and are deliberately out of scope.
-\begin{tabular}{@{}llrrrrrrr@{}}
+%% Loops: completed/cap. csloop (R4-R11): run.loops_completed / run.agent_loops
+%% from loop/metadata/manifest.toml. ccworkflow (R1-R3): completed
+%% Triage-Author-Integrate rounds counted from journal.jsonl; these runs are
+%% uncapped by configuration, so the cap shown is the approval-batch gate limit
+%% each run was actually stopped at (parsed from the blocking event's own message).
+\begin{tabular}{@{}llrrrrrrrr@{}}
   \toprule
-  & & \multicolumn{3}{c}{Run totals} & \multicolumn{3}{c}{Per file settled} & \\
-  \cmidrule(lr){3-5}\cmidrule(lr){6-8}
-  & Configuration & Files & Min & USD & USD & Min & Tool calls & Cache \%\\
+  & & & \multicolumn{3}{c}{Run totals} & \multicolumn{3}{c}{Per file settled} & \\
+  \cmidrule(lr){4-6}\cmidrule(lr){7-9}
+  & Configuration & Loops & Files & Min & USD & USD & Min & Tool calls & Cache \%\\
   \midrule
-    R1 & ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate) & 13 & 84 & 78.38 & 6.03 & 6.4 & 75.9 & 94 \\
-    R2 & ccworkflow (opus-5 triage and dispatch) & 15 & 69 & 104.43 & 6.96 & 4.6 & 47.7 & 92 \\
-    R3 & ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate, run2) & 16 & 89 & 73.67 & 4.60 & 5.5 & 66.8 & 94 \\
-    R4 & csloop opus-5 & 15 & 43 & 15.69 & 1.05 & 2.9 & 29.9 & 91 \\
-    R5 & csloop opus-5 (run2) & 14 & 42 & 13.32 & 0.95 & 3.0 & 25.3 & 91 \\
-    R6 & csloop opus-5 (run3) & 12 & 38 & 12.87 & 1.07 & 3.1 & 27.5 & 92 \\
-    R7 & csloop sonnet-5 (run2) & 2 & 35 & 5.83 & 2.91 & 17.3 & 195.5 & 91 \\
-    R8 & csloop sonnet-5 (run3, incomplete — no agent\_log archived) & 2 & 34 & 6.27 & 3.13 & 17.2 & 222.0 & 91 \\
-    R9 & csloop gpt-5.6 (run4) & 5 & 22 & 6.38 & 1.28 & 4.4 & 61.2 & 79 \\
-    R10 & csloop gpt-5.6 (run5) & 10 & 25 & 9.59 & 0.96 & 2.5 & 38.1 & 82 \\
-    R11 & csloop gpt-5.6 (run6) & 11 & 38 & 10.06 & 0.91 & 3.4 & 44.4 & 83 \\
+    R1 & ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate) & 3/3 & 13 & 84 & 78.38 & 6.03 & 6.4 & 75.9 & 94 \\
+    R2 & ccworkflow (opus-5 triage and dispatch) & 3/3 & 15 & 69 & 104.43 & 6.96 & 4.6 & 47.7 & 92 \\
+    R3 & ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate, run2) & 3/3 & 16 & 89 & 73.67 & 4.60 & 5.5 & 66.8 & 94 \\
+    R4 & csloop opus-5 & 5/5 & 15 & 43 & 15.69 & 1.05 & 2.9 & 29.9 & 91 \\
+    R5 & csloop opus-5 (run2) & 5/5 & 14 & 42 & 13.32 & 0.95 & 3.0 & 25.3 & 91 \\
+    R6 & csloop opus-5 (run3) & 4/5 & 12 & 38 & 12.87 & 1.07 & 3.1 & 27.5 & 92 \\
+    R7 & csloop sonnet-5 (run2) & 5/5 & 2 & 35 & 5.83 & 2.91 & 17.3 & 195.5 & 91 \\
+    R8 & csloop sonnet-5 (run3, incomplete — no agent\_log archived) & 5/5 & 2 & 34 & 6.27 & 3.13 & 17.2 & 222.0 & 91 \\
+    R9 & csloop gpt-5.6 (run4) & 5/5 & 5 & 22 & 6.38 & 1.28 & 4.4 & 61.2 & 79 \\
+    R10 & csloop gpt-5.6 (run5) & 4/5 & 10 & 25 & 9.59 & 0.96 & 2.5 & 38.1 & 82 \\
+    R11 & csloop gpt-5.6 (run6) & 5/5 & 11 & 38 & 10.06 & 0.91 & 3.4 & 44.4 & 83 \\
   \bottomrule
 \end{tabular}

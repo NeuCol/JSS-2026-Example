@@ -2285,7 +2285,10 @@ def write_tex_tables(metrics, coverage, translated_units, decision_models, loop_
     TEX_DIR.mkdir(exist_ok=True)
 
     # --- Table 1: the per-run numbers the figure deliberately does not repeat
-    # (tab_runs.tex, unrelated to the coverage split below).
+    # (tab_runs.tex, unrelated to the coverage split below). Loops (completed/cap)
+    # sits right after Configuration: csloop's cap is a real run parameter
+    # (run.agent_loops); ccworkflow has none, so its "cap" is the approval-batch
+    # gate limit the run was actually stopped at (see round_summary).
     rows = []
     for k in KEYS:
         m = metrics[k]
@@ -2296,21 +2299,27 @@ def write_tex_tables(metrics, coverage, translated_units, decision_models, loop_
         # "--" is a metric that does not exist for this run (it settled nothing);
         # "n/a" is one that was not measured (no archival branch in this clone).
         files = m["files"] if m["files"] is not None else "n/a"
+        loops = _loops_cell(k, loop_progress_by_run)
         rows.append(
-            f"    {m['code']} & {_tex_escape(m['label'])} & {files} & "
+            f"    {m['code']} & {_tex_escape(m['label'])} & {loops} & {files} & "
             f"{m['minutes']:.0f} & {cost} & {cpf} & {mpf} & {cpfile} & {m['read_share']:.0f} \\\\\n"
         )
-    # Column map: 1 code, 2 configuration, 3-5 run totals (files, minutes, USD),
-    # 6-8 per-file (USD, minutes, tool calls), 9 cache-read share. The USD total
-    # belongs under "Run totals", so the spans are 3-5 and 6-8; cache share sits
-    # under neither.
+    # Column map: 1 code, 2 configuration, 3 loops, 4-6 run totals (files,
+    # minutes, USD), 7-9 per-file (USD, minutes, tool calls), 10 cache-read
+    # share. The USD total belongs under "Run totals", so the spans are 4-6
+    # and 7-9; loops and cache share sit under neither.
     tbl1 = [
         TEX_DATA_BANNER,
-        "\\begin{tabular}{@{}llrrrrrrr@{}}\n",
+        "%% Loops: completed/cap. csloop (R4-R11): run.loops_completed / run.agent_loops\n"
+        "%% from loop/metadata/manifest.toml. ccworkflow (R1-R3): completed\n"
+        "%% Triage-Author-Integrate rounds counted from journal.jsonl; these runs are\n"
+        "%% uncapped by configuration, so the cap shown is the approval-batch gate limit\n"
+        "%% each run was actually stopped at (parsed from the blocking event's own message).\n",
+        "\\begin{tabular}{@{}llrrrrrrrr@{}}\n",
         "  \\toprule\n",
-        "  & & \\multicolumn{3}{c}{Run totals} & \\multicolumn{3}{c}{Per file settled} & \\\\\n",
-        "  \\cmidrule(lr){3-5}\\cmidrule(lr){6-8}\n",
-        "  & Configuration & Files & Min & USD & USD & Min & Tool calls & Cache \\%\\\\\n",
+        "  & & & \\multicolumn{3}{c}{Run totals} & \\multicolumn{3}{c}{Per file settled} & \\\\\n",
+        "  \\cmidrule(lr){4-6}\\cmidrule(lr){7-9}\n",
+        "  & Configuration & Loops & Files & Min & USD & USD & Min & Tool calls & Cache \\%\\\\\n",
         "  \\midrule\n",
         *rows,
         "  \\bottomrule\n",
@@ -2348,32 +2357,25 @@ def write_tex_tables(metrics, coverage, translated_units, decision_models, loop_
     (TEX_DIR / "tab_coverage_map.tex").write_text("".join(tbl_map))
     print(f"wrote {TEX_DIR / 'tab_coverage_map.tex'}")
 
-    # --- Table 2b: module coverage (which part of the tree each run reached),
-    # plus a Loops column: completed/cap. csloop's cap is a real run parameter
-    # (run.agent_loops); ccworkflow has none, so its "cap" is the
-    # approval-batch gate limit the run was stopped at (see round_summary).
+    # --- Table 2b: module coverage (which part of the tree each run reached).
+    # Loops moved to Table 1 (tab_runs.tex), right after Configuration --
+    # loop progress is a run-total-shaped stat, not a module one.
     mods = modules_touched(translated_units)
     all_modules = sorted({m for counts in mods.values() for m in counts})
     cov_rows = []
     for k in KEYS:
-        loops = _loops_cell(k, loop_progress_by_run)
         if translated_units[k] is None:
             cells = " & ".join(["n/a"] * len(all_modules))
-            cov_rows.append(f"    {RUN_CODES[k]} & {cells} & n/a & {loops} \\\\\n")
+            cov_rows.append(f"    {RUN_CODES[k]} & {cells} & n/a \\\\\n")
             continue
         counts = mods[k]
         cells = " & ".join(str(counts.get(m, "")) or "--" for m in all_modules)
-        cov_rows.append(f"    {RUN_CODES[k]} & {cells} & {sum(counts.values())} & {loops} \\\\\n")
+        cov_rows.append(f"    {RUN_CODES[k]} & {cells} & {sum(counts.values())} \\\\\n")
     tbl2 = [
         TEX_DATA_BANNER,
-        "%% Loops: completed/cap. csloop (R4-R11): run.loops_completed / run.agent_loops\n"
-        "%% from loop/metadata/manifest.toml. ccworkflow (R1-R3): completed\n"
-        "%% Triage-Author-Integrate rounds counted from journal.jsonl; these runs are\n"
-        "%% uncapped by configuration, so the cap shown is the approval-batch gate limit\n"
-        "%% each run was actually stopped at (parsed from the blocking event's own message).\n",
-        "\\begin{tabular}{@{}l" + "r" * (len(all_modules) + 2) + "@{}}\n",
+        "\\begin{tabular}{@{}l" + "r" * (len(all_modules) + 1) + "@{}}\n",
         "  \\toprule\n",
-        "  & " + " & ".join(_tex_escape(m) for m in all_modules) + " & Total & Loops \\\\\n",
+        "  & " + " & ".join(_tex_escape(m) for m in all_modules) + " & Total \\\\\n",
         "  \\midrule\n",
         *cov_rows,
         "  \\bottomrule\n",
