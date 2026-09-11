@@ -1,0 +1,26 @@
+{
+  "experiment_name": "ccworkflow-loop-sonnet-5",
+  "archive_created_at": "2026-09-11T08:34:22.468064+00:00",
+  "loop_source": ".claude",
+  "transformation_source": "dev/transformations/mcfm-translate",
+  "submodules": [
+    "software/mcfm"
+  ],
+  "archive_branch": "evals/09-11-2026/ccworkflow-loop-sonnet-5",
+  "submodule_results": [
+    {
+      "repo": "software/mcfm",
+      "branch": "evals/09-11-2026/ccworkflow-loop-sonnet-5",
+      "branch_action": "created",
+      "excluded_paths": [
+        "Bin",
+        "install"
+      ],
+      "committed": true,
+      "head": "aa0b94dadbb8c8dbeb2d7155dc27f60899ac468c"
+    }
+  ],
+  "session_logs": "/home/akash/.claude/projects/-home-akash-Desktop-Akash-Projects-JSS-Paper-Example/a446fe4b-dc39-4c6d-91fc-bea95bf7a9ca",
+  "included_dev_tmp": true,
+  "cleanup_performed": true
+}

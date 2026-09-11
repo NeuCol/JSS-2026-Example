@@ -1,0 +1,6 @@
+## main...origin/main [ahead 1]
+ M .claude/workflows/loop.js
+ m software/mcfm
+?? dev/tmp/
+?? dev/transformations/mcfm-translate/agent_log.md
+?? evals/experiments/09-11-2026/
