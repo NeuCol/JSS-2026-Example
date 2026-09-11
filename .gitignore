@@ -41,3 +41,8 @@ __pycache__/
 *.pyc
 .venv/
 .DS_Store
+
+# Loop-workflow scratch: .claude/workflows/loop.js has its review agent write
+# .claude/loop/review_output.toml, mirroring .codescribe/loop/. .claude itself is tracked,
+# so ignore just the run dir.
+/.claude/loop/
