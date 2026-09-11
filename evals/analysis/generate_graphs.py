@@ -1,22 +1,57 @@
 #!/usr/bin/env python3.10
-"""Generate the paper figures + summary tables for the 08-27/08-28-2026
-evaluation of the mcfm-translate transformation.
+"""Generate the paper figures + summary tables for the 08-27/08-28-2026 and
+09-11-2026 evaluation of the mcfm-translate transformation.
 
-Scope is two days on purpose, and it is what makes the cost comparison mean
-anything. All eleven branches in RUNS below fork from the same submodule commit
-(git merge-base against git_file_counts.BASE_REF is that commit exactly for
-every one of them), and their fork-point roadmaps reconstruct to the same
-445-file candidate set, agreeing to within three rows run-to-run. So cost, wall
-time and tokens divide by a files-settled number drawn from one shared pool of
-work, which is the premise a cost-per-file number needs and does not survive
-being computed across days that forked from different roadmap states. The
-earlier corpus (07-24/07-25-2026 and 08-11-2026 through 08-26-2026) is still on
-disk under experiments/ and still parses where its layout allows, but it is out
-of scope here for exactly that reason.
+Scope is three days on purpose, and it is what makes the cost comparison mean
+anything. All thirteen branches in RUNS below fork from the same submodule
+commit (git merge-base against git_file_counts.BASE_REF is that commit exactly
+for every one of them, the 09-11 pair included), and their fork-point roadmaps
+reconstruct to the same 445-file candidate set, agreeing to within three rows
+run-to-run. So cost, wall time and tokens divide by a files-settled number
+drawn from one shared pool of work, which is the premise a cost-per-file number
+needs and does not survive being computed across days that forked from
+different roadmap states. The earlier corpus (07-24/07-25-2026 and 08-11-2026
+through 08-26-2026) is still on disk under experiments/ and still parses where
+its layout allows, but it is out of scope here for exactly that reason.
+
+THREE HARNESSES, TWO VARIABLES. The corpus covers two design patterns across
+two baseline agents, and which pair you read tells you which variable is held
+fixed:
+
+                      | CodeScribe baseline | Claude Code baseline
+    loop pattern      | csloop              | ccloop
+    multi-agent flow  | (none)              | ccworkflow
+
+  ccloop vs. csloop      one design pattern, two baseline agents. Both are a
+                         bounded author->review loop over the same Spec/Plan;
+                         the loop workflow (.claude/workflows/loop.js) is
+                         deliberately shaped after CodeScribe's prompt_loop.
+                         What differs is the agent underneath, so this is the
+                         bare-metal comparison of the two baselines.
+  ccloop vs. ccworkflow  one baseline agent, two design patterns. Same Claude
+                         Code agent, same transformation, one running a loop
+                         and one running the five-phase group-at-a-time
+                         approval-gated workflow.
+Neither comparison existed before 09-11-2026: every ccworkflow/csloop pair in
+the corpus differs in both dimensions at once, so nothing in it could separate
+"a better agent" from "a better design pattern". The two ccloop runs are the
+cell that closes that.
+
+Read both comparisons with their sample sizes in view. ccloop is two runs, one
+per model, with no replicate of either; ccworkflow is three and csloop eight.
+Anything below labelled C6 or C7 is a single observation.
+
+The two ccloop runs also differ from each other in how they stopped, which is a
+property of the loop pattern rather than of either model. R12 (opus-5) ran its
+full budget of five loops, spending the last two holding at a blocked approval
+gate. R13 (sonnet-5) finished one loop and stopped, because its reviewer
+returned no pending items and no blocker, which is the loop's own early-exit
+condition -- so R13's totals are one loop of work, not a truncated five.
 
 Runs covered: three ccworkflow arms (opus-5 triage/dispatch x2, sonnet-5
 triage/dispatch with opus-5 integrate x2 -- one of each is 08-27, one is
-08-28) against eight csloop arms (opus-5 x3, sonnet-5 x2, gpt-5.6 x3).
+08-28), eight csloop arms (opus-5 x3, sonnet-5 x2, gpt-5.6 x3), and two ccloop
+arms (opus-5, sonnet-5, both 09-11).
 08-27-2026/ccworkflow-opus-5 ("R1" in that older single-day corpus's own
 numbering -- NOT the current R1 below, which is a different run) was dropped
 from this set: at 2 files settled it was a clear outlier for its own config,
@@ -74,11 +109,12 @@ file) and per_file_effort_runs.csv (per-run attribution method and its
 caveats). Those exist so plotting code reads a number rather than re-deriving
 an attribution, and so a figure and a table cannot disagree. Read
 per_file_effort.py before using them: ccworkflow effort is measured per file
-and csloop effort is apportioned to files, the two are not the same
-measurement, and every exported row carries a `method` column saying which it
-is.
+while csloop and ccloop effort is apportioned to files, the two are not the
+same measurement, and every exported row carries a `method` column saying which
+it is. ccloop and csloop share the apportioned method exactly, which is what
+makes their per-file columns directly comparable to each other.
 
-For the csloop runs, per_file_effort.py also has a third, tighter method,
+For the csloop runs only, per_file_effort.py also has a third, tighter method,
 "timed" -- it reads logs/toolusage.toml for real per-tool-call durations and
 per-iteration token usage instead of splitting a whole loop phase's totals by
 raw call count. It is exported alongside the apportioned tables as
@@ -118,7 +154,10 @@ from matplotlib.lines import Line2D
 
 sys.path.insert(0, str(Path(__file__).parent))
 
+from harness import (CCLOOP, CCWORKFLOW, CSLOOP, HARNESSES, harness_of,
+                     is_claude_code, verify_harness_names)
 from parse_ccworkflow import parse_all_ccworkflow, round_summary
+from parse_ccloop import parse_all_ccloop, loop_summary
 from parse_csloop import parse_all_csloop, manifest_run_info
 from parse_coverage import coverage_for_run
 from pricing import cost, PRICING, NON_ANTHROPIC
@@ -213,20 +252,30 @@ plt.rcParams.update(
 # summary_tables.md, so a reader can go from a bar/row straight back to the
 # archive on disk.
 #
-# Codes are sequential (R1..R11) and grouped by harness/decision-model rather
+# Codes are sequential (R1..R13) and grouped by harness/decision-model rather
 # than by wall-clock start or archival day: all three ccworkflow runs first,
 # then the three csloop opus-5 runs, then the two csloop sonnet-5 runs, then
-# the three csloop gpt-5.6 runs (see RUN_GROUPS) — so a same-config replicate
-# always sits next to the run(s) it replicates, regardless of which day it was
-# archived on. Renumbered to this grouped-sequential scheme on 2026-08-31;
-# earlier revisions of this file used a sparser R2/R8/R9/... scheme left over
-# from when a run was dropped from a larger corpus (see the module docstring)
-# — the codes here are NOT position-comparable with that older scheme.
+# the three csloop gpt-5.6 runs, then the two ccloop runs (see RUN_GROUPS) — so
+# a same-config replicate always sits next to the run(s) it replicates,
+# regardless of which day it was archived on. Renumbered to this
+# grouped-sequential scheme on 2026-08-31; earlier revisions of this file used a
+# sparser R2/R8/R9/... scheme left over from when a run was dropped from a
+# larger corpus (see the module docstring) — the codes here are NOT
+# position-comparable with that older scheme.
+#
+# The ccloop block is appended at the END rather than slotted next to the other
+# Claude Code harness, which grouping alone would argue for. R1..R11 are cited
+# by code in the paper and in the archived Zenodo snapshot, and renumbering them
+# to make room would silently repoint every one of those references; a new group
+# at the tail is the only addition that leaves existing codes meaning what they
+# already meant. Read the ordering as "groups, in the order they entered the
+# corpus", not as a claim that ccloop belongs furthest from ccworkflow.
 #
 # The ccworkflow labels name the TRIAGE model, because triage is what picks the
 # files (see DECIDING_PHASE below). R1 and R3 also run opus-5 as their
 # integrate model, which is where most of their cost lands but none of their
-# file choices; R2 runs opus-5 for every phase.
+# file choices; R2 runs opus-5 for every phase. ccloop and csloop each drive
+# every phase with one model, so their labels name it without qualification.
 # ---------------------------------------------------------------------------
 RUNS = [
     ("08-27-2026", "ccworkflow-sonnet-5-opus-5-integrate-run3", "R1",
@@ -244,6 +293,8 @@ RUNS = [
     ("08-27-2026", "codescribe-oaic-gpt56sol-run4", "R9", "csloop gpt-5.6 (run4)"),
     ("08-27-2026", "codescribe-oaic-gpt56sol-run5", "R10", "csloop gpt-5.6 (run5)"),
     ("08-28-2026", "codescribe-oaic-gpt56sol-run6", "R11", "csloop gpt-5.6 (run6)"),
+    ("09-11-2026", "ccworkflow-loop-opus-5", "R12", "ccloop opus-5"),
+    ("09-11-2026", "ccworkflow-loop-sonnet-5", "R13", "ccloop sonnet-5"),
 ]
 
 # Group boundaries, in the same order as RUNS above — used to build the
@@ -254,6 +305,7 @@ RUN_GROUPS = [
     ("csloop opus-5", 3),
     ("csloop sonnet-5", 2),
     ("csloop gpt-5.6", 3),
+    ("ccloop", 2),
 ]
 
 # Replicate sets. RUN_GROUPS above buckets by harness and author model, which
@@ -264,15 +316,19 @@ RUN_GROUPS = [
 # particular -- has to split them. CONFIGS is that finer partition: two runs
 # share a config only if the same models ran the same phases.
 #
-# C2 has a single member. Its would-be replicate, 08-27-2026/ccworkflow-opus-5,
-# is the run the module docstring explains was dropped from the corpus, so
-# "core" or "mean" for C2 is one observation and must be read as such.
+# C2, C6 and C7 each have a single member. C2's would-be replicate,
+# 08-27-2026/ccworkflow-opus-5, is the run the module docstring explains was
+# dropped from the corpus; C6 and C7 are the first runs of their configuration
+# and have no replicate yet. "core" or "mean" for any of the three is one
+# observation and must be read as such.
 CONFIGS = [
     ("C1", "ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate)", ["R1", "R3"]),
     ("C2", "ccworkflow (opus-5 all phases)", ["R2"]),
     ("C3", "csloop opus-5", ["R4", "R5", "R6"]),
     ("C4", "csloop sonnet-5", ["R7", "R8"]),
     ("C5", "csloop gpt-5.6", ["R9", "R10", "R11"]),
+    ("C6", "ccloop opus-5", ["R12"]),
+    ("C7", "ccloop sonnet-5", ["R13"]),
 ]
 
 KEYS = [(day, run_name) for day, run_name, _, _ in RUNS]
@@ -291,15 +347,19 @@ CONFIGS_BY_CODE = [(code, members) for code, _, members in CONFIGS]
 # Which configurations the per-file effort comparison intersects, and which it
 # prints. Both are explicit rather than derived, because the two exclusions are
 # judgements about the corpus and not facts a rule could read off it:
-#   - C2 is printed but not intersected: it has one replicate, so requiring it
-#     would let a single run decide the comparison set. Its column is one
-#     observation and the tables label it as such.
+#   - C2, C6 and C7 are printed but not intersected: each has one replicate, so
+#     requiring any of them would let a single run decide the comparison set.
+#     Their columns are one observation and the tables label them as such.
 #   - C4 is neither intersected nor printed: it settled only Mods/pp_mod and
 #     Mods/ppwp2j_mod, so intersecting it collapses the comparison to two rows
 #     and printing it leaves a column that is empty on every other row. Its
 #     per-file numbers are still in both CSV exports.
+# C6 and C7 worked only in W2jet, so their columns are blank on the BDK and
+# Mods rows. That is a real difference in where those runs went, not a gap in
+# the measurement, and the per-configuration table prints them for the W2jet
+# rows where a like-for-like comparison against C1/C3/C5 does exist.
 PER_FILE_COMPARISON_CONFIGS = ["C1", "C3", "C5"]
-PER_FILE_DISPLAY_CONFIGS = ["C1", "C2", "C3", "C5"]
+PER_FILE_DISPLAY_CONFIGS = ["C1", "C2", "C3", "C5", "C6", "C7"]
 
 
 def run_code_caption(fig_width_in, fontsize=None):
@@ -330,9 +390,17 @@ REASONING_NOTE = (
     "control. The gpt-5.6 gateway returns no reasoning text at all."
 )
 SCOPE_NOTE = (
-    "Scope: the eleven 08-27/08-28-2026 runs. All fork from one submodule commit and one "
-    "445-file roadmap, so per-file cost divides comparable work; earlier days did not and are "
-    "out of scope."
+    "Scope: the thirteen 08-27/08-28-2026 and 09-11-2026 runs. All fork from one submodule "
+    "commit and one 445-file roadmap, so per-file cost divides comparable work; earlier days "
+    "did not and are out of scope."
+)
+# What the three harnesses are a design for, and which pair isolates what.
+# Repeated on the figures because the run codes alone do not say it, and a
+# reader comparing two bars needs to know which variable is being held fixed.
+DESIGN_NOTE = (
+    "Three harnesses, two variables: ccloop vs. csloop is one design pattern (a bounded "
+    "author-review loop) on two baseline agents; ccloop vs. ccworkflow is one baseline agent "
+    "(Claude Code) under two design patterns (loop vs. multi-agent workflow)."
 )
 SHADOW_NOTE = (
     "Files settled counts a unit whose .cpp landed but whose Fortran original was never retired; "
@@ -356,10 +424,49 @@ def unpriced_caption(runs):
     """UNPRICED_NOTE, but only when a run in the current set is unpriced."""
     return [UNPRICED_NOTE] if any(runs[k]["unpriced_models"] for k in KEYS) else []
 
+# Harness identity, in categorical slots 1-3 of the validated default palette
+# (blue, orange, aqua) — the three-slot set that clears the all-pairs CVD and
+# normal-vision floors, which matters because one panel (the cost-time
+# frontier) is a scatter and therefore an all-pairs form. Aqua sits under 3:1
+# against the surface, so the relief rule applies: every panel using these
+# colours carries direct value labels, and summary_tables.md is the table view.
+#
+# ccworkflow and ccloop are deliberately NOT two steps of one hue. They share a
+# baseline agent but run different design patterns, and the figures are read
+# for the pattern comparison as often as for the agent one; a shared hue would
+# assert the grouping that half the comparisons exist to question.
+HARNESS_COLOR = {
+    CCWORKFLOW: CAT["blue"],
+    CCLOOP: CAT["aqua"],
+    CSLOOP: CAT["orange"],
+}
+
+
+def harness_legend_handles(harnesses=None):
+    """Legend patches for the harnesses in a panel, in HARNESSES order.
+
+    Panels pass the harnesses they actually drew: a legend entry for a harness
+    with no bar in the panel is a promise the reader then hunts for.
+    """
+    present = [h for h in HARNESSES if harnesses is None or h in harnesses]
+    return [mpatches.Patch(color=HARNESS_COLOR[h], label=h) for h in present]
+
+
+# Model tier, a scale independent of HARNESS_COLOR above. gpt-5.6-sol moved
+# from aqua to green on 2026-09-11, when ccloop took aqua as the third harness:
+# the combined figure puts the cost-by-model panel next to three
+# harness-coloured panels, and aqua meaning "ccloop" in one and "gpt-5.6" in
+# the other is at its worst here — the gpt-5.6 stack is exactly zero for the
+# two runs drawn in aqua next door. Green is the highest free slot that keeps
+# this scale's adjacent-pair CVD separation passing (checked with the dataviz
+# validator; the greens that fail do so against orange, which this scale does
+# not use). Blue still does double duty as "ccworkflow" and "sonnet-5"; that
+# predates this corpus, the two panels legend themselves separately, and
+# repainting it would change every already-published figure for no new reason.
 MODEL_COLOR = {
     "claude-sonnet-5": CAT["blue"],
     "claude-opus-5": CAT["violet"],
-    "oaic-gpt56sol": CAT["aqua"],
+    "oaic-gpt56sol": CAT["green"],
     "oaic-gpt56terra": CAT["yellow"],
 }
 UNPRICED_COLOR = MUTED
@@ -384,6 +491,13 @@ def normalize_model(model):
 
 def run_key(day, run_name):
     return (day, run_name)
+
+
+def key_harness(key):
+    """Harness for a (day, run_name) key — the substring test this file used to
+    do inline ("ccworkflow" in run_name) is wrong now that ccloop runs are
+    archived under a `ccworkflow-loop-*` name."""
+    return harness_of(key[1])
 
 
 def _title(text, letter):
@@ -451,13 +565,21 @@ def capped_limit(values, headroom=1.45, clip_ratio=2.0):
 # Load + aggregate
 # ---------------------------------------------------------------------------
 def load_run_aggregates():
+    """Per-run token/cost aggregates, plus the raw rows each parser produced.
+
+    Three parsers, one per harness. They are kept apart rather than unified
+    because they read genuinely different archives (see each module's
+    docstring); everything downstream works off the concatenation and the
+    `harness` field, not off which list a row came from.
+    """
     cc_rows = parse_all_ccworkflow(EXPERIMENTS)
+    cl_rows = parse_all_ccloop(EXPERIMENTS)
     cs_rows = parse_all_csloop(EXPERIMENTS)
 
     runs = {}
     for key in KEYS:
         runs[key] = {
-            "harness": "ccworkflow" if "ccworkflow" in key[1] else "csloop",
+            "harness": key_harness(key),
             "input": 0,
             "output": 0,
             "cache_write": 0,
@@ -467,7 +589,7 @@ def load_run_aggregates():
             "unpriced_models": set(),
         }
 
-    for row in cc_rows + cs_rows:
+    for row in cc_rows + cl_rows + cs_rows:
         key = run_key(row["day"], row["run_name"])
         if key not in runs:
             continue
@@ -493,26 +615,46 @@ def load_run_aggregates():
         r["cost"] += c
         r["cost_by_model"][model] = r["cost_by_model"].get(model, 0.0) + c
 
-    return runs, cc_rows, cs_rows
+    return runs, cc_rows, cl_rows, cs_rows
 
 
 def loop_progress(day, run_name):
     """(completed, cap) for the Loops column -- what "loop" means differs by
-    harness (see round_summary / manifest_run_info), so this is the one place
-    that reconciles them into a single completed/cap pair per run. Either side
-    is None when the run's archive doesn't carry the field (e.g. no manifest,
-    or a ccworkflow run that never hit the approval-batch gate)."""
+    harness, so this is the one place that reconciles them into a single
+    completed/cap pair per run. Either side is None when the run's archive
+    doesn't carry the field (e.g. no manifest, or a ccworkflow run that never
+    hit the approval-batch gate).
+
+    The three are NOT the same quantity, and a reader comparing the column
+    across harnesses needs to know which they are looking at:
+      csloop      run.loops_completed / run.agent_loops from the archived
+                  manifest -- a configured cap, and a real one.
+      ccloop      completed author->review loops / the cap the author prompt
+                  itself states ("Loop N of M"). Same shape and same meaning as
+                  csloop's: both are a bounded loop that can also stop early on
+                  its own stop condition. These two are directly comparable.
+      ccworkflow  completed Triage-Author-Integrate rounds. There is no
+                  configured cap at all, so the denominator is instead the
+                  approval-batch gate limit the run was actually stopped at.
+                  Comparable to neither of the above as a ratio; it is a count
+                  of rounds against a gate, not progress through a budget.
+    """
     run_dir = EXPERIMENTS / day / run_name
-    if "ccworkflow" in run_name:
+    harness = harness_of(run_name)
+    if harness == CCWORKFLOW:
         info = round_summary(run_dir)
         return info["rounds_completed"], info["cap"]
+    if harness == CCLOOP:
+        info = loop_summary(run_dir)
+        return info["loops_completed"], info["cap"]
     info = manifest_run_info(run_dir)
     return info.get("loops_completed"), info.get("agent_loops")
 
 
-def _ccworkflow_wall_time_seconds(day, run_name):
+def _transcript_wall_time_seconds(day, run_name):
     """Span between the first and last assistant-message timestamp across all
-    agent-*.jsonl files in the run's workflow-wf_* dir."""
+    agent-*.jsonl files in the run's workflow-wf_* dir. Used for both Claude
+    Code harnesses, which share that transcript layout."""
     import json as _json
     from datetime import datetime as _dt
 
@@ -545,22 +687,32 @@ def _csloop_wall_time_seconds(cs_rows, day, run_name):
 
 
 def load_wall_times(cs_rows):
+    """{run: seconds}. Two definitions, and the table caption says which:
+    a transcript span for the Claude Code harnesses, the sum of per-loop
+    duration_s for csloop. Both are engine time for a harness that runs one
+    thing at a time; the span additionally includes harness time between
+    agents, so it is the marginally more inclusive of the two."""
     wall_times = {}
     for day, run_name in KEYS:
-        if "ccworkflow" in run_name:
-            wall_times[(day, run_name)] = _ccworkflow_wall_time_seconds(day, run_name)
+        if is_claude_code(run_name):
+            wall_times[(day, run_name)] = _transcript_wall_time_seconds(day, run_name)
         else:
             wall_times[(day, run_name)] = _csloop_wall_time_seconds(cs_rows, day, run_name)
     return wall_times
 
 
-def total_tool_calls(cc_rows, cs_rows, day, run_name):
+def total_tool_calls(transcript_rows, cs_rows, day, run_name):
     """Executed tool calls (ok + error), excluding policy-rejected calls that
-    never ran, so the count is comparable across harnesses."""
-    if "ccworkflow" in run_name:
+    never ran, so the count is comparable across harnesses.
+
+    `transcript_rows` is the ccworkflow and ccloop rows together: both count
+    tool_result blocks out of a Claude Code transcript, so the same sum works
+    for either and a row can only belong to one run.
+    """
+    if is_claude_code(run_name):
         return sum(
             r["tool_ok"] + r["tool_error"]
-            for r in cc_rows
+            for r in transcript_rows
             if r["day"] == day and r["run_name"] == run_name
         )
     return sum(
@@ -604,15 +756,26 @@ def modules_touched(translated_units):
     return {k: Counter(module_of(u) for u in (units or [])) for k, units in translated_units.items()}
 
 
-# The phase whose agent chooses which units a round works on. In ccworkflow
-# that decision is the TRIAGE agent's: its prompt has it read the plan and the
+# The phase whose agent chooses which units a round works on, per harness.
+#
+# ccworkflow: the TRIAGE agent's. Its prompt has it read the plan and the
 # worklist and then "decide" the group and its units, while author agents are
 # handed units already chosen and the integrate agent only lands them. So a
 # ccworkflow run's file-selection behaviour belongs to its triage model, NOT to
 # the author model its label leads with, and not to the more expensive
 # integrate model. (There is no separate "dispatch" phase on disk -- triage
 # both triages and dispatches.)
-DECIDING_PHASE = "triage"
+#
+# ccloop: the AUTHOR agent's. There is no triage: the author reads the Spec and
+# Plan, queries the roadmap and picks its own group, then does the work. Review
+# only cross-references what the author reports and cannot select anything.
+#
+# csloop: no entry. One model drives every phase, so the decider is that model
+# whichever phase is asked, and decision_model_per_run falls through to it.
+DECIDING_PHASE = {
+    CCWORKFLOW: "triage",
+    CCLOOP: "author",
+}
 
 MODEL_DISPLAY = {
     "claude-opus-5": "opus-5",
@@ -628,12 +791,14 @@ def _display_model(model):
 
 
 def decision_model_per_run(cc_rows, cs_rows):
+    # cc_rows here is every transcript-harness row (ccworkflow + ccloop); see
+    # main(), which concatenates them before calling.
     """{run: model} — the model that chose which files the run translated.
 
     Derived from the archives rather than from the run label, so a new run
-    needs no entry here: csloop drives every phase with one model, so that
-    model is the decider; ccworkflow splits phases across models, so the
-    decider is whichever model ran DECIDING_PHASE.
+    needs no entry here: csloop and ccloop each drive every phase with one
+    model, so that model is the decider either way; ccworkflow splits phases
+    across models, so the decider is whichever model ran its DECIDING_PHASE.
 
     This deliberately reattributes the ccworkflow runs. Their labels lead with
     "sonnet-5 author, opus-5 integrate", but opus-5 never picks a file there --
@@ -643,23 +808,23 @@ def decision_model_per_run(cc_rows, cs_rows):
     from collections import Counter, defaultdict
 
     per_run = defaultdict(Counter)
-    triage_per_run = defaultdict(Counter)
+    deciding_per_run = defaultdict(Counter)
     for row in list(cc_rows) + list(cs_rows):
         key = run_key(row["day"], row["run_name"])
         if key not in RUN_CODES:
             continue
         model = normalize_model(row["model"])
         per_run[key][model] += 1
-        if row.get("phase") == DECIDING_PHASE:
-            triage_per_run[key][model] += 1
+        if row.get("phase") == DECIDING_PHASE.get(key_harness(key)):
+            deciding_per_run[key][model] += 1
 
     deciders = {}
     for key in KEYS:
-        if triage_per_run[key]:
-            deciders[key] = triage_per_run[key].most_common(1)[0][0]
+        if deciding_per_run[key]:
+            deciders[key] = deciding_per_run[key].most_common(1)[0][0]
         elif per_run[key]:
-            # csloop, or a ccworkflow run whose triage transcript is missing:
-            # the model that ran the most agents is the only sensible stand-in.
+            # csloop, or a run whose deciding-phase transcript is missing: the
+            # model that ran the most agents is the only sensible stand-in.
             deciders[key] = per_run[key].most_common(1)[0][0]
         else:
             deciders[key] = None
@@ -693,7 +858,7 @@ def files_by_decision_model(translated_units, decision_models):
             "union": union,
             "core": set.intersection(*sets),
             "modules": Counter(module_of(f) for f in union),
-            "harnesses": sorted({"ccworkflow" if "ccworkflow" in k[1] else "csloop" for k, _ in entries}),
+            "harnesses": sorted({key_harness(k) for k, _ in entries}),
         }
     return out
 
@@ -776,11 +941,11 @@ def pairwise_file_overlap(translated_units):
     return pairs
 
 
-def load_tool_calls_per_file(cc_rows, cs_rows, files_settled):
+def load_tool_calls_per_file(transcript_rows, cs_rows, files_settled):
     result = {}
     for key in KEYS:
         day, run_name = key
-        calls = total_tool_calls(cc_rows, cs_rows, day, run_name)
+        calls = total_tool_calls(transcript_rows, cs_rows, day, run_name)
         files = files_settled[key]
         result[key] = {
             "tool_calls": calls,
@@ -841,7 +1006,7 @@ def per_file_effort_rows(effort_by_run):
                 "run": code,
                 "day": key[0],
                 "run_name": key[1],
-                "harness": "ccworkflow" if "ccworkflow" in key[1] else "csloop",
+                "harness": key_harness(key),
                 "method": record["method"],
                 "unit": unit,
                 "module": module_of(unit),
@@ -1002,12 +1167,11 @@ def draw_cache_panel(ax, runs, letter=None):
 # ---------------------------------------------------------------------------
 def draw_files_panel(ax, files_settled, letter=None):
     x = list(range(len(KEYS)))
-    harness_color = {"ccworkflow": CAT["blue"], "csloop": CAT["orange"]}
     # None = the run's archival branch is not in this clone, so there is no
     # ground truth to plot. Zero = the branch is there and retired no file. The
     # two are opposite outcomes and must not share a bar height.
     settled = [files_settled[k] for k in KEYS]
-    colors = [harness_color["ccworkflow"] if "ccworkflow" in k[1] else harness_color["csloop"] for k in KEYS]
+    colors = [HARNESS_COLOR[key_harness(k)] for k in KEYS]
 
     ax.bar(x, [s or 0 for s in settled], width=0.6, color=colors, edgecolor=SURFACE, linewidth=1)
     ymax, _ = capped_limit(settled, clip_ratio=None)
@@ -1017,11 +1181,7 @@ def draw_files_panel(ax, files_settled, letter=None):
     ax.set_ylabel("Files settled (git-exact)")
     ax.set_ylim(0, ymax)
     ax.set_title(_title("Files translated", letter))
-    handles = [
-        mpatches.Patch(color=harness_color["ccworkflow"], label="ccworkflow"),
-        mpatches.Patch(color=harness_color["csloop"], label="csloop"),
-    ]
-    ax.legend(handles=handles, frameon=False, loc="upper left")
+    ax.legend(handles=harness_legend_handles(), frameon=False, loc="upper left", ncol=3)
 
 
 # ---------------------------------------------------------------------------
@@ -1051,8 +1211,7 @@ def draw_correctness_panel(ax, coverage, letter=None):
 def draw_wall_time_panel(ax, wall_times, letter=None):
     x = list(range(len(KEYS)))
     minutes = [(wall_times[k] or 0) / 60.0 for k in KEYS]
-    harness_color = {"ccworkflow": CAT["blue"], "csloop": CAT["orange"]}
-    colors = [harness_color["ccworkflow"] if "ccworkflow" in k[1] else harness_color["csloop"] for k in KEYS]
+    colors = [HARNESS_COLOR[key_harness(k)] for k in KEYS]
 
     ax.bar(x, minutes, width=0.5, color=colors, edgecolor=SURFACE, linewidth=1)
     ymax, _ = capped_limit(minutes, clip_ratio=None)
@@ -1061,11 +1220,7 @@ def draw_wall_time_panel(ax, wall_times, letter=None):
     ax.set_ylabel("Wall-clock minutes")
     ax.set_ylim(0, ymax)
     ax.set_title(_title("Wall-clock time", letter))
-    handles = [
-        mpatches.Patch(color=harness_color["ccworkflow"], label="ccworkflow"),
-        mpatches.Patch(color=harness_color["csloop"], label="csloop"),
-    ]
-    ax.legend(handles=handles, loc="upper right", frameon=False, ncol=2)
+    ax.legend(handles=harness_legend_handles(), loc="upper right", frameon=False, ncol=3)
 
 
 # ---------------------------------------------------------------------------
@@ -1073,9 +1228,8 @@ def draw_wall_time_panel(ax, wall_times, letter=None):
 # ---------------------------------------------------------------------------
 def draw_tool_calls_per_file_panel(ax, tool_calls_per_file, letter=None):
     x = list(range(len(KEYS)))
-    harness_color = {"ccworkflow": CAT["blue"], "csloop": CAT["orange"]}
     per_file = [tool_calls_per_file[k]["per_file"] for k in KEYS]
-    colors = [harness_color["ccworkflow"] if "ccworkflow" in k[1] else harness_color["csloop"] for k in KEYS]
+    colors = [HARNESS_COLOR[key_harness(k)] for k in KEYS]
 
     ymax, clipped = capped_limit(per_file)
     heights = [min(v, ymax) if v is not None else 0 for v in per_file]
@@ -1092,13 +1246,9 @@ def draw_tool_calls_per_file_panel(ax, tool_calls_per_file, letter=None):
     ax.set_ylabel("Tool calls per file settled")
     ax.set_ylim(0, ymax)
     ax.set_title(_title("Tool-call cost per file", letter))
-    handles = [
-        mpatches.Patch(color=harness_color["ccworkflow"], label="ccworkflow"),
-        mpatches.Patch(color=harness_color["csloop"], label="csloop"),
-    ]
     # Upper-left: the clipped low-throughput bars own the middle and the gpt56
     # runs on the right are tall, so this is the only reliably clear space.
-    ax.legend(handles=handles, loc="upper left", frameon=False, ncol=2)
+    ax.legend(handles=harness_legend_handles(), loc="upper left", frameon=False, ncol=3)
 
 
 # ---------------------------------------------------------------------------
@@ -1145,6 +1295,7 @@ def make_standalone_figures(runs, coverage, files_settled, wall_times, tool_call
     caption = run_code_caption(9.4) + [
         "No human_review files exist for these runs, so only self-reported pass rates are shown; "
         "runs that reported none are omitted from the right-hand panel.",
+        DESIGN_NOTE,
         SCOPE_NOTE,
         SHADOW_NOTE,
     ]
@@ -1157,7 +1308,9 @@ def make_standalone_figures(runs, coverage, files_settled, wall_times, tool_call
     draw_wall_time_panel(a1, wall_times)
     a1.set_title("")
     caption = run_code_caption(7.2) + [
-        "ccworkflow: span of first-to-last agent timestamp. csloop: sum of per-loop duration_s.",
+        "ccworkflow and ccloop: span of first-to-last agent timestamp. csloop: sum of per-loop "
+        "duration_s.",
+        DESIGN_NOTE,
         SCOPE_NOTE,
         SHADOW_NOTE,
     ]
@@ -1172,6 +1325,7 @@ def make_standalone_figures(runs, coverage, files_settled, wall_times, tool_call
     caption = run_code_caption(7.2) + [
         "Executed tool calls (ok + error) divided by files settled (git-exact count, git_file_counts.py).",
         "↑ marks a bar clipped by the axis; its true value is printed above it.",
+        DESIGN_NOTE,
         SCOPE_NOTE,
         SHADOW_NOTE,
     ]
@@ -1213,13 +1367,13 @@ def make_combined_figure(runs, coverage, files_settled, wall_times, tool_calls_p
     draw_correctness_panel(fig.add_subplot(gs[2, 1]), coverage, letter="(f)")
 
     fig.suptitle(
-        "08-27/08-28-2026: ccworkflow vs. csloop on mcfm-translate — cost, cache, tool calls & coverage",
+        "ccworkflow vs. ccloop vs. csloop on mcfm-translate — cost, cache, tool calls & coverage",
         fontsize=SUPTITLE_SIZE + 2,
         y=0.985,
     )
     caption_size = CAPTION_SIZE * 1.35
     caption = (run_code_caption(10.4, caption_size) + unpriced_caption(runs)
-               + [RATE_CARD_NOTE, REASONING_NOTE, SCOPE_NOTE, SHADOW_NOTE])
+               + [RATE_CARD_NOTE, REASONING_NOTE, DESIGN_NOTE, SCOPE_NOTE, SHADOW_NOTE])
     for i, line in enumerate(reversed(caption)):
         fig.text(0.5, 0.008 + i * 0.0135, line, ha="center", fontsize=caption_size, color=INK)
 
@@ -1422,12 +1576,13 @@ def make_decision_figure(translated_units, decision_models, module_timelines):
         run_code_caption(9.6)
         + [
             "Top: module-entry timeline. Runs collapsed to the model that CHOSE the files: the run's own "
-            "model for csloop, the triage model for ccworkflow (author/integrate agents do not select).",
+            "model for csloop and ccloop, the triage model for ccworkflow (its author/integrate agents "
+            "do not select).",
         ]
         + _wrap_caption_text(
             "Marker = first tool call in the run's own transcript that names a file inside that module "
-            "(Bash command text for ccworkflow -- every ccworkflow tool call observed here is Bash, there "
-            "is no structured file-path tool -- or a read/write/edit path argument for csloop). Filled vs. "
+            "(Bash command text for ccworkflow and most of ccloop, or a read/write/edit path argument "
+            "for csloop and for ccloop's sonnet-5 run). Filled vs. "
             "hollow marks whether every settled unit there was a ready leaf (deps=0, blind=0) at the "
             "shared fork point, or the run entered while at least one of them still had an untranslated "
             "callee. n/a: the run settled no files in any module, or its transcript could not be parsed "
@@ -1568,7 +1723,7 @@ def write_per_file_exports(effort_by_run, effort_by_config, shared_units, runs,
             share = (author_usd / run_usd) if (run_usd and author_usd) else ""
             writer.writerow([
                 RUN_CODES[key], CONFIG_OF_RUN[key],
-                "ccworkflow" if "ccworkflow" in key[1] else "csloop",
+                key_harness(key),
                 info["method"], info["settled_units"],
                 f"{info['attributed_usd']:.4f}", f"{info['attributed_minutes']:.4f}",
                 "" if run_usd is None else f"{run_usd:.4f}",
@@ -1670,14 +1825,18 @@ def write_summary_tables(runs, coverage, files_settled, translated_units, wall_t
         lines.append(f"{note}\n")
     lines.append(f"{RATE_CARD_NOTE}\n")
     lines.append(f"{REASONING_NOTE}\n")
+    lines.append(f"{DESIGN_NOTE}\n")
     lines.append(f"{SCOPE_NOTE}\n")
     lines.append(f"{SHADOW_NOTE}\n")
 
     lines.append("## Run manifest\n")
     lines.append(
         "Runs grouped sequentially by harness and decision model — all ccworkflow runs, then all "
-        "csloop opus-5 runs, then all csloop sonnet-5 runs, then all csloop gpt-5.6 runs — so R1..R11 "
-        "read as one block per group rather than by archival day. `Model` is the decision model (the "
+        "csloop opus-5 runs, then all csloop sonnet-5 runs, then all csloop gpt-5.6 runs, then "
+        "both ccloop runs — so R1..R13 read as one block per group rather than by archival day. "
+        "ccloop is appended last rather than placed beside the other Claude Code harness so that "
+        "R1..R11 keep the codes they already carry in the paper and in the archived snapshot; read "
+        "the order as the order groups entered the corpus. `Model` is the decision model (the "
         "model that chose which files the run translated; see \"Which files each model chose\" below). "
         "`Folder` is the run's archive, relative to the repository root.\n"
     )
@@ -1793,10 +1952,15 @@ def write_summary_tables(runs, coverage, files_settled, translated_units, wall_t
     lines.append(
         "Which top-level `software/mcfm/src/` directory each run's translated files came from — "
         "shows whether runs converged on the same module or scattered across different ones. `Loops` "
-        "is completed/cap: for the csloop runs this is `run.loops_completed`/`run.agent_loops` from the "
-        "run's archived `loop/metadata/manifest.toml`; ccworkflow has no configured cap, so it instead "
-        "reports completed Triage-Author-Integrate rounds against the approval-batch gate limit each run "
-        "was stopped at (recovered from the blocking event's own message, not a run parameter).\n"
+        "is completed/cap, and it is not one quantity across harnesses. For csloop it is "
+        "`run.loops_completed`/`run.agent_loops` from the run's archived "
+        "`loop/metadata/manifest.toml`. For ccloop it is completed author→review loops against the "
+        "cap the author prompt itself states (\"Loop N of M\"); that is the same shape and the same "
+        "meaning as csloop's, so those two columns compare directly. ccworkflow has no configured cap "
+        "at all, so it instead reports completed Triage-Author-Integrate rounds against the "
+        "approval-batch gate limit each run was stopped at (recovered from the blocking event's own "
+        "message, not a run parameter) — a count of rounds against a gate, not progress through a "
+        "budget, and not a ratio to compare with the other two.\n"
     )
     lines.append("| Run | " + " | ".join(all_modules) + " | Total | Loops |")
     lines.append("|---|" + "---:|" * (len(all_modules) + 1) + "---:|")
@@ -1880,8 +2044,9 @@ def write_summary_tables(runs, coverage, files_settled, translated_units, wall_t
     by_model = files_by_decision_model(translated_units, decision_models)
     lines.append("## Which files each *model* chose (git-exact)\n")
     lines.append(
-        "Runs grouped by the model that made the file-selection decision, not by harness. For csloop that "
-        "is the run's only model. For ccworkflow it is the **triage** model — triage reads the plan and "
+        "Runs grouped by the model that made the file-selection decision, not by harness. For csloop and "
+        "ccloop that is the run's only model (ccloop's author picks its own group; its reviewer only "
+        "cross-references). For ccworkflow it is the **triage** model — triage reads the plan and "
         "picks the round's units, while author agents are handed units already chosen and integrate only "
         "lands them. So R1 counts as a sonnet-5 decision even though opus-5 is its integrate model and "
         "carries most of its cost: opus-5 never picked a file in that run.\n"
@@ -1926,18 +2091,21 @@ def write_summary_tables(runs, coverage, files_settled, translated_units, wall_t
         "The tables above divide a run total by files settled. The tables below attribute wall time, "
         "USD and tool calls to *individual files*. Runs are grouped into configurations (two runs share "
         "one only if the same models ran the same phases), which splits the ccworkflow block: R2 drives "
-        "every phase with opus-5, while R1 and R3 author on sonnet-5 and only integrate on opus-5.\n"
+        "every phase with opus-5, while R1 and R3 author on sonnet-5 and only integrate on opus-5. "
+        "C6 and C7 (ccloop) are one run each, as is C2.\n"
     )
     lines.append("| Config | Runs | Harness | Attribution |")
     lines.append("|---|---|---|---|")
     for code, label, members in CONFIGS:
         method = _config_method(effort_by_run, code) or "—"
-        harness = "ccworkflow" if any("ccworkflow" in KEY_BY_CODE[r][1] for r in members) else "csloop"
+        harness = key_harness(KEY_BY_CODE[members[0]])
         lines.append(f"| {code} — {label} | {', '.join(members)} | {harness} | {method} |")
     lines.append("")
     lines.append(
         "**The two attribution methods are not the same measurement and must not be compared "
-        "column-for-column without this caveat.**\n"
+        "column-for-column without this caveat.** The one comparison that *is* clean is ccloop "
+        "against csloop: both are apportioned, by the same construction, so their per-file columns "
+        "differ only in what the runs did.\n"
     )
     lines.append(
         "- *exact* (ccworkflow): each unit has its own AUTHOR subagent, so its tokens, tool calls and "
@@ -1951,19 +2119,43 @@ def write_summary_tables(runs, coverage, files_settled, translated_units, wall_t
         "counting the retries.\n"
     )
     lines.append(
-        "- *apportioned* (csloop): a single agent loops over the whole transformation and usage is "
-        "recorded per loop phase, never per file. Each executed tool call is attributed to the settled "
+        "- *apportioned* (csloop and ccloop): a single agent loops over the whole transformation and "
+        "usage is recorded per loop phase (csloop) or per loop agent (ccloop), never per file. "
+        "Each executed tool call is attributed to the settled "
         "units its arguments name (`X_fi` counts as `X`; a call naming k units splits 1/k to each), and "
         "the run's USD and minutes are divided in proportion. Because USD and minutes are both "
         "proportional to the same call counts, those three columns carry one measurement between them, "
         "not three. `Unattributed` is the share of the run's tool calls that named no settled unit — "
         "builds, the test suite, roadmap queries, git — which is spread proportionally rather than "
-        "dropped, so run totals still reconcile exactly.\n"
+        "dropped, so run totals still reconcile exactly. The one input that differs between the two "
+        "harnesses is run minutes: csloop sums its per-phase `duration_s`, ccloop takes the span of "
+        "its transcript timestamps (the same number reported as its wall time above), which also "
+        "covers harness time between agents.\n"
     )
     lines.append(
         "- The tool-call column is not one quantity across methods: *exact* counts every call the unit's "
         "agent made, *apportioned* counts only calls naming the unit, which is smaller by construction.\n"
     )
+    # Derived, not hardcoded: which run leans hardest on the proportional
+    # spread is a property of the corpus and moves when a run is added.
+    unattr = [(effort_by_run[k]["run"].get("unattributed_tool_fraction"), k)
+              for k in KEYS
+              if effort_by_run.get(k)
+              and effort_by_run[k]["run"].get("unattributed_tool_fraction") is not None]
+    if unattr:
+        worst_frac, worst_key = max(unattr)
+        worst = effort_by_run[worst_key]["run"]
+        named = worst["tool_calls_executed"] - round(worst_frac * worst["tool_calls_executed"])
+        lines.append(
+            f"- `Unattributed` is also the honest read on how coarse a run's per-file split is. "
+            f"{RUN_CODES[worst_key]} is the highest in the corpus at {100*worst_frac:.0f}%: only about "
+            f"{named} of its {worst['tool_calls_executed']} attributable calls name a settled unit at "
+            f"all, the rest being builds, the benchmark, roadmap queries and the approval gate, so its "
+            f"columns rest on that handful and the rest is spread proportionally. For ccloop the count "
+            f"also excludes the harness's own end-of-loop report calls, whose prose names files it only "
+            f"wrote *about* (see `per_file_effort.py`); leaving them in would have handed "
+            f"`W2jet/w2jetsq` roughly half of {RUN_CODES[worst_key]} on the strength of two summaries.\n"
+        )
     lines.append("| Run | Config | Method | Units attributed | Attributed USD | Attributed min | Author phase / run | Unattributed |")
     lines.append("|---|---|---|---:|---:|---:|---:|---:|")
     for k in KEYS:
@@ -2048,13 +2240,23 @@ def write_summary_tables(runs, coverage, files_settled, translated_units, wall_t
 
     lines.append("## Per-file effort by configuration (shared file set)\n")
     comparison = ", ".join(PER_FILE_COMPARISON_CONFIGS)
+    single = ", ".join(c for c in PER_FILE_DISPLAY_CONFIGS if c not in PER_FILE_COMPARISON_CONFIGS)
     lines.append(
         f"Files settled by at least one replicate of every configuration with more than one replicate "
-        f"({comparison}); C2 is shown where it settled the same file but is not required, since one run "
-        f"should not decide the comparison set. C4 is left out entirely: it settled only "
+        f"({comparison}); {single} are shown where they settled the same file but are not required, "
+        f"since a single run should not decide the comparison set. C6 and C7 worked only in W2jet, so "
+        f"their columns are blank on every BDK and Mods row — that is where those runs went, not a hole "
+        f"in the measurement. C4 is left out entirely: it settled only "
         f"`Mods/pp_mod` and `Mods/ppwp2j_mod`, so intersecting it would collapse this to two rows. "
         f"Each cell is the mean over the replicates of that configuration **that settled the file**, with "
         f"the replicate count in brackets — a file no replicate settled is blank, not zero.\n"
+    )
+    lines.append(
+        "The bottom row of each table is likewise a mean over the shared files **that column reached**, "
+        "and `[nf]` says how many that was. Columns with different counts are not like-for-like: C6 and "
+        "C7 are averaging their W2jet rows only, where C1, C3 and C5 average BDK and Mods rows too. "
+        "Compare a column against another on the individual `W2jet/...` rows, which every displayed "
+        "configuration except C7's `subqcd` actually has.\n"
     )
     if not shared_units:
         lines.append("No file is common to those configurations.\n")
@@ -2076,12 +2278,19 @@ def write_summary_tables(runs, coverage, files_settled, translated_units, wall_t
                     cell = effort_by_config[code].get(unit)
                     cells.append("—" if cell is None else f"{fmt.format(cell[field])} ({cell['n']})")
                 lines.append(f"| `{unit}` | " + " | ".join(cells) + " |")
+            # Each column's mean is over the shared files THAT COLUMN settled,
+            # so the denominators differ — C6 and C7 reached five and four of
+            # these twelve files. The count travels with the number: without
+            # it, C6's mean reads as a like-for-like figure against C3's when
+            # the two are over different files.
             means = []
             for code in PER_FILE_DISPLAY_CONFIGS:
                 vals = [effort_by_config[code][u][field] for u in shared_units
                         if u in effort_by_config[code]]
-                means.append(fmt.format(sum(vals) / len(vals)) if vals else "—")
-            lines.append("| **Mean over the shared files** | " + " | ".join(means) + " |")
+                means.append(f"{fmt.format(sum(vals) / len(vals))} [{len(vals)}f]"
+                             if vals else "—")
+            lines.append(f"| **Mean over the shared files** [of {len(shared_units)}] | "
+                         + " | ".join(means) + " |")
             lines.append("")
 
     lines.append(
@@ -2143,11 +2352,15 @@ TEX_BANNER = (
 # Only the data-bearing .tex files carry this; the colour definitions have no
 # run set to qualify.
 TEX_DATA_BANNER = TEX_BANNER + (
-    "%% Corpus: the eleven 08-27/08-28-2026 runs, all forked from one submodule\n"
-    "%% commit and one 445-file roadmap. One run (08-28-2026/codescribe-sonnet-5-run3)\n"
-    "%% has no archived agent_log.md and is kept with its git-exact count only --\n"
-    "%% see generate_graphs.py. Earlier days (07-24/07-25, 08-11..08-26) forked\n"
-    "%% from different roadmap states and are deliberately out of scope.\n"
+    "%% Corpus: the thirteen 08-27/08-28-2026 and 09-11-2026 runs, all forked from\n"
+    "%% one submodule commit and one 445-file roadmap. Three harnesses: ccworkflow\n"
+    "%% (multi-agent workflow on Claude Code), ccloop (loop on Claude Code) and\n"
+    "%% csloop (loop on CodeScribe) -- ccloop vs csloop isolates the baseline agent,\n"
+    "%% ccloop vs ccworkflow isolates the design pattern. One run\n"
+    "%% (08-28-2026/codescribe-sonnet-5-run3) has no archived agent_log.md and is\n"
+    "%% kept with its git-exact count only -- see generate_graphs.py. Earlier days\n"
+    "%% (07-24/07-25, 08-11..08-26) forked from different roadmap states and are\n"
+    "%% deliberately out of scope.\n"
 )
 
 # Palette mirrored into LaTeX so the figure matches the PNG version exactly.
@@ -2363,13 +2576,43 @@ def _na_nodes(missing, note="n/a"):
     )
 
 
+# Harness -> LaTeX colour name, mirroring HARNESS_COLOR. Every panel that
+# splits its bars by harness iterates HARNESSES against this, rather than
+# naming two series inline: a hardcoded [ccworkflow, csloop] pair silently drew
+# NO bar at all for a third harness (its runs match neither filter), which
+# reads as "these runs settled nothing" instead of "this panel forgot them".
+TEX_HARNESS_COLOR = {
+    CCWORKFLOW: "evalBlue",
+    CCLOOP: "evalAqua",
+    CSLOOP: "evalOrange",
+}
+
+
+def _harness_series(metrics, keys=None):
+    """[(harness, tex colour)] for the harnesses present in the run set, in
+    HARNESSES order — the series a harness-split panel should emit."""
+    keys = KEYS if keys is None else keys
+    present = {metrics[k]["harness"] for k in keys}
+    return [(h, TEX_HARNESS_COLOR[h]) for h in HARNESSES if h in present]
+
+
+def _tex_harness_legend(series):
+    """`\legend{...}` naming exactly the harness series that were emitted."""
+    return "\\legend{" + ", ".join(h for h, _ in series) + "}\n"
+
+
 def _panel_files(metrics):
-    cc = [(metrics[k]["code"], metrics[k]["files"]) for k in KEYS
-          if metrics[k]["harness"] == "ccworkflow" and metrics[k]["files"] is not None]
-    cs = [(metrics[k]["code"], metrics[k]["files"]) for k in KEYS
-          if metrics[k]["harness"] == "csloop" and metrics[k]["files"] is not None]
+    series = _harness_series(metrics)
     ymax, _ = _tex_axis_max([metrics[k]["files"] for k in KEYS], clip_ratio=None, headroom=1.30)
     unmeasured = [metrics[k]["code"] for k in KEYS if metrics[k]["files"] is None]
+    plots = "".join(
+        f"\\addplot[fill={color}, draw=none, bar shift=0pt] coordinates {{"
+        + _coord_str([(metrics[k]["code"], metrics[k]["files"]) for k in KEYS
+                      if metrics[k]["harness"] == harness and metrics[k]["files"] is not None],
+                     "{:.0f}")
+        + "};\n"
+        for harness, color in series
+    )
     return (
         "\\nextgroupplot[" + _axis_common() + _symbolic_x() +
         # `area legend` after `ybar`: a non-stacked ybar plot installs its own
@@ -2381,18 +2624,17 @@ def _panel_files(metrics):
         f"  ylabel={{Files}}, ymax={ymax:.0f},\n"
         "  nodes near coords, nodes near coords style={font=\\scriptsize, color=evalInk,\n"
         "    rotate=90, anchor=west},\n"
-        # At 16 runs there is no free interior space left for it — R3 owns the
-        # top, the right-hand runs own the rest — so the harness legend goes
-        # under the axis. It covers panels (d) and (f) too, which use the same
-        # two colours for the same two harnesses.
-        "  legend style={at={(0.5,-0.42)}, anchor=north}, legend columns=2,\n"
+        # There is no free interior space left for it — R3 owns the top, the
+        # right-hand runs own the rest — so the harness legend goes under the
+        # axis. It covers panels (d) and (f) too, which use the same colours
+        # for the same harnesses.
+        f"  legend style={{at={{(0.5,-0.42)}}, anchor=north}}, legend columns={len(series)},\n"
         "]\n"
-        # The two harness series cover disjoint x values, so bar shift=0pt keeps
+        # The harness series cover disjoint x values, so bar shift=0pt keeps
         # every bar centred on its own tick instead of offsetting it into a
-        # two-series slot and leaving a phantom gap beside it.
-        "\\addplot[fill=evalBlue, draw=none, bar shift=0pt] coordinates {" + _coord_str(cc, "{:.0f}") + "};\n"
-        "\\addplot[fill=evalOrange, draw=none, bar shift=0pt] coordinates {" + _coord_str(cs, "{:.0f}") + "};\n"
-        "\\legend{ccworkflow, csloop}\n"
+        # multi-series slot and leaving a phantom gap beside it.
+        + plots
+        + _tex_harness_legend(series)
         # A run whose archival branch never reached this clone has no ground
         # truth at all; without this it would read as a run that settled zero.
         + _na_nodes(unmeasured, "no branch")
@@ -2405,7 +2647,7 @@ def _panel_files(metrics):
 TEX_MODEL_COLOR = {
     "claude-sonnet-5": "evalBlue",
     "claude-opus-5": "evalViolet",
-    "oaic-gpt56sol": "evalAqua",
+    "oaic-gpt56sol": "evalGreen",
     "oaic-gpt56terra": "evalYellow",
 }
 
@@ -2465,6 +2707,25 @@ def _compact_codes(codes):
         groups.append(str(start) if start == prev else f"{start}--{prev}")
         start = prev = n
     return ", ".join(groups)
+
+
+# Escapes that cost source characters but print as one glyph or none. Used to
+# size a note box: len() of the LaTeX source overstates a line carrying "\$",
+# "\," and "--" by enough to make a note look unplaceable and send it to a
+# corner it does not fit.
+_TEX_PRINTED = ((r"\,", ""), (r"\%", "%"), (r"\$", "$"), ("---", "-"), ("--", "-"))
+
+
+def _printed_len(text):
+    """Glyphs in the widest line a LaTeX fragment sets.
+
+    Splits on `\\\\` first: a note entry may itself carry a line break, and
+    measuring it as one long line would size the note box for a width it never
+    reaches.
+    """
+    for src, printed in _TEX_PRINTED:
+        text = text.replace(src, printed)
+    return max(len(line) for line in text.split("\\\\"))
 
 
 def _panel_frontier(metrics):
@@ -2547,6 +2808,119 @@ def _panel_frontier(metrics):
     cluster_pts = [on_scale[i] for i in sorted(cluster_idx)]
     labeled_scale = [p for i, p in enumerate(on_scale) if i not in cluster_idx]
 
+    def _overlaps(box, other):
+        ax0, ay0, ax1, ay1 = box
+        bx0, by0, bx1, by1 = other
+        return ax0 < bx1 and bx0 < ax1 and ay0 < by1 and by0 < ay1
+
+    # Box geometry, shared by the note placement below and the label packer
+    # under it: the measured size of a two-character bold \scriptsize code, one
+    # text line, and a plotted mark, all in axis fractions so x and y are
+    # comparable. A three-character code (R10..R13) gets a proportionally wider
+    # box from _label_w.
+    LABEL_W, LABEL_H, MARK_R = 0.075, 0.085, 0.022
+
+    marks = [_norm(x, y) for x, y, _, _ in on_scale]
+
+    # The note text, built before the point labels are placed so its box
+    # can be reserved against them (below). A note placed afterwards can
+    # only dodge labels that are already down, which in a panel this
+    # crowded means landing on them anyway; reserving it first lets the
+    # label packer route around the note instead.
+    notes = [
+        f"{code} off scale:\\\\{x:.0f}\\,min, \\${y:.0f}/file" for x, y, code, _ in off_scale
+    ]
+
+    if cluster_pts:
+        # Broken into short lines on purpose, and it is WIDTH that is being
+        # bought, not tidiness. This note is placed by fitting its box into a
+        # corner (below); the panel's empty space is a narrow column beside the
+        # points, so a wide note has no corner to fit into and lands on the
+        # labels wherever it goes. The previous phrasing ("... cluster (not /
+        # individually labeled): ... $0.91--$1.28/file") ran to most of the
+        # panel width and did exactly that. Trading a line of height for a
+        # third of the width is the right trade in this panel.
+        cluster_codes = [code for _, _, code, _ in cluster_pts]
+        cxs = [x for x, _, _, _ in cluster_pts]
+        cys = [y for _, y, _, _ in cluster_pts]
+        notes.append("cluster, unlabeled:")
+        notes.append(f"R{_compact_codes(cluster_codes).replace(', ', ', R')}")
+        notes.append(f"{min(cxs):.1f}\\,--\\,{max(cxs):.1f}\\,min")
+        notes.append(f"\\${min(cys):.2f}\\,--\\,\\${max(cys):.2f}")
+        notes.append("per file")
+
+    # A run needs both a per-file cost and a per-file time to be a point here,
+    # so runs that settled nothing or carry no rate card cannot appear at all.
+    # Listing them stops a reader from reading absence as "not measured" — or,
+    # worse, as a point hidden under another.
+    absent = {}
+    for k in KEYS:
+        m = metrics[k]
+        if m["min_per_file"] is not None and m["cost_per_file"] is not None:
+            continue
+        if not m["priced"]:
+            reason = "unpriced"
+        elif m["files"] is None:
+            reason = "no branch"
+        else:
+            reason = "0 files"
+        absent.setdefault(reason, []).append(m["code"])
+    if absent:
+        # ~26 characters is all a \tiny line gets inside a panel this narrow
+        # before the text runs past the axis and is clipped mid-word, so the
+        # codes are compacted the same way the point labels are (drop the "R",
+        # collapse runs into ranges) and the heading gets a line to itself.
+        notes.append("not plotted:")
+        notes.extend(f"{_compact_codes(codes)} ({reason})" for reason, codes in absent.items())
+
+    note_box = None
+    if notes:
+        # Where the note goes is the same packing problem as a point label, and
+        # is solved the same way: build the box the note will actually occupy,
+        # try it in each corner, and keep whichever overlaps the fewest marks.
+        # Only marks are considered -- the labels are not placed yet, by
+        # design -- and the winning box is then handed to the label placer as
+        # an obstacle.
+        #
+        # The rule this replaced compared the two TOP corners by distance to
+        # the nearest point, and failed twice over. It never considered the
+        # bottom, so with expensive-and-slow runs owning the top right and
+        # expensive-and-fast ones the top left it had to pick a bad corner even
+        # though the cheap-and-slow corner was empty. And distance-to-nearest-
+        # point says nothing about a note several lines tall and a third of the
+        # panel wide: the top-right corner is the FURTHEST from any single
+        # point and still put the note squarely on the labels in the middle.
+        #
+        # NOTE_CHAR_W / NOTE_LINE_H are the printed size of one \scriptsize
+        # character and one line in axis fractions, from the same measurements
+        # LABEL_W / LABEL_H already encode for a code at that font size.
+        # NOTE_MARGIN pads the result: these are estimates, and an
+        # underestimate reads as "this corner is clear" right up until the
+        # rendered note touches something.
+        NOTE_CHAR_W, NOTE_LINE_H, NOTE_MARGIN = LABEL_W / 2, LABEL_H, 1.15
+        note_w = min(0.9, NOTE_CHAR_W * max(_printed_len(n) for n in notes) * NOTE_MARGIN)
+        note_h = min(0.9, NOTE_LINE_H * len(notes) * NOTE_MARGIN)
+
+        corners = []
+        for note_anchor, note_align, fx, fy in [
+            ("north west", "left", 0.0, 1.0), ("north east", "right", 1.0, 1.0),
+            ("south west", "left", 0.0, 0.0), ("south east", "right", 1.0, 0.0),
+        ]:
+            x0 = fx * (1.0 - note_w)          # the box grows inward from its corner
+            y0 = fy - note_h if fy else 0.0
+            box = (x0, y0, x0 + note_w, y0 + note_h)
+            hits = sum(1 for m in marks
+                       if _overlaps(box, (m[0] - MARK_R, m[1] - MARK_R,
+                                          m[0] + MARK_R, m[1] + MARK_R)))
+            # Distance to the nearest mark breaks ties between clear corners.
+            clear = min((abs(mx - fx) + abs(my - fy) for mx, my in marks),
+                        default=1.0)
+            corners.append((hits, -clear, note_anchor, note_align,
+                            xmax * 0.99 if fx else 0.55,
+                            ymax * (0.99 if fy else 0.02), box))
+
+        _h, _c, note_anchor, note_align, note_x, note_y, note_box = min(corners)
+
     # Label placement is a small packing problem, not an alternation. A fixed
     # rule (all labels above, or above/below by x order) puts two labels in
     # the same place whenever the y ordering disagrees with the x ordering.
@@ -2558,13 +2932,10 @@ def _panel_frontier(metrics):
     # room, and a bare digit reads as a data value in a panel whose axes are
     # both numeric.
     #
-    # Geometry is done in axis fractions so x and y are comparable. The label
-    # box is measured for a two-character bold \scriptsize code at the printed
-    # panel size; a three-character code (R10, R11) gets a proportionally
-    # wider box below so it doesn't sit closer to its neighbors or the axis
-    # than its printed width actually is.
-    LABEL_W, LABEL_H, MARK_R = 0.075, 0.085, 0.022
-
+    # A three-character code (R10..R13) gets a proportionally wider box from
+    # _label_w below, so it doesn't sit closer to its neighbors or the axis
+    # than its printed width actually is. LABEL_W / LABEL_H / MARK_R are
+    # defined above, since the note placement sizes its own box from them too.
     def _label_w(code):
         return LABEL_W if len(code) <= 2 else LABEL_W * len(code) / 2
     # (anchor, dx, dy) in half-box units, in preference order: directly above or
@@ -2584,14 +2955,9 @@ def _panel_frontier(metrics):
     # stray number floating nearby.
     RING_MULTS = [1.0, 2.0, 3.5, 5.0]
 
-    marks = [_norm(x, y) for x, y, _, _ in on_scale]
-
-    def _overlaps(box, other):
-        ax0, ay0, ax1, ay1 = box
-        bx0, by0, bx1, by1 = other
-        return ax0 < bx1 and bx0 < ax1 and ay0 < by1 and by0 < ay1
-
-    placed_boxes = []
+    # The note is an obstacle like any other: seeding it here is what keeps a
+    # label off it, rather than the other way round.
+    placed_boxes = [note_box] if note_box is not None else []
     place_of = {}
     leader_of = {}
     for (px, py, code, _) in labeled_scale:
@@ -2634,7 +3000,7 @@ def _panel_frontier(metrics):
         if best_mult > 1.0:
             leader_of[code] = (cx * xmax, cy * ymax)
 
-    for harness, color in [("ccworkflow", "evalBlue"), ("csloop", "evalOrange")]:
+    for harness, color in _harness_series(metrics):
         pts = [p for p in on_scale if p[3] == harness]
         lines.append(
             f"\\addplot[only marks, mark=*, mark size=1.7pt, color={color}] coordinates {{"
@@ -2657,64 +3023,10 @@ def _panel_frontier(metrics):
                 f"  at (axis cs:{x:.3g},{y:.3g}) {{{code}}};\n"
             )
 
-    # The note goes in whichever top corner is emptier. Top-left used to be
-    # unconditionally free (the fast-and-expensive corner nothing lands in), but
-    # a slow run with a mid-range per-file cost puts a label right where the
-    # note's left edge sits, and the two collide. Comparing how close the
-    # plotted points come to each corner picks the safe side per dataset
-    # instead of assuming one. It is set over several lines because a single
-    # line of it is wider than the panel and gets clipped mid-word.
-    notes = [
-        f"{code} off scale:\\\\{x:.0f}\\,min, \\${y:.0f}/file" for x, y, code, _ in off_scale
-    ]
-
-    if cluster_pts:
-        cluster_codes = [code for _, _, code, _ in cluster_pts]
-        cxs = [x for x, _, _, _ in cluster_pts]
-        cys = [y for _, y, _, _ in cluster_pts]
-        notes.append(f"{_compact_codes(cluster_codes)} cluster (not")
-        notes.append("individually labeled):")
-        notes.append(f"{min(cxs):.1f}\\,--\\,{max(cxs):.1f}\\,min,")
-        notes.append(f"\\${min(cys):.2f}\\,--\\,\\${max(cys):.2f}/file")
-
-    # A run needs both a per-file cost and a per-file time to be a point here,
-    # so runs that settled nothing or carry no rate card cannot appear at all.
-    # Listing them stops a reader from reading absence as "not measured" — or,
-    # worse, as a point hidden under another.
-    absent = {}
-    for k in KEYS:
-        m = metrics[k]
-        if m["min_per_file"] is not None and m["cost_per_file"] is not None:
-            continue
-        if not m["priced"]:
-            reason = "unpriced"
-        elif m["files"] is None:
-            reason = "no branch"
-        else:
-            reason = "0 files"
-        absent.setdefault(reason, []).append(m["code"])
-    if absent:
-        # ~26 characters is all a \tiny line gets inside a panel this narrow
-        # before the text runs past the axis and is clipped mid-word, so the
-        # codes are compacted the same way the point labels are (drop the "R",
-        # collapse runs into ranges) and the heading gets a line to itself.
-        notes.append("not plotted:")
-        notes.extend(f"{_compact_codes(codes)} ({reason})" for reason, codes in absent.items())
-
     if notes:
-        # Distance from each top corner to the nearest plotted point, in axis
-        # fractions, so the two dimensions are comparable.
-        def _clearance(corner_x):
-            return min(abs(x - corner_x) / xmax + (ymax - y) / ymax
-                       for x, y, _, _ in on_scale) if on_scale else 1.0
-        left_clear, right_clear = _clearance(0.0), _clearance(xmax)
-        if right_clear > left_clear:
-            anchor, at_x, align = "north east", xmax * 0.99, "right"
-        else:
-            anchor, at_x, align = "north west", 0.55, "left"
         lines.append(
-            f"\\node[font=\\scriptsize, color=evalInk, anchor={anchor}, align={align}]\n"
-            f"  at (axis cs:{at_x:.3g},{ymax * 0.99:.3g})\n"
+            f"\\node[font=\\scriptsize, color=evalInk, anchor={note_anchor}, align={note_align}]\n"
+            f"  at (axis cs:{note_x:.3g},{note_y:.3g})\n"
             "  {" + "\\\\".join(notes) + "};\n"
         )
     return "".join(lines)
@@ -2722,7 +3034,10 @@ def _panel_frontier(metrics):
 
 def _panel_calls_per_file(metrics):
     ymax, clipped = _tex_axis_max([metrics[k]["calls_per_file"] for k in KEYS])
-    cc, cs, over, missing = [], [], [], []
+    series = _harness_series(metrics)
+    on_scale = {h: [] for h, _ in series}
+    over = {h: [] for h, _ in series}
+    missing = []
     for k in KEYS:
         m = metrics[k]
         v = m["calls_per_file"]
@@ -2730,18 +3045,20 @@ def _panel_calls_per_file(metrics):
             missing.append((m["code"], "no branch" if m["files"] is None else "0 files"))
             continue
         if m["code"] in clipped:
-            over.append((m["harness"], (m["code"], ymax, f"{v:.0f}\\,$\\uparrow$")))
+            over[m["harness"]].append((m["code"], ymax, f"{v:.0f}\\,$\\uparrow$"))
             continue
-        (cc if m["harness"] == "ccworkflow" else cs).append((m["code"], v, f"{v:.0f}"))
+        on_scale[m["harness"]].append((m["code"], v, f"{v:.0f}"))
     return (
         "\\nextgroupplot[" + _axis_common() + _symbolic_x() + _explicit_labels() +
         "  ybar, bar width=5pt, title={(d) Tool calls per file settled},\n"
         f"  ylabel={{Calls / file}}, ymax={ymax:.0f},\n"
         "]\n"
-        "\\addplot[fill=evalBlue, draw=none, bar shift=0pt] coordinates {" + _coord_str_meta(cc) + "};\n"
-        "\\addplot[fill=evalOrange, draw=none, bar shift=0pt] coordinates {" + _coord_str_meta(cs) + "};\n"
-        + _clip_plot("evalBlue", [p for h, p in over if h == "ccworkflow"])
-        + _clip_plot("evalOrange", [p for h, p in over if h == "csloop"])
+        + "".join(
+            f"\\addplot[fill={color}, draw=none, bar shift=0pt] coordinates {{"
+            + _coord_str_meta(on_scale[harness]) + "};\n"
+            for harness, color in series
+        )
+        + "".join(_clip_plot(color, over[harness]) for harness, color in series)
         + "".join(_na_nodes([c], note) for c, note in missing)
     )
 
@@ -2749,7 +3066,15 @@ def _panel_calls_per_file(metrics):
 def _panel_input_composition(metrics):
     """100\\% stacked input-side token mix. This is the panel that explains the
     cache-share column in the table: a run with no cache-write at all cannot
-    reach the read share the others do."""
+    reach the read share the others do.
+
+    This is a third independent categorical scale in the same figure, and it
+    shares hues with the other two (aqua also marks ccloop in the harness
+    panels, orange also marks csloop, violet also marks opus-5). Left as is:
+    every segment here is non-zero for every run, so there is no run whose
+    colour in this panel could be mistaken for a claim about it in another —
+    unlike the cost-by-model panel, whose gpt-5.6 series was repainted for
+    exactly that reason (see MODEL_COLOR)."""
     lines = [
         "\\nextgroupplot[" + _axis_common() + _symbolic_x() +
         "  ybar stacked, bar width=5pt, title={(e) Input-side token mix},\n"
@@ -2773,7 +3098,10 @@ def _panel_tokens_per_file(metrics):
     ymax, clipped = _tex_axis_max(
         [(metrics[k]["tokens_per_file"] / 1e6) if metrics[k]["tokens_per_file"] else None for k in KEYS]
     )
-    cc, cs, over, missing = [], [], [], []
+    series = _harness_series(metrics)
+    on_scale = {h: [] for h, _ in series}
+    over = {h: [] for h, _ in series}
+    missing = []
     for k in KEYS:
         m = metrics[k]
         if m["tokens_per_file"] is None:
@@ -2781,9 +3109,9 @@ def _panel_tokens_per_file(metrics):
             continue
         v = m["tokens_per_file"] / 1e6
         if m["code"] in clipped:
-            over.append((m["harness"], (m["code"], ymax, f"{v:.2f}\\,$\\uparrow$")))
+            over[m["harness"]].append((m["code"], ymax, f"{v:.2f}\\,$\\uparrow$"))
             continue
-        (cc if m["harness"] == "ccworkflow" else cs).append((m["code"], v, f"{v:.2f}"))
+        on_scale[m["harness"]].append((m["code"], v, f"{v:.2f}"))
     # Linear, not log. Across the runs that are on scale the spread is about
     # 27x, which a linear axis shows honestly; a log axis would both flatten the
     # very gap the panel exists to show and make the value labels read as log10.
@@ -2793,10 +3121,12 @@ def _panel_tokens_per_file(metrics):
         "  title={(f) Input tokens per file settled},\n"
         f"  ylabel={{M tok / file}}, ymax={ymax:.3g},\n"
         "]\n"
-        "\\addplot[fill=evalBlue, draw=none, bar shift=0pt] coordinates {" + _coord_str_meta(cc) + "};\n"
-        "\\addplot[fill=evalOrange, draw=none, bar shift=0pt] coordinates {" + _coord_str_meta(cs) + "};\n"
-        + _clip_plot("evalBlue", [p for h, p in over if h == "ccworkflow"])
-        + _clip_plot("evalOrange", [p for h, p in over if h == "csloop"])
+        + "".join(
+            f"\\addplot[fill={color}, draw=none, bar shift=0pt] coordinates {{"
+            + _coord_str_meta(on_scale[harness]) + "};\n"
+            for harness, color in series
+        )
+        + "".join(_clip_plot(color, over[harness]) for harness, color in series)
         + "".join(_na_nodes([c], note) for c, note in missing)
     )
 
@@ -2865,11 +3195,18 @@ def write_tex_tables(metrics, coverage, translated_units, decision_models, loop_
     # and 7-9; loops and cache share sit under neither.
     tbl1 = [
         TEX_DATA_BANNER,
-        "%% Loops: completed/cap. csloop (R4-R11): run.loops_completed / run.agent_loops\n"
-        "%% from loop/metadata/manifest.toml. ccworkflow (R1-R3): completed\n"
-        "%% Triage-Author-Integrate rounds counted from journal.jsonl; these runs are\n"
-        "%% uncapped by configuration, so the cap shown is the approval-batch gate limit\n"
-        "%% each run was actually stopped at (parsed from the blocking event's own message).\n",
+        "%% Loops: completed/cap, and NOT one quantity across harnesses.\n"
+        "%% csloop (R4-R11): run.loops_completed / run.agent_loops from\n"
+        "%% loop/metadata/manifest.toml -- a configured budget.\n"
+        "%% ccloop (R12-R13): completed author-review loops / the cap stated in the\n"
+        "%% author prompt itself (Loop N of M). Same meaning as csloop's, so those two\n"
+        "%% are directly comparable; R13 stopped early on the loop's own\n"
+        "%% no-pending-items exit, not at its budget.\n"
+        "%% ccworkflow (R1-R3): completed Triage-Author-Integrate rounds counted from\n"
+        "%% journal.jsonl; these runs are uncapped by configuration, so the cap shown\n"
+        "%% is the approval-batch gate limit each run was actually stopped at (parsed\n"
+        "%% from the blocking event's own message). Not a ratio to compare with the\n"
+        "%% other two.\n",
         "\\begin{tabular}{@{}llrrrrrrrr@{}}\n",
         "  \\toprule\n",
         "  & & & \\multicolumn{3}{c}{Run totals} & \\multicolumn{3}{c}{Per file settled} & \\\\\n",
@@ -3074,7 +3411,8 @@ def write_tikz_decision_figure(translated_units, decision_models, module_timelin
         "%% there still had an untranslated callee (see parse_decision_timeline.py\n"
         "%% for what counts as \"settled\" here). Bottom panel: runs are\n"
         "%% collapsed to the model that CHOSE the files (the run's own model for\n"
-        "%% csloop, the TRIAGE model for ccworkflow), and counts are over DISTINCT\n"
+        "%% csloop and ccloop, the TRIAGE model for ccworkflow), and counts are over\n"
+        "%% DISTINCT\n"
         "%% files, so a model with four runs cannot out-vote one with a single run\n"
         "%% by repeating itself.\n",
         "\\begin{tikzpicture}\n",
@@ -3090,8 +3428,19 @@ def write_tikz_decision_figure(translated_units, decision_models, module_timelin
 
 
 def main():
-    runs, cc_rows, cs_rows = load_run_aggregates()
-    print(f"ccworkflow rows: {len(cc_rows)}, csloop rows: {len(cs_rows)}")
+    # A run misnamed relative to its own archive would be silently reclassified
+    # into another harness's numbers, so the naming convention harness_of reads
+    # is checked against what is actually on disk before anything is parsed.
+    for day, run_name, by_name, on_disk in verify_harness_names(EXPERIMENTS, RUNS):
+        print(f"  WARNING: {day}/{run_name} is named like {by_name} but its "
+              f"archive is {on_disk}")
+
+    runs, cc_rows, cl_rows, cs_rows = load_run_aggregates()
+    print(f"ccworkflow rows: {len(cc_rows)}, ccloop rows: {len(cl_rows)}, "
+          f"csloop rows: {len(cs_rows)}")
+    # ccworkflow and ccloop rows have the same shape and are read the same way
+    # everywhere downstream; only the parser that produced them differs.
+    transcript_rows = cc_rows + cl_rows
 
     coverage = {k: coverage_for_run(EXPERIMENTS / k[0] / k[1]) for k in KEYS}
     for k, c in coverage.items():
@@ -3108,7 +3457,7 @@ def main():
         if shadowed:
             print(f"{k}: {len(shadowed)} translated but not retired: {', '.join(shadowed)}")
 
-    decision_models = decision_model_per_run(cc_rows, cs_rows)
+    decision_models = decision_model_per_run(transcript_rows, cs_rows)
     for k in KEYS:
         print(f"{k}: decided by {decision_models[k]}")
 
@@ -3116,13 +3465,13 @@ def main():
     for k, s in wall_times.items():
         print(f"{k}: wall time {s/60:.1f} min" if s else f"{k}: wall time unknown")
 
-    tool_calls_per_file = load_tool_calls_per_file(cc_rows, cs_rows, files_settled)
+    tool_calls_per_file = load_tool_calls_per_file(transcript_rows, cs_rows, files_settled)
     for k, t in tool_calls_per_file.items():
         print(f"{k}: {t}")
 
     loop_progress_by_run = {k: loop_progress(*k) for k in KEYS}
     for k, lp in loop_progress_by_run.items():
-        print(f"{k}: loops {lp[0]}/{lp[1]}")
+        print(f"{k}: loops {lp[0]}/{lp[1]} ({key_harness(k)} sense)")
 
     metrics = derived_metrics(runs, files_settled, wall_times, tool_calls_per_file)
 

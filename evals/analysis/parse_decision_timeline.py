@@ -6,19 +6,21 @@ Neither harness tags "which file is this tool call about" as structured
 metadata, so the path is recovered the same way generate_graphs.py already
 recovers ccworkflow's phase (from raw transcript text), by pattern-matching
 `src/<module>/<file>.<ext>` wherever it appears in the tool arguments: verbatim
-in a csloop `read`/`write`/`edit` `path` argument, or embedded in the shell
-command string for ccworkflow (every ccworkflow tool call observed in this
-corpus is `Bash` — there is no structured file-path tool). Matches are
-restricted to the exact units the run actually settled (the caller passes
-git_file_counts.translated_file_units for that run) rather than every module
-its transcript merely mentions: a run reads and greps plenty of files it never
+in a csloop `read`/`write`/`edit` `path` argument, or embedded in the tool
+arguments for the two Claude Code harnesses (`Bash` command text for every
+ccworkflow call in this corpus, and for most ccloop calls; ccloop's sonnet-5 run
+also uses `Read`/`Write`/`Edit`, whose path argument matches the same way).
+Matches are restricted to the exact units the run actually settled (the caller
+passes git_file_counts.translated_file_units for that run) rather than every
+module its transcript merely mentions: a run reads and greps plenty of files it never
 translates — rejected candidates, infrastructure it only inspects — and dating
 a module's entry to one of those would measure exploration, not the work the
 run committed to.
 
-ccworkflow timestamps come from each `agent-*.jsonl`'s per-message
-`timestamp` field (the same field generate_graphs._ccworkflow_wall_time_seconds
-already uses for wall time). csloop timestamps come from `logs/toolusage.toml`,
+ccworkflow and ccloop timestamps come from each `agent-*.jsonl`'s per-message
+`timestamp` field (the same field generate_graphs._transcript_wall_time_seconds
+already uses for wall time) — the two harnesses share that transcript layout, so
+they share this code path. csloop timestamps come from `logs/toolusage.toml`,
 which is NOT valid TOML in every archive (some tool output previews carry raw
 terminal escapes that abort tomllib — the same failure parse_csloop.py already
 works around for loop/{author,review}.toml) and is parsed line-by-line here for
@@ -29,6 +31,8 @@ import json
 import re
 from datetime import datetime
 from pathlib import Path
+
+from harness import is_claude_code
 
 # Matches an explicit source-file reference, so a bare directory listing
 # ("ls src/BDK/") is not read as a touch. Module names are the top-level
@@ -50,9 +54,9 @@ def _parse_ts(ts):
 
 
 # ---------------------------------------------------------------------------
-# ccworkflow — agent-*.jsonl
+# ccworkflow and ccloop — agent-*.jsonl
 # ---------------------------------------------------------------------------
-def _ccworkflow_all_timestamps(run_dir):
+def _transcript_all_timestamps(run_dir):
     timestamps = []
     for workflow_dir in Path(run_dir).glob("workflow-wf_*"):
         for agent_path in workflow_dir.glob("agent-*.jsonl"):
@@ -67,7 +71,7 @@ def _ccworkflow_all_timestamps(run_dir):
     return timestamps
 
 
-def _ccworkflow_events(run_dir):
+def _transcript_events(run_dir):
     """[{"ts", "tool", "matches", "rationale"}] for every tool call that names
     a source file, across every subagent in the run, unsorted."""
     events = []
@@ -185,10 +189,6 @@ def _csloop_events(run_dir):
 # ---------------------------------------------------------------------------
 # Public API
 # ---------------------------------------------------------------------------
-def is_ccworkflow(run_name):
-    return "ccworkflow" in run_name
-
-
 def run_start_ts(experiments_root, day, run_name):
     """Wall-clock start of the run, for computing elapsed time -- the minimum
     timestamp over EVERY event (not just the module-matching ones), since the
@@ -196,8 +196,8 @@ def run_start_ts(experiments_root, day, run_name):
     src/, and using the first *matched* event as t0 would understate elapsed
     time for a run that spent a while orienting itself before entering src/."""
     run_dir = Path(experiments_root) / day / run_name
-    if is_ccworkflow(run_name):
-        timestamps = _ccworkflow_all_timestamps(run_dir)
+    if is_claude_code(run_name):
+        timestamps = _transcript_all_timestamps(run_dir)
         return min(timestamps) if timestamps else None
     return _csloop_first_ts(run_dir)
 
@@ -225,7 +225,7 @@ def module_entry_order(experiments_root, day, run_name, settled_units):
     t0 = run_start_ts(experiments_root, day, run_name)
     if t0 is None:
         return []
-    events = _ccworkflow_events(run_dir) if is_ccworkflow(run_name) else _csloop_events(run_dir)
+    events = _transcript_events(run_dir) if is_claude_code(run_name) else _csloop_events(run_dir)
 
     best = {}
     for e in events:

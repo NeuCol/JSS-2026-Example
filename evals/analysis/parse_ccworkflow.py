@@ -1,5 +1,12 @@
 """Parse Claude-Code-Workflow ("ccworkflow") run directories into flat rows.
 
+Only the multi-agent `transform` workflow. The Claude Code `loop` workflow
+archives into the same `workflow-wf_*` layout and its run directories are named
+`ccworkflow-loop-*`, so a bare `ccworkflow-*` glob sweeps those up too; runs are
+selected through harness.harness_of instead, and the loop runs are parsed by
+parse_ccloop, which reads their structured phase labels rather than guessing a
+phase from prompt text as this module has to.
+
 Layout: experiments/<day>/ccworkflow-*/workflow-wf_*/
   - journal.jsonl        orchestration events (agent started / result)
   - agent-<id>.jsonl     one Claude Code transcript per subagent
@@ -17,6 +24,8 @@ phase.
 import json
 import re
 from pathlib import Path
+
+from harness import CCWORKFLOW, harness_of
 
 PHASE_PATTERNS = [
     (re.compile(r"you are an? author agent", re.I), "author"),
@@ -221,6 +230,9 @@ def parse_all_ccworkflow(experiments_root):
         if not day_dir.is_dir():
             continue
         for run_dir in sorted(day_dir.glob("ccworkflow-*")):
+            # `ccworkflow-loop-*` matches this glob but is a different harness.
+            if harness_of(run_dir.name) != CCWORKFLOW:
+                continue
             for row in parse_ccworkflow_run(run_dir):
                 row["day"] = day_dir.name
                 row["run_name"] = run_dir.name

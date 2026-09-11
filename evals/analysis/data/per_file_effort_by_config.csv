@@ -74,3 +74,17 @@ C5,csloop gpt-5.6,apportioned,W2jet/a6treeg,W2jet,3,R9 R10 R11,3.2083,1.0237,13.
 C5,csloop gpt-5.6,apportioned,W2jet/atree,W2jet,3,R9 R10 R11,4.3709,1.3052,17.4056,True
 C5,csloop gpt-5.6,apportioned,W2jet/ggZZcapture,W2jet,3,R9 R10 R11,3.2239,0.9923,12.9611,True
 C5,csloop gpt-5.6,apportioned,W2jet/subqcd,W2jet,1,R9,2.9669,0.8695,10.0833,True
+C6,ccloop opus-5,apportioned,W2jet/ZZbox1LL,W2jet,1,R12,2.3158,1.9893,0.5000,True
+C6,ccloop opus-5,apportioned,W2jet/a6treeg,W2jet,1,R12,5.5578,4.7744,1.2000,True
+C6,ccloop opus-5,apportioned,W2jet/atree,W2jet,1,R12,10.1894,8.7530,2.2000,True
+C6,ccloop opus-5,apportioned,W2jet/fvf,W2jet,1,R12,0.9263,0.7957,0.2000,False
+C6,ccloop opus-5,apportioned,W2jet/ggZZcapture,W2jet,1,R12,11.5788,9.9466,2.5000,True
+C6,ccloop opus-5,apportioned,W2jet/subqcd,W2jet,1,R12,2.3158,1.9893,0.5000,True
+C6,ccloop opus-5,apportioned,W2jet/vv,W2jet,1,R12,0.9263,0.7957,0.2000,False
+C6,ccloop opus-5,apportioned,W2jet/vvg,W2jet,1,R12,0.9263,0.7957,0.2000,False
+C6,ccloop opus-5,apportioned,W2jet/w2jetsq,W2jet,1,R12,25.4735,21.8825,5.5000,False
+C7,ccloop sonnet-5,apportioned,W2jet/ZZbox1LL,W2jet,1,R13,5.2343,2.5689,8.0000,True
+C7,ccloop sonnet-5,apportioned,W2jet/a6treeg,W2jet,1,R13,5.2343,2.5689,8.0000,True
+C7,ccloop sonnet-5,apportioned,W2jet/atree,W2jet,1,R13,5.8886,2.8900,9.0000,True
+C7,ccloop sonnet-5,apportioned,W2jet/fvf,W2jet,1,R13,5.2343,2.5689,8.0000,False
+C7,ccloop sonnet-5,apportioned,W2jet/ggZZcapture,W2jet,1,R13,5.2343,2.5689,8.0000,True

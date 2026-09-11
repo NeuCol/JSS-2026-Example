@@ -36,17 +36,38 @@ them must say so.
           it (R1 retried W2jet/atree once; R3 retried BDK/fvs three times).
           Those are summed into one row and `agents` records how many.
 
-  "apportioned" (csloop, R4-R11)
-      csloop is a single agent looping over the whole transformation. Usage is
-      recorded per loop PHASE (loop/metadata/loop_NNN_{author,review}.toml),
-      never per file, so there is no per-file measurement to read and one has
-      to be constructed. Each executed tool call is attributed to the settled
-      units its arguments name (X_fi counts as X; a call naming k settled units
-      splits 1/k to each), and the run's total USD and total minutes are then
-      divided across units in proportion to those attributed calls.
+  "apportioned" (csloop and ccloop)
+      Both are a single agent looping over the whole transformation, so neither
+      records anything per file and one has to be constructed. csloop records
+      usage per loop PHASE (loop/metadata/loop_NNN_{author,review}.toml);
+      ccloop records it per loop AGENT (one Claude Code transcript per author
+      or review agent, workflow-wf_*/agent-*.jsonl). Either way the unit of
+      record is a whole phase of work over the whole Spec/Plan, never a file.
+      Each executed tool call is attributed to the settled units its arguments
+      name (X_fi counts as X; a call naming k settled units splits 1/k to
+      each), and the run's total USD and total minutes are then divided across
+      units in proportion to those attributed calls. ccloop additionally drops
+      the harness's own structured-report calls before matching, since their
+      "arguments" are a prose summary of the loop rather than work on a file --
+      see _REPORTING_TOOLS, which also says what that does not change.
+
+      Reading the same method off two harnesses is the point, not an accident:
+      ccloop and csloop run the same design pattern on different baseline
+      agents, so their per-file columns are built from the same construction
+      and can be compared to each other directly — which the exact/apportioned
+      pair below explicitly cannot be. What differs between them is only where
+      the raw numbers were read from, and both are noted per row.
+
+      One measurement does differ in kind. csloop's run minutes are the sum of
+      its per-phase `duration_s`; ccloop's are the span from its first to its
+      last transcript timestamp, the same quantity generate_graphs reports as
+      its wall time. For a strictly sequential loop those are the same thing
+      (ccloop never runs two agents at once), but the span also includes any
+      harness time between agents, so ccloop's minutes are the slightly more
+      inclusive of the two.
 
       Consequences a caller must not paper over:
-        - 67%-88% of csloop tool calls name no settled unit at all: builds,
+        - Most tool calls name no settled unit at all: builds,
           `jobrunner submit tests/mcfm`, roadmap queries, git, reading the plan.
           That overhead is spread proportionally rather than dropped, so run
           totals still reconcile exactly to the per-run tables. It is a
@@ -61,7 +82,7 @@ them must say so.
           is only calls that name the unit. The apportioned number is smaller
           by construction and the two must not be compared directly.
 
-  "timed" (csloop, same runs as "apportioned")
+  "timed" (csloop only, same runs as "apportioned")
       A tighter apportionment for the same harness, built from
       logs/toolusage.toml instead of the loop-phase totals in
       loop/metadata/loop_NNN_*.toml. That file is the harness's raw event log
@@ -110,7 +131,8 @@ WHICH UNITS GET A ROW
 Rows are emitted for the run's git-exact settled units (git_file_counts:
 retired + shadowed), which is the same population every other table here
 counts. ccworkflow additionally emits rows for author agents whose unit never
-landed -- R1 spent two full agents on Mods/mod_qcdloop_c and Mods/types_mod and
+landed (only it can: a ccloop or csloop agent works the whole Plan, so it has
+no per-unit agent that could fail to land one) -- R1 spent two full agents on Mods/mod_qcdloop_c and Mods/types_mod and
 finished neither -- flagged `settled = False`. That work was paid for and
 dropping it would understate the harness's cost; including it in a per-settled
 -file average would overstate the cost of the files that did land. So it is
@@ -118,8 +140,8 @@ carried, flagged, and left out of the averages.
 
 Costs come from pricing.cost on the same rate cards and the same token fields
 as the per-run tables, so a per-file column summed over a ccworkflow run's
-author agents equals that run's author-phase USD exactly, and a csloop run's
-per-file column sums to the run's whole USD exactly.
+author agents equals that run's author-phase USD exactly, and a csloop or
+ccloop run's per-file column sums to the run's whole USD exactly.
 """
 
 import json
@@ -133,6 +155,7 @@ except ModuleNotFoundError:
     import tomli as tomllib
 
 import parse_csloop
+from harness import CCLOOP, CCWORKFLOW, harness_of
 from pricing import cost
 
 # The AUTHOR prompt names its unit on the line after "transformation:". The
@@ -272,6 +295,157 @@ def _ccworkflow_per_file(run_dir, settled):
             row["agents"] += 1
 
     return units, {"author_usd": author_usd}
+
+
+# The workflow harness's structured-return channel, not a tool that touches
+# the repository: an agent calls it once at the end of a phase to hand its
+# report back, and its "arguments" are that report's prose -- a status, a
+# narrative plan, quoted build output. Excluded from per-file ATTRIBUTION
+# because that prose names whatever files the loop worked on, so counting it
+# measures what the agent chose to write about rather than effort spent on a
+# file. It matters: in 09-11-2026/ccworkflow-loop-opus-5, 10 of the 23 calls
+# naming a settled unit were these reports, and they alone would have handed
+# W2jet/w2jetsq (the unit its last summaries kept discussing) roughly half the
+# run.
+#
+# csloop has no equivalent -- its loop report is not a tool call at all -- so
+# leaving these in would also break the like-for-like comparison that is the
+# whole point of the two harnesses sharing this method.
+#
+# Two things this deliberately does NOT change:
+#   - Run-level tool-call totals (generate_graphs.total_tool_calls) still count
+#     it, for every harness. It is a real executed call and ccworkflow's
+#     published counts include it; the exclusion is about attribution only.
+#   - The ccworkflow "exact" method, which attributes a whole author agent's
+#     transcript to its one unit and never matches per-call arguments.
+_REPORTING_TOOLS = frozenset({"StructuredOutput"})
+
+
+def _ccloop_agents(run_dir):
+    """[(records, [args of each attributable executed tool call])] per agent.
+
+    "Executed" means a `tool_use` block that came back with a matching
+    `tool_result`, so the count agrees with generate_graphs.total_tool_calls
+    (which counts tool_result blocks) rather than with the number of calls the
+    model issued — the last agent of an interrupted run can issue one that is
+    never answered. Calls to a tool in _REPORTING_TOOLS are dropped here; see
+    that constant for why.
+    """
+    out = []
+    for workflow_dir in sorted(run_dir.glob("workflow-wf_*")):
+        for agent_path in sorted(workflow_dir.glob("agent-*.jsonl")):
+            with open(agent_path) as fh:
+                records = [json.loads(line) for line in fh if line.strip()]
+
+            issued = {}
+            answered = []
+            for record in records:
+                rtype = record.get("type")
+                content = record.get("message", {}).get("content")
+                if not isinstance(content, list):
+                    continue
+                for block in content:
+                    if not isinstance(block, dict):
+                        continue
+                    if rtype == "assistant" and block.get("type") == "tool_use":
+                        issued[block.get("id")] = (block.get("name"),
+                                                   block.get("input", {}) or {})
+                    elif rtype == "user" and block.get("type") == "tool_result":
+                        call = issued.get(block.get("tool_use_id"))
+                        if call is None:
+                            continue
+                        name, args = call
+                        if name in _REPORTING_TOOLS:
+                            continue
+                        answered.append(args)
+            out.append((records, answered))
+    return out
+
+
+def _ccloop_per_file(run_dir, settled):
+    """Apportioned per-unit rows for a ccloop run.
+
+    Same construction as _csloop_per_file — run totals split across units in
+    proportion to the executed tool calls whose arguments name them — reading
+    the Claude Code transcripts instead of CodeScribe's loop metadata. See the
+    module docstring's "apportioned" entry for what that shares with csloop and
+    the one place (run minutes) where the two inputs differ.
+    """
+    run_usd = 0.0
+    timestamps = []
+    models = {}
+    attributed = {}
+    executed = 0
+    unattributed = 0
+
+    for records, calls in _ccloop_agents(run_dir):
+        totals, _tool_calls, model, _minutes = _agent_totals(records)
+        if model is None:
+            continue
+        run_usd += cost(
+            model,
+            totals["input"],
+            totals["output"],
+            totals["cache_write"],
+            totals["cache_read"],
+        )
+        models[model] = models.get(model, 0) + 1
+        timestamps.extend(r["timestamp"] for r in records if r.get("timestamp"))
+
+        for args in calls:
+            executed += 1
+            named = {
+                f"{module}/{name}".replace(_MIRROR_SUFFIX, "")
+                for module, name in SOURCE_PATH_RE.findall(json.dumps(args))
+            }
+            hit = named & settled
+            if not hit:
+                unattributed += 1
+                continue
+            for unit in hit:
+                attributed[unit] = attributed.get(unit, 0.0) + 1.0 / len(hit)
+
+    # First-to-last transcript timestamp, matching the run's reported wall time.
+    run_minutes = 0.0
+    if len(timestamps) >= 2:
+        timestamps.sort()
+        span = datetime.strptime(timestamps[-1], _TIMESTAMP_FMT) - datetime.strptime(
+            timestamps[0], _TIMESTAMP_FMT
+        )
+        run_minutes = span.total_seconds() / 60.0
+
+    # A ccloop run drives every phase with one model, so "the run's model" is
+    # well defined; max() rather than [0] in case a phase override ever puts a
+    # second one in the archive, in which case the dominant one is reported and
+    # the per-run cost above still bills each agent at its own rate.
+    model = max(models, key=models.get) if models else None
+
+    total_attributed = sum(attributed.values())
+    units = {}
+    for unit in sorted(settled):
+        calls = attributed.get(unit, 0.0)
+        share = (calls / total_attributed) if total_attributed else 0.0
+        units[unit] = {
+            "unit": unit,
+            "settled": True,
+            "model": model,
+            "minutes": run_minutes * share,
+            "usd": run_usd * share,
+            "tool_calls": calls,
+            "agents": None,
+            "attributed_share": share,
+        }
+
+    run_info = {
+        "run_usd": run_usd,
+        "run_minutes": run_minutes,
+        # Excludes the reporting calls dropped by _ccloop_agents, so this is
+        # the count the attribution actually ran over -- slightly below the
+        # run-level tool-call total in the per-run tables, which counts them.
+        "tool_calls_executed": executed,
+        "unattributed_tool_fraction": (unattributed / executed) if executed else None,
+    }
+    return units, run_info
 
 
 def _csloop_per_file(run_dir, settled):
@@ -567,7 +741,9 @@ def per_file_effort_timed(experiments_root, day, run_name, settled_units):
     """Timed per-unit effort for one csloop run (see module docstring).
 
     None for a ccworkflow run (already exact -- no apportionment to tighten),
-    a run with no settled units, or a csloop run whose logs/toolusage.toml is
+    for a ccloop run (Claude Code writes no per-tool-call duration log, so
+    there is nothing tighter to read -- its rows stay apportioned), for a run
+    with no settled units, or for a csloop run whose logs/toolusage.toml is
     missing or fails the structural sanity check against loop/metadata.
     Callers must treat None as "not available for this run", the same
     convention per_file_effort() uses for a run with no archival branch.
@@ -575,7 +751,7 @@ def per_file_effort_timed(experiments_root, day, run_name, settled_units):
     if settled_units is None:
         return None
     run_dir = Path(experiments_root) / day / run_name
-    if any(run_dir.glob("workflow-wf_*")):
+    if harness_of(run_name) in (CCWORKFLOW, CCLOOP):
         return None
     result = _csloop_per_file_timed(run_dir, set(settled_units))
     if result is None:
@@ -600,16 +776,26 @@ def per_file_effort(experiments_root, day, run_name, settled_units):
     attribute effort to and this returns None, the same way every other
     git-exact measure reports such a run.
 
-    Returns {"method": "exact"|"apportioned", "units": {unit: row}, "run": {...}}.
+    Returns {"method": "exact"|"apportioned", "units": {unit: row}, "run": {...}}
+    — "exact" for ccworkflow, "apportioned" for csloop and ccloop alike (the
+    same construction over different archives; see the module docstring).
     """
     if settled_units is None:
         return None
     run_dir = Path(experiments_root) / day / run_name
     settled = set(settled_units)
 
-    if any(run_dir.glob("workflow-wf_*")):
+    # Dispatch on the harness, not on the presence of workflow-wf_* — ccloop
+    # archives into that same directory layout but has no per-unit author
+    # agent for the exact method to read, so keying off the layout would give
+    # it an "exact" record with no rows in it.
+    harness = harness_of(run_name)
+    if harness == CCWORKFLOW:
         units, run_info = _ccworkflow_per_file(run_dir, settled)
         method = "exact"
+    elif harness == CCLOOP:
+        units, run_info = _ccloop_per_file(run_dir, settled)
+        method = "apportioned"
     else:
         units, run_info = _csloop_per_file(run_dir, settled)
         method = "apportioned"
