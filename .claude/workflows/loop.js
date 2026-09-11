@@ -43,8 +43,26 @@
 //    as hard rules in the review prompt. RunResult.rejected_calls therefore has no
 //    equivalent: `rejected` is reported by the agent (tool calls the user or a hook denied)
 //    and may simply be empty.
-// 3. Iteration cap. `agent_iterations` (and the review agent's max(6, n/2)) is a hard stop
-//    in CodeScribe. Here it is stated to the agent as a tool-call budget — advisory.
+// 3. Execution policy. CodeScribe's Agent (codescribe/lib/_agent.py) enforces a whole
+//    AgentPolicy per phase, in code: max_iterations MODEL TURNS (30 for author,
+//    max(6, n/2)=15 for review), max_tool_calls_total=120 EXECUTIONS, max_calls_per_
+//    iteration=10, identical (tool,args) blocked after max_repeated_calls=2 (x3 for
+//    `read`), a BLOCKED nudge after 3 all-failing iterations, and single tool outputs
+//    truncated into history at 8000 chars. This harness exposes no policy knobs on
+//    agent(), so all of it is stated to the agent instead and only the total tool budget
+//    is enforced — and only as a recorded overrun at the loop boundary, since a workflow
+//    script cannot interrupt a subagent mid-flight. Note the scope: max_tool_calls_total
+//    is PER PHASE (Agent.run() creates a fresh RunState each call), so it refreshes every
+//    loop rather than bounding the run.
+//
+//    An earlier revision of this file called agent_iterations "a tool-call budget". It is
+//    not: it bounds MODEL TURNS, and a CodeScribe turn carries up to 10 tool calls (2.2-3.2
+//    in practice across the archived runs). So "30" buys a CodeScribe author 58-96 tool
+//    executions per loop, and every archived csloop author phase runs to `max_iterations`
+//    and is hard-cut there. Claude Code emits exactly ONE tool call per turn, so stating
+//    "30 turns" here imposed a ~3x TIGHTER budget than csloop actually runs under. The
+//    comparable bound is the one AgentPolicy states in a harness-independent unit —
+//    tool executions — so that is what this file now states and tracks.
 // 4. Task source. _loop.py reads a single task file (its own chat-template format) and
 //    pre-injects it on loop 1 so that loop skips an orientation round-trip. This workflow
 //    has no single task file to pre-inject — the Spec and Plan are two separate, often long,
@@ -60,9 +78,23 @@
 //    no longer consume the same task file. Token accounting comes from budget.spent()
 //    instead of run.toml's cumulative counters.
 //
+// 6. Author tool policy. _loop.py builds the AUTHOR's tools with
+//    make_tools(workdir, bash_allow=<the task file's [tools].bash>, protected_paths=
+//    {task_file}) — and for mcfm-translate that allowlist is exactly ["jobrunner",
+//    "python3"], through a bounded BashTool. The csloop author therefore has a two-command
+//    shell with no pipes or redirects; this one has an unrestricted shell. This is the
+//    single largest uncontrolled difference between the two arms, and it cannot be
+//    enforced here (no per-agent tool policy, as #2 says). `bashAllow` below states the
+//    same restriction to the author as a hard rule, the way #2 already does for the
+//    reviewer. It is OFF by default: turning it on changes what the experiment measures,
+//    so it is the operator's call, not a silent default.
+//
 // ---------------------------------------------------------------------------
 // Config (args): transformation (required — a folder under dev/transformations/),
-//                agentLoops (5), agentIterations (30), workdir ('.'), loopDir ('.claude'),
+//                agentLoops (5), agentIterations (30), maxToolCalls (120),
+//                bashAllow (null = unrestricted; e.g. ["jobrunner","python3"] to match
+//                csloop's own allowlist for this transformation),
+//                workdir ('.'), loopDir ('.claude'),
 //                archive (true — run the Metadata phase),
 //                model / authorModel / reviewModel / metadataModel, effort.
 //
@@ -108,9 +140,32 @@ const LOG = `${DIR}/agent_log.md`
 
 const WORKDIR = cfg.workdir || '.'
 const AGENT_LOOPS = cfg.agentLoops ?? 5
+// MODEL TURNS, not tool calls — _agent.py's `for iteration in range(max_iterations)`.
 const AGENT_ITERATIONS = cfg.agentIterations ?? 30
 // _loop.py: max_iterations=max(6, agent_iterations // 2) for the review agent.
 const REVIEW_ITERATIONS = Math.max(6, Math.floor(AGENT_ITERATIONS / 2))
+
+// AgentPolicy (codescribe/lib/_agent.py) — the execution bounds every CodeScribe phase
+// runs under. Only MAX_TOOL_CALLS is enforceable here, and only between loops; the rest
+// are stated to the agent, since this harness has no policy knobs on agent(). They are
+// named and defaulted to CodeScribe's own values so a change there is a one-line change
+// here rather than a silent drift in what "the same loop" means.
+// PER LOOP, not per run. Agent.run() builds a fresh RunState() every call and _loop.py
+// builds a fresh author Agent every loop, so tool_calls_total resets at each phase; a
+// 5-loop csloop run may spend up to 5x this. Making it a run ceiling would have been ~5x
+// TIGHTER than the harness it is meant to match.
+const MAX_TOOL_CALLS = cfg.maxToolCalls ?? 120 // AgentPolicy.max_tool_calls_total
+const MAX_CALLS_PER_ITERATION = 10 // AgentPolicy.max_calls_per_iteration
+const MAX_REPEATED_CALLS = 2 // AgentPolicy.max_repeated_calls
+const READ_REPEAT_MULTIPLIER = 3 // AgentPolicy.read_repeat_multiplier
+
+// null = unrestricted (this harness's default). An array states csloop's own bash
+// allowlist to the author as a hard rule — see divergence #6.
+const BASH_ALLOW = Array.isArray(cfg.bashAllow) && cfg.bashAllow.length ? cfg.bashAllow : null
+
+// End the run when a loop overruns its per-loop tool budget. Off by default: see the
+// overrun handling in the main loop for why recording beats stopping.
+const STOP_ON_OVERRUN = cfg.stopOnOverrun ?? false
 
 // This workflow's own operator-facing artifact directory — unrelated to loop.toml, and not
 // an attempt to mirror CodeScribe's .codescribe/loop/ layout (see divergence #5 above).
@@ -125,7 +180,13 @@ const DO_ARCHIVE = cfg.archive ?? true
 // one of them as the independent variable of a comparison.
 const AUTHOR_MODEL = cfg.model || cfg.authorModel
 const REVIEW_MODEL = cfg.model || cfg.reviewModel
-const METADATA_MODEL = cfg.metadataModel || cfg.model
+// Pinned, NOT inherited from cfg.model. Archival is instrumentation, not the thing being
+// measured, and letting it follow the arm under test makes the cheap arm's overhead cheap
+// and the expensive arm's expensive — on 09-11-2026 the same archival phase cost $2.07 on
+// the opus arm and $1.15 on the sonnet one, 4% and 9% of their runs. This also makes the
+// code agree with meta.phases above, which already declares sonnet-5 for this phase and
+// was being silently overridden by cfg.model.
+const METADATA_MODEL = cfg.metadataModel || 'claude-sonnet-5'
 const EFFORT = cfg.effort // analog of _loop.py's `reason` / reasoning_effort
 
 const ARCHIVE_SPEC = 'evals/archive.toml'
@@ -134,7 +195,14 @@ const ARCHIVE_TOOL = 'evals/tools/archive_experiment.py'
 // Repeated in every prompt below — the same note transform.js gives its agents. The Plans in
 // this repo were written with CodeScribe (a different, more restricted runner) in mind, and
 // loop.toml is CodeScribe's own config — not ours, and never read by this workflow.
-const NOTES = `You have normal Bash tool access (cd, pipes, redirects, variables all work) —
+const NOTES = BASH_ALLOW ?
+    `Shell policy for this run: you may ONLY invoke ${BASH_ALLOW.map((c) => `\`${c}\``).join(' and ')}
+through the Bash tool, with no pipes, redirects, shell variables or command chaining. This
+mirrors the bounded shell the comparison harness enforces in code; treat it as a hard rule,
+and if something cannot be done within it, say so rather than working around it. Do not read
+or follow ${DIR}/loop.toml — it belongs to that other orchestrator (CodeScribe) and has
+nothing to do with this run.` :
+    `You have normal Bash tool access (cd, pipes, redirects, variables all work) —
 ignore any note in the Plan about a restricted shell; that applies to a different runner, not
 you. Do not read or follow ${DIR}/loop.toml — it belongs to that other orchestrator
 (CodeScribe) and has nothing to do with this run.`
@@ -210,8 +278,25 @@ const AUTHOR_SCHEMA = {
             },
             description: 'tool calls that were DENIED and never executed, in the form "tool(arg): reason" — empty if none',
         },
+        // The three fields _agent.py's RunResult carries and this harness does not
+        // expose. Self-reported, like everything else here (divergence #1), but they are
+        // what makes a ccloop loop and a csloop loop comparable units of work — and the
+        // transcript can be counted afterwards to check the report.
+        toolCalls: {
+            type: 'integer',
+            description: 'total number of tool calls you executed this loop (count them; do not estimate)',
+        },
+        iterations: {
+            type: 'integer',
+            description: 'number of your own assistant turns that issued at least one tool call',
+        },
+        stopReason: {
+            type: 'string',
+            enum: ['final_text', 'max_iterations', 'tool_budget'],
+            description: 'final_text = you finished on your own; max_iterations = you ran out of turns; tool_budget = you hit the tool-call budget',
+        },
     },
-    required: ['status', 'plan', 'checkOutput'],
+    required: ['status', 'plan', 'checkOutput', 'toolCalls', 'stopReason'],
 }
 
 // Mirrors the TOML the review agent writes in _loop.py (loop / summary / blocker / [[pending]]).
@@ -250,8 +335,16 @@ const REVIEW_SCHEMA = {
 // the harness allows; every deviation is one of the divergences listed at the top.
 // ---------------------------------------------------------------------------
 
-// _loop.py passes this as `system=` to both agents. Subagent system prompts are not
-// settable here, so it is prepended to each task string instead.
+// _loop.py passes build_system_prompt() as `system=` to both agents — but that is only
+// HALF of what a CodeScribe agent actually receives. Agent.run() (_agent.py) appends
+// _REACT_NUDGE to the system message on every run, so the real system prompt is
+// build_system_prompt() + _REACT_NUDGE. This file used to port only the first half, which
+// silently dropped the tool-discipline rules — no repeated identical calls, stay inside the
+// listed tools, stop as soon as the work is done. Both halves are here now, in the same
+// order and wording the Python builds them in.
+//
+// Subagent system prompts are not settable in this harness, so this is prepended to each
+// task string instead.
 const SYSTEM = `You are an autonomous coding agent specializing in test-driven development and repair.
 
 Core rules:
@@ -270,12 +363,37 @@ Efficiency rules (critical for speed):
 
 Tool guidance:
 - Use glob to discover structure, read for content, bash for running commands and tests.
-- Use edit for targeted changes; use write only when creating new files or doing full rewrites.`
+- Use edit for targeted changes; use write only when creating new files or doing full rewrites.
+
+You are a coding agent with access to tools.
+
+Rules:
+- Be concise and practical.
+- Use tools whenever you need to inspect files, run commands, or change the filesystem.
+- Do NOT fabricate tool outputs. If you need info, call a tool.
+- Batch ALL independent reads and globs into a single turn before acting — gather everything you need first, then implement.
+- Once you have the information needed, implement immediately without further exploration.
+- Do not re-read files you have already read unless they were modified since your last read.
+- Prefer one comprehensive edit over multiple small edits to the same file.
+- IMPORTANT: Only use the tools listed here. For shell work, ONLY use the bash tool and ONLY run commands that succeed under the bash tool's safety policy. If a command is blocked, pick an allowed alternative.
+- Avoid repeating identical tool calls with the same arguments unless the workspace changed (e.g., after an edit).
+- Before using edit, ensure you have read the exact file region you are changing.
+- When all required actions are complete, respond with the final answer immediately — do not do additional cleanup or exploration.`
 
 // Port of format_loop_context(): the injected block that replaces the agent having to read
 // state/history/plan files. Accumulates the full file inventory across ALL prior loops.
-const formatLoopContext = (loopIdx, loopSummaries, pendingItems) => {
+const formatLoopContext = (loopIdx, loopSummaries, pendingItems, toolCallsUsed) => {
     const lines = [`Loop ${loopIdx} of ${AGENT_LOOPS}.`]
+    // _agent.py re-injects a WORKSPACE CONTEXT block every ITERATION carrying
+    // "tool_calls_total: N/120", so a CodeScribe agent always knows how much of its budget
+    // it has spent. Nothing here can inject per-iteration, so the budget is restated at the
+    // top of each loop instead — coarser, but it is the difference between an agent that
+    // knows a cap exists and one that does not. The cap is per loop; the run total is
+    // carried alongside it purely as context.
+    lines.push(
+        `Tool-call budget: ${MAX_TOOL_CALLS} for THIS loop` +
+        (toolCallsUsed ? ` (${toolCallsUsed} used across previous loops).` : '.')
+    )
 
     const allWritten = []
     const allEdited = []
@@ -320,8 +438,8 @@ const formatLoopContext = (loopIdx, loopSummaries, pendingItems) => {
 
 // Port of build_author_task(), sourced from this transformation's Spec + Plan (transform.js's
 // SPEC/PLAN) instead of a single CodeScribe task file.
-const buildAuthorTask = (loopIdx, loopSummaries, pendingItems) => {
-    const context = formatLoopContext(loopIdx, loopSummaries, pendingItems)
+const buildAuthorTask = (loopIdx, loopSummaries, pendingItems, toolCallsUsed) => {
+    const context = formatLoopContext(loopIdx, loopSummaries, pendingItems, toolCallsUsed)
 
     const orientStep = loopIdx === 1 ?
         `1. Read ${PLAN} — how this step is run: its conventions, its tool list, and its
@@ -362,8 +480,20 @@ ${orientStep}2. Write a short PLAN (3–7 bullets) covering everything you inten
 8. If the Plan's own log conventions call for it, update ${LOG} to reflect what you settled —
    follow its heading/line format exactly rather than inventing your own.
 
-Budget: aim to finish within about ${AGENT_ITERATIONS} tool-calling turns. Treat that as a
-target, not a licence to stop early — and never as a reason to report work you did not do.
+Execution policy — these are the bounds the comparison harness enforces in code, and this
+run is only comparable to it if you hold to them:
+- At most ${MAX_TOOL_CALLS} tool calls in THIS loop (the budget refreshes each loop). If
+  you reach it, stop and report stopReason "tool_budget" rather than pressing on.
+- At most ${AGENT_ITERATIONS} of your own turns this loop, and at most
+  ${MAX_CALLS_PER_ITERATION} tool calls in any single turn — so batch independent reads and
+  globs rather than issuing them one per turn.
+- Do not repeat an identical tool call with identical arguments more than
+  ${MAX_REPEATED_CALLS} times (${MAX_REPEATED_CALLS * READ_REPEAT_MULTIPLIER} for plain
+  file reads) unless the workspace changed in between. Change the arguments or the approach.
+- If every tool call fails for three turns running, stop and report the blocker rather than
+  continuing to retry.
+Treat these as bounds, not as a licence to stop early — and never as a reason to report work
+you did not do.
 
 ${SPEC} and ${PLAN} are read-only: never edit them, and never edit anything outside
 ${WORKDIR}.
@@ -460,8 +590,10 @@ Rules:
 You are a REVIEWER, not an author. Restrict yourself to: reading files, globbing, read-only
 shell (ls, stat, pwd, find, grep, head, tail, which, env, rg) and writing the single file
 ${REVIEW_OUTPUT}. Do NOT edit source, do NOT run builds or tests, do NOT modify
-${SPEC} or ${PLAN}, and do not touch anything outside ${WORKDIR}. Aim to finish within about
-${REVIEW_ITERATIONS} tool-calling turns.
+${SPEC} or ${PLAN}, and do not touch anything outside ${WORKDIR}. Stay within
+${REVIEW_ITERATIONS} of your own turns and ${MAX_TOOL_CALLS} tool calls — the same bounds the
+comparison harness gives its reviewer (max(6, author_iterations/2) turns, one shared tool
+budget).
 
 Return the same assessment as the structured object, with wrote=true once the file is on disk.`
 }
@@ -473,6 +605,8 @@ Return the same assessment as the structured object, with wrote=true once the fi
 
 const asList = (v) => (Array.isArray(v) ? v.filter((x) => typeof x === 'string' && x.trim()) : [])
 
+const asCount = (v) => (Number.isInteger(v) && v >= 0 ? v : 0)
+
 const loopSummaryFrom = (loopIndex, a) => ({
     loopIndex,
     filesWritten: asList(a?.filesWritten),
@@ -481,6 +615,12 @@ const loopSummaryFrom = (loopIndex, a) => ({
     commandsRun: asList(a?.commandsRun),
     errors: asList(a?.errors),
     rejected: asList(a?.rejected),
+    // Self-reported (divergence #1). commandsRun is a lower bound on the same quantity —
+    // every bash call appears there — so a toolCalls that is SMALLER than commandsRun is
+    // provably wrong and is corrected upward rather than trusted.
+    toolCalls: Math.max(asCount(a?.toolCalls), asList(a?.commandsRun).length),
+    iterations: asCount(a?.iterations),
+    stopReason: typeof a?.stopReason === 'string' ? a.stopReason : 'unknown',
 })
 
 const extractStatus = (a) => {
@@ -504,6 +644,14 @@ let pendingItems = []
 let loopsCompleted = 0
 let stopReason = `exhausted all ${AGENT_LOOPS} loop(s)`
 let finalStatus = 'INCOMPLETE'
+// _agent.py enforces AgentPolicy.max_tool_calls_total INSIDE a phase: handle_tool_calls
+// returns "tool_budget" the moment the count is reached and Agent.run stops there. A
+// workflow script cannot interrupt a subagent mid-flight, so the budget is enforced at the
+// only boundary this file controls — between loops. That makes it a ceiling on the RUN
+// rather than on each phase, which is looser than CodeScribe in one direction (a single
+// loop can overshoot) and tighter in another (the budget is not refreshed per loop). Both
+// are recorded, so an over-budget loop is visible in the log rather than silently absorbed.
+let toolCallsUsed = 0
 
 const tokensAtStart = budget.spent()
 
@@ -512,7 +660,7 @@ for (let loopIdx = 1; loopIdx <= AGENT_LOOPS; loopIdx++) {
     phase('Author')
 
     const authored = await agent(
-        buildAuthorTask(loopIdx, loopSummaries, pendingItems), {
+        buildAuthorTask(loopIdx, loopSummaries, pendingItems, toolCallsUsed), {
             label: `author:loop${loopIdx}`,
             phase: 'Author',
             schema: AUTHOR_SCHEMA,
@@ -531,14 +679,26 @@ for (let loopIdx = 1; loopIdx <= AGENT_LOOPS; loopIdx++) {
     loopSummaries.push(summary)
     pendingItems = asList(authored.nextSteps).slice(0, 5)
     loopsCompleted = loopIdx
+    toolCallsUsed += summary.toolCalls
 
     const status = extractStatus(authored)
     log(
         `Loop ${loopIdx} [author]: STATUS ${status || 'UNREPORTED'} — ` +
         `${summary.filesWritten.length} written, ${summary.filesEdited.length} edited, ` +
         `${summary.commandsRun.length} command(s), ${summary.errors.length} error(s)` +
-        (summary.rejected.length ? `, ${summary.rejected.length} rejected` : '') + '.'
+        (summary.rejected.length ? `, ${summary.rejected.length} rejected` : '') +
+        ` — ${summary.toolCalls}/${MAX_TOOL_CALLS} tool call(s) this loop ` +
+        `(${toolCallsUsed} run total), ${summary.iterations} turn(s), stop: ${summary.stopReason}.`
     )
+    const overranBudget = summary.toolCalls > MAX_TOOL_CALLS
+    if (summary.iterations > AGENT_ITERATIONS) {
+        log(
+            `  note: loop ${loopIdx} used ${summary.iterations} turns against a stated cap of ` +
+            `${AGENT_ITERATIONS} — CodeScribe would have hard-stopped this phase. (Its turns ` +
+            'carry up to ' + MAX_CALLS_PER_ITERATION + ' tool calls each, so compare tool ' +
+            'calls, not turns.)'
+        )
+    }
 
     if (status === 'COMPLETE') {
         finalStatus = 'COMPLETE'
@@ -546,6 +706,25 @@ for (let loopIdx = 1; loopIdx <= AGENT_LOOPS; loopIdx++) {
         stopReason = `author agent reported STATUS: COMPLETE after loop ${loopIdx}`
         log(`✓ ${stopReason} — task complete, stopping early (review skipped).`)
         break
+    }
+
+    // A loop that overran its own budget already did work CodeScribe would have cut, and
+    // stopping the run now cannot undo that — it would only add a divergence of its own
+    // (csloop keeps looping after a tool_budget stop; run() calls run_review_phase
+    // regardless). So the default is to record it and continue, and STOP_ON_OVERRUN is
+    // there for the operator who would rather lose the run than the comparability.
+    if (overranBudget) {
+        log(
+            `  note: loop ${loopIdx} used ${summary.toolCalls} tool calls against a stated ` +
+            `per-loop budget of ${MAX_TOOL_CALLS} — CodeScribe would have stopped this ` +
+            'phase with stop_reason="tool_budget".'
+        )
+        if (STOP_ON_OVERRUN) {
+            stopReason = `per-loop tool-call budget exceeded in loop ${loopIdx} ` +
+                `(${summary.toolCalls}/${MAX_TOOL_CALLS})`
+            log(`✗ ${stopReason} — stopping (stopOnOverrun).`)
+            break
+        }
     }
 
     // --- Review phase ----------------------------------------------------------
@@ -600,10 +779,14 @@ for (let loopIdx = 1; loopIdx <= AGENT_LOOPS; loopIdx++) {
 
 const outputTokens = budget.spent() - tokensAtStart
 
+const overrunLoops = loopSummaries.filter((s) => s.toolCalls > MAX_TOOL_CALLS).length
+
 log(
     `Done: completed ${loopsCompleted}/${AGENT_LOOPS} loop(s) — ${stopReason} — ` +
     `${finalStatus}${pendingItems.length ? `, ${pendingItems.length} item(s) still pending` : ''} ` +
-    `(~${Math.round(outputTokens / 1000)}k output tokens).`
+    `— ${toolCallsUsed} tool call(s) over ${loopsCompleted} loop(s), budget ${MAX_TOOL_CALLS}/loop` +
+    (overrunLoops ? `, ${overrunLoops} over it` : '') +
+    ` (~${Math.round(outputTokens / 1000)}k output tokens).`
 )
 
 // ---------------------------------------------------------------------------
@@ -624,6 +807,27 @@ if (DO_ARCHIVE && loopsCompleted > 0) {
             loopsCompleted,
             finalStatus,
             stopReason,
+            // The run's own configuration, so the archive answers "what were the bounds"
+            // without anyone parsing it back out of a prompt. CodeScribe writes the same
+            // facts to loop/metadata/manifest.toml; recovering ccloop's loop cap by
+            // regexing "Loop N of M" out of an author prompt was the alternative, and the
+            // archived copy of this script records the DEFAULT rather than the args it was
+            // actually invoked with.
+            config: {
+                agentIterations: AGENT_ITERATIONS,
+                reviewIterations: REVIEW_ITERATIONS,
+                maxToolCallsPerLoop: MAX_TOOL_CALLS,
+                stopOnOverrun: STOP_ON_OVERRUN,
+                maxCallsPerIteration: MAX_CALLS_PER_ITERATION,
+                maxRepeatedCalls: MAX_REPEATED_CALLS,
+                bashAllow: BASH_ALLOW,
+                authorModel: AUTHOR_MODEL || null,
+                reviewModel: REVIEW_MODEL || null,
+                metadataModel: METADATA_MODEL,
+                effort: EFFORT || null,
+            },
+            toolCallsUsed, // across the whole run
+            toolCallsBudgetPerLoop: MAX_TOOL_CALLS,
             loops: loopSummaries.map((s) => {
                 const rev = reviewSummaries.find((r) => r.loopIndex === s.loopIndex) || null
                 return {
@@ -634,6 +838,9 @@ if (DO_ARCHIVE && loopsCompleted > 0) {
                     commandsRun: s.commandsRun,
                     errors: s.errors,
                     rejected: s.rejected,
+                    toolCalls: s.toolCalls,
+                    iterations: s.iterations,
+                    stopReason: s.stopReason,
                     review: rev ? {
                         blocker: rev.blocker,
                         pending: rev.pending,
