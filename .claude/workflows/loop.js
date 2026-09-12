@@ -56,13 +56,33 @@
 //    loop rather than bounding the run.
 //
 //    An earlier revision of this file called agent_iterations "a tool-call budget". It is
-//    not: it bounds MODEL TURNS, and a CodeScribe turn carries up to 10 tool calls (2.2-3.2
-//    in practice across the archived runs). So "30" buys a CodeScribe author 58-96 tool
-//    executions per loop, and every archived csloop author phase runs to `max_iterations`
-//    and is hard-cut there. Claude Code emits exactly ONE tool call per turn, so stating
-//    "30 turns" here imposed a ~3x TIGHTER budget than csloop actually runs under. The
-//    comparable bound is the one AgentPolicy states in a harness-independent unit —
-//    tool executions — so that is what this file now states and tracks.
+//    not: it bounds MODEL TURNS, and a CodeScribe turn carries up to 10 tool calls. Measured
+//    over the 38 archived author and review phases in the 08-27/08-28-2026 figure scope
+//    (evals/experiments/*/codescribe-*/loop/metadata/loop_*.toml): mean 2.41 calls per turn,
+//    range 0.50-4.60. So "30" buys a csloop author around 71 tool executions per loop
+//    (observed author-phase totals 25-89). Claude Code emits exactly ONE tool call per turn,
+//    so stating "30 turns" here imposed a ~2-3x TIGHTER budget than csloop actually runs
+//    under. The comparable bound is the one AgentPolicy states in a harness-independent
+//    unit — tool executions — so that is what this file now states and tracks.
+//
+//    Two corrections to what an earlier revision of this note asserted, both checked against
+//    the archives rather than assumed:
+//      - "every archived csloop author phase runs to max_iterations and is hard-cut there"
+//        is false. 25 of 38 phases stop on `max_iterations`; the other 13 stop on
+//        `final_text`, i.e. the agent finished early. The cap binds often, not always.
+//      - max_tool_calls_total=120 never actually binds in the archived corpus: no phase
+//        records stop_reason `tool_budget`. For csloop the operative limit is
+//        max_iterations; 120 is a ceiling above observed behaviour, which is why it is a
+//        safe number to copy here rather than a tight one.
+//
+//    THE RUNS ARCHIVED ON 09-11-2026 DID NOT RUN UNDER THIS. They ran the revision that said
+//    "about 30 tool-calling turns", with no maxToolCalls at all, and the two models read it
+//    very differently: the opus-5 run averaged 34 tool calls per loop across its five loops
+//    (49/42/44/22/14), while the sonnet-5 run spent 139 in its single loop. An advisory
+//    budget is not a budget, and it is not a like-for-like substitute for one enforced in
+//    code. Treat those two runs' throughput and per-file numbers as measured under a tighter
+//    and unevenly applied budget than csloop's — a calibration error, and separate from the
+//    execution-policy difference in #6, which is the intended contrast.
 // 4. Task source. _loop.py reads a single task file (its own chat-template format) and
 //    pre-injects it on loop 1 so that loop skips an orientation round-trip. This workflow
 //    has no single task file to pre-inject — the Spec and Plan are two separate, often long,
@@ -80,23 +100,133 @@
 //
 // 6. Author tool policy. _loop.py builds the AUTHOR's tools with
 //    make_tools(workdir, bash_allow=<the task file's [tools].bash>, protected_paths=
-//    {task_file}) — and for mcfm-translate that allowlist is exactly ["jobrunner",
-//    "python3"], through a bounded BashTool. The csloop author therefore has a two-command
-//    shell with no pipes or redirects; this one has an unrestricted shell. This is the
-//    single largest uncontrolled difference between the two arms, and it cannot be
-//    enforced here (no per-agent tool policy, as #2 says). `bashAllow` below states the
-//    same restriction to the author as a hard rule, the way #2 already does for the
-//    reviewer. It is OFF by default: turning it on changes what the experiment measures,
-//    so it is the operator's call, not a silent default.
+//    {task_file}), through a bounded BashTool.
+//
+//    An earlier revision of this note said that allowlist "is exactly ['jobrunner',
+//    'python3']" and called the result "a two-command shell". That is wrong, and the error
+//    is in the direction that overstates the gap: make_tools UNIONS the task file's list
+//    with BashTool._DEFAULT_ALLOWED (codescribe/lib/_tools.py:718), so the mcfm-translate
+//    author actually gets THIRTEEN commands —
+//        ls pwd find grep head tail wc git test echo sed   (the default set)
+//      + jobrunner python3                                 (this task file's [tools].bash)
+//    — plus per-command hardening (find -exec/-delete rejected, sed forced to --sandbox,
+//    git config/-c/--git-dir/ext:: rejected, rg --pre rejected).
+//
+//    What actually does the work is not the command list but the other two rules:
+//      - _BLOCKED_CHARS = "|&;><`$\n\r" rejected anywhere in the command string, which bans
+//        pipes, redirects, chaining, command substitution and multi-line scripts outright;
+//      - a fixed cwd with no `cd`, plus every non-flag argument required to resolve inside
+//        the workdir.
+//    Replaying the 09-11-2026 runs' Bash calls through that validator (see
+//    evals/analysis/shell_policy.py, which mirrors it) rejects 95% of the opus-5 run's 216
+//    calls and 91% of the sonnet-5 run's 113 — in both cases mostly on shell syntax, then
+//    on `cd`. So this remains by far the largest difference between the two arms; only the
+//    description of it was wrong.
+//
+//    Read that as the INTERVENTION, not as noise to be eliminated. Enforced bounded
+//    execution is what CodeScribe is for, and a ccloop run with an unrestricted shell is the
+//    control it is measured against. `bashAllow` below exists so a matched-policy run can be
+//    done deliberately (see "Running a file-by-file comparison"), and it is OFF by default
+//    precisely because turning it on changes what the experiment measures.
+//
+//    It cannot be ENFORCED here (no per-agent tool policy, as #2 says) — `bashAllow` states
+//    the restriction to the author as a hard rule, the way #2 already does for the reviewer.
+//    A prose rule and a validator are not the same instrument, and #3 shows what happens
+//    when they are treated as one.
+//
+// ---------------------------------------------------------------------------
+// RUNNING A FILE-BY-FILE COMPARISON against a csloop run
+//
+// evals/analysis attributes cost, minutes and tool calls to individual source files, and
+// compares those per-file columns across harnesses (see per_file_effort.py). A ccloop run
+// only lands in that comparison if it satisfies the conditions below. They are listed here
+// because every one of them is a property of how the RUN is set up, not of the analysis.
+//
+// A. Same work, or the per-file numbers do not divide comparable work.
+//    - Same transformation folder, and the same Spec/Plan content as the csloop arm. Note
+//      the two harnesses reach the same text by different routes: csloop is handed
+//      loop.toml, whose whole body is "read current_plan.md, then desired_spec.md" (its
+//      author's first two tool calls in every archived run are exactly those reads), while
+//      this workflow names the two files directly. Same instructions, different envelope —
+//      so #4's "no single task file to pre-inject" costs less than it sounds like.
+//    - Same submodule fork point. generate_graphs checks every run's branch merge-base
+//      against git_file_counts.BASE_REF, and a run that forked elsewhere is out of scope.
+//    - Archive with evals/tools/archive_experiment.py so the run gets a branch under
+//      evals/<day>/<name>; `files settled` is the git diff of that branch, never the
+//      agent's own checklist.
+//
+// B. Name the run so the harness classifies it.
+//    evals/analysis/harness.py keys off the directory name, and `ccworkflow-loop-*` and
+//    `ccloop-*` both mean ccloop. Anything else beginning `ccworkflow-` is read as the
+//    multi-agent workflow and will be parsed with the wrong module. `harness.detect_harness`
+//    re-derives the answer from the journal's Author/Review phase labels and
+//    `verify_harness_names` reports any run where the two disagree — so a misnamed run is
+//    caught, but only after it has already been mis-parsed once.
+//
+// C. Write file paths the attributor can see. THIS IS THE ONE MOST EASILY GOT WRONG.
+//    ccloop effort is APPORTIONED: per_file_effort matches each executed tool call's
+//    arguments against `src/<Module>/<name>.<ext>` (SOURCE_PATH_RE) and splits the run's
+//    cost across whichever settled units the call names. A call that names no unit falls
+//    into the unattributed pool and is spread proportionally.
+//    A `cd software/mcfm/src/W2jet` followed by bare filenames therefore attributes
+//    NOTHING, even though every one of those calls is doing per-file work. In the 09-11
+//    runs, counted over the attributable executed calls per_file_effort sees:
+//      opus-5    219 calls, 94% unattributed → ~13 carry the whole per-file split.
+//                It issued `cd` 77 times, and 54 further calls name a settled unit by
+//                basename only, so most of its real file work is invisible to the matcher.
+//      sonnet-5  160 calls, 74% unattributed → ~41 carry the split. It worked through
+//                Read/Write/Edit with full paths; only 10 calls are basename-only.
+//    Both numbers are honest, but C6's per-file column rests on ~13 calls and C7's on ~41,
+//    and they are not equally trustworthy — which is a difference in how the two models
+//    drove the shell, not a difference the analysis introduced.
+//    Worth noticing WHY csloop does not have this problem: its BashTool has a fixed cwd and
+//    no `cd`, so every path it writes is already root-relative and matchable. Bounded
+//    execution buys attributable telemetry as a side effect. If you want a ccloop run whose
+//    per-file split is as tight as csloop's, `bashAllow` is the knob that gets you there —
+//    which is also why a matched-policy run is worth doing even though it is no longer the
+//    control.
+//
+// D. Match the budget in the unit both harnesses share.
+//    csloop's author does ~71 tool EXECUTIONS per loop (see #3). Set `maxToolCalls` to the
+//    same order and leave `agentIterations` alone; do not assume a turn means the same thing
+//    on both sides. A run whose budget was stated in the wrong unit is not comparable on
+//    files-settled or on any per-file column, and nothing downstream can correct for it.
+//
+// E. Decide, and record, whether you are running the control or the matched arm.
+//      bashAllow: null                      → the control. Unrestricted shell; this is what
+//                                             R12/R13 are, and what the published
+//                                             ccloop-vs-csloop gap measures.
+//      bashAllow: ["jobrunner","python3"]   → the matched arm. Note this reproduces the same
+//                                             THIRTEEN-command shell csloop gets, because
+//                                             the prompt text built from it also states the
+//                                             default set; it does not reproduce enforcement.
+//    Say which in the run name. The two are different configurations and averaging them
+//    would answer neither question.
+//
+// F. What still will not match, even with A-E done.
+//    - Enforcement itself: every AgentPolicy rule here is prose, so compliance is the
+//      model's choice and varies by model (#3).
+//    - LoopSummary provenance: self-reported here, harness-computed there (#1).
+//    - Attribution method for ccworkflow only: "exact" per-unit author agents, versus the
+//      apportioned split ccloop and csloop share. ccloop-vs-csloop per-file columns ARE
+//      like-for-like; neither is like-for-like against ccworkflow.
+//    - Review-phase telemetry: csloop's logs/toolusage.toml covers the author phase only,
+//      while a Claude Code transcript timestamps every phase. per_file_effort's "timed"
+//      method reports which via `duration_source`/`phases_covered`; do not difference a
+//      measured/author total against a derived/all one.
 //
 // ---------------------------------------------------------------------------
 // Config (args): transformation (required — a folder under dev/transformations/),
 //                agentLoops (5), agentIterations (30), maxToolCalls (120),
-//                bashAllow (null = unrestricted; e.g. ["jobrunner","python3"] to match
-//                csloop's own allowlist for this transformation),
+//                bashAllow (null = unrestricted, the control arm; e.g. ["jobrunner",
+//                "python3"] for the matched arm — it EXTENDS CodeScribe's default set the
+//                way make_tools does, giving the same thirteen commands csloop gets, and
+//                also states the no-cd / no-pipes / root-relative-paths rules. See
+//                "Running a file-by-file comparison" above before choosing),
 //                workdir ('.'), loopDir ('.claude'),
 //                archive (true — run the Metadata phase),
-//                model / authorModel / reviewModel / metadataModel, effort.
+//                model / authorModel / reviewModel / metadataModel,
+//                effort ('high' — explicit, not inherited from the session).
 //
 // Start it with:
 //   Run loop for dev/transformations/<name>
@@ -161,7 +291,18 @@ const READ_REPEAT_MULTIPLIER = 3 // AgentPolicy.read_repeat_multiplier
 
 // null = unrestricted (this harness's default). An array states csloop's own bash
 // allowlist to the author as a hard rule — see divergence #6.
-const BASH_ALLOW = Array.isArray(cfg.bashAllow) && cfg.bashAllow.length ? cfg.bashAllow : null
+// CodeScribe's make_tools does `allowed = BashTool._DEFAULT_ALLOWED | bash_allow` — the task
+// file's list EXTENDS a default set, it does not replace it (codescribe/lib/_tools.py:718).
+// Mirroring that here matters: passing bashAllow:["jobrunner","python3"] to match
+// mcfm-translate's task file must produce csloop's actual thirteen-command shell, not a
+// two-command one that is stricter than anything csloop ever enforced. Kept verbatim from
+// _tools.py:284 so a drift in either copy is greppable.
+const CS_DEFAULT_BASH_ALLOW = [
+    'ls', 'pwd', 'find', 'grep', 'head', 'tail', 'wc', 'git', 'test', 'echo', 'sed',
+]
+const BASH_ALLOW = Array.isArray(cfg.bashAllow) && cfg.bashAllow.length ?
+    [...new Set([...CS_DEFAULT_BASH_ALLOW, ...cfg.bashAllow])].sort() :
+    null
 
 // End the run when a loop overruns its per-loop tool budget. Off by default: see the
 // overrun handling in the main loop for why recording beats stopping.
@@ -187,7 +328,19 @@ const REVIEW_MODEL = cfg.model || cfg.reviewModel
 // code agree with meta.phases above, which already declares sonnet-5 for this phase and
 // was being silently overridden by cfg.model.
 const METADATA_MODEL = cfg.metadataModel || 'claude-sonnet-5'
-const EFFORT = cfg.effort // analog of _loop.py's `reason` / reasoning_effort
+// Analog of _loop.py's `reason` / reasoning_effort — and DEFAULTED, not left
+// undefined. Both 09-11-2026 runs passed no effort and every one of their
+// assistant messages came back at `effort: high`, inherited from the session
+// rather than chosen: the runs were configured by whatever the operator's
+// session happened to be set to, and nothing in the archive said so. Naming a
+// default makes the setting a recorded run parameter that the manifest carries.
+//
+// Note this does NOT make the arms equal. CodeScribe reaches "reasoning on" via
+// reason=true -> thinking=display:summarized,type:adaptive; there is no
+// documented mapping from an effort level onto that, so adaptive-vs-high stays
+// an uncontrolled difference between the harnesses. It is now at least an
+// explicit one. Pass effort to vary it deliberately.
+const EFFORT = cfg.effort ?? 'high'
 
 const ARCHIVE_SPEC = 'evals/archive.toml'
 const ARCHIVE_TOOL = 'evals/tools/archive_experiment.py'
@@ -196,10 +349,14 @@ const ARCHIVE_TOOL = 'evals/tools/archive_experiment.py'
 // this repo were written with CodeScribe (a different, more restricted runner) in mind, and
 // loop.toml is CodeScribe's own config — not ours, and never read by this workflow.
 const NOTES = BASH_ALLOW ?
-    `Shell policy for this run: you may ONLY invoke ${BASH_ALLOW.map((c) => `\`${c}\``).join(' and ')}
-through the Bash tool, with no pipes, redirects, shell variables or command chaining. This
-mirrors the bounded shell the comparison harness enforces in code; treat it as a hard rule,
-and if something cannot be done within it, say so rather than working around it. Do not read
+    `Shell policy for this run: through the Bash tool you may ONLY invoke
+${BASH_ALLOW.map((c) => `\`${c}\``).join(', ')} — nothing else, and in particular no \`cd\`
+and no \`cat\`. Every command must be a single simple command: no pipes, redirects, shell
+variables, command substitution, \`&&\`/\`;\` chaining or multi-line scripts. Paths are always
+written relative to the repository root (\`software/mcfm/src/W2jet/atree.f\`, never a bare
+\`atree.f\` after moving directory), because there is no moving directory. This mirrors the
+bounded shell the comparison harness enforces in code; treat it as a hard rule, and if
+something cannot be done within it, say so rather than working around it. Do not read
 or follow ${DIR}/loop.toml — it belongs to that other orchestrator (CodeScribe) and has
 nothing to do with this run.` :
     `You have normal Bash tool access (cd, pipes, redirects, variables all work) —
@@ -824,7 +981,10 @@ if (DO_ARCHIVE && loopsCompleted > 0) {
                 authorModel: AUTHOR_MODEL || null,
                 reviewModel: REVIEW_MODEL || null,
                 metadataModel: METADATA_MODEL,
-                effort: EFFORT || null,
+                // The reasoning setting this run actually requested. csloop's
+                // run.toml records `reason` / `reasoning_config` for the same
+                // purpose; the two are different knobs (see EFFORT above).
+                effort: EFFORT,
             },
             toolCallsUsed, // across the whole run
             toolCallsBudgetPerLoop: MAX_TOOL_CALLS,

@@ -22,12 +22,24 @@ fixed:
     loop pattern      | csloop              | ccloop
     multi-agent flow  | (none)              | ccworkflow
 
-  ccloop vs. csloop      one design pattern, two baseline agents. Both are a
-                         bounded author->review loop over the same Spec/Plan;
-                         the loop workflow (.claude/workflows/loop.js) is
-                         deliberately shaped after CodeScribe's prompt_loop.
-                         What differs is the agent underneath, so this is the
-                         bare-metal comparison of the two baselines.
+  ccloop vs. csloop      one design pattern over one task, varying EXECUTION
+                         POLICY. Both are a bounded author->review loop; the
+                         loop workflow (.claude/workflows/loop.js) is
+                         deliberately shaped after CodeScribe's prompt_loop,
+                         and both authors work the same Spec and Plan (csloop's
+                         task file only tells it to read those two files, and
+                         its author's first two tool calls are those reads). The
+                         difference under test is that CodeScribe ENFORCES its
+                         shell allowlist, per-phase iteration and tool caps,
+                         repeated-call blocking and a protected task file in
+                         code, while the loop workflow states the same rules as
+                         prose to an agent with an unrestricted shell. Replaying
+                         the ccloop runs' Bash calls against CodeScribe's own
+                         validator rejects 91-95% of them (shell_policy.py), so
+                         this is a large intervention rather than a detail. Read
+                         a gap here as the cost of bounded execution -- with the
+                         budget caveat in BUDGET_NOTE, which is a calibration
+                         error on top of it.
   ccloop vs. ccworkflow  one baseline agent, two design patterns. Same Claude
                          Code agent, same transformation, one running a loop
                          and one running the five-phase group-at-a-time
@@ -166,6 +178,7 @@ from git_file_counts import (translated_file_count, translated_file_units, modul
 from parse_roadmap import fork_point_roadmap
 from per_file_effort import per_file_effort, per_file_effort_timed
 from parse_decision_timeline import module_entry_order
+import shell_policy
 
 REPO_ROOT = Path(__file__).parent.parent
 EXPERIMENTS = REPO_ROOT / "experiments"
@@ -362,32 +375,61 @@ PER_FILE_COMPARISON_CONFIGS = ["C1", "C3", "C5"]
 PER_FILE_DISPLAY_CONFIGS = ["C1", "C2", "C3", "C5", "C6", "C7"]
 
 
-def run_code_caption(fig_width_in, fontsize=None):
-    """The code→configuration mapping, wrapped to the figure it sits under.
+def _wrap_to_figure(text, fig_width_in, fontsize=None):
+    """One caption string -> lines that fit inside `fig_width_in`.
 
-    Returned as a list of lines rather than one string: at 16 runs the mapping
-    is far wider than any figure, and a single un-wrapped line makes
-    `bbox_inches="tight"` grow the saved canvas to the width of the *text*,
-    which strands the panels in the middle of a very wide image.
+    A single un-wrapped line makes `bbox_inches="tight"` grow the saved canvas
+    to the width of the *text*, which strands the panels in the middle of a very
+    wide image. That used to be a risk only for the run-code mapping; it became
+    a live one for the prose notes too once DESIGN_NOTE grew, so every caption
+    line goes through this now rather than just the mapping.
     """
     import textwrap
 
     fontsize = fontsize or CAPTION_SIZE
-    text = "  |  ".join(f"{code} = {label}" for _, _, code, label in RUNS)
     # ~0.52 em per character is the measured average for DejaVu Sans at these
     # sizes; close enough to keep the wrapped text inside the axes width.
     chars = max(40, int(fig_width_in * 72 / (0.52 * fontsize)))
     return textwrap.wrap(text, chars)
 
 
-# Every Anthropic run in this table ran with adaptive thinking active: Opus 5
-# and Sonnet 5 both think by default when the thinking parameter is omitted, so
-# there is no reasoning-OFF arm here and no run is another run's control for it.
-# The gpt-5.6 runs emit no reasoning text at all, which is the OpenAI-compatible
-# gateway's behaviour rather than a setting on the run.
+def wrap_notes(fig_width_in, notes, fontsize=None):
+    """Several caption strings -> one flat list of wrapped lines.
+
+    Callers size the caption strip from `len()` of this, so the wrapping has to
+    happen here at assembly time and not inside save_fig — by then the rect is
+    already reserved and extra lines would run under the panels.
+    """
+    lines = []
+    for note in notes:
+        lines.extend(_wrap_to_figure(note, fig_width_in, fontsize))
+    return lines
+
+
+def run_code_caption(fig_width_in, fontsize=None):
+    """The code→configuration mapping, wrapped to the figure it sits under."""
+    text = "  |  ".join(f"{code} = {label}" for _, _, code, label in RUNS)
+    return _wrap_to_figure(text, fig_width_in, fontsize)
+
+
+# No run here is another run's reasoning ON/OFF control -- but the runs do NOT
+# all reach "reasoning on" through the same knob, and saying only the former hid
+# that. Read off the archives, the corpus splits in two:
+#   thinking, adaptive   the eight Anthropic csloop runs (R4-R8), which set
+#                        `reason=true` and record
+#                        `thinking=display:summarized,type:adaptive`.
+#   effort=high          every ccworkflow and ccloop run (an `effort` on each
+#                        assistant message -- including the two 09-11 runs, which
+#                        passed no effort argument and took the session default),
+#                        AND the gpt-5.6 csloop runs (R9-R11), whose manifests
+#                        record `reasoning_effort=high`.
+# So the split is not harness-shaped: it separates the Anthropic csloop arm from
+# everything else. That is an uncontrolled difference between arms rather than a
+# control within one, and the run manifest prints the setting per run.
 REASONING_NOTE = (
-    "All Anthropic runs think adaptively (on by default); no run here is a reasoning ON/OFF "
-    "control. The gpt-5.6 gateway returns no reasoning text at all."
+    "Reasoning is on everywhere it can be, but not via one knob: the Anthropic csloop runs use "
+    "adaptive thinking, while every Claude Code run and the gpt-5.6 runs use effort=high (per-run "
+    "settings are in the manifest table). No run is another run's reasoning ON/OFF control."
 )
 SCOPE_NOTE = (
     "Scope: the thirteen 08-27/08-28-2026 and 09-11-2026 runs. All fork from one submodule "
@@ -397,10 +439,98 @@ SCOPE_NOTE = (
 # What the three harnesses are a design for, and which pair isolates what.
 # Repeated on the figures because the run codes alone do not say it, and a
 # reader comparing two bars needs to know which variable is being held fixed.
+#
+# An earlier revision of this note said ccloop vs. csloop varied "the baseline
+# agent", which named the wrong variable and undersold the comparison. The two
+# arms run the same design pattern over the same Spec and Plan -- csloop's task
+# file is eighteen lines whose content is "read current_plan.md, then
+# desired_spec.md", and its author's first two tool calls in every archived run
+# are those two reads. What actually separates them is EXECUTION POLICY:
+# CodeScribe enforces a bounded shell, per-phase iteration and tool caps,
+# repeated-call blocking and a protected task file in code (codescribe/lib/
+# _agent.py AgentPolicy, _tools.py BashTool), while the loop workflow states the
+# same rules as prose to an agent holding an unrestricted shell. That is the
+# intervention under test, not a nuisance variable, and shell_policy.py sizes it
+# from the archives rather than asserting it here.
 DESIGN_NOTE = (
     "Three harnesses, two variables: ccloop vs. csloop is one design pattern (a bounded "
-    "author-review loop) on two baseline agents; ccloop vs. ccworkflow is one baseline agent "
-    "(Claude Code) under two design patterns (loop vs. multi-agent workflow)."
+    "author-review loop) over one Spec/Plan, varying execution policy -- csloop enforces a "
+    "bounded shell and per-phase caps in code, ccloop states the same rules as prose to an "
+    "unrestricted agent; ccloop vs. ccworkflow is one baseline agent (Claude Code) under two "
+    "design patterns (loop vs. multi-agent workflow)."
+)
+
+
+def _ccloop_shell_divergence():
+    """(low, high) share of ccloop Bash calls CodeScribe's shell would refuse.
+
+    Computed from the archives by shell_policy.py, not asserted, so adding a
+    ccloop run moves the number in the note. Cached because the notes are
+    emitted into several figures and the tables.
+    """
+    global _SHELL_DIVERGENCE
+    if _SHELL_DIVERGENCE is None:
+        ccloop_runs = [r for r in RUNS if harness_of(r[1]) == CCLOOP]
+        summary = shell_policy.divergence_summary(EXPERIMENTS, ccloop_runs)
+        _SHELL_DIVERGENCE = summary["range"]
+    return _SHELL_DIVERGENCE
+
+
+_SHELL_DIVERGENCE = None
+
+
+def policy_note():
+    """POLICY_NOTE with the measured divergence filled in.
+
+    Emitted into summary_tables.md only, not onto the figures: the figure
+    captions are already a stack of unwrapped single lines wide enough to
+    stretch the saved canvas past the panels, and this is the longest note of
+    the set. The tables are where a reader goes for the caveat anyway.
+    """
+    span = _ccloop_shell_divergence()
+    if span is None:
+        return (
+            "ccloop vs. csloop varies execution policy: CodeScribe enforces its shell and "
+            "per-phase caps in code, the loop workflow states them as prose. No ccloop "
+            "transcript in scope, so the size of the difference is not measured here."
+        )
+    low, high = span
+    return (
+        "Execution policy is the variable in ccloop vs. csloop, and it is large: replaying each "
+        f"ccloop run's Bash calls against CodeScribe's own bounded shell rejects {low:.0%}-{high:.0%} "
+        "of them (shell_policy.py; mostly pipes, redirects and chaining, which that shell bans "
+        "outright, plus `cd`, which it has no need for). CodeScribe also enforces per-phase "
+        "iteration and tool-call caps, repeated-call blocking and a protected task file in code; "
+        "the loop workflow states all of it as prose. Read a ccloop-vs-csloop gap as the cost of "
+        "that policy, not as a property of the baseline agent."
+    )
+
+
+# The one part of the ccloop/csloop contrast that is an error rather than the
+# intervention, and the figures cannot show it, so it is stated once here.
+#
+# A clean enforced-vs-advisory contrast states the SAME budget in the SAME unit
+# and varies only whether it is enforced. R12 and R13 did not get that. csloop's
+# binding constraint is AgentPolicy.max_iterations = 30 MODEL TURNS, and a
+# CodeScribe turn carries several tool calls (measured over the 38 archived
+# author/review phases in scope: mean 2.41, range 0.50-4.60), so a csloop opus
+# author executes about 71 tool calls per loop. The loop.js revision that ran
+# R12/R13 told its author to "finish within about 30 tool-calling turns", and
+# Claude Code emits exactly one tool call per turn -- so the same number meant
+# roughly a third of the work. R12 complied and averaged 34 calls per loop; R13
+# ignored it entirely and spent 139 in its single loop, which is what advisory
+# means in practice. `maxToolCalls` was added to loop.js afterwards and is not
+# what these runs ran under. Note also that csloop's own 120-call ceiling never
+# bound: no archived phase stops on `tool_budget`, they stop at max_iterations
+# (25 of 38) or finish early (13 of 38).
+BUDGET_NOTE = (
+    "Budget caveat on ccloop: the loop.js revision that produced R12/R13 stated its per-loop "
+    "budget in Claude Code turns (one tool call each) against a number calibrated for CodeScribe "
+    "turns (2.41 tool calls each, measured), so ccloop authors ran to roughly a third of csloop's "
+    "per-loop work -- R12 averaged 34 tool calls per loop against csloop opus-5's ~71. It was "
+    "advisory, and only one model honoured it: R13 spent 139 in its one loop. Treat ccloop's "
+    "files-settled and per-file figures as measured under a tighter and unevenly applied budget, "
+    "which is a calibration error rather than part of the policy contrast above."
 )
 SHADOW_NOTE = (
     "Files settled counts a unit whose .cpp landed but whose Fortran original was never retired; "
@@ -790,6 +920,38 @@ def _display_model(model):
     return MODEL_DISPLAY.get(model, model)
 
 
+def reasoning_config_per_run(transcript_rows):
+    """{run: str} — how reasoning was configured, in each harness's own terms.
+
+    Read from the archive rather than from the run label: the Claude Code
+    harnesses record an `effort` on every assistant message, csloop records
+    `reasoning_config` (and `reason`) in its manifest. The two are different
+    knobs and the cell says which, rather than flattening both to "on".
+    """
+    from collections import Counter, defaultdict
+
+    efforts = defaultdict(Counter)
+    for row in transcript_rows:
+        key = run_key(row["day"], row["run_name"])
+        if key in RUN_CODES and row.get("effort"):
+            efforts[key][row["effort"]] += 1
+
+    out = {}
+    for key in KEYS:
+        if efforts[key]:
+            out[key] = f"effort={efforts[key].most_common(1)[0][0]}"
+            continue
+        info = manifest_run_info(EXPERIMENTS / key[0] / key[1])
+        config = info.get("reasoning_config")
+        if config:
+            out[key] = str(config).replace("thinking=", "thinking ")
+        elif info:
+            out[key] = f"reason={info.get('reason')}"
+        else:
+            out[key] = "—"
+    return out
+
+
 def decision_model_per_run(cc_rows, cs_rows):
     # cc_rows here is every transcript-harness row (ccworkflow + ccloop); see
     # main(), which concatenates them before calling.
@@ -973,11 +1135,16 @@ def load_per_file_effort(translated_units):
 
 
 def load_per_file_effort_timed(translated_units):
-    """{run: per_file_effort_timed record or None} — the "timed" method's
-    tighter csloop apportionment (see per_file_effort.py), keyed the same way
-    as load_per_file_effort(). None for every ccworkflow run (already exact)
-    and for any csloop run whose logs/toolusage.toml is missing or fails the
-    structural sanity check against loop/metadata.
+    """{run: per_file_effort_timed record or None} — the "timed" method (see
+    per_file_effort.py), keyed the same way as load_per_file_effort().
+
+    Available for all three harnesses, from two different sources: real
+    per-call durations out of logs/toolusage.toml for csloop (author phase
+    only), and durations derived from transcript timestamps for ccworkflow and
+    ccloop (every phase). Each record carries `duration_source` and
+    `phases_covered`; a table printing both kinds must qualify the heading,
+    because a derived/all total is more complete than a measured/author one.
+    None for a run with no settled units or no parseable telemetry.
     """
     return {
         key: per_file_effort_timed(EXPERIMENTS, key[0], key[1], translated_units[key])
@@ -998,6 +1165,7 @@ def per_file_effort_rows(effort_by_run):
             continue
         code = RUN_CODES[key]
         config = CONFIG_OF_RUN[key]
+        info = record.get("run", {})
         for unit in sorted(record["units"]):
             entry = record["units"][unit]
             rows.append({
@@ -1008,6 +1176,10 @@ def per_file_effort_rows(effort_by_run):
                 "run_name": key[1],
                 "harness": key_harness(key),
                 "method": record["method"],
+                # Empty for exact/apportioned; set for timed, where the two
+                # sources are not the same measurement (see per_file_effort).
+                "duration_source": info.get("duration_source", ""),
+                "phases_covered": info.get("phases_covered", ""),
                 "unit": unit,
                 "module": module_of(unit),
                 "settled": entry["settled"],
@@ -1282,8 +1454,9 @@ def make_standalone_figures(runs, coverage, files_settled, wall_times, tool_call
     fig.suptitle("Token cost & cache efficiency", fontsize=SUPTITLE_SIZE)
     draw_cost_panel(a1, runs)
     draw_cache_panel(a2, runs)
-    caption = (run_code_caption(9.4) + unpriced_caption(runs)
-               + [RATE_CARD_NOTE, REASONING_NOTE, SCOPE_NOTE, SHADOW_NOTE])
+    caption = (run_code_caption(9.4)
+               + wrap_notes(9.4, unpriced_caption(runs)
+                            + [RATE_CARD_NOTE, REASONING_NOTE, SCOPE_NOTE, SHADOW_NOTE]))
     fig.tight_layout(rect=_caption_rect(len(caption)))
     save_fig(fig, "fig1_cost_and_cache.png", caption)
 
@@ -1292,13 +1465,13 @@ def make_standalone_figures(runs, coverage, files_settled, wall_times, tool_call
     fig.suptitle("Coverage & correctness", fontsize=SUPTITLE_SIZE)
     draw_files_panel(a1, files_settled)
     draw_correctness_panel(a2, coverage)
-    caption = run_code_caption(9.4) + [
+    caption = run_code_caption(9.4) + wrap_notes(9.4, [
         "No human_review files exist for these runs, so only self-reported pass rates are shown; "
         "runs that reported none are omitted from the right-hand panel.",
         DESIGN_NOTE,
         SCOPE_NOTE,
         SHADOW_NOTE,
-    ]
+    ])
     fig.tight_layout(rect=_caption_rect(len(caption)))
     save_fig(fig, "fig3_coverage.png", caption)
 
@@ -1307,13 +1480,13 @@ def make_standalone_figures(runs, coverage, files_settled, wall_times, tool_call
     fig.suptitle("Wall-clock time", fontsize=SUPTITLE_SIZE)
     draw_wall_time_panel(a1, wall_times)
     a1.set_title("")
-    caption = run_code_caption(7.2) + [
+    caption = run_code_caption(7.2) + wrap_notes(7.2, [
         "ccworkflow and ccloop: span of first-to-last agent timestamp. csloop: sum of per-loop "
         "duration_s.",
         DESIGN_NOTE,
         SCOPE_NOTE,
         SHADOW_NOTE,
-    ]
+    ])
     fig.tight_layout(rect=_caption_rect(len(caption)))
     save_fig(fig, "fig4_wall_time.png", caption)
 
@@ -1322,13 +1495,13 @@ def make_standalone_figures(runs, coverage, files_settled, wall_times, tool_call
     fig.suptitle("Tool-call cost per file", fontsize=SUPTITLE_SIZE)
     draw_tool_calls_per_file_panel(a1, tool_calls_per_file)
     a1.set_title("")
-    caption = run_code_caption(7.2) + [
+    caption = run_code_caption(7.2) + wrap_notes(7.2, [
         "Executed tool calls (ok + error) divided by files settled (git-exact count, git_file_counts.py).",
         "↑ marks a bar clipped by the axis; its true value is printed above it.",
         DESIGN_NOTE,
         SCOPE_NOTE,
         SHADOW_NOTE,
-    ]
+    ])
     fig.tight_layout(rect=_caption_rect(len(caption)))
     save_fig(fig, "fig5_tool_calls_per_file.png", caption)
 
@@ -1354,10 +1527,29 @@ def _bump_fonts_for_combined(scale=1.15):
 
 
 def make_combined_figure(runs, coverage, files_settled, wall_times, tool_calls_per_file):
-    # Three rows at the same 3in/row the four-row layout used, plus the same
-    # absolute caption band (~2.2in) and top margin (~0.8in).
+    # Three rows at the same 3in/row the four-row layout used, plus a caption
+    # band sized to the caption and a top margin (~0.8in).
+    #
+    # The caption is built BEFORE the gridspec because the band is derived from
+    # its line count. It used to be a fixed bottom=0.181, which held only as
+    # long as the notes happened to wrap to the same number of lines; when
+    # DESIGN_NOTE grew, the extra lines ran straight up through panels (e) and
+    # (f). Deriving it means a longer note costs canvas, never legibility.
     fig = plt.figure(figsize=(11, 12))
-    gs = fig.add_gridspec(3, 2, hspace=0.62, wspace=0.32, top=0.931, bottom=0.181, left=0.09, right=0.98)
+
+    caption_size = CAPTION_SIZE * 1.35
+    caption = (run_code_caption(10.4, caption_size)
+               + wrap_notes(10.4, unpriced_caption(runs)
+                            + [RATE_CARD_NOTE, REASONING_NOTE, DESIGN_NOTE, SCOPE_NOTE,
+                               SHADOW_NOTE],
+                            fontsize=caption_size))
+    line_gap, first_line_y = 0.0135, 0.008
+    # The 0.035 is clearance for the bottom row's rotated run-code tick labels,
+    # which hang below their axes box and are not counted in `bottom`.
+    caption_bottom = first_line_y + len(caption) * line_gap + 0.035
+
+    gs = fig.add_gridspec(3, 2, hspace=0.62, wspace=0.32, top=0.931,
+                          bottom=caption_bottom, left=0.09, right=0.98)
 
     draw_cost_panel(fig.add_subplot(gs[0, 0]), runs, letter="(a)")
     draw_cache_panel(fig.add_subplot(gs[0, 1]), runs, letter="(b)")
@@ -1371,11 +1563,9 @@ def make_combined_figure(runs, coverage, files_settled, wall_times, tool_calls_p
         fontsize=SUPTITLE_SIZE + 2,
         y=0.985,
     )
-    caption_size = CAPTION_SIZE * 1.35
-    caption = (run_code_caption(10.4, caption_size) + unpriced_caption(runs)
-               + [RATE_CARD_NOTE, REASONING_NOTE, DESIGN_NOTE, SCOPE_NOTE, SHADOW_NOTE])
     for i, line in enumerate(reversed(caption)):
-        fig.text(0.5, 0.008 + i * 0.0135, line, ha="center", fontsize=caption_size, color=INK)
+        fig.text(0.5, first_line_y + i * line_gap, line, ha="center",
+                 fontsize=caption_size, color=INK)
 
     out = FIGURES_DIR / "fig_combined.png"
     fig.savefig(out, dpi=300, bbox_inches="tight")
@@ -1544,18 +1734,6 @@ def draw_module_timeline_panel(ax, timelines, letter=None):
               ncol=1, frameon=False, fontsize=LEGEND_SIZE * 0.92)
 
 
-def _wrap_caption_text(text, fig_width_in, fontsize=None):
-    """Manual line breaks for one long caption sentence — save_fig draws each
-    caption_lines entry as one unwrapped fig.text call, so a sentence this
-    long has to be pre-wrapped the same way run_code_caption wraps the
-    code->configuration mapping."""
-    import textwrap
-
-    fontsize = fontsize or CAPTION_SIZE
-    chars = max(40, int(fig_width_in * 72 / (0.52 * fontsize)))
-    return textwrap.wrap(text, chars)
-
-
 def make_decision_figure(translated_units, decision_models, module_timelines):
     """Top: module-entry timeline. Bottom: cross-model file agreement.
 
@@ -1574,12 +1752,12 @@ def make_decision_figure(translated_units, decision_models, module_timelines):
 
     caption = (
         run_code_caption(9.6)
-        + [
+        + wrap_notes(9.6, [
             "Top: module-entry timeline. Runs collapsed to the model that CHOSE the files: the run's own "
             "model for csloop and ccloop, the triage model for ccworkflow (its author/integrate agents "
             "do not select).",
-        ]
-        + _wrap_caption_text(
+        ])
+        + _wrap_to_figure(
             "Marker = first tool call in the run's own transcript that names a file inside that module "
             "(Bash command text for ccworkflow and most of ccloop, or a read/write/edit path argument "
             "for csloop and for ccloop's sonnet-5 run). Filled vs. "
@@ -1587,12 +1765,12 @@ def make_decision_figure(translated_units, decision_models, module_timelines):
             "shared fork point, or the run entered while at least one of them still had an untranslated "
             "callee. n/a: the run settled no files in any module, or its transcript could not be parsed "
             "for a start time.", 9.6)
-        + [
+        + wrap_notes(9.6, [
             "Bottom: how many distinct models independently settled the same file. Counts are over "
             "distinct files, so a model with four runs cannot out-vote one with a single run by "
             "repeating itself.",
             SCOPE_NOTE,
-        ]
+        ])
     )
 
     # Manual axis placement rather than tight_layout: the timeline panel's two
@@ -1656,6 +1834,7 @@ def write_per_file_exports(effort_by_run, effort_by_config, shared_units, runs,
     flat = per_file_effort_rows(effort_by_run)
     path = DATA_DIR / "per_file_effort.csv"
     fields = ["config", "config_label", "run", "day", "run_name", "harness", "method",
+              "duration_source", "phases_covered",
               "unit", "module", "settled", "model", "minutes", "usd", "tool_calls",
               "agents", "attributed_share"]
     with open(path, "w", newline="") as fh:
@@ -1767,19 +1946,21 @@ def write_per_file_exports(effort_by_run, effort_by_config, shared_units, runs,
     path = DATA_DIR / "per_file_effort_timed_runs.csv"
     with open(path, "w", newline="") as fh:
         writer = csv.writer(fh)
-        writer.writerow(["run", "config", "method", "settled_units",
+        writer.writerow(["run", "config", "harness", "method", "duration_source",
+                         "phases_covered", "settled_units",
                          "attributed_usd", "attributed_minutes", "run_usd",
-                         "review_usd", "review_minutes", "unattributed_fraction"])
+                         "unmeasured_usd", "unmeasured_minutes", "unattributed_fraction"])
         for key in KEYS:
             record = effort_by_run_timed.get(key)
             if record is None:
                 continue
             info = record["run"]
             writer.writerow([
-                RUN_CODES[key], CONFIG_OF_RUN[key], info["method"], info["settled_units"],
+                RUN_CODES[key], CONFIG_OF_RUN[key], key_harness(key), info["method"],
+                info["duration_source"], info["phases_covered"], info["settled_units"],
                 f"{info['attributed_usd']:.4f}", f"{info['attributed_minutes']:.4f}",
-                f"{info['run_usd']:.4f}", f"{info['review_usd']:.4f}",
-                f"{info['review_minutes']:.4f}",
+                f"{info['run_usd']:.4f}", f"{info['unmeasured_usd']:.4f}",
+                f"{info['unmeasured_minutes']:.4f}",
                 "" if info.get("unattributed_fraction") is None
                 else f"{info['unattributed_fraction']:.4f}",
             ])
@@ -1819,13 +2000,17 @@ def _loops_cell(k, loop_progress_by_run):
 
 def write_summary_tables(runs, coverage, files_settled, translated_units, wall_times, tool_calls_per_file,
                          decision_models, shadowed_units, module_timelines, loop_progress_by_run,
-                         effort_by_run, effort_by_config, shared_units, effort_by_run_timed=None):
+                         effort_by_run, effort_by_config, shared_units, effort_by_run_timed=None,
+                         reasoning_configs=None):
+    reasoning_configs = reasoning_configs or {}
     lines = ["# Summary tables (generated by analysis/generate_graphs.py — do not hand-edit)\n"]
     for note in unpriced_caption(runs):
         lines.append(f"{note}\n")
     lines.append(f"{RATE_CARD_NOTE}\n")
     lines.append(f"{REASONING_NOTE}\n")
     lines.append(f"{DESIGN_NOTE}\n")
+    lines.append(f"{policy_note()}\n")
+    lines.append(f"{BUDGET_NOTE}\n")
     lines.append(f"{SCOPE_NOTE}\n")
     lines.append(f"{SHADOW_NOTE}\n")
 
@@ -1840,14 +2025,20 @@ def write_summary_tables(runs, coverage, files_settled, translated_units, wall_t
         "model that chose which files the run translated; see \"Which files each model chose\" below). "
         "`Folder` is the run's archive, relative to the repository root.\n"
     )
-    lines.append("| Run | Group | Model | Folder |")
-    lines.append("|---|---|---|---|")
+    lines.append(
+        "`Reasoning` is the setting as each harness records it, not a normalization of the two: "
+        "csloop archives `reasoning_config` in its manifest, the Claude Code harnesses carry an "
+        "`effort` level on every assistant message. Adaptive and effort=high are different knobs, "
+        "and the difference between the arms is uncontrolled.\n"
+    )
+    lines.append("| Run | Group | Model | Reasoning | Folder |")
+    lines.append("|---|---|---|---|---|")
     for idx, (day, run_name, code, _label) in enumerate(RUNS):
         k = (day, run_name)
         model = decision_models.get(k)
         lines.append(
             f"| {code} | {_run_group_label(idx)} | {_display_model(model) if model else '—'} | "
-            f"`{_run_folder(day, run_name)}` |"
+            f"{reasoning_configs.get(k, '—')} | `{_run_folder(day, run_name)}` |"
         )
     lines.append("")
 
@@ -2182,60 +2373,94 @@ def write_summary_tables(runs, coverage, files_settled, translated_units, wall_t
     )
 
     if effort_by_run_timed is not None:
-        lines.append("## Per-file effort (timed): csloop with measured tool/model durations\n")
+        lines.append("## Per-file effort (timed): attribution weighted by measured duration\n")
         lines.append(
-            "A third, tighter attribution for the csloop runs above, built from `logs/toolusage.toml` "
-            "instead of the loop-phase totals: it has the real `duration_ms` of every individual tool call "
-            "and the real token usage behind every model response, so an iteration's cost is split across "
+            "A third attribution, available for **every** harness: an iteration's cost is split across "
             "whatever settled files its own tool calls name, weighted by how long each call actually took — "
-            "rather than splitting a whole phase's total by raw call count, which treats a `read` and a full "
-            "test-suite `bash` call as equally expensive. See `per_file_effort.py`'s docstring for the exact "
-            "method.\n"
+            "rather than by raw call count, which treats a `read` and a full test-suite `bash` call as "
+            "equally expensive. See `per_file_effort.py`'s docstring for the exact method.\n"
         )
         lines.append(
-            "It is still not *exact*: `logs/toolusage.toml` records the **author phase only** (review-phase "
-            "tool calls never appear in it, confirmed against every run below), and a model's \"thinking\" "
-            "time between tool calls — the majority of a phase's wall clock — is still not tied to one file; "
-            "it is split across whichever files that same iteration's tool calls name. Review, plus any "
-            "iteration whose tool calls name no settled file, are folded into one unattributed pool and "
-            "spread across files in proportion to each file's *measured* share — the same policy "
-            "*apportioned* already uses, just with a better weight. `Unattributed` below is how much of the "
-            "run's USD was spread this way rather than measured.\n"
+            "**The durations do not come from the same place, and the two kinds are not interchangeable.** "
+            "`Source / phases` on each row says which:\n"
         )
         lines.append(
-            "**The `Total` columns below are a cross-check, not a new number**: *apportioned* and *timed* "
-            "both reconcile to the same run USD and minutes, so they redistribute the same total across "
-            "files differently rather than disagreeing on it. Per-file rows differ between "
-            "`data/per_file_effort.csv` (apportioned) and `data/per_file_effort_timed.csv` (timed).\n"
+            "- *measured / author* (csloop): real `duration_ms` per tool call and real per-iteration tokens "
+            "from `logs/toolusage.toml`. That file records the **author phase only** — review-phase tool "
+            "calls never appear in it — so review is excluded from the measurement and folded into the "
+            "unattributed pool.\n"
         )
         lines.append(
-            "| Run | Config | Apportioned total | Timed total | Timed: review USD | Timed: review min | "
-            "Timed: unattributed |"
+            "- *derived / all* (ccworkflow, ccloop): Claude Code writes no durations, but it timestamps "
+            "every transcript record, so tool time is `ts(tool_result) − ts(assistant)` and model time is "
+            "the gap before each turn. Walking the records in order partitions the whole span with no gap "
+            "or overlap. It is a **proxy**: each interval brackets harness queueing as well as execution, "
+            "which inflates short calls most (the corpus median call is 57 ms). It does cover **every** "
+            "phase.\n"
         )
-        lines.append("|---|---|---:|---:|---:|---:|---:|")
+        lines.append(
+            "So a *derived / all* total is more complete than a *measured / author* one under the same "
+            "heading. Do not difference them and read the gap as method noise.\n"
+        )
+        lines.append(
+            "For the ccworkflow runs this is not a refinement of *exact* but a different measurement: "
+            "*exact* covers the author phase only (see `Author phase / run` above), and *timed* covers the "
+            "whole run. Their per-file minutes also overlap, because author agents inside a group run in "
+            "parallel.\n"
+        )
+        lines.append(
+            "It is still not *exact* for anyone: a model's \"thinking\" time between tool calls — the "
+            "majority of a phase's wall clock — is not tied to one file either way; it is split across "
+            "whichever files that same iteration's tool calls name. Any iteration whose tool calls name no "
+            "settled file (plus, for csloop, the whole review phase) is folded into one unattributed pool "
+            "and spread across files in proportion to each file's measured share. `Unattributed` below is "
+            "how much of the run's USD was spread that way rather than measured — and weighting by duration "
+            "rather than call count *raises* it for a run whose long calls are builds and test suites, "
+            "which name no unit.\n"
+        )
+        lines.append(
+            "Per-file rows differ between `data/per_file_effort.csv` (exact / apportioned) and "
+            "`data/per_file_effort_timed.csv` (timed); both carry `method`, and the timed export also "
+            "carries `duration_source` and `phases_covered` on every row.\n"
+        )
+        lines.append(
+            "| Run | Config | Source / phases | Primary method | Primary USD | Timed USD | "
+            "Unmeasured USD | Timed: unattributed |"
+        )
+        lines.append("|---|---|---|---|---:|---:|---:|---:|")
         for k in KEYS:
             timed = effort_by_run_timed.get(k)
             if timed is None:
                 continue
-            appt = effort_by_run.get(k)
-            appt_total = f"${appt['run']['attributed_usd']:.2f}" if appt is not None else "—"
+            primary = effort_by_run.get(k)
+            primary_method = primary["run"]["method"] if primary is not None else "—"
+            primary_total = f"${primary['run']['attributed_usd']:.2f}" if primary is not None else "—"
             info = timed["run"]
             unattr = info.get("unattributed_fraction")
             lines.append(
-                f"| {RUN_CODES[k]} | {CONFIG_OF_RUN[k]} | {appt_total} | ${info['attributed_usd']:.2f} | "
-                f"${info['review_usd']:.2f} | {info['review_minutes']:.1f} | "
+                f"| {RUN_CODES[k]} | {CONFIG_OF_RUN[k]} | {info['duration_source']} / "
+                f"{info['phases_covered']} | {primary_method} | {primary_total} | "
+                f"${info['attributed_usd']:.2f} | ${info['unmeasured_usd']:.2f} | "
                 f"{'—' if unattr is None else f'{100*unattr:.0f}%'} |"
             )
         lines.append("")
         lines.append(
-            "A run missing from this table has no row because its `logs/toolusage.toml` is either absent "
-            "or fails the structural sanity check against `loop/metadata` (see `per_file_effort.py`); its "
-            "`apportioned` row above is unaffected.\n"
+            "`Primary USD` is the run's other method — *exact* for ccworkflow (author phase only), "
+            "*apportioned* for csloop and ccloop (whole run). Where the primary method is *apportioned*, "
+            "it and *timed* reconcile to the same run total by construction and differ only in how that "
+            "total is split across files; where it is *exact*, the two cover different phases and the "
+            "totals are not meant to match. `Unmeasured USD` is the cost of phases the timed method could "
+            "not see at all — csloop's review phase, and nothing for a transcript harness.\n"
+        )
+        lines.append(
+            "A run missing from this table has no settled units or no parseable telemetry; its primary-method "
+            "row above is unaffected.\n"
         )
         lines.append(
             "Machine-readable versions: `analysis/data/per_file_effort_timed.csv` (one row per run and "
-            "unit) and `analysis/data/per_file_effort_timed_runs.csv` (per-run measured/review/unattributed "
-            "split).\n"
+            "unit, each carrying `duration_source` and `phases_covered`) and "
+            "`analysis/data/per_file_effort_timed_runs.csv` (per-run source, coverage, unmeasured and "
+            "unattributed split).\n"
         )
 
     lines.append("## Per-file effort by configuration (shared file set)\n")
@@ -3458,6 +3683,9 @@ def main():
             print(f"{k}: {len(shadowed)} translated but not retired: {', '.join(shadowed)}")
 
     decision_models = decision_model_per_run(transcript_rows, cs_rows)
+    reasoning_configs = reasoning_config_per_run(transcript_rows)
+    for k in KEYS:
+        print(f"{k}: reasoning {reasoning_configs[k]}")
     for k in KEYS:
         print(f"{k}: decided by {decision_models[k]}")
 
@@ -3508,7 +3736,8 @@ def main():
     make_decision_figure(translated_units, decision_models, module_timelines)
     write_summary_tables(runs, coverage, files_settled, translated_units, wall_times, tool_calls_per_file,
                          decision_models, shadowed_units, module_timelines, loop_progress_by_run,
-                         effort_by_run, effort_by_config, shared_units, effort_by_run_timed)
+                         effort_by_run, effort_by_config, shared_units, effort_by_run_timed,
+                         reasoning_configs)
     write_per_file_exports(effort_by_run, effort_by_config, shared_units, runs, effort_by_run_timed)
 
     # LaTeX/TikZ artifacts consumed directly by the paper.

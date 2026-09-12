@@ -7,8 +7,9 @@ Layout: experiments/<day>/<ccloop run>/workflow-wf_*/
 
 Same on-disk shape as ccworkflow (see parse_ccworkflow), and the token
 accounting is identical — usage lives on every `assistant` line's
-`message.usage`. Two things differ, and they are why this is its own module
-rather than a flag on that one:
+`message.usage`, read through the shared cc_usage reader so the TTL split,
+thinking tokens and service tier reach the row. Two things differ, and they are
+why this is its own module rather than a flag on that one:
 
 PHASE IS STRUCTURED HERE, NOT GUESSED. ccworkflow's phase has to be recovered
 by pattern-matching the first user message, because nothing on disk records it.
@@ -41,6 +42,8 @@ self-terminates gets, and `stopped_early` says it was not the cap that ended it.
 import json
 import re
 from pathlib import Path
+
+from cc_usage import ACCUMULATED_FIELDS, cc_usage
 
 # "Loop 3 of 5" — the loop workflow states the budget in every author prompt.
 _LOOP_BUDGET_RE = re.compile(r"\bLoop\s+(\d+)\s+of\s+(\d+)\b")
@@ -132,6 +135,8 @@ def parse_agent_file(agent_path, journal_events, labels):
     tool_error = 0
     model = None
     effort = None
+    service_tier = None
+    ttl_attributed = True
     loop_cap = None
 
     with open(agent_path) as fh:
@@ -160,20 +165,16 @@ def parse_agent_file(agent_path, journal_events, labels):
                 message = record.get("message", {})
                 model = message.get("model", model)
                 effort = record.get("effort", effort)
-                usage = message.get("usage", {})
-                rows.append(
-                    {
-                        "input_tokens": usage.get("input_tokens", 0),
-                        "output_tokens": usage.get("output_tokens", 0),
-                        "cache_write_tokens": usage.get("cache_creation_input_tokens", 0),
-                        "cache_read_tokens": usage.get("cache_read_input_tokens", 0),
-                    }
-                )
+                usage = cc_usage(message)
+                service_tier = usage["service_tier"] or service_tier
+                if usage["cache_write_tokens"] and not usage["cache_write_ttl_attributed"]:
+                    ttl_attributed = False
+                rows.append(usage)
 
     if not rows:
         return None
 
-    return {
+    agg = {
         "agent_id": agent_id,
         "phase": phase,
         "label": label,
@@ -181,15 +182,15 @@ def parse_agent_file(agent_path, journal_events, labels):
         "loop_cap": loop_cap,
         "model": model,
         "effort": effort,
+        "service_tier": service_tier,
         "status": _agent_status(agent_id, journal_events),
         "n_messages": len(rows),
-        "input_tokens": sum(r["input_tokens"] for r in rows),
-        "output_tokens": sum(r["output_tokens"] for r in rows),
-        "cache_write_tokens": sum(r["cache_write_tokens"] for r in rows),
-        "cache_read_tokens": sum(r["cache_read_tokens"] for r in rows),
+        "cache_write_ttl_attributed": ttl_attributed,
         "tool_ok": tool_ok,
         "tool_error": tool_error,
     }
+    agg.update({f: sum(r[f] for r in rows) for f in ACCUMULATED_FIELDS})
+    return agg
 
 
 def parse_workflow_dir(workflow_dir):

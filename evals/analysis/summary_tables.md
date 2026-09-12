@@ -2,9 +2,13 @@
 
 USD figures mix two rate cards: Anthropic's for Opus 5 / Sonnet 5, OpenAI's gpt-5.6-sol standard short-context rates for the gpt-5.6 runs (see pricing.py for the tier assumptions). Reference costs for comparison, not charges incurred.
 
-All Anthropic runs think adaptively (on by default); no run here is a reasoning ON/OFF control. The gpt-5.6 gateway returns no reasoning text at all.
+Reasoning is on everywhere it can be, but not via one knob: the Anthropic csloop runs use adaptive thinking, while every Claude Code run and the gpt-5.6 runs use effort=high (per-run settings are in the manifest table). No run is another run's reasoning ON/OFF control.
 
-Three harnesses, two variables: ccloop vs. csloop is one design pattern (a bounded author-review loop) on two baseline agents; ccloop vs. ccworkflow is one baseline agent (Claude Code) under two design patterns (loop vs. multi-agent workflow).
+Three harnesses, two variables: ccloop vs. csloop is one design pattern (a bounded author-review loop) over one Spec/Plan, varying execution policy -- csloop enforces a bounded shell and per-phase caps in code, ccloop states the same rules as prose to an unrestricted agent; ccloop vs. ccworkflow is one baseline agent (Claude Code) under two design patterns (loop vs. multi-agent workflow).
+
+Execution policy is the variable in ccloop vs. csloop, and it is large: replaying each ccloop run's Bash calls against CodeScribe's own bounded shell rejects 91%-95% of them (shell_policy.py; mostly pipes, redirects and chaining, which that shell bans outright, plus `cd`, which it has no need for). CodeScribe also enforces per-phase iteration and tool-call caps, repeated-call blocking and a protected task file in code; the loop workflow states all of it as prose. Read a ccloop-vs-csloop gap as the cost of that policy, not as a property of the baseline agent.
+
+Budget caveat on ccloop: the loop.js revision that produced R12/R13 stated its per-loop budget in Claude Code turns (one tool call each) against a number calibrated for CodeScribe turns (2.41 tool calls each, measured), so ccloop authors ran to roughly a third of csloop's per-loop work -- R12 averaged 34 tool calls per loop against csloop opus-5's ~71. It was advisory, and only one model honoured it: R13 spent 139 in its one loop. Treat ccloop's files-settled and per-file figures as measured under a tighter and unevenly applied budget, which is a calibration error rather than part of the policy contrast above.
 
 Scope: the thirteen 08-27/08-28-2026 and 09-11-2026 runs. All fork from one submodule commit and one 445-file roadmap, so per-file cost divides comparable work; earlier days did not and are out of scope.
 
@@ -14,21 +18,23 @@ Files settled counts a unit whose .cpp landed but whose Fortran original was nev
 
 Runs grouped sequentially by harness and decision model — all ccworkflow runs, then all csloop opus-5 runs, then all csloop sonnet-5 runs, then all csloop gpt-5.6 runs, then both ccloop runs — so R1..R13 read as one block per group rather than by archival day. ccloop is appended last rather than placed beside the other Claude Code harness so that R1..R11 keep the codes they already carry in the paper and in the archived snapshot; read the order as the order groups entered the corpus. `Model` is the decision model (the model that chose which files the run translated; see "Which files each model chose" below). `Folder` is the run's archive, relative to the repository root.
 
-| Run | Group | Model | Folder |
-|---|---|---|---|
-| R1 | ccworkflow | sonnet-5 | `evals/experiments/08-27-2026/ccworkflow-sonnet-5-opus-5-integrate-run3` |
-| R2 | ccworkflow | opus-5 | `evals/experiments/08-28-2026/ccworkflow-opus-5` |
-| R3 | ccworkflow | sonnet-5 | `evals/experiments/08-28-2026/ccworkflow-sonnet-5-opus-5-integrate-run4` |
-| R4 | csloop opus-5 | opus-5 | `evals/experiments/08-27-2026/codescribe-opus-5` |
-| R5 | csloop opus-5 | opus-5 | `evals/experiments/08-27-2026/codescribe-opus-5-run2` |
-| R6 | csloop opus-5 | opus-5 | `evals/experiments/08-28-2026/codescribe-opus-5` |
-| R7 | csloop sonnet-5 | sonnet-5 | `evals/experiments/08-27-2026/codescribe-sonnet-5-run2` |
-| R8 | csloop sonnet-5 | sonnet-5 | `evals/experiments/08-28-2026/codescribe-sonnet-5-run3` |
-| R9 | csloop gpt-5.6 | gpt-5.6 | `evals/experiments/08-27-2026/codescribe-oaic-gpt56sol-run4` |
-| R10 | csloop gpt-5.6 | gpt-5.6 | `evals/experiments/08-27-2026/codescribe-oaic-gpt56sol-run5` |
-| R11 | csloop gpt-5.6 | gpt-5.6 | `evals/experiments/08-28-2026/codescribe-oaic-gpt56sol-run6` |
-| R12 | ccloop | opus-5 | `evals/experiments/09-11-2026/ccworkflow-loop-opus-5` |
-| R13 | ccloop | sonnet-5 | `evals/experiments/09-11-2026/ccworkflow-loop-sonnet-5` |
+`Reasoning` is the setting as each harness records it, not a normalization of the two: csloop archives `reasoning_config` in its manifest, the Claude Code harnesses carry an `effort` level on every assistant message. Adaptive and effort=high are different knobs, and the difference between the arms is uncontrolled.
+
+| Run | Group | Model | Reasoning | Folder |
+|---|---|---|---|---|
+| R1 | ccworkflow | sonnet-5 | effort=high | `evals/experiments/08-27-2026/ccworkflow-sonnet-5-opus-5-integrate-run3` |
+| R2 | ccworkflow | opus-5 | effort=high | `evals/experiments/08-28-2026/ccworkflow-opus-5` |
+| R3 | ccworkflow | sonnet-5 | effort=high | `evals/experiments/08-28-2026/ccworkflow-sonnet-5-opus-5-integrate-run4` |
+| R4 | csloop opus-5 | opus-5 | thinking display:summarized,type:adaptive | `evals/experiments/08-27-2026/codescribe-opus-5` |
+| R5 | csloop opus-5 | opus-5 | thinking display:summarized,type:adaptive | `evals/experiments/08-27-2026/codescribe-opus-5-run2` |
+| R6 | csloop opus-5 | opus-5 | thinking display:summarized,type:adaptive | `evals/experiments/08-28-2026/codescribe-opus-5` |
+| R7 | csloop sonnet-5 | sonnet-5 | thinking display:summarized,type:adaptive | `evals/experiments/08-27-2026/codescribe-sonnet-5-run2` |
+| R8 | csloop sonnet-5 | sonnet-5 | thinking display:summarized,type:adaptive | `evals/experiments/08-28-2026/codescribe-sonnet-5-run3` |
+| R9 | csloop gpt-5.6 | gpt-5.6 | reasoning_effort=high | `evals/experiments/08-27-2026/codescribe-oaic-gpt56sol-run4` |
+| R10 | csloop gpt-5.6 | gpt-5.6 | reasoning_effort=high | `evals/experiments/08-27-2026/codescribe-oaic-gpt56sol-run5` |
+| R11 | csloop gpt-5.6 | gpt-5.6 | reasoning_effort=high | `evals/experiments/08-28-2026/codescribe-oaic-gpt56sol-run6` |
+| R12 | ccloop | opus-5 | effort=high | `evals/experiments/09-11-2026/ccworkflow-loop-opus-5` |
+| R13 | ccloop | sonnet-5 | effort=high | `evals/experiments/09-11-2026/ccworkflow-loop-sonnet-5` |
 
 ## Run comparison: cost, cache, wall time, tool calls & files settled
 
@@ -286,28 +292,45 @@ The tables above divide a run total by files settled. The tables below attribute
 
 Unsettled work is carried but not averaged: R1 spent two full author agents on `Mods/mod_qcdloop_c` and `Mods/types_mod` and landed neither (a `.hpp` with no `.cpp` behind it is not a translation — see `git_file_counts.py`). Those rows are in `data/per_file_effort.csv` with `settled = False` and are excluded from every mean below.
 
-## Per-file effort (timed): csloop with measured tool/model durations
+## Per-file effort (timed): attribution weighted by measured duration
 
-A third, tighter attribution for the csloop runs above, built from `logs/toolusage.toml` instead of the loop-phase totals: it has the real `duration_ms` of every individual tool call and the real token usage behind every model response, so an iteration's cost is split across whatever settled files its own tool calls name, weighted by how long each call actually took — rather than splitting a whole phase's total by raw call count, which treats a `read` and a full test-suite `bash` call as equally expensive. See `per_file_effort.py`'s docstring for the exact method.
+A third attribution, available for **every** harness: an iteration's cost is split across whatever settled files its own tool calls name, weighted by how long each call actually took — rather than by raw call count, which treats a `read` and a full test-suite `bash` call as equally expensive. See `per_file_effort.py`'s docstring for the exact method.
 
-It is still not *exact*: `logs/toolusage.toml` records the **author phase only** (review-phase tool calls never appear in it, confirmed against every run below), and a model's "thinking" time between tool calls — the majority of a phase's wall clock — is still not tied to one file; it is split across whichever files that same iteration's tool calls name. Review, plus any iteration whose tool calls name no settled file, are folded into one unattributed pool and spread across files in proportion to each file's *measured* share — the same policy *apportioned* already uses, just with a better weight. `Unattributed` below is how much of the run's USD was spread this way rather than measured.
+**The durations do not come from the same place, and the two kinds are not interchangeable.** `Source / phases` on each row says which:
 
-**The `Total` columns below are a cross-check, not a new number**: *apportioned* and *timed* both reconcile to the same run USD and minutes, so they redistribute the same total across files differently rather than disagreeing on it. Per-file rows differ between `data/per_file_effort.csv` (apportioned) and `data/per_file_effort_timed.csv` (timed).
+- *measured / author* (csloop): real `duration_ms` per tool call and real per-iteration tokens from `logs/toolusage.toml`. That file records the **author phase only** — review-phase tool calls never appear in it — so review is excluded from the measurement and folded into the unattributed pool.
 
-| Run | Config | Apportioned total | Timed total | Timed: review USD | Timed: review min | Timed: unattributed |
-|---|---|---:|---:|---:|---:|---:|
-| R4 | C3 | $15.69 | $15.69 | $1.78 | 5.1 | 64% |
-| R5 | C3 | $13.32 | $13.32 | $1.25 | 3.4 | 61% |
-| R6 | C3 | $12.87 | $12.87 | $1.03 | 2.6 | 66% |
-| R7 | C4 | $5.83 | $5.83 | $0.78 | 5.1 | 82% |
-| R8 | C4 | $6.27 | $6.27 | $1.05 | 7.0 | 80% |
-| R9 | C5 | $6.38 | $6.38 | $0.94 | 1.6 | 54% |
-| R10 | C5 | $9.59 | $9.59 | $0.69 | 1.1 | 54% |
-| R11 | C5 | $10.06 | $10.06 | $0.90 | 1.9 | 54% |
+- *derived / all* (ccworkflow, ccloop): Claude Code writes no durations, but it timestamps every transcript record, so tool time is `ts(tool_result) − ts(assistant)` and model time is the gap before each turn. Walking the records in order partitions the whole span with no gap or overlap. It is a **proxy**: each interval brackets harness queueing as well as execution, which inflates short calls most (the corpus median call is 57 ms). It does cover **every** phase.
 
-A run missing from this table has no row because its `logs/toolusage.toml` is either absent or fails the structural sanity check against `loop/metadata` (see `per_file_effort.py`); its `apportioned` row above is unaffected.
+So a *derived / all* total is more complete than a *measured / author* one under the same heading. Do not difference them and read the gap as method noise.
 
-Machine-readable versions: `analysis/data/per_file_effort_timed.csv` (one row per run and unit) and `analysis/data/per_file_effort_timed_runs.csv` (per-run measured/review/unattributed split).
+For the ccworkflow runs this is not a refinement of *exact* but a different measurement: *exact* covers the author phase only (see `Author phase / run` above), and *timed* covers the whole run. Their per-file minutes also overlap, because author agents inside a group run in parallel.
+
+It is still not *exact* for anyone: a model's "thinking" time between tool calls — the majority of a phase's wall clock — is not tied to one file either way; it is split across whichever files that same iteration's tool calls name. Any iteration whose tool calls name no settled file (plus, for csloop, the whole review phase) is folded into one unattributed pool and spread across files in proportion to each file's measured share. `Unattributed` below is how much of the run's USD was spread that way rather than measured — and weighting by duration rather than call count *raises* it for a run whose long calls are builds and test suites, which name no unit.
+
+Per-file rows differ between `data/per_file_effort.csv` (exact / apportioned) and `data/per_file_effort_timed.csv` (timed); both carry `method`, and the timed export also carries `duration_source` and `phases_covered` on every row.
+
+| Run | Config | Source / phases | Primary method | Primary USD | Timed USD | Unmeasured USD | Timed: unattributed |
+|---|---|---|---|---:|---:|---:|---:|
+| R1 | C1 | derived / all | exact | $35.71 | $78.38 | $0.00 | 89% |
+| R2 | C2 | derived / all | exact | $72.68 | $104.43 | $0.00 | 85% |
+| R3 | C1 | derived / all | exact | $46.15 | $73.67 | $0.00 | 87% |
+| R4 | C3 | measured / author | apportioned | $15.69 | $15.69 | $1.78 | 64% |
+| R5 | C3 | measured / author | apportioned | $13.32 | $13.32 | $1.25 | 61% |
+| R6 | C3 | measured / author | apportioned | $12.87 | $12.87 | $1.03 | 66% |
+| R7 | C4 | measured / author | apportioned | $5.83 | $5.83 | $0.78 | 82% |
+| R8 | C4 | measured / author | apportioned | $6.27 | $6.27 | $1.05 | 80% |
+| R9 | C5 | measured / author | apportioned | $6.38 | $6.38 | $0.94 | 54% |
+| R10 | C5 | measured / author | apportioned | $9.59 | $9.59 | $0.69 | 54% |
+| R11 | C5 | measured / author | apportioned | $10.06 | $10.06 | $0.90 | 54% |
+| R12 | C6 | derived / all | apportioned | $51.72 | $51.72 | $0.00 | 98% |
+| R13 | C7 | derived / all | apportioned | $13.17 | $13.17 | $0.00 | 74% |
+
+`Primary USD` is the run's other method — *exact* for ccworkflow (author phase only), *apportioned* for csloop and ccloop (whole run). Where the primary method is *apportioned*, it and *timed* reconcile to the same run total by construction and differ only in how that total is split across files; where it is *exact*, the two cover different phases and the totals are not meant to match. `Unmeasured USD` is the cost of phases the timed method could not see at all — csloop's review phase, and nothing for a transcript harness.
+
+A run missing from this table has no settled units or no parseable telemetry; its primary-method row above is unaffected.
+
+Machine-readable versions: `analysis/data/per_file_effort_timed.csv` (one row per run and unit, each carrying `duration_source` and `phases_covered`) and `analysis/data/per_file_effort_timed_runs.csv` (per-run source, coverage, unmeasured and unattributed split).
 
 ## Per-file effort by configuration (shared file set)
 
