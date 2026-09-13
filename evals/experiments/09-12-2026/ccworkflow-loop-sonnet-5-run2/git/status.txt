@@ -1,0 +1,6 @@
+## main...origin/main [ahead 1]
+M  dev/tools/coverage/coverage_check.py
+AM dev/transformations/mcfm-translate/agent_log.md
+ m software/mcfm
+?? dev/tmp/
+?? evals/experiments/09-12-2026/
