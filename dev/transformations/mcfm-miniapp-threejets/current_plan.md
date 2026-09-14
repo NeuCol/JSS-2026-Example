@@ -171,8 +171,10 @@ reports in `dev/tmp/assets/roadmap_metrics.tsv`.
    has already been translated. Work upward from there; the list refills as files settle.
 4. A miniapp file whose remaining untranslated callees are all *outside* the miniapp is ready
    now. Per the Spec's "never invent a called symbol", declare the still-Fortran callee in
-   `extern "C"` and call it with pointer arguments. Do not rewrite it. In this miniapp that
-   applies to `spinoru` (in `src/Need`) and `fillperm`.
+   `extern "C"` and call it with pointer arguments. Do not rewrite it. In this miniapp the
+   only such callee is `spinoru` (in `src/Need`, already translated). `fillperm` is not
+   external: it is a subroutine defined at the bottom of `A5NLOqbqggg.f` and is translated
+   with that file.
 5. Group files for review:
    - about 5 files per group
    - headings must start with `Group`
