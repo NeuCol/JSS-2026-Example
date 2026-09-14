@@ -1,11 +1,11 @@
 #!/usr/bin/env python3.10
 """Generate the paper figures + summary tables for the 08-27/08-28-2026 and
-09-11-2026 evaluation of the mcfm-translate transformation.
+09-12-2026 evaluation of the mcfm-translate transformation.
 
 Scope is three days on purpose, and it is what makes the cost comparison mean
-anything. All thirteen branches in RUNS below fork from the same submodule
+anything. All twelve branches in RUNS below fork from the same submodule
 commit (git merge-base against git_file_counts.BASE_REF is that commit exactly
-for every one of them, the 09-11 pair included), and their fork-point roadmaps
+for every one of them, the 09-12 run included), and their fork-point roadmaps
 reconstruct to the same 445-file candidate set, agreeing to within three rows
 run-to-run. So cost, wall time and tokens divide by a files-settled number
 drawn from one shared pool of work, which is the premise a cost-per-file number
@@ -13,6 +13,24 @@ needs and does not survive being computed across days that forked from
 different roadmap states. The earlier corpus (07-24/07-25-2026 and 08-11-2026
 through 08-26-2026) is still on disk under experiments/ and still parses where
 its layout allows, but it is out of scope here for exactly that reason.
+
+WHICH ccloop RUN IS IN SCOPE, AND WHY IT REPLACED TWO. The 2026-09-11 revision
+of this file carried the first two ccloop runs,
+09-11-2026/ccworkflow-loop-opus-5 and .../ccworkflow-loop-sonnet-5. Both are
+superseded here by the single
+09-12-2026 run, on the choice recorded in RUNS: the 09-12 run is the only
+ccloop run that took the loop pattern to its designed stopping point -- five
+loops against a five-loop cap, three groups completed, every one of its 15
+units retired, and the last three loops spent holding at a blocked approval
+gate rather than translating. The 09-11 opus-5 run ran the same five loops but
+settled 9 units, all in W2jet, so it never entered a second module; the 09-11
+sonnet-5 run exited after a single loop on the reviewer's no-pending-items
+condition and is one loop of work, not a run. Both remain on disk under
+experiments/09-11-2026/ and both still parse, exactly like the earlier
+out-of-scope corpus; nothing was deleted. The cost of this choice
+is sample size, and it is stated everywhere it bites: ccloop is now ONE run, so
+every ccloop number in every figure and table is a single observation, and no
+ccloop claim below is a claim about a distribution.
 
 THREE HARNESSES, TWO VARIABLES. The corpus covers two design patterns across
 two baseline agents, and which pair you read tells you which variable is held
@@ -46,24 +64,30 @@ fixed:
                          approval-gated workflow.
 Neither comparison existed before 09-11-2026: every ccworkflow/csloop pair in
 the corpus differs in both dimensions at once, so nothing in it could separate
-"a better agent" from "a better design pattern". The two ccloop runs are the
-cell that closes that.
+"a better agent" from "a better design pattern". The ccloop cell is what closes
+that.
 
-Read both comparisons with their sample sizes in view. ccloop is two runs, one
-per model, with no replicate of either; ccworkflow is three and csloop eight.
-Anything below labelled C6 or C7 is a single observation.
+Read both comparisons with their sample sizes in view. ccloop is ONE run;
+ccworkflow is three and csloop eight. Every ccloop bar, row and C6 column below
+is a single observation, and the opus-5 comparisons it supports (C6 against C3
+for execution policy, R12 against R2 for design pattern) are one-against-three
+and one-against-one. Direction is worth reading; magnitude is not worth more
+than a sentence of hedging.
 
-The two ccloop runs also differ from each other in how they stopped, which is a
-property of the loop pattern rather than of either model. R12 (opus-5) ran its
-full budget of five loops, spending the last two holding at a blocked approval
-gate. R13 (sonnet-5) finished one loop and stopped, because its reviewer
-returned no pending items and no blocker, which is the loop's own early-exit
-condition -- so R13's totals are one loop of work, not a truncated five.
+R12 ran its full budget of five author->review loops and did not stop early.
+The shape of that budget matters for reading its totals: loops 1 and 2 opened
+and completed all three of its groups, and loops 3-5 found the approval gate
+blocked (three completed groups against a limit of three), so they re-verified
+the settled tree, audited it, and translated nothing. Three of the run's five
+loops and 81 of its 238 tool calls (34%) are that hold, and $14.72 of its
+$53.16. It is the loop pattern meeting the same human-approval gate ccworkflow
+meets, not idle time -- but it does mean R12's cost-per-file is not its cost
+divided by five loops of translation.
 
 Runs covered: three ccworkflow arms (opus-5 triage/dispatch x2, sonnet-5
 triage/dispatch with opus-5 integrate x2 -- one of each is 08-27, one is
-08-28), eight csloop arms (opus-5 x3, sonnet-5 x2, gpt-5.6 x3), and two ccloop
-arms (opus-5, sonnet-5, both 09-11).
+08-28), eight csloop arms (opus-5 x3, sonnet-5 x2, gpt-5.6 x3), and one ccloop
+arm (opus-5, 09-12).
 08-27-2026/ccworkflow-opus-5 ("R1" in that older single-day corpus's own
 numbering -- NOT the current R1 below, which is a different run) was dropped
 from this set: at 2 files settled it was a clear outlier for its own config,
@@ -125,6 +149,10 @@ while csloop and ccloop effort is apportioned to files, the two are not the
 same measurement, and every exported row carries a `method` column saying which
 it is. ccloop and csloop share the apportioned method exactly, which is what
 makes their per-file columns directly comparable to each other.
+
+The per-run CSV exports cover exactly the runs in RUNS, so dropping the 09-11
+ccloop pair from scope drops their rows from data/ as well; they come back only
+by being re-added to RUNS and regenerating.
 
 For the csloop runs only, per_file_effort.py also has a third, tighter method,
 "timed" -- it reads logs/toolusage.toml for real per-tool-call durations and
@@ -265,10 +293,10 @@ plt.rcParams.update(
 # summary_tables.md, so a reader can go from a bar/row straight back to the
 # archive on disk.
 #
-# Codes are sequential (R1..R13) and grouped by harness/decision-model rather
+# Codes are sequential (R1..R12) and grouped by harness/decision-model rather
 # than by wall-clock start or archival day: all three ccworkflow runs first,
 # then the three csloop opus-5 runs, then the two csloop sonnet-5 runs, then
-# the three csloop gpt-5.6 runs, then the two ccloop runs (see RUN_GROUPS) — so
+# the three csloop gpt-5.6 runs, then the one ccloop run (see RUN_GROUPS) — so
 # a same-config replicate always sits next to the run(s) it replicates,
 # regardless of which day it was archived on. Renumbered to this
 # grouped-sequential scheme on 2026-08-31; earlier revisions of this file used a
@@ -283,6 +311,29 @@ plt.rcParams.update(
 # at the tail is the only addition that leaves existing codes meaning what they
 # already meant. Read the ordering as "groups, in the order they entered the
 # corpus", not as a claim that ccloop belongs furthest from ccworkflow.
+#
+# R12 IS NOT THE R12 OF THE 2026-09-11 REVISION. That revision carried two
+# ccloop runs, 09-11-2026/ccworkflow-loop-opus-5 (R12) and
+# .../ccworkflow-loop-sonnet-5 (R13); both were superseded on 2026-09-13 by the
+# single 09-12-2026 run below, which is the same loop design driven by the same
+# model as the old R12 but settles more of the shared roadmap (15 files across
+# W2jet and BDK, against the old R12's 9 in W2jet alone). The old pair is
+# still on disk under experiments/09-11-2026/ and still parses; out of the figure
+# set, not deleted. R13 no longer exists as a code. Anything citing R12 or R13
+# from before 2026-09-13 is citing different runs.
+#
+# THE 09-12 RUN'S DIRECTORY NAME IS WRONG AND THE LABEL HERE DELIBERATELY
+# DISAGREES WITH IT. The archive is named `ccworkflow-loop-sonnet-5-run2` and
+# its archive_summary.json repeats that as `experiment_name`, but every Author
+# and Review agent in its transcripts reports `"model":"claude-opus-5"` (the
+# only sonnet-5 agent is the archival Metadata agent, which translates nothing
+# and decides nothing). The run is an opus-5 run mis-titled at archival time,
+# the way 08-11-2026/csloop-opus-5's archive_summary names a branch that does
+# not exist (see git_file_counts). The directory keeps its name, because that
+# name is also its archival git branch in software/mcfm; every label, config
+# and model attribution in this analysis follows the transcripts instead —
+# `decision_model_per_run` reads the model off the archive, so nothing but this
+# hand-written label ever depended on the folder.
 #
 # The ccworkflow labels name the TRIAGE model, because triage is what picks the
 # files (see DECIDING_PHASE below). R1 and R3 also run opus-5 as their
@@ -306,8 +357,7 @@ RUNS = [
     ("08-27-2026", "codescribe-oaic-gpt56sol-run4", "R9", "csloop gpt-5.6 (run4)"),
     ("08-27-2026", "codescribe-oaic-gpt56sol-run5", "R10", "csloop gpt-5.6 (run5)"),
     ("08-28-2026", "codescribe-oaic-gpt56sol-run6", "R11", "csloop gpt-5.6 (run6)"),
-    ("09-11-2026", "ccworkflow-loop-opus-5", "R12", "ccloop opus-5"),
-    ("09-11-2026", "ccworkflow-loop-sonnet-5", "R13", "ccloop sonnet-5"),
+    ("09-12-2026", "ccworkflow-loop-sonnet-5-run2", "R12", "ccloop opus-5"),
 ]
 
 # Group boundaries, in the same order as RUNS above — used to build the
@@ -318,7 +368,7 @@ RUN_GROUPS = [
     ("csloop opus-5", 3),
     ("csloop sonnet-5", 2),
     ("csloop gpt-5.6", 3),
-    ("ccloop", 2),
+    ("ccloop", 1),
 ]
 
 # Replicate sets. RUN_GROUPS above buckets by harness and author model, which
@@ -329,11 +379,10 @@ RUN_GROUPS = [
 # particular -- has to split them. CONFIGS is that finer partition: two runs
 # share a config only if the same models ran the same phases.
 #
-# C2, C6 and C7 each have a single member. C2's would-be replicate,
+# C2 and C6 each have a single member. C2's would-be replicate,
 # 08-27-2026/ccworkflow-opus-5, is the run the module docstring explains was
-# dropped from the corpus; C6 and C7 are the first runs of their configuration
-# and have no replicate yet. "core" or "mean" for any of the three is one
-# observation and must be read as such.
+# dropped from the corpus; C6 is the only ccloop run in scope. "core" or "mean"
+# for either is one observation and must be read as such.
 CONFIGS = [
     ("C1", "ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate)", ["R1", "R3"]),
     ("C2", "ccworkflow (opus-5 all phases)", ["R2"]),
@@ -341,7 +390,6 @@ CONFIGS = [
     ("C4", "csloop sonnet-5", ["R7", "R8"]),
     ("C5", "csloop gpt-5.6", ["R9", "R10", "R11"]),
     ("C6", "ccloop opus-5", ["R12"]),
-    ("C7", "ccloop sonnet-5", ["R13"]),
 ]
 
 KEYS = [(day, run_name) for day, run_name, _, _ in RUNS]
@@ -360,19 +408,19 @@ CONFIGS_BY_CODE = [(code, members) for code, _, members in CONFIGS]
 # Which configurations the per-file effort comparison intersects, and which it
 # prints. Both are explicit rather than derived, because the two exclusions are
 # judgements about the corpus and not facts a rule could read off it:
-#   - C2, C6 and C7 are printed but not intersected: each has one replicate, so
-#     requiring any of them would let a single run decide the comparison set.
-#     Their columns are one observation and the tables label them as such.
+#   - C2 and C6 are printed but not intersected: each has one run, so requiring
+#     either would let a single run decide the comparison set. Their columns
+#     are one observation and the tables label them as such.
 #   - C4 is neither intersected nor printed: it settled only Mods/pp_mod and
 #     Mods/ppwp2j_mod, so intersecting it collapses the comparison to two rows
 #     and printing it leaves a column that is empty on every other row. Its
 #     per-file numbers are still in both CSV exports.
-# C6 and C7 worked only in W2jet, so their columns are blank on the BDK and
-# Mods rows. That is a real difference in where those runs went, not a gap in
-# the measurement, and the per-configuration table prints them for the W2jet
-# rows where a like-for-like comparison against C1/C3/C5 does exist.
+# C6 worked only in W2jet and BDK, so its column is blank on the Mods rows.
+# That is a real difference in where the run went, not a gap in the
+# measurement, and the per-configuration table prints it for the rows where a
+# like-for-like comparison against C1/C3/C5 does exist.
 PER_FILE_COMPARISON_CONFIGS = ["C1", "C3", "C5"]
-PER_FILE_DISPLAY_CONFIGS = ["C1", "C2", "C3", "C5", "C6", "C7"]
+PER_FILE_DISPLAY_CONFIGS = ["C1", "C2", "C3", "C5", "C6"]
 
 
 def _wrap_to_figure(text, fig_width_in, fontsize=None):
@@ -419,7 +467,7 @@ def run_code_caption(fig_width_in, fontsize=None):
 #                        `reason=true` and record
 #                        `thinking=display:summarized,type:adaptive`.
 #   effort=high          every ccworkflow and ccloop run (an `effort` on each
-#                        assistant message -- including the two 09-11 runs, which
+#                        assistant message -- including the 09-12 run, which
 #                        passed no effort argument and took the session default),
 #                        AND the gpt-5.6 csloop runs (R9-R11), whose manifests
 #                        record `reasoning_effort=high`.
@@ -432,9 +480,10 @@ REASONING_NOTE = (
     "settings are in the manifest table). No run is another run's reasoning ON/OFF control."
 )
 SCOPE_NOTE = (
-    "Scope: the thirteen 08-27/08-28-2026 and 09-11-2026 runs. All fork from one submodule "
+    "Scope: the twelve 08-27/08-28-2026 and 09-12-2026 runs. All fork from one submodule "
     "commit and one 445-file roadmap, so per-file cost divides comparable work; earlier days "
-    "did not and are out of scope."
+    "did not and are out of scope. ccloop is a single run (R12), so read every ccloop bar as "
+    "one observation."
 )
 # What the three harnesses are a design for, and which pair isolates what.
 # Repeated on the figures because the run codes alone do not say it, and a
@@ -495,9 +544,12 @@ def policy_note():
             "transcript in scope, so the size of the difference is not measured here."
         )
     low, high = span
+    # One ccloop run in scope collapses the range to a point, and printing
+    # "96%-96%" would invent a spread the corpus does not have.
+    rejected = f"{low:.0%}" if low == high else f"{low:.0%}-{high:.0%}"
     return (
-        "Execution policy is the variable in ccloop vs. csloop, and it is large: replaying each "
-        f"ccloop run's Bash calls against CodeScribe's own bounded shell rejects {low:.0%}-{high:.0%} "
+        "Execution policy is the variable in ccloop vs. csloop, and it is large: replaying the "
+        f"ccloop run's Bash calls against CodeScribe's own bounded shell rejects {rejected} "
         "of them (shell_policy.py; mostly pipes, redirects and chaining, which that shell bans "
         "outright, plus `cd`, which it has no need for). CodeScribe also enforces per-phase "
         "iteration and tool-call caps, repeated-call blocking and a protected task file in code; "
@@ -510,27 +562,31 @@ def policy_note():
 # intervention, and the figures cannot show it, so it is stated once here.
 #
 # A clean enforced-vs-advisory contrast states the SAME budget in the SAME unit
-# and varies only whether it is enforced. R12 and R13 did not get that. csloop's
-# binding constraint is AgentPolicy.max_iterations = 30 MODEL TURNS, and a
-# CodeScribe turn carries several tool calls (measured over the 38 archived
-# author/review phases in scope: mean 2.41, range 0.50-4.60), so a csloop opus
-# author executes about 71 tool calls per loop. The loop.js revision that ran
-# R12/R13 told its author to "finish within about 30 tool-calling turns", and
-# Claude Code emits exactly one tool call per turn -- so the same number meant
-# roughly a third of the work. R12 complied and averaged 34 calls per loop; R13
-# ignored it entirely and spent 139 in its single loop, which is what advisory
-# means in practice. `maxToolCalls` was added to loop.js afterwards and is not
-# what these runs ran under. Note also that csloop's own 120-call ceiling never
-# bound: no archived phase stops on `tool_budget`, they stop at max_iterations
-# (25 of 38) or finish early (13 of 38).
+# and varies only whether it is enforced. R12 did not get that. csloop's binding
+# constraint is AgentPolicy.max_iterations = 30 MODEL TURNS, and a CodeScribe
+# turn carries several tool calls (measured over the 38 archived author/review
+# phases in scope: mean 2.41, range 0.50-4.60), so a csloop opus author executes
+# about 71 tool calls per loop. The loop.js revision that ran R12 told its author
+# to "finish within about 30 tool-calling turns", and Claude Code emits exactly
+# one tool call per turn -- so the same number meant roughly a third of the work.
+# R12 averaged 37 author tool calls per loop against that ~71, and the average
+# understates how front-loaded it is: its two translating loops spent 71 and 61,
+# i.e. right at csloop's per-loop figure and well past the stated 30, while the
+# three gate-blocked loops spent 22, 18 and 12. So the budget was advisory in
+# practice as well as in wording -- the author overran it exactly when it had
+# work to do. `maxToolCalls` was added to loop.js afterwards and is not what this
+# run ran under. Note also that csloop's own 120-call ceiling never bound: no
+# archived phase stops on `tool_budget`, they stop at max_iterations (25 of 38)
+# or finish early (13 of 38).
 BUDGET_NOTE = (
-    "Budget caveat on ccloop: the loop.js revision that produced R12/R13 stated its per-loop "
+    "Budget caveat on ccloop: the loop.js revision that produced R12 stated its per-loop "
     "budget in Claude Code turns (one tool call each) against a number calibrated for CodeScribe "
-    "turns (2.41 tool calls each, measured), so ccloop authors ran to roughly a third of csloop's "
-    "per-loop work -- R12 averaged 34 tool calls per loop against csloop opus-5's ~71. It was "
-    "advisory, and only one model honoured it: R13 spent 139 in its one loop. Treat ccloop's "
-    "files-settled and per-file figures as measured under a tighter and unevenly applied budget, "
-    "which is a calibration error rather than part of the policy contrast above."
+    "turns (2.41 tool calls each, measured), so the stated budget was roughly a third of csloop's "
+    "per-loop work. It was advisory and the author overran it when it had work to do: R12 "
+    "averaged 37 author tool calls per loop, but spent 71 and 61 in its two translating loops "
+    "(against csloop opus-5's ~71) and 22/18/12 in the three loops that found the approval gate "
+    "blocked. Read ccloop's per-loop figures as measured under a miscalibrated advisory budget, "
+    "which is an error on top of the policy contrast above rather than part of it."
 )
 SHADOW_NOTE = (
     "Files settled counts a unit whose .cpp landed but whose Fortran original was never retired; "
@@ -1759,8 +1815,8 @@ def make_decision_figure(translated_units, decision_models, module_timelines):
         ])
         + _wrap_to_figure(
             "Marker = first tool call in the run's own transcript that names a file inside that module "
-            "(Bash command text for ccworkflow and most of ccloop, or a read/write/edit path argument "
-            "for csloop and for ccloop's sonnet-5 run). Filled vs. "
+            "(Bash command text for ccworkflow and ccloop, or a read/write/edit path argument "
+            "for csloop). Filled vs. "
             "hollow marks whether every settled unit there was a ready leaf (deps=0, blind=0) at the "
             "shared fork point, or the run entered while at least one of them still had an untranslated "
             "callee. n/a: the run settled no files in any module, or its transcript could not be parsed "
@@ -2018,7 +2074,7 @@ def write_summary_tables(runs, coverage, files_settled, translated_units, wall_t
     lines.append(
         "Runs grouped sequentially by harness and decision model — all ccworkflow runs, then all "
         "csloop opus-5 runs, then all csloop sonnet-5 runs, then all csloop gpt-5.6 runs, then "
-        "both ccloop runs — so R1..R13 read as one block per group rather than by archival day. "
+        "the ccloop run — so R1..R12 read as one block per group rather than by archival day. "
         "ccloop is appended last rather than placed beside the other Claude Code harness so that "
         "R1..R11 keep the codes they already carry in the paper and in the archived snapshot; read "
         "the order as the order groups entered the corpus. `Model` is the decision model (the "
@@ -2283,7 +2339,7 @@ def write_summary_tables(runs, coverage, files_settled, translated_units, wall_t
         "USD and tool calls to *individual files*. Runs are grouped into configurations (two runs share "
         "one only if the same models ran the same phases), which splits the ccworkflow block: R2 drives "
         "every phase with opus-5, while R1 and R3 author on sonnet-5 and only integrate on opus-5. "
-        "C6 and C7 (ccloop) are one run each, as is C2.\n"
+        "C6 (ccloop) is a single run, as is C2.\n"
     )
     lines.append("| Config | Runs | Harness | Attribution |")
     lines.append("|---|---|---|---|")
@@ -2344,8 +2400,8 @@ def write_summary_tables(runs, coverage, files_settled, translated_units, wall_t
             f"all, the rest being builds, the benchmark, roadmap queries and the approval gate, so its "
             f"columns rest on that handful and the rest is spread proportionally. For ccloop the count "
             f"also excludes the harness's own end-of-loop report calls, whose prose names files it only "
-            f"wrote *about* (see `per_file_effort.py`); leaving them in would have handed "
-            f"`W2jet/w2jetsq` roughly half of {RUN_CODES[worst_key]} on the strength of two summaries.\n"
+            f"wrote *about* rather than worked on (see `per_file_effort.py` for why, and for the "
+            f"out-of-scope run where leaving them in would have handed one unit roughly half the run).\n"
         )
     lines.append("| Run | Config | Method | Units attributed | Attributed USD | Attributed min | Author phase / run | Unattributed |")
     lines.append("|---|---|---|---:|---:|---:|---:|---:|")
@@ -2469,8 +2525,8 @@ def write_summary_tables(runs, coverage, files_settled, translated_units, wall_t
     lines.append(
         f"Files settled by at least one replicate of every configuration with more than one replicate "
         f"({comparison}); {single} are shown where they settled the same file but are not required, "
-        f"since a single run should not decide the comparison set. C6 and C7 worked only in W2jet, so "
-        f"their columns are blank on every BDK and Mods row — that is where those runs went, not a hole "
+        f"since a single run should not decide the comparison set. C6 worked only in W2jet and BDK, so "
+        f"its column is blank on every Mods row — that is where that run went, not a hole "
         f"in the measurement. C4 is left out entirely: it settled only "
         f"`Mods/pp_mod` and `Mods/ppwp2j_mod`, so intersecting it would collapse this to two rows. "
         f"Each cell is the mean over the replicates of that configuration **that settled the file**, with "
@@ -2478,10 +2534,9 @@ def write_summary_tables(runs, coverage, files_settled, translated_units, wall_t
     )
     lines.append(
         "The bottom row of each table is likewise a mean over the shared files **that column reached**, "
-        "and `[nf]` says how many that was. Columns with different counts are not like-for-like: C6 and "
-        "C7 are averaging their W2jet rows only, where C1, C3 and C5 average BDK and Mods rows too. "
-        "Compare a column against another on the individual `W2jet/...` rows, which every displayed "
-        "configuration except C7's `subqcd` actually has.\n"
+        "and `[nf]` says how many that was. Columns with different counts are not like-for-like: C6 "
+        "averages its W2jet and BDK rows only, where C1, C3 and C5 average Mods rows too. Compare a "
+        "column against another on the individual rows both actually have, not on the bottom row.\n"
     )
     if not shared_units:
         lines.append("No file is common to those configurations.\n")
@@ -2504,10 +2559,10 @@ def write_summary_tables(runs, coverage, files_settled, translated_units, wall_t
                     cells.append("—" if cell is None else f"{fmt.format(cell[field])} ({cell['n']})")
                 lines.append(f"| `{unit}` | " + " | ".join(cells) + " |")
             # Each column's mean is over the shared files THAT COLUMN settled,
-            # so the denominators differ — C6 and C7 reached five and four of
-            # these twelve files. The count travels with the number: without
-            # it, C6's mean reads as a like-for-like figure against C3's when
-            # the two are over different files.
+            # so the denominators differ — C6 reaches only the W2jet and BDK
+            # rows. The count travels with the number: without it, C6's mean
+            # reads as a like-for-like figure against C3's when the two are
+            # over different files.
             means = []
             for code in PER_FILE_DISPLAY_CONFIGS:
                 vals = [effort_by_config[code][u][field] for u in shared_units
@@ -2577,15 +2632,17 @@ TEX_BANNER = (
 # Only the data-bearing .tex files carry this; the colour definitions have no
 # run set to qualify.
 TEX_DATA_BANNER = TEX_BANNER + (
-    "%% Corpus: the thirteen 08-27/08-28-2026 and 09-11-2026 runs, all forked from\n"
+    "%% Corpus: the twelve 08-27/08-28-2026 and 09-12-2026 runs, all forked from\n"
     "%% one submodule commit and one 445-file roadmap. Three harnesses: ccworkflow\n"
     "%% (multi-agent workflow on Claude Code), ccloop (loop on Claude Code) and\n"
-    "%% csloop (loop on CodeScribe) -- ccloop vs csloop isolates the baseline agent,\n"
-    "%% ccloop vs ccworkflow isolates the design pattern. One run\n"
-    "%% (08-28-2026/codescribe-sonnet-5-run3) has no archived agent_log.md and is\n"
-    "%% kept with its git-exact count only -- see generate_graphs.py. Earlier days\n"
-    "%% (07-24/07-25, 08-11..08-26) forked from different roadmap states and are\n"
-    "%% deliberately out of scope.\n"
+    "%% csloop (loop on CodeScribe) -- ccloop vs csloop isolates execution policy,\n"
+    "%% ccloop vs ccworkflow isolates the design pattern. ccloop is a SINGLE run\n"
+    "%% (R12, 09-12-2026): read every ccloop number as one observation. The two\n"
+    "%% earlier ccloop runs (09-11-2026) are still on disk but out of scope -- see\n"
+    "%% generate_graphs.py. One run (08-28-2026/codescribe-sonnet-5-run3) has no\n"
+    "%% archived agent_log.md and is kept with its git-exact count only. Earlier\n"
+    "%% days (07-24/07-25, 08-11..08-26) forked from different roadmap states and\n"
+    "%% are deliberately out of scope.\n"
 )
 
 # Palette mirrored into LaTeX so the figure matches the PNG version exactly.
@@ -3041,7 +3098,7 @@ def _panel_frontier(metrics):
     # Box geometry, shared by the note placement below and the label packer
     # under it: the measured size of a two-character bold \scriptsize code, one
     # text line, and a plotted mark, all in axis fractions so x and y are
-    # comparable. A three-character code (R10..R13) gets a proportionally wider
+    # comparable. A three-character code (R10..R12) gets a proportionally wider
     # box from _label_w.
     LABEL_W, LABEL_H, MARK_R = 0.075, 0.085, 0.022
 
@@ -3157,7 +3214,7 @@ def _panel_frontier(metrics):
     # room, and a bare digit reads as a data value in a panel whose axes are
     # both numeric.
     #
-    # A three-character code (R10..R13) gets a proportionally wider box from
+    # A three-character code (R10..R12) gets a proportionally wider box from
     # _label_w below, so it doesn't sit closer to its neighbors or the axis
     # than its printed width actually is. LABEL_W / LABEL_H / MARK_R are
     # defined above, since the note placement sizes its own box from them too.
@@ -3423,10 +3480,10 @@ def write_tex_tables(metrics, coverage, translated_units, decision_models, loop_
         "%% Loops: completed/cap, and NOT one quantity across harnesses.\n"
         "%% csloop (R4-R11): run.loops_completed / run.agent_loops from\n"
         "%% loop/metadata/manifest.toml -- a configured budget.\n"
-        "%% ccloop (R12-R13): completed author-review loops / the cap stated in the\n"
+        "%% ccloop (R12): completed author-review loops / the cap stated in the\n"
         "%% author prompt itself (Loop N of M). Same meaning as csloop's, so those two\n"
-        "%% are directly comparable; R13 stopped early on the loop's own\n"
-        "%% no-pending-items exit, not at its budget.\n"
+        "%% are directly comparable; R12 ran its full budget, with its last three loops\n"
+        "%% held at a blocked approval gate rather than translating.\n"
         "%% ccworkflow (R1-R3): completed Triage-Author-Integrate rounds counted from\n"
         "%% journal.jsonl; these runs are uncapped by configuration, so the cap shown\n"
         "%% is the approval-batch gate limit each run was actually stopped at (parsed\n"

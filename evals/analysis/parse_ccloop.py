@@ -37,6 +37,16 @@ STATUS: COMPLETE, or when review comes back with no pending items and no
 blocker — 09-11-2026/ccworkflow-loop-sonnet-5 stops that way after one loop.
 `loop_summary` reports that as 1/5, the same shape a csloop run that
 self-terminates gets, and `stopped_early` says it was not the cap that ended it.
+(That run is out of generate_graphs' figure set as of 2026-09-13; this module
+parses the whole corpus, in scope or not, so the example still runs.)
+
+RUNNING TO THE CAP IS NOT THE SAME AS TRANSLATING TO THE CAP. The in-scope
+09-12-2026 run reports 5/5 and `stopped_early = False`, but only its first two
+loops opened groups: the approval gate blocked after the third completed group,
+and loops 3-5 re-verified and audited the settled tree instead. `loop_summary`
+counts loops, not work, by design — what a loop did is the author report's
+business — so a caller dividing a run total by `loops_completed` is not
+dividing by loops of translation.
 """
 
 import json

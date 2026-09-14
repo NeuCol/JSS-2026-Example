@@ -336,10 +336,15 @@ def _ccworkflow_per_file(run_dir, settled):
 # narrative plan, quoted build output. Excluded from per-file ATTRIBUTION
 # because that prose names whatever files the loop worked on, so counting it
 # measures what the agent chose to write about rather than effort spent on a
-# file. It matters: in 09-11-2026/ccworkflow-loop-opus-5, 10 of the 23 calls
-# naming a settled unit were these reports, and they alone would have handed
-# W2jet/w2jetsq (the unit its last summaries kept discussing) roughly half the
-# run.
+# file. How much it matters depends on how much the run's loops spent
+# summarising, and the corpus has both extremes. In
+# 09-11-2026/ccworkflow-loop-opus-5 (out of the figure set since 2026-09-13,
+# still parsed here) 10 of the 23 calls naming a settled unit were these
+# reports, and they alone would have handed W2jet/w2jetsq -- the unit its last
+# summaries kept discussing -- roughly half the run. In the in-scope
+# 09-12-2026 run only 2 of 14 are, and dropping them moves no unit's share by
+# more than about two points. The rule is kept for the first case; the second
+# is why it should not be sold as a large correction in general.
 #
 # csloop has no equivalent -- its loop report is not a tool call at all -- so
 # leaving these in would also break the like-for-like comparison that is the

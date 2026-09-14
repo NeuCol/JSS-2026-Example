@@ -10,5 +10,4 @@ R8,C4,csloop,timed,measured,author,2,6.2680,34.4129,6.2680,1.0500,7.0357,0.7967
 R9,C5,csloop,timed,measured,author,5,6.3810,21.7716,6.3810,0.9448,1.6335,0.5392
 R10,C5,csloop,timed,measured,author,10,9.5905,25.3763,9.5905,0.6900,1.1328,0.5361
 R11,C5,csloop,timed,measured,author,11,10.0632,37.5702,10.0632,0.8993,1.9075,0.5399
-R12,C6,ccloop,timed,derived,all,9,51.7223,60.4557,51.7223,0.0000,0.0000,0.9756
-R13,C7,ccloop,timed,derived,all,5,13.1656,26.7828,13.1656,0.0000,0.0000,0.7374
+R12,C6,ccloop,timed,derived,all,15,53.1562,72.2502,53.1562,0.0000,0.0000,0.9760

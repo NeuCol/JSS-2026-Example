@@ -57,11 +57,17 @@ CSLOOP = "csloop"
 # Claude Code harnesses adjacent, then csloop.
 HARNESSES = (CCWORKFLOW, CCLOOP, CSLOOP)
 
-# Run-directory prefixes that mean ccloop. The 09-11-2026 runs are archived as
-# `ccworkflow-loop-*` (they came out of the same .claude loop source as the
-# ccworkflow runs), which is a `ccworkflow-` prefix and would otherwise be
-# swept up as ccworkflow — so this is checked FIRST, before any other rule.
-# `ccloop-*` is accepted too, for runs archived under the shorter name.
+# Run-directory prefixes that mean ccloop. Every ccloop run so far (the two
+# 09-11-2026 ones and the 09-12-2026 one) is archived as `ccworkflow-loop-*`
+# (they came out of the same .claude loop source as the ccworkflow runs), which
+# is a `ccworkflow-` prefix and would otherwise be swept up as ccworkflow — so
+# this is checked FIRST, before any other rule. `ccloop-*` is accepted too, for
+# runs archived under the shorter name.
+#
+# Directory names carry no reliable MODEL either: 09-12-2026's run is named
+# `ccworkflow-loop-sonnet-5-run2` but every author and review agent in it ran
+# opus-5. That is why nothing here parses a model out of a name, and why
+# generate_graphs labels that run from its transcripts instead.
 _CCLOOP_PREFIXES = ("ccworkflow-loop-", "ccloop-")
 
 

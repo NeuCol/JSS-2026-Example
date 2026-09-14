@@ -6,17 +6,17 @@ Reasoning is on everywhere it can be, but not via one knob: the Anthropic csloop
 
 Three harnesses, two variables: ccloop vs. csloop is one design pattern (a bounded author-review loop) over one Spec/Plan, varying execution policy -- csloop enforces a bounded shell and per-phase caps in code, ccloop states the same rules as prose to an unrestricted agent; ccloop vs. ccworkflow is one baseline agent (Claude Code) under two design patterns (loop vs. multi-agent workflow).
 
-Execution policy is the variable in ccloop vs. csloop, and it is large: replaying each ccloop run's Bash calls against CodeScribe's own bounded shell rejects 91%-95% of them (shell_policy.py; mostly pipes, redirects and chaining, which that shell bans outright, plus `cd`, which it has no need for). CodeScribe also enforces per-phase iteration and tool-call caps, repeated-call blocking and a protected task file in code; the loop workflow states all of it as prose. Read a ccloop-vs-csloop gap as the cost of that policy, not as a property of the baseline agent.
+Execution policy is the variable in ccloop vs. csloop, and it is large: replaying the ccloop run's Bash calls against CodeScribe's own bounded shell rejects 96% of them (shell_policy.py; mostly pipes, redirects and chaining, which that shell bans outright, plus `cd`, which it has no need for). CodeScribe also enforces per-phase iteration and tool-call caps, repeated-call blocking and a protected task file in code; the loop workflow states all of it as prose. Read a ccloop-vs-csloop gap as the cost of that policy, not as a property of the baseline agent.
 
-Budget caveat on ccloop: the loop.js revision that produced R12/R13 stated its per-loop budget in Claude Code turns (one tool call each) against a number calibrated for CodeScribe turns (2.41 tool calls each, measured), so ccloop authors ran to roughly a third of csloop's per-loop work -- R12 averaged 34 tool calls per loop against csloop opus-5's ~71. It was advisory, and only one model honoured it: R13 spent 139 in its one loop. Treat ccloop's files-settled and per-file figures as measured under a tighter and unevenly applied budget, which is a calibration error rather than part of the policy contrast above.
+Budget caveat on ccloop: the loop.js revision that produced R12 stated its per-loop budget in Claude Code turns (one tool call each) against a number calibrated for CodeScribe turns (2.41 tool calls each, measured), so the stated budget was roughly a third of csloop's per-loop work. It was advisory and the author overran it when it had work to do: R12 averaged 37 author tool calls per loop, but spent 71 and 61 in its two translating loops (against csloop opus-5's ~71) and 22/18/12 in the three loops that found the approval gate blocked. Read ccloop's per-loop figures as measured under a miscalibrated advisory budget, which is an error on top of the policy contrast above rather than part of it.
 
-Scope: the thirteen 08-27/08-28-2026 and 09-11-2026 runs. All fork from one submodule commit and one 445-file roadmap, so per-file cost divides comparable work; earlier days did not and are out of scope.
+Scope: the twelve 08-27/08-28-2026 and 09-12-2026 runs. All fork from one submodule commit and one 445-file roadmap, so per-file cost divides comparable work; earlier days did not and are out of scope. ccloop is a single run (R12), so read every ccloop bar as one observation.
 
 Files settled counts a unit whose .cpp landed but whose Fortran original was never retired; the coverage table's "not retired" column says how many of a run's units are in that state.
 
 ## Run manifest
 
-Runs grouped sequentially by harness and decision model — all ccworkflow runs, then all csloop opus-5 runs, then all csloop sonnet-5 runs, then all csloop gpt-5.6 runs, then both ccloop runs — so R1..R13 read as one block per group rather than by archival day. ccloop is appended last rather than placed beside the other Claude Code harness so that R1..R11 keep the codes they already carry in the paper and in the archived snapshot; read the order as the order groups entered the corpus. `Model` is the decision model (the model that chose which files the run translated; see "Which files each model chose" below). `Folder` is the run's archive, relative to the repository root.
+Runs grouped sequentially by harness and decision model — all ccworkflow runs, then all csloop opus-5 runs, then all csloop sonnet-5 runs, then all csloop gpt-5.6 runs, then the ccloop run — so R1..R12 read as one block per group rather than by archival day. ccloop is appended last rather than placed beside the other Claude Code harness so that R1..R11 keep the codes they already carry in the paper and in the archived snapshot; read the order as the order groups entered the corpus. `Model` is the decision model (the model that chose which files the run translated; see "Which files each model chose" below). `Folder` is the run's archive, relative to the repository root.
 
 `Reasoning` is the setting as each harness records it, not a normalization of the two: csloop archives `reasoning_config` in its manifest, the Claude Code harnesses carry an `effort` level on every assistant message. Adaptive and effort=high are different knobs, and the difference between the arms is uncontrolled.
 
@@ -33,8 +33,7 @@ Runs grouped sequentially by harness and decision model — all ccworkflow runs,
 | R9 | csloop gpt-5.6 | gpt-5.6 | reasoning_effort=high | `evals/experiments/08-27-2026/codescribe-oaic-gpt56sol-run4` |
 | R10 | csloop gpt-5.6 | gpt-5.6 | reasoning_effort=high | `evals/experiments/08-27-2026/codescribe-oaic-gpt56sol-run5` |
 | R11 | csloop gpt-5.6 | gpt-5.6 | reasoning_effort=high | `evals/experiments/08-28-2026/codescribe-oaic-gpt56sol-run6` |
-| R12 | ccloop | opus-5 | effort=high | `evals/experiments/09-11-2026/ccworkflow-loop-opus-5` |
-| R13 | ccloop | sonnet-5 | effort=high | `evals/experiments/09-11-2026/ccworkflow-loop-sonnet-5` |
+| R12 | ccloop | opus-5 | effort=high | `evals/experiments/09-12-2026/ccworkflow-loop-sonnet-5-run2` |
 
 ## Run comparison: cost, cache, wall time, tool calls & files settled
 
@@ -51,8 +50,7 @@ Runs grouped sequentially by harness and decision model — all ccworkflow runs,
 | R9 — csloop gpt-5.6 (run4) | $6.38 | 79% | 22 min | 61.2 | 5 | 4.4 min | $1.28 |
 | R10 — csloop gpt-5.6 (run5) | $9.59 | 82% | 25 min | 38.1 | 10 | 2.5 min | $0.96 |
 | R11 — csloop gpt-5.6 (run6) | $10.06 | 83% | 38 min | 44.4 | 11 | 3.4 min | $0.91 |
-| R12 — ccloop opus-5 | $51.72 | 91% | 60 min | 25.6 | 9 | 6.7 min | $5.75 |
-| R13 — ccloop sonnet-5 | $13.17 | 97% | 27 min | 32.4 | 5 | 5.4 min | $2.63 |
+| R12 — ccloop opus-5 | $53.16 | 93% | 70 min | 17.1 | 15 | 4.6 min | $3.54 |
 
 ## Token usage, cost, cache & wall time detail
 
@@ -69,8 +67,7 @@ Runs grouped sequentially by harness and decision model — all ccworkflow runs,
 | R9 — csloop gpt-5.6 (run4) | 318 | 38,515 | 866,327 | 3,194,506 | 79% | $6.38 | 22 min |
 | R10 — csloop gpt-5.6 (run5) | 363 | 49,811 | 1,268,255 | 5,628,943 | 82% | $9.59 | 25 min |
 | R11 — csloop gpt-5.6 (run6) | 450 | 61,845 | 1,260,024 | 6,310,940 | 83% | $10.06 | 38 min |
-| R12 — ccloop opus-5 | 972 | 521,147 | 3,403,074 | 34,839,052 | 91% | $51.72 | 60 min |
-| R13 — ccloop sonnet-5 | 526 | 381,826 | 1,044,697 | 33,672,542 | 97% | $13.17 | 27 min |
+| R12 — ccloop opus-5 | 994 | 618,840 | 3,137,769 | 40,034,863 | 93% | $53.16 | 70 min |
 
 ## Cost by model
 
@@ -87,8 +84,7 @@ Runs grouped sequentially by harness and decision model — all ccworkflow runs,
 | R9 — csloop gpt-5.6 (run4) | $0.00 | $0.00 | $6.38 |
 | R10 — csloop gpt-5.6 (run5) | $0.00 | $0.00 | $9.59 |
 | R11 — csloop gpt-5.6 (run6) | $0.00 | $0.00 | $10.06 |
-| R12 — ccloop opus-5 | $51.72 | $0.00 | $0.00 |
-| R13 — ccloop sonnet-5 | $0.00 | $13.17 | $0.00 |
+| R12 — ccloop opus-5 | $51.86 | $1.30 | $0.00 |
 
 ## Status, coverage claim & self-reported correctness
 
@@ -107,10 +103,9 @@ Runs grouped sequentially by harness and decision model — all ccworkflow runs,
 | R9 — csloop gpt-5.6 (run4) | stopped-at-gate | 5 | — | 5 | 0 | — |
 | R10 — csloop gpt-5.6 (run5) | stopped-at-gate | 10 | — | 10 | 0 | 272/272 |
 | R11 — csloop gpt-5.6 (run6) | stopped-at-gate | 11 | — | 11 | 0 | 272/272 |
-| R12 — ccloop opus-5 | stopped-at-gate | 9 | — | 9 | 0 | 272/272 |
-| R13 — ccloop sonnet-5 | stopped-at-gate | 5 | — | 5 | 0 | — |
+| R12 — ccloop opus-5 | stopped-at-gate | 15 | — | 15 | 0 | 272/272 |
 
-6 of 13 runs left at least one original in place. All of them shadow the same units (`Mods/pp_mod`, `Mods/ppwp2j_mod`), which points at those Fortran modules rather than at any one model.
+6 of 12 runs left at least one original in place. All of them shadow the same units (`Mods/pp_mod`, `Mods/ppwp2j_mod`), which points at those Fortran modules rather than at any one model.
 
 ## Which src/ module each run translated files from (git-exact)
 
@@ -129,8 +124,7 @@ Which top-level `software/mcfm/src/` directory each run's translated files came 
 | R9 — csloop gpt-5.6 (run4) |  | 1 | 4 | 5 | 5/5 |
 | R10 — csloop gpt-5.6 (run5) |  | 5 | 5 | 10 | 4/5 |
 | R11 — csloop gpt-5.6 (run6) | 5 | 1 | 5 | 11 | 5/5 |
-| R12 — ccloop opus-5 |  |  | 9 | 9 | 5/5 |
-| R13 — ccloop sonnet-5 |  |  | 5 | 5 | 1/5 |
+| R12 — ccloop opus-5 | 5 |  | 10 | 15 | 5/5 |
 
 ## File-level overlap between runs sharing a module (git-exact)
 
@@ -139,6 +133,8 @@ For every pair of runs that translated files from at least one of the same modul
 | Run A | Run B | Shared module(s) | Files (A) | Files (B) | Overlap | Overlap / min(A,B) |
 |---|---|---|---:|---:|---:|---:|
 | R2 — ccworkflow (opus-5 triage and dispatch) | R3 — ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate, run2) | BDK, W2jet | 15 | 16 | 15 | 100% |
+| R3 — ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate, run2) | R12 — ccloop opus-5 | BDK, W2jet | 16 | 15 | 14 | 93% |
+| R2 — ccworkflow (opus-5 triage and dispatch) | R12 — ccloop opus-5 | BDK, W2jet | 15 | 15 | 13 | 87% |
 | R1 — ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate) | R5 — csloop opus-5 (run2) | BDK, Mods, W2jet | 13 | 14 | 11 | 85% |
 | R1 — ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate) | R2 — ccworkflow (opus-5 triage and dispatch) | BDK, W2jet | 13 | 15 | 10 | 77% |
 | R1 — ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate) | R3 — ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate, run2) | BDK, W2jet | 13 | 16 | 10 | 77% |
@@ -152,47 +148,35 @@ For every pair of runs that translated files from at least one of the same modul
 | R4 — csloop opus-5 | R6 — csloop opus-5 (run3) | Mods, W2jet | 15 | 12 | 9 | 75% |
 | R4 — csloop opus-5 | R10 — csloop gpt-5.6 (run5) | Mods, W2jet | 15 | 10 | 9 | 90% |
 | R5 — csloop opus-5 (run2) | R11 — csloop gpt-5.6 (run6) | BDK, Mods, W2jet | 14 | 11 | 9 | 82% |
+| R1 — ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate) | R12 — ccloop opus-5 | BDK, W2jet | 13 | 15 | 8 | 62% |
 | R2 — ccworkflow (opus-5 triage and dispatch) | R4 — csloop opus-5 | W2jet | 15 | 15 | 8 | 53% |
+| R4 — csloop opus-5 | R12 — ccloop opus-5 | W2jet | 15 | 15 | 8 | 53% |
+| R5 — csloop opus-5 (run2) | R12 — ccloop opus-5 | BDK, W2jet | 14 | 15 | 8 | 57% |
 | R1 — ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate) | R4 — csloop opus-5 | Mods, W2jet | 13 | 15 | 7 | 54% |
 | R1 — ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate) | R10 — csloop gpt-5.6 (run5) | Mods, W2jet | 13 | 10 | 7 | 70% |
 | R2 — ccworkflow (opus-5 triage and dispatch) | R6 — csloop opus-5 (run3) | W2jet | 15 | 12 | 7 | 58% |
 | R3 — ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate, run2) | R6 — csloop opus-5 (run3) | W2jet | 16 | 12 | 7 | 58% |
-| R3 — ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate, run2) | R12 — ccloop opus-5 | W2jet | 16 | 9 | 7 | 78% |
-| R4 — csloop opus-5 | R12 — ccloop opus-5 | W2jet | 15 | 9 | 7 | 78% |
 | R5 — csloop opus-5 (run2) | R10 — csloop gpt-5.6 (run5) | Mods, W2jet | 14 | 10 | 7 | 70% |
+| R6 — csloop opus-5 (run3) | R12 — ccloop opus-5 | W2jet | 12 | 15 | 7 | 58% |
+| R11 — csloop gpt-5.6 (run6) | R12 — ccloop opus-5 | BDK, W2jet | 11 | 15 | 7 | 64% |
 | R1 — ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate) | R6 — csloop opus-5 (run3) | Mods, W2jet | 13 | 12 | 6 | 50% |
-| R2 — ccworkflow (opus-5 triage and dispatch) | R12 — ccloop opus-5 | W2jet | 15 | 9 | 6 | 67% |
 | R4 — csloop opus-5 | R11 — csloop gpt-5.6 (run6) | Mods, W2jet | 15 | 11 | 6 | 55% |
 | R5 — csloop opus-5 (run2) | R6 — csloop opus-5 (run3) | Mods, W2jet | 14 | 12 | 6 | 50% |
 | R6 — csloop opus-5 (run3) | R10 — csloop gpt-5.6 (run5) | Mods, W2jet | 12 | 10 | 6 | 60% |
-| R6 — csloop opus-5 (run3) | R12 — ccloop opus-5 | W2jet | 12 | 9 | 6 | 67% |
 | R10 — csloop gpt-5.6 (run5) | R11 — csloop gpt-5.6 (run6) | Mods, W2jet | 10 | 11 | 6 | 60% |
-| R1 — ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate) | R12 — ccloop opus-5 | W2jet | 13 | 9 | 5 | 56% |
-| R1 — ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate) | R13 — ccloop sonnet-5 | W2jet | 13 | 5 | 5 | 100% |
-| R2 — ccworkflow (opus-5 triage and dispatch) | R13 — ccloop sonnet-5 | W2jet | 15 | 5 | 5 | 100% |
-| R3 — ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate, run2) | R13 — ccloop sonnet-5 | W2jet | 16 | 5 | 5 | 100% |
 | R4 — csloop opus-5 | R9 — csloop gpt-5.6 (run4) | Mods, W2jet | 15 | 5 | 5 | 100% |
-| R4 — csloop opus-5 | R13 — ccloop sonnet-5 | W2jet | 15 | 5 | 5 | 100% |
 | R5 — csloop opus-5 (run2) | R9 — csloop gpt-5.6 (run4) | Mods, W2jet | 14 | 5 | 5 | 100% |
-| R5 — csloop opus-5 (run2) | R12 — ccloop opus-5 | W2jet | 14 | 9 | 5 | 56% |
-| R12 — ccloop opus-5 | R13 — ccloop sonnet-5 | W2jet | 9 | 5 | 5 | 100% |
 | R2 — ccworkflow (opus-5 triage and dispatch) | R9 — csloop gpt-5.6 (run4) | W2jet | 15 | 5 | 4 | 80% |
 | R2 — ccworkflow (opus-5 triage and dispatch) | R10 — csloop gpt-5.6 (run5) | W2jet | 15 | 10 | 4 | 40% |
 | R3 — ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate, run2) | R9 — csloop gpt-5.6 (run4) | W2jet | 16 | 5 | 4 | 80% |
 | R3 — ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate, run2) | R10 — csloop gpt-5.6 (run5) | W2jet | 16 | 10 | 4 | 40% |
-| R5 — csloop opus-5 (run2) | R13 — ccloop sonnet-5 | W2jet | 14 | 5 | 4 | 80% |
 | R6 — csloop opus-5 (run3) | R11 — csloop gpt-5.6 (run6) | Mods, W2jet | 12 | 11 | 4 | 36% |
-| R6 — csloop opus-5 (run3) | R13 — ccloop sonnet-5 | W2jet | 12 | 5 | 4 | 80% |
 | R9 — csloop gpt-5.6 (run4) | R10 — csloop gpt-5.6 (run5) | Mods, W2jet | 5 | 10 | 4 | 80% |
 | R9 — csloop gpt-5.6 (run4) | R11 — csloop gpt-5.6 (run6) | Mods, W2jet | 5 | 11 | 4 | 80% |
-| R9 — csloop gpt-5.6 (run4) | R12 — ccloop opus-5 | W2jet | 5 | 9 | 4 | 80% |
-| R10 — csloop gpt-5.6 (run5) | R12 — ccloop opus-5 | W2jet | 10 | 9 | 4 | 44% |
-| R10 — csloop gpt-5.6 (run5) | R13 — ccloop sonnet-5 | W2jet | 10 | 5 | 4 | 80% |
-| R11 — csloop gpt-5.6 (run6) | R12 — ccloop opus-5 | W2jet | 11 | 9 | 4 | 44% |
-| R11 — csloop gpt-5.6 (run6) | R13 — ccloop sonnet-5 | W2jet | 11 | 5 | 4 | 80% |
 | R1 — ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate) | R9 — csloop gpt-5.6 (run4) | Mods, W2jet | 13 | 5 | 3 | 60% |
 | R6 — csloop opus-5 (run3) | R9 — csloop gpt-5.6 (run4) | Mods, W2jet | 12 | 5 | 3 | 60% |
-| R9 — csloop gpt-5.6 (run4) | R13 — ccloop sonnet-5 | W2jet | 5 | 5 | 3 | 60% |
+| R9 — csloop gpt-5.6 (run4) | R12 — ccloop opus-5 | W2jet | 5 | 15 | 3 | 60% |
+| R10 — csloop gpt-5.6 (run5) | R12 — ccloop opus-5 | W2jet | 10 | 15 | 3 | 30% |
 | R1 — ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate) | R7 — csloop sonnet-5 (run2) | Mods | 13 | 2 | 2 | 100% |
 | R1 — ccworkflow (sonnet-5 triage and dispatch, opus-5 integrate) | R8 — csloop sonnet-5 (run3, incomplete — no agent_log archived) | Mods | 13 | 2 | 2 | 100% |
 | R4 — csloop opus-5 | R7 — csloop sonnet-5 (run2) | Mods | 15 | 2 | 2 | 100% |
@@ -211,22 +195,21 @@ For every pair of runs that translated files from at least one of the same modul
 
 ## How many runs settled each file (git-exact)
 
-Every distinct file any run translated (26 of them), bucketed by how many of the 13 measured runs translated it. The module table above shows whether runs landed in the same *area*; this shows whether they landed on the same *files*, which is the stricter question.
+Every distinct file any run translated (26 of them), bucketed by how many of the 12 measured runs translated it. The module table above shows whether runs landed in the same *area*; this shows whether they landed on the same *files*, which is the stricter question.
 
-**No file was settled by all 13 runs.** The intersection is empty because the smallest runs settled only a handful of files each, not because the runs worked on unrelated things: the top bucket is 2 file(s) settled by 11 of 13 runs, and the module table above shows where the rest of the disagreement sits. Read the rows below as levels of partial agreement.
+**No file was settled by all 12 runs.** The intersection is empty because the smallest runs settled only a handful of files each, not because the runs worked on unrelated things: the top bucket is 2 file(s) settled by 10 of 12 runs, and the module table above shows where the rest of the disagreement sits. Read the rows below as levels of partial agreement.
 
 | Runs settling it | Files | Share | Cumulative | Which files |
 |---:|---:|---:|---:|---|
-| 11 | 2 | 8% | 8% | `W2jet/a6treeg`, `W2jet/atree` |
-| 10 | 1 | 4% | 12% | `W2jet/ggZZcapture` |
-| 9 | 1 | 4% | 15% | `W2jet/ZZbox1LL` |
-| 8 | 1 | 4% | 19% | `W2jet/fvf` |
-| 7 | 3 | 12% | 31% | `Mods/pp_mod`, `Mods/ppwp2j_mod`, `W2jet/subqcd` |
-| 5 | 6 | 23% | 54% | `BDK/FFMPcc`, `BDK/FFPMccT`, `BDK/FFPMccTtilde`, `BDK/FFPMscT`, `BDK/fvs`, `Mods/types_mod` |
-| 4 | 2 | 8% | 62% | `W2jet/Acalc`, `W2jet/a6routine` |
-| 3 | 4 | 15% | 77% | `Mods/mod_qcdloop_c`, `W2jet/Ftexact`, `W2jet/LRcalc`, `W2jet/w2jetsq` |
-| 2 | 3 | 12% | 88% | `Mods/Modules_Interface`, `W2jet/Ltfunctions`, `W2jet/vv` |
-| 1 | 3 | 12% | 100% | `W2jet/A6texact`, `W2jet/fpp`, `W2jet/vvg` |
+| 10 | 2 | 8% | 8% | `W2jet/a6treeg`, `W2jet/atree` |
+| 8 | 2 | 8% | 15% | `W2jet/ZZbox1LL`, `W2jet/ggZZcapture` |
+| 7 | 4 | 15% | 31% | `Mods/pp_mod`, `Mods/ppwp2j_mod`, `W2jet/fvf`, `W2jet/subqcd` |
+| 6 | 4 | 15% | 46% | `BDK/FFPMccT`, `BDK/FFPMccTtilde`, `BDK/FFPMscT`, `BDK/fvs` |
+| 5 | 3 | 12% | 58% | `BDK/FFMPcc`, `Mods/types_mod`, `W2jet/Acalc` |
+| 4 | 3 | 12% | 69% | `W2jet/Ftexact`, `W2jet/LRcalc`, `W2jet/a6routine` |
+| 3 | 3 | 12% | 81% | `Mods/mod_qcdloop_c`, `W2jet/Ltfunctions`, `W2jet/w2jetsq` |
+| 2 | 1 | 4% | 85% | `Mods/Modules_Interface` |
+| 1 | 4 | 15% | 100% | `BDK/FFPMscTtilde`, `W2jet/A6texact`, `W2jet/fpp`, `W2jet/vv` |
 
 ## Which files each *model* chose (git-exact)
 
@@ -236,8 +219,8 @@ Runs grouped by the model that made the file-selection decision, not by harness.
 
 | Decision model | Runs | Harness | Modules entered | Files (union) | Core | Core files |
 |---|---|---|---|---:|---:|---|
-| opus-5 | R2, R4, R5, R6, R12 | ccloop, ccworkflow, csloop | W2jet (16), BDK (5), Mods (4) | 25 | 4 | `W2jet/a6treeg`, `W2jet/atree`, `W2jet/fvf`, `W2jet/subqcd` |
-| sonnet-5 | R1, R3, R7, R8, R13 | ccloop, ccworkflow, csloop | W2jet (11), BDK (5), Mods (3) | 19 | 0 | — |
+| opus-5 | R2, R4, R5, R6, R12 | ccloop, ccworkflow, csloop | W2jet (15), BDK (6), Mods (4) | 25 | 4 | `W2jet/a6treeg`, `W2jet/atree`, `W2jet/fvf`, `W2jet/subqcd` |
+| sonnet-5 | R1, R3, R7, R8 | ccworkflow, csloop | W2jet (11), BDK (5), Mods (3) | 19 | 0 | — |
 | gpt-5.6 | R9, R10, R11 | csloop | W2jet (6), BDK (5), Mods (5) | 16 | 4 | `Mods/types_mod`, `W2jet/a6treeg`, `W2jet/atree`, `W2jet/ggZZcapture` |
 
 ## How many *models* settled each file (git-exact)
@@ -248,11 +231,11 @@ The stricter companion to the run-level table above. A file settled by several r
 |---:|---:|---:|---|
 | 3 of 3 | 12 | 46% | — |
 | 2 of 3 | 10 | 38% | — |
-| 1 of 3 | 4 | 15% | `W2jet/A6texact`, `W2jet/fpp`, `W2jet/vv`, `W2jet/vvg` |
+| 1 of 3 | 4 | 15% | `BDK/FFPMscTtilde`, `W2jet/A6texact`, `W2jet/fpp`, `W2jet/vv` |
 
 ## Per-file effort: configurations and how effort is attributed
 
-The tables above divide a run total by files settled. The tables below attribute wall time, USD and tool calls to *individual files*. Runs are grouped into configurations (two runs share one only if the same models ran the same phases), which splits the ccworkflow block: R2 drives every phase with opus-5, while R1 and R3 author on sonnet-5 and only integrate on opus-5. C6 and C7 (ccloop) are one run each, as is C2.
+The tables above divide a run total by files settled. The tables below attribute wall time, USD and tool calls to *individual files*. Runs are grouped into configurations (two runs share one only if the same models ran the same phases), which splits the ccworkflow block: R2 drives every phase with opus-5, while R1 and R3 author on sonnet-5 and only integrate on opus-5. C6 (ccloop) is a single run, as is C2.
 
 | Config | Runs | Harness | Attribution |
 |---|---|---|---|
@@ -262,7 +245,6 @@ The tables above divide a run total by files settled. The tables below attribute
 | C4 — csloop sonnet-5 | R7, R8 | csloop | apportioned |
 | C5 — csloop gpt-5.6 | R9, R10, R11 | csloop | apportioned |
 | C6 — ccloop opus-5 | R12 | ccloop | apportioned |
-| C7 — ccloop sonnet-5 | R13 | ccloop | apportioned |
 
 **The two attribution methods are not the same measurement and must not be compared column-for-column without this caveat.** The one comparison that *is* clean is ccloop against csloop: both are apportioned, by the same construction, so their per-file columns differ only in what the runs did.
 
@@ -272,7 +254,7 @@ The tables above divide a run total by files settled. The tables below attribute
 
 - The tool-call column is not one quantity across methods: *exact* counts every call the unit's agent made, *apportioned* counts only calls naming the unit, which is smaller by construction.
 
-- `Unattributed` is also the honest read on how coarse a run's per-file split is. R12 is the highest in the corpus at 94%: only about 13 of its 219 attributable calls name a settled unit at all, the rest being builds, the benchmark, roadmap queries and the approval gate, so its columns rest on that handful and the rest is spread proportionally. For ccloop the count also excludes the harness's own end-of-loop report calls, whose prose names files it only wrote *about* (see `per_file_effort.py`); leaving them in would have handed `W2jet/w2jetsq` roughly half of R12 on the strength of two summaries.
+- `Unattributed` is also the honest read on how coarse a run's per-file split is. R12 is the highest in the corpus at 95%: only about 12 of its 244 attributable calls name a settled unit at all, the rest being builds, the benchmark, roadmap queries and the approval gate, so its columns rest on that handful and the rest is spread proportionally. For ccloop the count also excludes the harness's own end-of-loop report calls, whose prose names files it only wrote *about* rather than worked on (see `per_file_effort.py` for why, and for the out-of-scope run where leaving them in would have handed one unit roughly half the run).
 
 | Run | Config | Method | Units attributed | Attributed USD | Attributed min | Author phase / run | Unattributed |
 |---|---|---|---:|---:|---:|---:|---:|
@@ -287,8 +269,7 @@ The tables above divide a run total by files settled. The tables below attribute
 | R9 | C5 | apportioned | 5 | $6.38 | 21.8 | — | 76% |
 | R10 | C5 | apportioned | 10 | $9.59 | 25.4 | — | 67% |
 | R11 | C5 | apportioned | 11 | $10.06 | 37.6 | — | 67% |
-| R12 | C6 | apportioned | 9 | $51.72 | 60.2 | — | 94% |
-| R13 | C7 | apportioned | 5 | $13.17 | 26.8 | — | 74% |
+| R12 | C6 | apportioned | 15 | $53.16 | 69.7 | — | 95% |
 
 Unsettled work is carried but not averaged: R1 spent two full author agents on `Mods/mod_qcdloop_c` and `Mods/types_mod` and landed neither (a `.hpp` with no `.cpp` behind it is not a translation — see `git_file_counts.py`). Those rows are in `data/per_file_effort.csv` with `settled = False` and are excluded from every mean below.
 
@@ -323,8 +304,7 @@ Per-file rows differ between `data/per_file_effort.csv` (exact / apportioned) an
 | R9 | C5 | measured / author | apportioned | $6.38 | $6.38 | $0.94 | 54% |
 | R10 | C5 | measured / author | apportioned | $9.59 | $9.59 | $0.69 | 54% |
 | R11 | C5 | measured / author | apportioned | $10.06 | $10.06 | $0.90 | 54% |
-| R12 | C6 | derived / all | apportioned | $51.72 | $51.72 | $0.00 | 98% |
-| R13 | C7 | derived / all | apportioned | $13.17 | $13.17 | $0.00 | 74% |
+| R12 | C6 | derived / all | apportioned | $53.16 | $53.16 | $0.00 | 98% |
 
 `Primary USD` is the run's other method — *exact* for ccworkflow (author phase only), *apportioned* for csloop and ccloop (whole run). Where the primary method is *apportioned*, it and *timed* reconcile to the same run total by construction and differ only in how that total is split across files; where it is *exact*, the two cover different phases and the totals are not meant to match. `Unmeasured USD` is the cost of phases the timed method could not see at all — csloop's review phase, and nothing for a transcript harness.
 
@@ -334,63 +314,63 @@ Machine-readable versions: `analysis/data/per_file_effort_timed.csv` (one row pe
 
 ## Per-file effort by configuration (shared file set)
 
-Files settled by at least one replicate of every configuration with more than one replicate (C1, C3, C5); C2, C6, C7 are shown where they settled the same file but are not required, since a single run should not decide the comparison set. C6 and C7 worked only in W2jet, so their columns are blank on every BDK and Mods row — that is where those runs went, not a hole in the measurement. C4 is left out entirely: it settled only `Mods/pp_mod` and `Mods/ppwp2j_mod`, so intersecting it would collapse this to two rows. Each cell is the mean over the replicates of that configuration **that settled the file**, with the replicate count in brackets — a file no replicate settled is blank, not zero.
+Files settled by at least one replicate of every configuration with more than one replicate (C1, C3, C5); C2, C6 are shown where they settled the same file but are not required, since a single run should not decide the comparison set. C6 worked only in W2jet and BDK, so its column is blank on every Mods row — that is where that run went, not a hole in the measurement. C4 is left out entirely: it settled only `Mods/pp_mod` and `Mods/ppwp2j_mod`, so intersecting it would collapse this to two rows. Each cell is the mean over the replicates of that configuration **that settled the file**, with the replicate count in brackets — a file no replicate settled is blank, not zero.
 
-The bottom row of each table is likewise a mean over the shared files **that column reached**, and `[nf]` says how many that was. Columns with different counts are not like-for-like: C6 and C7 are averaging their W2jet rows only, where C1, C3 and C5 average BDK and Mods rows too. Compare a column against another on the individual `W2jet/...` rows, which every displayed configuration except C7's `subqcd` actually has.
+The bottom row of each table is likewise a mean over the shared files **that column reached**, and `[nf]` says how many that was. Columns with different counts are not like-for-like: C6 averages its W2jet and BDK rows only, where C1, C3 and C5 average Mods rows too. Compare a column against another on the individual rows both actually have, not on the bottom row.
 
 ### Minutes per file
 
-| File | C1 (exact) | C2 (exact) | C3 (apportioned) | C5 (apportioned) | C6 (apportioned) | C7 (apportioned) |
-|---|---:|---:|---:|---:|---:|---:|
-| `BDK/FFMPcc` | 10.4 (2) | 6.2 (1) | 2.5 (1) | 3.1 (1) | — | — |
-| `BDK/FFPMccT` | 8.6 (2) | 5.5 (1) | 2.5 (1) | 3.1 (1) | — | — |
-| `BDK/FFPMccTtilde` | 4.7 (2) | 3.7 (1) | 2.5 (1) | 2.6 (1) | — | — |
-| `BDK/FFPMscT` | 5.1 (2) | 6.0 (1) | 2.5 (1) | 4.0 (1) | — | — |
-| `BDK/fvs` | 18.6 (2) | 7.0 (1) | 3.5 (1) | 4.4 (1) | — | — |
-| `Mods/pp_mod` | 7.1 (1) | — | 3.6 (3) | 2.7 (1) | — | — |
-| `Mods/ppwp2j_mod` | 5.8 (1) | — | 2.5 (3) | 2.7 (1) | — | — |
-| `W2jet/ZZbox1LL` | 8.1 (2) | 7.8 (1) | 2.7 (2) | 2.7 (2) | 2.3 (1) | 5.2 (1) |
-| `W2jet/a6treeg` | 7.8 (2) | 5.9 (1) | 2.8 (3) | 3.2 (3) | 5.6 (1) | 5.2 (1) |
-| `W2jet/atree` | 8.4 (2) | 6.0 (1) | 4.8 (3) | 4.4 (3) | 10.2 (1) | 5.9 (1) |
-| `W2jet/ggZZcapture` | 7.4 (2) | 5.6 (1) | 2.5 (2) | 3.2 (3) | 11.6 (1) | 5.2 (1) |
-| `W2jet/subqcd` | 4.9 (1) | 6.8 (1) | 3.9 (3) | 3.0 (1) | 2.3 (1) | — |
-| **Mean over the shared files** [of 12] | 8.1 [12f] | 6.1 [10f] | 3.0 [12f] | 3.3 [12f] | 6.4 [5f] | 5.4 [4f] |
+| File | C1 (exact) | C2 (exact) | C3 (apportioned) | C5 (apportioned) | C6 (apportioned) |
+|---|---:|---:|---:|---:|---:|
+| `BDK/FFMPcc` | 10.4 (2) | 6.2 (1) | 2.5 (1) | 3.1 (1) | — |
+| `BDK/FFPMccT` | 8.6 (2) | 5.5 (1) | 2.5 (1) | 3.1 (1) | 1.2 (1) |
+| `BDK/FFPMccTtilde` | 4.7 (2) | 3.7 (1) | 2.5 (1) | 2.6 (1) | 1.2 (1) |
+| `BDK/FFPMscT` | 5.1 (2) | 6.0 (1) | 2.5 (1) | 4.0 (1) | 1.2 (1) |
+| `BDK/fvs` | 18.6 (2) | 7.0 (1) | 3.5 (1) | 4.4 (1) | 4.1 (1) |
+| `Mods/pp_mod` | 7.1 (1) | — | 3.6 (3) | 2.7 (1) | — |
+| `Mods/ppwp2j_mod` | 5.8 (1) | — | 2.5 (3) | 2.7 (1) | — |
+| `W2jet/ZZbox1LL` | 8.1 (2) | 7.8 (1) | 2.7 (2) | 2.7 (2) | 7.0 (1) |
+| `W2jet/a6treeg` | 7.8 (2) | 5.9 (1) | 2.8 (3) | 3.2 (3) | 12.8 (1) |
+| `W2jet/atree` | 8.4 (2) | 6.0 (1) | 4.8 (3) | 4.4 (3) | 4.1 (1) |
+| `W2jet/ggZZcapture` | 7.4 (2) | 5.6 (1) | 2.5 (2) | 3.2 (3) | — |
+| `W2jet/subqcd` | 4.9 (1) | 6.8 (1) | 3.9 (3) | 3.0 (1) | 1.2 (1) |
+| **Mean over the shared files** [of 12] | 8.1 [12f] | 6.1 [10f] | 3.0 [12f] | 3.3 [12f] | 4.1 [8f] |
 
 ### USD per file
 
-| File | C1 (exact) | C2 (exact) | C3 (apportioned) | C5 (apportioned) | C6 (apportioned) | C7 (apportioned) |
-|---|---:|---:|---:|---:|---:|---:|
-| `BDK/FFMPcc` | 4.09 (2) | 5.40 (1) | 0.80 (1) | 0.84 (1) | — | — |
-| `BDK/FFPMccT` | 3.25 (2) | 4.62 (1) | 0.80 (1) | 0.84 (1) | — | — |
-| `BDK/FFPMccTtilde` | 1.71 (2) | 3.32 (1) | 0.80 (1) | 0.69 (1) | — | — |
-| `BDK/FFPMscT` | 1.96 (2) | 5.69 (1) | 0.80 (1) | 1.08 (1) | — | — |
-| `BDK/fvs` | 5.68 (2) | 5.40 (1) | 1.09 (1) | 1.19 (1) | — | — |
-| `Mods/pp_mod` | 2.58 (1) | — | 1.22 (3) | 1.02 (1) | — | — |
-| `Mods/ppwp2j_mod` | 2.42 (1) | — | 0.87 (3) | 1.02 (1) | — | — |
-| `W2jet/ZZbox1LL` | 3.50 (2) | 6.28 (1) | 0.95 (2) | 0.87 (2) | 1.99 (1) | 2.57 (1) |
-| `W2jet/a6treeg` | 3.18 (2) | 4.84 (1) | 0.96 (3) | 1.02 (3) | 4.77 (1) | 2.57 (1) |
-| `W2jet/atree` | 2.54 (2) | 5.15 (1) | 1.62 (3) | 1.31 (3) | 8.75 (1) | 2.89 (1) |
-| `W2jet/ggZZcapture` | 2.92 (2) | 5.00 (1) | 0.84 (2) | 0.99 (3) | 9.95 (1) | 2.57 (1) |
-| `W2jet/subqcd` | 2.23 (1) | 5.06 (1) | 1.30 (3) | 0.87 (1) | 1.99 (1) | — |
-| **Mean over the shared files** [of 12] | 3.01 [12f] | 5.08 [10f] | 1.00 [12f] | 0.98 [12f] | 5.49 [5f] | 2.65 [4f] |
+| File | C1 (exact) | C2 (exact) | C3 (apportioned) | C5 (apportioned) | C6 (apportioned) |
+|---|---:|---:|---:|---:|---:|
+| `BDK/FFMPcc` | 4.09 (2) | 5.40 (1) | 0.80 (1) | 0.84 (1) | — |
+| `BDK/FFPMccT` | 3.25 (2) | 4.62 (1) | 0.80 (1) | 0.84 (1) | 0.89 (1) |
+| `BDK/FFPMccTtilde` | 1.71 (2) | 3.32 (1) | 0.80 (1) | 0.69 (1) | 0.89 (1) |
+| `BDK/FFPMscT` | 1.96 (2) | 5.69 (1) | 0.80 (1) | 1.08 (1) | 0.89 (1) |
+| `BDK/fvs` | 5.68 (2) | 5.40 (1) | 1.09 (1) | 1.19 (1) | 3.10 (1) |
+| `Mods/pp_mod` | 2.58 (1) | — | 1.22 (3) | 1.02 (1) | — |
+| `Mods/ppwp2j_mod` | 2.42 (1) | — | 0.87 (3) | 1.02 (1) | — |
+| `W2jet/ZZbox1LL` | 3.50 (2) | 6.28 (1) | 0.95 (2) | 0.87 (2) | 5.32 (1) |
+| `W2jet/a6treeg` | 3.18 (2) | 4.84 (1) | 0.96 (3) | 1.02 (3) | 9.75 (1) |
+| `W2jet/atree` | 2.54 (2) | 5.15 (1) | 1.62 (3) | 1.31 (3) | 3.10 (1) |
+| `W2jet/ggZZcapture` | 2.92 (2) | 5.00 (1) | 0.84 (2) | 0.99 (3) | — |
+| `W2jet/subqcd` | 2.23 (1) | 5.06 (1) | 1.30 (3) | 0.87 (1) | 0.89 (1) |
+| **Mean over the shared files** [of 12] | 3.01 [12f] | 5.08 [10f] | 1.00 [12f] | 0.98 [12f] | 3.10 [8f] |
 
 ### Tool calls per file
 
-| File | C1 (exact) | C2 (exact) | C3 (apportioned) | C5 (apportioned) | C6 (apportioned) | C7 (apportioned) |
-|---|---:|---:|---:|---:|---:|---:|
-| `BDK/FFMPcc` | 63 (2) | 34 (1) | 5 (1) | 14 (1) | — | — |
-| `BDK/FFPMccT` | 63 (2) | 29 (1) | 5 (1) | 14 (1) | — | — |
-| `BDK/FFPMccTtilde` | 42 (2) | 25 (1) | 5 (1) | 11 (1) | — | — |
-| `BDK/FFPMscT` | 32 (2) | 30 (1) | 5 (1) | 18 (1) | — | — |
-| `BDK/fvs` | 92 (2) | 30 (1) | 7 (1) | 19 (1) | — | — |
-| `Mods/pp_mod` | 35 (1) | — | 8 (3) | 13 (1) | — | — |
-| `Mods/ppwp2j_mod` | 29 (1) | — | 6 (3) | 13 (1) | — | — |
-| `W2jet/ZZbox1LL` | 52 (2) | 40 (1) | 6 (2) | 13 (2) | 0 (1) | 8 (1) |
-| `W2jet/a6treeg` | 67 (2) | 33 (1) | 6 (3) | 14 (3) | 1 (1) | 8 (1) |
-| `W2jet/atree` | 58 (2) | 36 (1) | 11 (3) | 17 (3) | 2 (1) | 9 (1) |
-| `W2jet/ggZZcapture` | 51 (2) | 32 (1) | 6 (2) | 13 (3) | 2 (1) | 8 (1) |
-| `W2jet/subqcd` | 49 (1) | 44 (1) | 9 (3) | 10 (1) | 0 (1) | — |
-| **Mean over the shared files** [of 12] | 53 [12f] | 33 [10f] | 7 [12f] | 14 [12f] | 1 [5f] | 8 [4f] |
+| File | C1 (exact) | C2 (exact) | C3 (apportioned) | C5 (apportioned) | C6 (apportioned) |
+|---|---:|---:|---:|---:|---:|
+| `BDK/FFMPcc` | 63 (2) | 34 (1) | 5 (1) | 14 (1) | — |
+| `BDK/FFPMccT` | 63 (2) | 29 (1) | 5 (1) | 14 (1) | 0 (1) |
+| `BDK/FFPMccTtilde` | 42 (2) | 25 (1) | 5 (1) | 11 (1) | 0 (1) |
+| `BDK/FFPMscT` | 32 (2) | 30 (1) | 5 (1) | 18 (1) | 0 (1) |
+| `BDK/fvs` | 92 (2) | 30 (1) | 7 (1) | 19 (1) | 1 (1) |
+| `Mods/pp_mod` | 35 (1) | — | 8 (3) | 13 (1) | — |
+| `Mods/ppwp2j_mod` | 29 (1) | — | 6 (3) | 13 (1) | — |
+| `W2jet/ZZbox1LL` | 52 (2) | 40 (1) | 6 (2) | 13 (2) | 1 (1) |
+| `W2jet/a6treeg` | 67 (2) | 33 (1) | 6 (3) | 14 (3) | 2 (1) |
+| `W2jet/atree` | 58 (2) | 36 (1) | 11 (3) | 17 (3) | 1 (1) |
+| `W2jet/ggZZcapture` | 51 (2) | 32 (1) | 6 (2) | 13 (3) | — |
+| `W2jet/subqcd` | 49 (1) | 44 (1) | 9 (3) | 10 (1) | 0 (1) |
+| **Mean over the shared files** [of 12] | 53 [12f] | 33 [10f] | 7 [12f] | 14 [12f] | 1 [8f] |
 
 Machine-readable versions, for plotting: `analysis/data/per_file_effort.csv` (one row per run and file, unsettled rows included), `analysis/data/per_file_effort_by_config.csv` (one row per configuration and file, with `shared` marking this comparison set) and `analysis/data/per_file_effort_runs.csv` (per-run method, coverage and caveats). Every row in all three carries `method`.
 
@@ -423,5 +403,5 @@ Per run, the order it first touched a file it actually went on to settle in each
 | R11 — csloop gpt-5.6 (run6) | 1 | Mods | 0.6 min | bash | `Mods/types_mod` | 1/1 | 8.0 | — |
 | R11 — csloop gpt-5.6 (run6) | 2 | W2jet | 4.6 min | bash | `W2jet/ggZZcapture` | 4/5 | 3.6 | — |
 | R11 — csloop gpt-5.6 (run6) | 3 | BDK | 22.5 min | bash | `BDK/FFMPcc` | 5/5 | 1.2 | — |
-| R12 — ccloop opus-5 | 1 | W2jet | 8.9 min | Bash | `W2jet/atree` | 8/9 | 2.7 | — |
-| R13 — ccloop sonnet-5 | 1 | W2jet | 11.5 min | Bash | `W2jet/atree` | 5/5 | 3.6 | — |
+| R12 — ccloop opus-5 | 1 | W2jet | 12.4 min | Bash | `W2jet/a6treeg` | 9/10 | 2.0 | — |
+| R12 — ccloop opus-5 | 2 | BDK | 21.8 min | Bash | `BDK/FFPMscTtilde` | 5/5 | 1.2 | — |
