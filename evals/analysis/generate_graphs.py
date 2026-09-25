@@ -3620,46 +3620,6 @@ def write_tex_tables(metrics, coverage, translated_units, decision_models, loop_
 
 
 
-def _tikz_decision_axis(width, height):
-    """Chrome shared by the three decision panels: no frame, recessive ticks."""
-    return (
-        f"width={width}, height={height},\n"
-        "  axis lines=left, axis line style={draw=none},\n"
-        "  tick label style={font=\\footnotesize, /pgf/number format/assume math mode=true},\n"
-        "  label style={font=\\footnotesize, color=evalInk},\n"
-        "  title style={font=\\small\\bfseries, yshift=-1pt},\n"
-        "  xtick style={draw=none}, ytick style={draw=none},\n"
-    )
-
-
-def _tikz_panel_agreement(buckets, n_models):
-    """Distinct files by how many models independently settled them."""
-    ns = sorted(buckets, reverse=True)
-    total = sum(len(v) for v in buckets.values())
-    n = len(ns)
-    bars, labels = [], []
-    for i, k in enumerate(ns):
-        v = len(buckets[k])
-        y = n - 1 - i
-        step = min(k - 1, len(ORD_BLUE) - 1)
-        bars.append(f"\\addplot[xbar, fill=evalOrd{step}, draw=none, bar width=10pt,"
-                    f" forget plot] coordinates {{({v},{y})}};\n")
-        labels.append(
-            f"\\node[font=\\scriptsize, color=evalInk, anchor=west] at (axis cs:{v},{y})"
-            f" {{\\hspace{{3pt}}{v} ({100 * v / total:.0f}\\%)}};\n"
-        )
-    yl = ",".join(f"{k} of {n_models}" for k in reversed(ns))
-    return (
-        "\\nextgroupplot[" + _tikz_decision_axis("0.55\\textwidth", "4.6cm") +
-        "  xmajorgrids, grid style={draw=evalGrid, line width=0.4pt},\n"
-        f"  xmin=0, xmax={total * 1.55:.0f}, xtick={{0,25,50}}, ymin=-0.7, ymax={n - 0.3},\n"
-        f"  ytick={{{','.join(str(i) for i in range(n))}}}, yticklabels={{{yl}}},\n"
-        "  xlabel={Distinct files},\n"
-        "  title={Cross-model agreement},\n"
-        "]\n" + "".join(bars) + "".join(labels)
-    )
-
-
 TIKZ_TIMELINE_MARKER_SIZE_PT = 8.5
 """Node `minimum size` in pt, constant across markers -- see
 TIMELINE_MARKER_SIZE for why the fan-in-scaled size was dropped."""
@@ -3717,6 +3677,25 @@ def _tikz_panel_timeline(module_timelines):
         for i, m in enumerate(modules_seen)
     )
 
+    # Marker-style legend (filled vs. hollow), mirroring the PNG's top-right
+    # key -- drawn in evalInkStrong rather than a module color, since the
+    # filled/hollow distinction is orthogonal to which module a marker is.
+    # Placed in its own column, well clear of the module-color column above,
+    # so its longer strings never need to wrap.
+    style_x = xmax * 0.02
+    style_rows = [
+        ("fill=evalInkStrong, draw=evalSurface, line width=0.6pt", "ready leaf at fork"),
+        ("fill=evalSurface, draw=evalInkStrong, line width=1.1pt", "blocked unit at fork"),
+    ]
+    style_legend_lines = "".join(
+        f"\\node[circle, {style}, minimum size={TIKZ_TIMELINE_MARKER_SIZE_PT:.2f}pt, inner sep=0pt] "
+        f"at (axis cs:{style_x:.3g},{legend_y0 + 0.7 * i:.3f}) {{}};\n"
+        f"\\node[font=\\scriptsize, color=evalInk, anchor=west, xshift=8pt] "
+        f"at (axis cs:{style_x:.3g},{legend_y0 + 0.7 * i:.3f}) {{{_tex_escape(label)}}};\n"
+        for i, (style, label) in enumerate(style_rows)
+    )
+    legend_lines += style_legend_lines
+
     yticklabels = ",".join(_tex_escape(RUN_CODES[k]) for k in keys_order)
     ymax = n + 0.3 + 0.7 * len(modules_seen)
     return (
@@ -3733,34 +3712,28 @@ def _tikz_panel_timeline(module_timelines):
     )
 
 
-def write_tikz_decision_figure(translated_units, decision_models, module_timelines):
-    """Decision-making figure as pgfplots, mirroring fig6_decision_making.png:
-    the module-entry timeline on top, cross-model file agreement below.
-
-    Same numbers, same palette steps, same panel order as the PNG -- the paper
-    gets a vector copy that picks up the document's fonts, and there is still
-    one source of truth behind both.
+def write_tikz_decision_figure(module_timelines):
+    """Decision-making figure as pgfplots: the module-entry timeline panel of
+    fig6_decision_making.png, as a vector copy that picks up the document's
+    fonts. The PNG's second panel (cross-model file agreement) is left out
+    here on purpose -- that count is reported in prose in sec:evaldecision
+    instead of as a panel, so model_settlement_frequency still feeds the
+    summary tables but has nothing left to draw in this figure.
     """
-    buckets, n_models = model_settlement_frequency(translated_units, decision_models)
-
     body = [
         TEX_DATA_BANNER,
         "%% Decision-making figure. Requires pgfplots + the groupplots library\n"
-        "%% and the evalXxx colours, both set up in jss-submission.sty. Top panel:\n"
-        "%% module-entry timeline -- marker color is the module; filled = every\n"
+        "%% and the evalXxx colours, both set up in jss-submission.sty.\n"
+        "%% Module-entry timeline -- marker color is the module; filled = every\n"
         "%% settled unit there was a ready leaf (deps=0, blind=0) at the shared\n"
         "%% fork point, hollow = at least one was entered while something else\n"
         "%% there still had an untranslated callee (see parse_decision_timeline.py\n"
-        "%% for what counts as \"settled\" here). Bottom panel: runs are\n"
-        "%% collapsed to the model that CHOSE the files (the run's own model for\n"
-        "%% csloop and ccloop, the TRIAGE model for ccworkflow), and counts are over\n"
-        "%% DISTINCT\n"
-        "%% files, so a model with four runs cannot out-vote one with a single run\n"
-        "%% by repeating itself.\n",
+        "%% for what counts as \"settled\" here) -- see the in-plot legend.\n"
+        "%% Cross-model agreement on the same files (PNG's second panel) is\n"
+        "%% reported in prose in sec:evaldecision instead of as a panel here.\n",
         "\\begin{tikzpicture}\n",
-        "\\begin{groupplot}[group style={group size=1 by 2, vertical sep=2.4cm}]\n",
+        "\\begin{groupplot}[group style={group size=1 by 1}]\n",
         _tikz_panel_timeline(module_timelines),
-        _tikz_panel_agreement(buckets, n_models),
         "\\end{groupplot}\n",
         "\\end{tikzpicture}\n",
     ]
@@ -3866,7 +3839,7 @@ def main():
     # LaTeX/TikZ artifacts consumed directly by the paper.
     write_tikz_colors()
     write_tikz_figure(metrics)
-    write_tikz_decision_figure(translated_units, decision_models, module_timelines)
+    write_tikz_decision_figure(module_timelines)
     write_tex_tables(metrics, coverage, translated_units, decision_models, loop_progress_by_run)
 
 
