@@ -237,10 +237,11 @@ def divergence_summary(experiments_root, runs):
 if __name__ == "__main__":
     import sys
 
-    sys.path.insert(0, str(Path(__file__).parent))
+    _HERE = Path(__file__).resolve().parent
+    sys.path.insert(0, str(_HERE))
     from generate_graphs import RUNS  # the registry, so this matches the figures
 
-    root = Path(__file__).parent.parent / "experiments"
+    root = _HERE.parent / "experiments"
     summary = divergence_summary(root, RUNS)
     span = summary.pop("range")
     for run_name, replay in summary.items():

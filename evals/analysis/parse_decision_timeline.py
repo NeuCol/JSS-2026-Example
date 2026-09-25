@@ -247,10 +247,10 @@ def module_entry_order(experiments_root, day, run_name, settled_units):
 if __name__ == "__main__":
     import sys
 
-    sys.path.insert(0, str(Path(__file__).parent))
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
     from git_file_counts import translated_file_units
 
-    experiments_root = Path(__file__).parent.parent / "experiments"
+    experiments_root = Path(__file__).resolve().parent.parent / "experiments"
     day, run_name = sys.argv[1], sys.argv[2]
     units = translated_file_units(day, run_name) or []
     for row in module_entry_order(experiments_root, day, run_name, units):

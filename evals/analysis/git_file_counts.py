@@ -57,7 +57,7 @@ here from the run directory name, with an explicit existence check.
 import subprocess
 from pathlib import Path
 
-MCFM_DIR = Path(__file__).parent.parent.parent / "software" / "mcfm"
+MCFM_DIR = Path(__file__).resolve().parent.parent.parent / "software" / "mcfm"
 BASE_REF = "1abdcddaad89582552edc41de68e4a6e1ac75f1d"  # shared fork point for every evals/* branch seen so far
 
 # Extensions that make a path an original Fortran source. Matched
@@ -199,7 +199,7 @@ def discover_runs(experiments_root):
 if __name__ == "__main__":
     import sys
 
-    experiments = Path(__file__).parent.parent / "experiments"
+    experiments = Path(__file__).resolve().parent.parent / "experiments"
     args = sys.argv[1:]
     runs = [tuple(a.split("/", 1)) for a in args] if args else discover_runs(experiments)
 

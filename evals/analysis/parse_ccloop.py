@@ -287,8 +287,8 @@ def parse_all_ccloop(experiments_root):
 if __name__ == "__main__":
     import sys
 
-    sys.path.insert(0, str(Path(__file__).parent))
-    root = sys.argv[1] if len(sys.argv) > 1 else str(Path(__file__).parent.parent / "experiments")
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+    root = sys.argv[1] if len(sys.argv) > 1 else str(Path(__file__).resolve().parent.parent / "experiments")
     rows = parse_all_ccloop(root)
     print(f"Parsed {len(rows)} ccloop agent rows")
     for row in rows:

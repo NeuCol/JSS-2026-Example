@@ -52,9 +52,10 @@ fixed:
                          repeated-call blocking and a protected task file in
                          code, while the loop workflow states the same rules as
                          prose to an agent with an unrestricted shell. Replaying
-                         the ccloop runs' Bash calls against CodeScribe's own
-                         validator rejects 91-95% of them (shell_policy.py), so
-                         this is a large intervention rather than a detail. Read
+                         the Claude Code runs' Bash calls against CodeScribe's
+                         own validator rejects 93-96% of them, 96% for the
+                         ccloop run R12 (shell_policy.py), so this is a large
+                         intervention rather than a detail. Read
                          a gap here as the cost of bounded execution -- with the
                          budget caveat in BUDGET_NOTE, which is a calibration
                          error on top of it.
@@ -192,7 +193,7 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 from matplotlib.lines import Line2D
 
-sys.path.insert(0, str(Path(__file__).parent))
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from harness import (CCLOOP, CCWORKFLOW, CSLOOP, HARNESSES, harness_of,
                      is_claude_code, verify_harness_names)
@@ -207,15 +208,16 @@ from parse_roadmap import fork_point_roadmap
 from per_file_effort import per_file_effort, per_file_effort_timed
 from parse_decision_timeline import module_entry_order
 import shell_policy
+from bash_error_rates import bash_error_rates as load_bash_error_rates_raw
 
-REPO_ROOT = Path(__file__).parent.parent
+REPO_ROOT = Path(__file__).resolve().parent.parent
 EXPERIMENTS = REPO_ROOT / "experiments"
-FIGURES_DIR = Path(__file__).parent / "figures"
+FIGURES_DIR = Path(__file__).resolve().parent / "figures"
 FIGURES_DIR.mkdir(exist_ok=True)
 # Machine-readable exports of numbers the summary tables round for reading.
 # Plotting code (here or elsewhere) should read these rather than re-deriving
 # an attribution, so a figure and a table can never disagree.
-DATA_DIR = Path(__file__).parent / "data"
+DATA_DIR = Path(__file__).resolve().parent / "data"
 DATA_DIR.mkdir(exist_ok=True)
 
 # ---------------------------------------------------------------------------
@@ -564,9 +566,10 @@ def policy_note():
 # A clean enforced-vs-advisory contrast states the SAME budget in the SAME unit
 # and varies only whether it is enforced. R12 did not get that. csloop's binding
 # constraint is AgentPolicy.max_iterations = 30 MODEL TURNS, and a CodeScribe
-# turn carries several tool calls (measured over the 38 archived author/review
-# phases in scope: mean 2.41, range 0.50-4.60), so a csloop opus author executes
-# about 71 tool calls per loop. The loop.js revision that ran R12 told its author
+# turn carries several tool calls (measured over all 72 archived phases in scope
+# -- 38 author and 34 review: mean 2.40, range 0.50-4.60). A csloop opus author
+# executes about 71 tool calls per loop; that figure is measured directly rather
+# than derived from the ratio above (mean 71.3 over its 14 author phases). The loop.js revision that ran R12 told its author
 # to "finish within about 30 tool-calling turns", and Claude Code emits exactly
 # one tool call per turn -- so the same number meant roughly a third of the work.
 # R12 averaged 37 author tool calls per loop against that ~71, and the average
@@ -576,12 +579,12 @@ def policy_note():
 # practice as well as in wording -- the author overran it exactly when it had
 # work to do. `maxToolCalls` was added to loop.js afterwards and is not what this
 # run ran under. Note also that csloop's own 120-call ceiling never bound: no
-# archived phase stops on `tool_budget`, they stop at max_iterations (25 of 38)
-# or finish early (13 of 38).
+# archived phase stops on `tool_budget`: of the 38 author phases, 25 stop at
+# max_iterations and 13 finish early, and all 34 review phases end on final text.
 BUDGET_NOTE = (
     "Budget caveat on ccloop: the loop.js revision that produced R12 stated its per-loop "
     "budget in Claude Code turns (one tool call each) against a number calibrated for CodeScribe "
-    "turns (2.41 tool calls each, measured), so the stated budget was roughly a third of csloop's "
+    "turns (2.40 tool calls each, measured), so the stated budget was roughly a third of csloop's "
     "per-loop work. It was advisory and the author overran it when it had work to do: R12 "
     "averaged 37 author tool calls per loop, but spent 71 and 61 in its two translating loops "
     "(against csloop opus-5's ~71) and 22/18/12 in the three loops that found the approval gate "
@@ -1173,6 +1176,11 @@ def load_tool_calls_per_file(transcript_rows, cs_rows, files_settled):
     return result
 
 
+def load_bash_error_rates():
+    """{key: {"total", "errors", "rate"}} — see bash_error_rates.py for the count."""
+    return load_bash_error_rates_raw(EXPERIMENTS, RUNS)
+
+
 def load_per_file_effort(translated_units):
     """{run: per_file_effort record} — wall time, USD and tool calls attributed
     to individual translated files rather than to the run as a whole.
@@ -1480,6 +1488,41 @@ def draw_tool_calls_per_file_panel(ax, tool_calls_per_file, letter=None):
 
 
 # ---------------------------------------------------------------------------
+# Panel I — bash tool-call error rate
+#
+# Coloured by decision_models rather than HARNESS_COLOR: the point of this
+# panel is the model-level split inside csloop (Section~evalloop), which a
+# harness colouring would hide behind one orange for all eight csloop bars.
+# decision_models already attributes exactly one model per run the same way
+# Figure~fig:decision does (a run's own model for csloop/ccloop, the triage
+# model for ccworkflow), so this panel and that one never disagree about which
+# model a run is read as.
+# ---------------------------------------------------------------------------
+def draw_bash_error_rate_panel(ax, error_rates, decision_models, letter=None):
+    x = list(range(len(KEYS)))
+    rates = [
+        (error_rates[k]["rate"] * 100) if error_rates[k]["rate"] is not None else None
+        for k in KEYS
+    ]
+    colors = [MODEL_COLOR.get(decision_models[k], MUTED) for k in KEYS]
+
+    ymax, clipped = capped_limit(rates, clip_ratio=None)
+    heights = [v if v is not None else 0 for v in rates]
+    ax.bar(x, heights, width=0.5, color=colors, edgecolor=SURFACE, linewidth=1)
+    texts = [f"{v:.0f}%" if v is not None else "no bash calls" for v in rates]
+    _annotate_bars(ax, heights, texts, ymax)
+    _run_xticks(ax)
+    ax.set_ylabel("Bash calls that errored (%)")
+    ax.set_ylim(0, ymax)
+    ax.set_title(_title("Bash tool-call error rate", letter))
+
+    models_seen = [decision_models[k] for k in KEYS if decision_models[k] in MODEL_COLOR]
+    models_present = [m for m in MODEL_COLOR if m in models_seen]
+    handles = [mpatches.Patch(color=MODEL_COLOR[m], label=m) for m in models_present]
+    ax.legend(handles=handles, loc="upper left", frameon=False, ncol=2)
+
+
+# ---------------------------------------------------------------------------
 # Standalone compact figures
 # ---------------------------------------------------------------------------
 def save_fig(fig, name, caption_lines, width_in=None):
@@ -1504,7 +1547,8 @@ def _caption_rect(n_lines, top=0.90):
     return [0, min(0.45, 0.06 + 0.033 * n_lines), 1, top]
 
 
-def make_standalone_figures(runs, coverage, files_settled, wall_times, tool_calls_per_file):
+def make_standalone_figures(runs, coverage, files_settled, wall_times, tool_calls_per_file,
+                             error_rates, decision_models):
     # Fig 1 — cost & cache
     fig, (a1, a2) = plt.subplots(1, 2, figsize=(9.4, 4.4))
     fig.suptitle("Token cost & cache efficiency", fontsize=SUPTITLE_SIZE)
@@ -1560,6 +1604,22 @@ def make_standalone_figures(runs, coverage, files_settled, wall_times, tool_call
     ])
     fig.tight_layout(rect=_caption_rect(len(caption)))
     save_fig(fig, "fig5_tool_calls_per_file.png", caption)
+
+    # Fig 6 — bash tool-call error rate
+    fig, a1 = plt.subplots(figsize=(7.2, 4.2))
+    fig.suptitle("Bash tool-call error rate", fontsize=SUPTITLE_SIZE)
+    draw_bash_error_rate_panel(a1, error_rates, decision_models)
+    a1.set_title("")
+    caption = run_code_caption(7.2) + wrap_notes(7.2, [
+        "Bash calls that returned an error, divided by Bash calls executed (bash_error_rates.py); "
+        "csloop reads this from loop/metadata/*.toml's per-tool ok field, ccworkflow/ccloop by "
+        "matching each Bash tool_use to its tool_result.",
+        "Coloured by the model that chose the run's files (decision_model_per_run), not by "
+        "harness, so the csloop model split (Section~evalloop) is legible bar-by-bar.",
+        SCOPE_NOTE,
+    ])
+    fig.tight_layout(rect=_caption_rect(len(caption)))
+    save_fig(fig, "fig6_bash_error_rate.png", caption)
 
 
 # ---------------------------------------------------------------------------
@@ -2609,7 +2669,7 @@ def write_summary_tables(runs, coverage, files_settled, translated_units, wall_t
             )
     lines.append("")
 
-    out = Path(__file__).parent / "summary_tables.md"
+    out = Path(__file__).resolve().parent / "summary_tables.md"
     out.write_text("\n".join(lines))
     print(f"wrote {out}")
 
@@ -2621,7 +2681,7 @@ def write_summary_tables(runs, coverage, files_settled, translated_units, wall_t
 # tables above, so there is exactly one numeric source of truth; the .tex files
 # below are generated artifacts and carry a do-not-hand-edit banner.
 # ---------------------------------------------------------------------------
-TEX_DIR = Path(__file__).parent / "tex"
+TEX_DIR = Path(__file__).resolve().parent / "tex"
 
 TEX_BANNER = (
     "%% GENERATED by evals/analysis/generate_graphs.py -- DO NOT HAND-EDIT.\n"
@@ -3787,7 +3847,13 @@ def main():
         print(f"{k}: per-file effort timed, {info['settled_units']} units, "
               f"${info['attributed_usd']:.2f} attributed, {info['unattributed_fraction']:.0%} unattributed")
 
-    make_standalone_figures(runs, coverage, files_settled, wall_times, tool_calls_per_file)
+    error_rates = load_bash_error_rates()
+    for k, r in error_rates.items():
+        rate = f"{r['rate']:.1%}" if r["rate"] is not None else "n/a"
+        print(f"{k}: bash calls {r['total']}, errors {r['errors']}, rate {rate}")
+
+    make_standalone_figures(runs, coverage, files_settled, wall_times, tool_calls_per_file,
+                             error_rates, decision_models)
     _bump_fonts_for_combined()
     make_combined_figure(runs, coverage, files_settled, wall_times, tool_calls_per_file)
     make_decision_figure(translated_units, decision_models, module_timelines)

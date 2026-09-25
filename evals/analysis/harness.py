@@ -170,7 +170,7 @@ def verify_harness_names(experiments_root, runs=None):
 
 
 if __name__ == "__main__":
-    experiments = Path(__file__).parent.parent / "experiments"
+    experiments = Path(__file__).resolve().parent.parent / "experiments"
     for day in sorted(p for p in experiments.iterdir() if p.is_dir()):
         for run in sorted(p for p in day.iterdir() if p.is_dir()):
             on_disk = detect_harness(run)
