@@ -2,8 +2,8 @@ run_id = "20260827-163852-7ae966"
 loop_index = 1
 phase = "review"
 model = "anthropic-claude-opus-5"
-task_file = "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/loop.toml"
-workdir = "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example"
+task_file = "/home/user/JSS-2026-Example/dev/transformations/mcfm-translate/loop.toml"
+workdir = "/home/user/JSS-2026-Example"
 stop_reason = "final_text"
 final_text_present = true
 iterations = 7
@@ -90,7 +90,7 @@ command = "grep -rn -e \"TRANSLATED\" -e \"status\" dev/transformations/mcfm-tra
 [[tools]]
 name = "write"
 ok = true
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/.codescribe/loop/review_output.toml (2723 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/.codescribe/loop/review_output.toml (2723 bytes)"
 
 [tools.args]
 path = ".codescribe/loop/review_output.toml"

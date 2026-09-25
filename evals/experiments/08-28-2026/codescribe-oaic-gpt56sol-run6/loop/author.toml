@@ -53,7 +53,7 @@ ok = true
 duration_ms = 0.626
 output_chars = 10524
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/current_plan.md
+# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/current_plan.md
 # lines: 1-210
 0001: # Fortran → C++ plan
 0002: 
@@ -89,7 +89,7 @@ ok = true
 duration_ms = 0.543
 output_chars = 7692
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/desired_spec.md
+# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/desired_spec.md
 # lines: 1-144
 0001: # Fortran → C++: target output for one MCFM file
 0002: 
@@ -129,7 +129,7 @@ ok = true
 duration_ms = 0.47
 output_chars = 3221
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/agent_log.md
+# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/agent_log.md
 # lines: 1-51
 0001: # MCFM translation worklist
 0002: 
@@ -168,7 +168,7 @@ ok = true
 duration_ms = 0.435
 output_chars = 368
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/fvs.hpp
+# path: /home/user/JSS-2026-Example/software/mcfm/src/BDK/fvs.hpp
 # lines: 1-6
 0001: #ifndef FVS_HPP
 0002: #define FVS_HPP
@@ -203,7 +203,7 @@ ok = true
 duration_ms = 0.457
 output_chars = 5868
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/fvs.cpp
+# path: /home/user/JSS-2026-Example/software/mcfm/src/BDK/fvs.cpp
 # lines: 1-40
 0001: #include "fvs.hpp"
 0002: #include <Need.hpp>
@@ -241,7 +241,7 @@ ok = true
 duration_ms = 0.424
 output_chars = 827
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/fvs_fi.f90
+# path: /home/user/JSS-2026-Example/software/mcfm/src/BDK/fvs_fi.f90
 # lines: 1-18
 0001: function fvs(st,j1,j2,j3,j4,j5,j6,za,zb) result(res)
 0002:  use, intrinsic :: iso_c_binding
@@ -279,7 +279,7 @@ ok = true
 duration_ms = 0.448
 output_chars = 6015
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/FFMPcc.cpp
+# path: /home/user/JSS-2026-Example/software/mcfm/src/BDK/FFMPcc.cpp
 # lines: 1-36
 0001: #include "FFMPcc.hpp"
 0002: #include <Need.hpp>
@@ -313,10 +313,10 @@ run_id = "20260828-152202-5382f0"
 iteration = 1
 tool = "read"
 ok = false
-error = "file not found: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/FFMPcc.f"
+error = "file not found: /home/user/JSS-2026-Example/software/mcfm/src/BDK/FFMPcc.f"
 duration_ms = 0.382
 output_chars = 106
-output_preview = "Error: file not found: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/FFMPcc.f"
+output_preview = "Error: file not found: /home/user/JSS-2026-Example/software/mcfm/src/BDK/FFMPcc.f"
 ts = "2026-08-28T20:22:10.614591+00:00"
 
 [[event]]
@@ -343,7 +343,7 @@ ok = true
 duration_ms = 0.44
 output_chars = 2775
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/FFPMccT.cpp
+# path: /home/user/JSS-2026-Example/software/mcfm/src/BDK/FFPMccT.cpp
 # lines: 1-21
 0001: #include "FFPMccT.hpp"
 0002: #include <sprods_com_mod.hpp>
@@ -376,10 +376,10 @@ run_id = "20260828-152202-5382f0"
 iteration = 1
 tool = "read"
 ok = false
-error = "file not found: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/FFPMccT.f"
+error = "file not found: /home/user/JSS-2026-Example/software/mcfm/src/BDK/FFPMccT.f"
 duration_ms = 0.371
 output_chars = 107
-output_preview = "Error: file not found: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/FFPMccT.f"
+output_preview = "Error: file not found: /home/user/JSS-2026-Example/software/mcfm/src/BDK/FFPMccT.f"
 ts = "2026-08-28T20:22:10.615860+00:00"
 
 [[event]]
@@ -494,8 +494,8 @@ output_chars = 44339
 output_preview = '''
 exit_code: 0
 STDOUT:
-Generating Doxygen XML for /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src -> /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/doxygen_dep/xml
-wrote 1139 XML file(s) to /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/doxygen_dep/xml
+Generating Doxygen XML for /home/user/JSS-2026-Example/software/mcfm/src -> /home/user/JSS-2026-Example/software/mcfm/doxygen_dep/xml
+wrote 1139 XML file(s) to /home/user/JSS-2026-Example/software/mcfm/doxygen_dep/xml
 source 520  translated 86  untranslated 434
 ready leaves (deps=0, non-blind): 230
 symbol index: 915 symbol(s)
@@ -529,7 +529,7 @@ ok = true
 duration_ms = 0.713
 output_chars = 7635
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/deprecated/fvs.f
+# path: /home/user/JSS-2026-Example/software/mcfm/src/BDK/deprecated/fvs.f
 # lines: 1-178
 0001: !
 0002: !  SPDX-License-Identifier: GPL-3.0-or-later
@@ -571,7 +571,7 @@ ok = true
 duration_ms = 0.667
 output_chars = 7927
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/deprecated/FFMPcc.f
+# path: /home/user/JSS-2026-Example/software/mcfm/src/BDK/deprecated/FFMPcc.f
 # lines: 1-185
 0001: !
 0002: !  SPDX-License-Identifier: GPL-3.0-or-later
@@ -612,7 +612,7 @@ ok = true
 duration_ms = 0.58
 output_chars = 3168
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/deprecated/FFPMccT.f
+# path: /home/user/JSS-2026-Example/software/mcfm/src/BDK/deprecated/FFPMccT.f
 # lines: 1-73
 0001: !
 0002: !  SPDX-License-Identifier: GPL-3.0-or-later
@@ -654,7 +654,7 @@ ok = true
 duration_ms = 0.554
 output_chars = 1349
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/FFPMccTtilde.cpp
+# path: /home/user/JSS-2026-Example/software/mcfm/src/BDK/FFPMccTtilde.cpp
 # lines: 1-18
 0001: #include "FFPMccTtilde.hpp"
 0002: #include <sprods_com_mod.hpp>
@@ -692,7 +692,7 @@ ok = true
 duration_ms = 0.49
 output_chars = 1322
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/deprecated/FFPMccTtilde.f
+# path: /home/user/JSS-2026-Example/software/mcfm/src/BDK/deprecated/FFPMccTtilde.f
 # lines: 1-31
 0001: !
 0002: !  SPDX-License-Identifier: GPL-3.0-or-later
@@ -733,7 +733,7 @@ ok = true
 duration_ms = 0.431
 output_chars = 2884
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/FFPMscT.cpp
+# path: /home/user/JSS-2026-Example/software/mcfm/src/BDK/FFPMscT.cpp
 # lines: 1-23
 0001: #include "FFPMscT.hpp"
 0002: #include <sprods_com_mod.hpp>
@@ -771,7 +771,7 @@ ok = true
 duration_ms = 0.487
 output_chars = 3167
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/deprecated/FFPMscT.f
+# path: /home/user/JSS-2026-Example/software/mcfm/src/BDK/deprecated/FFPMscT.f
 # lines: 1-71
 0001: !
 0002: !  SPDX-License-Identifier: GPL-3.0-or-later
@@ -813,7 +813,7 @@ ok = true
 duration_ms = 0.459
 output_chars = 941
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/CMakeLists.txt
+# path: /home/user/JSS-2026-Example/software/mcfm/src/BDK/CMakeLists.txt
 # lines: 1-49
 0001: target_sources(objlib PRIVATE
 0002: FFPPsc.f
@@ -926,7 +926,7 @@ output_chars = 3524
 output_preview = '''
 exit_code: 0
 STDOUT:
-[95mROOT:[0m /home/akash/Desktop/Akash/Projects/JSS-Paper-Example
+[95mROOT:[0m /home/user/JSS-2026-Example
 [95mNODE:[0m <ROOT>/tests/mcfm
 
 [95mSCRIPTS: [0m
@@ -938,7 +938,7 @@ STDOUT:
 in 1:10.4 
       |     ^~~~~~~~
 /usr/include/c++/9/complex:409:5: note:   template argument deduction/substitution failed:
-/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/FFPMscT.cpp:15:1258: note:   '''
+/home/user/JSS-2026-Example/software/mcfm/src/BDK/FFPMscT.cpp:15:1258: note:   '''
 ts = "2026-08-28T20:23:37.178576+00:00"
 
 [[event]]
@@ -967,7 +967,7 @@ ok = true
 duration_ms = 0.511
 output_chars = 373
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/FFMPcc.hpp
+# path: /home/user/JSS-2026-Example/software/mcfm/src/BDK/FFMPcc.hpp
 # lines: 1-6
 0001: #ifndef FFMPCC_HPP
 0002: #define FFMPCC_HPP
@@ -1004,7 +1004,7 @@ ok = true
 duration_ms = 0.472
 output_chars = 821
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/FFMPcc_fi.f90
+# path: /home/user/JSS-2026-Example/software/mcfm/src/BDK/FFMPcc_fi.f90
 # lines: 1-18
 0001: function FFMPcc(j1,j2,j3,j4,j5,j6,za,zb) result(res)
 0002:  use, intrinsic :: iso_c_binding
@@ -1044,7 +1044,7 @@ ok = true
 duration_ms = 0.457
 output_chars = 377
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/FFPMccT.hpp
+# path: /home/user/JSS-2026-Example/software/mcfm/src/BDK/FFPMccT.hpp
 # lines: 1-6
 0001: #ifndef FFPMCCT_HPP
 0002: #define FFPMCCT_HPP
@@ -1081,7 +1081,7 @@ ok = true
 duration_ms = 0.476
 output_chars = 824
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/FFPMccT_fi.f90
+# path: /home/user/JSS-2026-Example/software/mcfm/src/BDK/FFPMccT_fi.f90
 # lines: 1-18
 0001: function FFPMccT(j1,j2,j3,j4,j5,j6,za,zb) result(res)
 0002:  use, intrinsic :: iso_c_binding
@@ -1121,7 +1121,7 @@ ok = true
 duration_ms = 0.466
 output_chars = 397
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/FFPMccTtilde.hpp
+# path: /home/user/JSS-2026-Example/software/mcfm/src/BDK/FFPMccTtilde.hpp
 # lines: 1-6
 0001: #ifndef FFPMCCTTILDE_HPP
 0002: #define FFPMCCTTILDE_HPP
@@ -1158,7 +1158,7 @@ ok = true
 duration_ms = 0.464
 output_chars = 839
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/FFPMccTtilde_fi.f90
+# path: /home/user/JSS-2026-Example/software/mcfm/src/BDK/FFPMccTtilde_fi.f90
 # lines: 1-18
 0001: function FFPMccTtilde(j1,j2,j3,j4,j5,j6,za,zb) result(res)
 0002:  use, intrinsic :: iso_c_binding
@@ -1198,7 +1198,7 @@ ok = true
 duration_ms = 0.45
 output_chars = 377
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/FFPMscT.hpp
+# path: /home/user/JSS-2026-Example/software/mcfm/src/BDK/FFPMscT.hpp
 # lines: 1-6
 0001: #ifndef FFPMSCT_HPP
 0002: #define FFPMSCT_HPP
@@ -1235,7 +1235,7 @@ ok = true
 duration_ms = 0.484
 output_chars = 824
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/FFPMscT_fi.f90
+# path: /home/user/JSS-2026-Example/software/mcfm/src/BDK/FFPMscT_fi.f90
 # lines: 1-18
 0001: function FFPMscT(j1,j2,j3,j4,j5,j6,za,zb) result(res)
 0002:  use, intrinsic :: iso_c_binding
@@ -1530,7 +1530,7 @@ output_chars = 758
 output_preview = '''
 {
   "ok": true,
-  "path": "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/FFPMscT.cpp",
+  "path": "/home/user/JSS-2026-Example/software/mcfm/src/BDK/FFPMscT.cpp",
   "applied": 1,
   "replacements": [
     {
@@ -1584,7 +1584,7 @@ output_chars = 3085
 output_preview = '''
 exit_code: 0
 STDOUT:
-[95mROOT:[0m /home/akash/Desktop/Akash/Projects/JSS-Paper-Example
+[95mROOT:[0m /home/user/JSS-2026-Example
 [95mNODE:[0m <ROOT>/tests/mcfm
 
 [95mSCRIPTS: [0m
@@ -1596,7 +1596,7 @@ STDOUT:
 in 1:10.3 
       |     ^~~~~~~~
 /usr/include/c++/9/complex:409:5: note:   template argument deduction/substitution failed:
-/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/FFPMscT.cpp:15:819: note:   d'''
+/home/user/JSS-2026-Example/software/mcfm/src/BDK/FFPMscT.cpp:15:819: note:   d'''
 ts = "2026-08-28T20:25:09.792505+00:00"
 
 [[event]]
@@ -1643,7 +1643,7 @@ output_chars = 2350
 output_preview = '''
 {
   "ok": true,
-  "path": "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/FFPMscT.cpp",
+  "path": "/home/user/JSS-2026-Example/software/mcfm/src/BDK/FFPMscT.cpp",
   "applied": 4,
   "replacements": [
     {
@@ -1697,7 +1697,7 @@ output_chars = 7291
 output_preview = '''
 exit_code: 0
 STDOUT:
-[95mROOT:[0m /home/akash/Desktop/Akash/Projects/JSS-Paper-Example
+[95mROOT:[0m /home/user/JSS-2026-Example
 [95mNODE:[0m <ROOT>/tests/mcfm
 
 [95mSCRIPTS: [0m
@@ -1709,7 +1709,7 @@ STDOUT:
 in 1:11.6 
       |     ^~~~~~~~
 /usr/include/c++/9/complex:409:5: note:   template argument deduction/substitution failed:
-/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/FFMPcc.cpp:26:3045: note:   d'''
+/home/user/JSS-2026-Example/software/mcfm/src/BDK/FFMPcc.cpp:26:3045: note:   d'''
 ts = "2026-08-28T20:26:31.213379+00:00"
 
 [[event]]
@@ -1883,7 +1883,7 @@ output_chars = 4917
 output_preview = '''
 {
   "ok": true,
-  "path": "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/FFMPcc.cpp",
+  "path": "/home/user/JSS-2026-Example/software/mcfm/src/BDK/FFMPcc.cpp",
   "applied": 9,
   "replacements": [
     {
@@ -1937,7 +1937,7 @@ output_chars = 4008
 output_preview = '''
 exit_code: 0
 STDOUT:
-[95mROOT:[0m /home/akash/Desktop/Akash/Projects/JSS-Paper-Example
+[95mROOT:[0m /home/user/JSS-2026-Example
 [95mNODE:[0m <ROOT>/tests/mcfm
 
 [95mSCRIPTS: [0m
@@ -1949,7 +1949,7 @@ STDOUT:
 in 1:15.7 
       |     ^~~~~~~~
 /usr/include/c++/9/complex:409:5: note:   template argument deduction/substitution failed:
-/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/FFPMccT.cpp:13:1563: note:   '''
+/home/user/JSS-2026-Example/software/mcfm/src/BDK/FFPMccT.cpp:13:1563: note:   '''
 ts = "2026-08-28T20:28:04.139612+00:00"
 
 [[event]]
@@ -1994,7 +1994,7 @@ output_chars = 3811
 output_preview = '''
 {
   "ok": true,
-  "path": "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/FFPMccT.cpp",
+  "path": "/home/user/JSS-2026-Example/software/mcfm/src/BDK/FFPMccT.cpp",
   "applied": 7,
   "replacements": [
     {
@@ -2048,7 +2048,7 @@ output_chars = 358
 output_preview = '''
 exit_code: 0
 STDOUT:
-[95mROOT:[0m /home/akash/Desktop/Akash/Projects/JSS-Paper-Example
+[95mROOT:[0m /home/user/JSS-2026-Example
 [95mNODE:[0m <ROOT>/tests/mcfm
 
 [95mSCRIPTS: [0m
@@ -2493,7 +2493,7 @@ ok = true
 duration_ms = 0.458
 output_chars = 2423
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/environment.sh
+# path: /home/user/JSS-2026-Example/environment.sh
 # lines: 1-41
 0001: # Shell configuration shared across the lab notebook.
 0002: #
@@ -2764,7 +2764,7 @@ tool = "write"
 ok = true
 duration_ms = 0.49
 output_chars = 92
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tmp/run_verify.py (195 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/dev/tmp/run_verify.py (195 bytes)"
 ts = "2026-08-28T20:30:54.366564+00:00"
 
 [[event]]
@@ -3118,7 +3118,7 @@ output_chars = 3082
 output_preview = '''
 {
   "ok": true,
-  "path": "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/agent_log.md",
+  "path": "/home/user/JSS-2026-Example/dev/transformations/mcfm-translate/agent_log.md",
   "applied": 2,
   "replacements": [
     {

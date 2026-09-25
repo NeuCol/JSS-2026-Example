@@ -2,8 +2,8 @@ run_id = "20260827-143518-94e682"
 loop_index = 1
 phase = "review"
 model = "anthropic-claude-sonnet-5"
-task_file = "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/loop.toml"
-workdir = "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example"
+task_file = "/home/user/JSS-2026-Example/dev/transformations/mcfm-translate/loop.toml"
+workdir = "/home/user/JSS-2026-Example"
 stop_reason = "final_text"
 final_text_present = true
 iterations = 6
@@ -20,7 +20,7 @@ command = "find .codescribe -type f 2>/dev/null; echo ---; find dev/transformati
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/loop.toml\n# lines: 1-18\n0001: # CodeScribe loop for Fortran -> C++.\n0002: #\n0003: # Run from the project root:\n0004: #   code-scribe loop -p dev/transformations/mcfm-translate/loop.toml -m <model>\n0005: \n0006: [tools]\n0007: bash = [\"jobrunner\", \"python3\"]\n0008: \n0009: [[chat.user]]\n0010: content = '''\n0011: Each round, follow the round algorithm in dev/transformations/mcfm-translate/current_plan.md an"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/loop.toml\n# lines: 1-18\n0001: # CodeScribe loop for Fortran -> C++.\n0002: #\n0003: # Run from the project root:\n0004: #   code-scribe loop -p dev/transformations/mcfm-translate/loop.toml -m <model>\n0005: \n0006: [tools]\n0007: bash = [\"jobrunner\", \"python3\"]\n0008: \n0009: [[chat.user]]\n0010: content = '''\n0011: Each round, follow the round algorithm in dev/transformations/mcfm-translate/current_plan.md an"
 
 [tools.args]
 path = "dev/transformations/mcfm-translate/loop.toml"
@@ -41,14 +41,14 @@ pattern = "dev/transformations/mcfm-translate/*"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/.codescribe/loop/author.toml\n# lines: 1-2614\n0001: \n0002: [[event]]\n0003: event = \"run_start\"\n0004: run_id = \"20260827-143518-56adda\"\n0005: mode = \"native_tools\"\n0006: max_iterations = 30\n0007: ts = \"2026-08-27T19:35:18.684638+00:00\"\n0008: \n0009: [[event]]\n0010: event = \"iteration_start\"\n0011: run_id = \"20260827-143518-56adda\"\n0012: iteration = 1\n0013: ts = \"2026-08-27T19:35:18.684775+00:00\"\n0014: \n0015: [[event]]\n0016: event = \"model_"
+output_preview = "# path: /home/user/JSS-2026-Example/.codescribe/loop/author.toml\n# lines: 1-2614\n0001: \n0002: [[event]]\n0003: event = \"run_start\"\n0004: run_id = \"20260827-143518-56adda\"\n0005: mode = \"native_tools\"\n0006: max_iterations = 30\n0007: ts = \"2026-08-27T19:35:18.684638+00:00\"\n0008: \n0009: [[event]]\n0010: event = \"iteration_start\"\n0011: run_id = \"20260827-143518-56adda\"\n0012: iteration = 1\n0013: ts = \"2026-08-27T19:35:18.684775+00:00\"\n0014: \n0015: [[event]]\n0016: event = \"model_"
 
 [tools.args]
 path = ".codescribe/loop/author.toml"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/.codescribe/loop/author.toml\n# lines: 2450-2614\n2450: iteration = 27\n2451: stop_reason = \"tool_calls\"\n2452: ts = \"2026-08-27T19:42:10.454162+00:00\"\n2453: \n2454: [[event]]\n2455: event = \"iteration_start\"\n2456: run_id = \"20260827-143518-56adda\"\n2457: iteration = 28\n2458: ts = \"2026-08-27T19:42:10.454318+00:00\"\n2459: \n2460: [[event]]\n2461: event = \"model_response\"\n2462: run_id = \"20260827-143518-56adda\"\n2463: iteration = 28\n2464: duration"
+output_preview = "# path: /home/user/JSS-2026-Example/.codescribe/loop/author.toml\n# lines: 2450-2614\n2450: iteration = 27\n2451: stop_reason = \"tool_calls\"\n2452: ts = \"2026-08-27T19:42:10.454162+00:00\"\n2453: \n2454: [[event]]\n2455: event = \"iteration_start\"\n2456: run_id = \"20260827-143518-56adda\"\n2457: iteration = 28\n2458: ts = \"2026-08-27T19:42:10.454318+00:00\"\n2459: \n2460: [[event]]\n2461: event = \"model_response\"\n2462: run_id = \"20260827-143518-56adda\"\n2463: iteration = 28\n2464: duration"
 
 [tools.args]
 path = ".codescribe/loop/author.toml"
@@ -57,7 +57,7 @@ limit = 165
 [[tools]]
 name = "write"
 ok = true
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/.codescribe/loop/review_output.toml (2772 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/.codescribe/loop/review_output.toml (2772 bytes)"
 
 [tools.args]
 path = ".codescribe/loop/review_output.toml"

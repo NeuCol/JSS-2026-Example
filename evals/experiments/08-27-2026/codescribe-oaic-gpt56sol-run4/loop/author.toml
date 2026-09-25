@@ -53,7 +53,7 @@ ok = true
 duration_ms = 0.628
 output_chars = 10524
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/current_plan.md
+# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/current_plan.md
 # lines: 1-210
 0001: # Fortran → C++ plan
 0002: 
@@ -123,7 +123,7 @@ ok = true
 duration_ms = 0.574
 output_chars = 3186
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/current_plan.md
+# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/current_plan.md
 # lines: 150-210
 0150:    - headings must start with `Group`
 0151: 5. If there is already an open group, keep filling and fixing that group before opening another.
@@ -158,7 +158,7 @@ ok = true
 duration_ms = 0.557
 output_chars = 7692
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/desired_spec.md
+# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/desired_spec.md
 # lines: 1-144
 0001: # Fortran → C++: target output for one MCFM file
 0002: 
@@ -230,8 +230,8 @@ output_chars = 44339
 output_preview = '''
 exit_code: 0
 STDOUT:
-Generating Doxygen XML for /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src -> /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/doxygen_dep/xml
-wrote 1133 XML file(s) to /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/doxygen_dep/xml
+Generating Doxygen XML for /home/user/JSS-2026-Example/software/mcfm/src -> /home/user/JSS-2026-Example/software/mcfm/doxygen_dep/xml
+wrote 1133 XML file(s) to /home/user/JSS-2026-Example/software/mcfm/doxygen_dep/xml
 source 526  translated 86  untranslated 440
 ready leaves (deps=0, non-blind): 238
 symbol index: 915 symbol(s)
@@ -297,7 +297,7 @@ ok = true
 duration_ms = 0.503
 output_chars = 3429
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/agent_log.md
+# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/agent_log.md
 # lines: 1-54
 0001: # MCFM translation worklist
 0002: 
@@ -339,7 +339,7 @@ ok = true
 duration_ms = 0.429
 output_chars = 142
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/approvals.toml
+# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/approvals.toml
 # lines: 1-1
 0001: version = 1
 '''
@@ -380,10 +380,10 @@ Blocking group: Group 1 — Mods type-kind infrastructure
 Reason: 3 completed group(s) are waiting; limit is 3
 
 Approve with:
-  python3 dev/tools/approve/approve_group.py /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate --latest-blocking
+  python3 dev/tools/approve/approve_group.py /home/user/JSS-2026-Example/dev/transformations/mcfm-translate --latest-blocking
 
 Or approve this exact group explicitly:
-  python3 dev/tools/approve/approve_group.py /home/akash/D'''
+  python3 dev/tools/approve/approve_group.py /home/user'''
 ts = "2026-08-27T18:15:02.126414+00:00"
 
 [[event]]
@@ -414,7 +414,7 @@ output_chars = 255
 output_preview = '''
 exit_code: 0
 STDOUT:
-pending approvals in /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate:
+pending approvals in /home/user/JSS-2026-Example/dev/transformations/mcfm-translate:
   - Group 1 — Mods type-kind infrastructure
   - Group 2 — W2jet amplitudes
   - Group 3 — W2jet coefficient capture
@@ -479,7 +479,7 @@ output_chars = 1309
 output_preview = '''
 {
   "ok": true,
-  "path": "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/agent_log.md",
+  "path": "/home/user/JSS-2026-Example/dev/transformations/mcfm-translate/agent_log.md",
   "applied": 1,
   "replacements": [
     {
@@ -590,10 +590,10 @@ Blocking group: Group 1 — Mods type-kind infrastructure
 Reason: 3 completed group(s) are waiting; limit is 3
 
 Approve with:
-  python3 dev/tools/approve/approve_group.py /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate --latest-blocking
+  python3 dev/tools/approve/approve_group.py /home/user/JSS-2026-Example/dev/transformations/mcfm-translate --latest-blocking
 
 Or approve this exact group explicitly:
-  python3 dev/tools/approve/approve_group.py /home/akash/D'''
+  python3 dev/tools/approve/approve_group.py /home/user'''
 ts = "2026-08-27T18:15:17.676626+00:00"
 
 [[event]]
@@ -624,7 +624,7 @@ output_chars = 255
 output_preview = '''
 exit_code: 0
 STDOUT:
-pending approvals in /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate:
+pending approvals in /home/user/JSS-2026-Example/dev/transformations/mcfm-translate:
   - Group 1 — Mods type-kind infrastructure
   - Group 2 — W2jet amplitudes
   - Group 3 — W2jet coefficient capture

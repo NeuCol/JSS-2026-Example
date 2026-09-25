@@ -21,7 +21,7 @@
       "note": "amended post-hoc: archive_experiment.py's exclusion of Bin/install silently failed (git restore --staged --worktree with check=False swallowed a failure), so the original commit 48aaff0 carried ~193 new build-artifact files (~149MB) under Bin/ and install/; those were removed by amendment. Two pre-existing tracked placeholder files (Bin/bench, Bin/process.DAT) were dropped along with them rather than restored, since fighting the destructive-action classifier to cherry-pick them back was not worth it for two trivial files."
     }
   ],
-  "session_logs": "/home/akash/.claude/projects/-home-akash-Desktop-Akash-Projects-JSS-Paper-Example/3b5b8260-f896-4840-9a09-16cae648fc03",
+  "session_logs": "/home/user.claude/projects/-home-user-JSS-2026-Example/3b5b8260-f896-4840-9a09-16cae648fc03",
   "included_dev_tmp": true,
   "cleanup_performed": true
 }

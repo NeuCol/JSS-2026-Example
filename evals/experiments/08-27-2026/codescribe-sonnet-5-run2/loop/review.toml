@@ -59,7 +59,7 @@ tool = "read"
 ok = true
 duration_ms = 0.3
 output_chars = 863
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/loop.toml\n# lines: 1-18\n0001: # CodeScribe loop for Fortran -> C++.\n0002: #\n0003: # Run from the project root:\n0004: #   code-scribe loop -p dev/transformations/mcfm-translate/loop.toml -m <model>\n0005: \n0006: [tools]\n0007: bash = [\"jobrunner\", \"python3\"]\n0008: \n0009: [[chat.user]]\n0010: content = '''\n0011: Each round, follow the round algorithm in dev/transformations/mcfm-translate/current_plan.md an"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/loop.toml\n# lines: 1-18\n0001: # CodeScribe loop for Fortran -> C++.\n0002: #\n0003: # Run from the project root:\n0004: #   code-scribe loop -p dev/transformations/mcfm-translate/loop.toml -m <model>\n0005: \n0006: [tools]\n0007: bash = [\"jobrunner\", \"python3\"]\n0008: \n0009: [[chat.user]]\n0010: content = '''\n0011: Each round, follow the round algorithm in dev/transformations/mcfm-translate/current_plan.md an"
 ts = "2026-08-27T19:42:36.401909+00:00"
 
 [[event]]
@@ -175,7 +175,7 @@ ok = true
 duration_ms = 2.526
 output_chars = 97086
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/.codescribe/loop/author.toml
+# path: /home/user/JSS-2026-Example/.codescribe/loop/author.toml
 # lines: 1-2614
 0001: 
 0002: [[event]]
@@ -236,7 +236,7 @@ ok = true
 duration_ms = 0.898
 output_chars = 7045
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/.codescribe/loop/author.toml
+# path: /home/user/JSS-2026-Example/.codescribe/loop/author.toml
 # lines: 2450-2614
 2450: iteration = 27
 2451: stop_reason = "tool_calls"
@@ -298,7 +298,7 @@ tool = "write"
 ok = true
 duration_ms = 0.351
 output_chars = 107
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/.codescribe/loop/review_output.toml (2772 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/.codescribe/loop/review_output.toml (2772 bytes)"
 ts = "2026-08-27T19:43:06.993643+00:00"
 
 [[event]]
@@ -383,7 +383,7 @@ tool = "read"
 ok = true
 duration_ms = 0.39
 output_chars = 863
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/loop.toml\n# lines: 1-18\n0001: # CodeScribe loop for Fortran -> C++.\n0002: #\n0003: # Run from the project root:\n0004: #   code-scribe loop -p dev/transformations/mcfm-translate/loop.toml -m <model>\n0005: \n0006: [tools]\n0007: bash = [\"jobrunner\", \"python3\"]\n0008: \n0009: [[chat.user]]\n0010: content = '''\n0011: Each round, follow the round algorithm in dev/transformations/mcfm-translate/current_plan.md an"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/loop.toml\n# lines: 1-18\n0001: # CodeScribe loop for Fortran -> C++.\n0002: #\n0003: # Run from the project root:\n0004: #   code-scribe loop -p dev/transformations/mcfm-translate/loop.toml -m <model>\n0005: \n0006: [tools]\n0007: bash = [\"jobrunner\", \"python3\"]\n0008: \n0009: [[chat.user]]\n0010: content = '''\n0011: Each round, follow the round algorithm in dev/transformations/mcfm-translate/current_plan.md an"
 ts = "2026-08-27T19:50:08.085054+00:00"
 
 [[event]]
@@ -451,7 +451,7 @@ ok = true
 duration_ms = 2.706
 output_chars = 108316
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/.codescribe/loop/author.toml
+# path: /home/user/JSS-2026-Example/.codescribe/loop/author.toml
 # lines: 1-2736
 0001: 
 0002: [[event]]
@@ -488,11 +488,11 @@ ok = true
 duration_ms = 0.339
 output_chars = 429
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/.codescribe/loop/state.toml
+# path: /home/user/JSS-2026-Example/.codescribe/loop/state.toml
 # lines: 1-6
 0001: run_id = "20260827-143518-94e682"
-0002: workdir = "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example"
-0003: task_file = "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/loop.toml"
+0002: workdir = "/home/user/JSS-2026-Example"
+0003: task_file = "/home/user/JSS-2026-Example/dev/transformations/mcfm-translate/loop.toml"
 0004: loop_index = 2
 0005: phase = "review"
 0006: updated_at = "2026-08-27T19:50:04.050368+00:00"
@@ -559,7 +559,7 @@ tool = "read"
 ok = true
 duration_ms = 0.792
 output_chars = 15393
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/.codescribe/loop/author.toml\n# lines: 2500-2735\n2500: text_chars = 0\n2501: tool_calls = 1\n2502: usage = \"{\\\"input_tokens\\\": 1297, \\\"cache_creation_input_tokens\\\": 3312, \\\"cache_read_input_tokens\\\": 120613, \\\"cache_creation_5m_input_tokens\\\": 3312, \\\"cache_creation_1h_input_tokens\\\": 0, \\\"output_tokens\\\": 3142}\"\n2503: model_reasoning = '''\n2504: This module just declares C-bound interfaces to external QCDLoop functions rather than conta"
+output_preview = "# path: /home/user/JSS-2026-Example/.codescribe/loop/author.toml\n# lines: 2500-2735\n2500: text_chars = 0\n2501: tool_calls = 1\n2502: usage = \"{\\\"input_tokens\\\": 1297, \\\"cache_creation_input_tokens\\\": 3312, \\\"cache_read_input_tokens\\\": 120613, \\\"cache_creation_5m_input_tokens\\\": 3312, \\\"cache_creation_1h_input_tokens\\\": 0, \\\"output_tokens\\\": 3142}\"\n2503: model_reasoning = '''\n2504: This module just declares C-bound interfaces to external QCDLoop functions rather than conta"
 ts = "2026-08-27T19:50:16.372149+00:00"
 
 [[event]]
@@ -603,7 +603,7 @@ ok = true
 duration_ms = 0.911
 output_chars = 5082
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/.codescribe/loop/author.toml
+# path: /home/user/JSS-2026-Example/.codescribe/loop/author.toml
 # lines: 2630-2735
 2630: run_id = "20260827-144326-d4efb5"
 2631: iteration = 29
@@ -664,7 +664,7 @@ ok = true
 duration_ms = 0.845
 output_chars = 27838
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/.codescribe/loop/review.toml
+# path: /home/user/JSS-2026-Example/.codescribe/loop/review.toml
 # lines: 1-656
 0001: 
 0002: [[event]]
@@ -701,12 +701,12 @@ ok = true
 duration_ms = 0.363
 output_chars = 886
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/.codescribe/loop/run.toml
+# path: /home/user/JSS-2026-Example/.codescribe/loop/run.toml
 # lines: 1-17
 0001: run_id = "20260827-143518-94e682"
 0002: created_at = "2026-08-27T19:35:18.683820+00:00"
-0003: workdir = "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example"
-0004: task_file = "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/loop.toml"
+0003: workdir = "/home/user/JSS-2026-Example"
+0004: task_file = "/home/user/JSS-2026-Example/dev/transformations/mcfm-translate/loop.toml"
 0005: model = "anthropic-claude-sonnet-5"
 0006: agent_loops = 5
 0007: agent_iterations = 30
@@ -912,7 +912,7 @@ tool = "write"
 ok = true
 duration_ms = 0.368
 output_chars = 107
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/.codescribe/loop/review_output.toml (2454 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/.codescribe/loop/review_output.toml (2454 bytes)"
 ts = "2026-08-27T19:51:15.016937+00:00"
 
 [[event]]
@@ -996,7 +996,7 @@ tool = "read"
 ok = true
 duration_ms = 0.411
 output_chars = 863
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/loop.toml\n# lines: 1-18\n0001: # CodeScribe loop for Fortran -> C++.\n0002: #\n0003: # Run from the project root:\n0004: #   code-scribe loop -p dev/transformations/mcfm-translate/loop.toml -m <model>\n0005: \n0006: [tools]\n0007: bash = [\"jobrunner\", \"python3\"]\n0008: \n0009: [[chat.user]]\n0010: content = '''\n0011: Each round, follow the round algorithm in dev/transformations/mcfm-translate/current_plan.md an"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/loop.toml\n# lines: 1-18\n0001: # CodeScribe loop for Fortran -> C++.\n0002: #\n0003: # Run from the project root:\n0004: #   code-scribe loop -p dev/transformations/mcfm-translate/loop.toml -m <model>\n0005: \n0006: [tools]\n0007: bash = [\"jobrunner\", \"python3\"]\n0008: \n0009: [[chat.user]]\n0010: content = '''\n0011: Each round, follow the round algorithm in dev/transformations/mcfm-translate/current_plan.md an"
 ts = "2026-08-27T19:57:11.454530+00:00"
 
 [[event]]
@@ -1016,7 +1016,7 @@ ok = true
 duration_ms = 0.53
 output_chars = 10524
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/current_plan.md
+# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/current_plan.md
 # lines: 1-210
 0001: # Fortran → C++ plan
 0002: 
@@ -1100,7 +1100,7 @@ ok = true
 duration_ms = 1.991
 output_chars = 99585
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/.codescribe/loop/author.toml
+# path: /home/user/JSS-2026-Example/.codescribe/loop/author.toml
 # lines: 1-2621
 0001: 
 0002: [[event]]
@@ -1137,14 +1137,14 @@ ok = true
 duration_ms = 0.63
 output_chars = 38990
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/.codescribe/loop/metadata/loop_003_author.toml
+# path: /home/user/JSS-2026-Example/.codescribe/loop/metadata/loop_003_author.toml
 # lines: 1-506
 0001: run_id = "20260827-143518-94e682"
 0002: loop_index = 3
 0003: phase = "author"
 0004: model = "anthropic-claude-sonnet-5"
-0005: task_file = "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/loop.toml"
-0006: workdir = "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example"
+0005: task_file = "/home/user/JSS-2026-Example/dev/transformations/mcfm-translate/loop.toml"
+0006: workdir = "/home/user/JSS-2026-Example"
 0007: stop_reason = "max_iterations"
 0008: final_text_present '''
 ts = "2026-08-27T19:57:14.494631+00:00"
@@ -1284,7 +1284,7 @@ ok = true
 duration_ms = 0.895
 output_chars = 2819
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/.codescribe/loop/author.toml
+# path: /home/user/JSS-2026-Example/.codescribe/loop/author.toml
 # lines: 2540-2620
 2540: duration_ms = 5658.795
 2541: text_chars = 0
@@ -1337,7 +1337,7 @@ ok = true
 duration_ms = 0.338
 output_chars = 1063
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Mods/pp_mod.f90
+# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/pp_mod.f90
 # lines: 1-34
 0001: module pp_mod
 0002: 
@@ -1374,7 +1374,7 @@ ok = true
 duration_ms = 0.171
 output_chars = 1103
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Mods/ppwp2j_mod.f90
+# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/ppwp2j_mod.f90
 # lines: 1-34
 0001: module ppwp2j_mod
 0002: 
@@ -1409,7 +1409,7 @@ ok = true
 duration_ms = 0.46
 output_chars = 23815
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Mods/pp_mod.cpp
+# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/pp_mod.cpp
 # lines: 1-360
 0001: /*
 0002:  * Translated from pp_mod.f90
@@ -1442,7 +1442,7 @@ ok = true
 duration_ms = 0.578
 output_chars = 23831
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Mods/ppwp2j_mod.cpp
+# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/ppwp2j_mod.cpp
 # lines: 1-360
 0001: /*
 0002:  * Translated from ppwp2j_mod.f90
@@ -1565,7 +1565,7 @@ ok = true
 duration_ms = 0.373
 output_chars = 463
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Mods/pp_mod.hpp
+# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/pp_mod.hpp
 # lines: 1-14
 0001: #ifndef PP_MOD
 0002: #define PP_MOD
@@ -1628,7 +1628,7 @@ ok = true
 duration_ms = 0.308
 output_chars = 3112
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Mods/CMakeLists.txt
+# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/CMakeLists.txt
 # lines: 1-137
 0001: target_sources(objlib PRIVATE
 0002: mod_qcdloop_c.f
@@ -1668,7 +1668,7 @@ ok = true
 duration_ms = 0.253
 output_chars = 11986
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Mods/Modules_Interface.f90
+# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/Modules_Interface.f90
 # lines: 1-249
 0001: ! TODO: Remove this FORTRAN interface subroutines once the trasition to
 0002: ! C++ is complete
@@ -1889,7 +1889,7 @@ tool = "write"
 ok = true
 duration_ms = 0.397
 output_chars = 107
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/.codescribe/loop/review_output.toml (3196 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/.codescribe/loop/review_output.toml (3196 bytes)"
 ts = "2026-08-27T19:58:40.365661+00:00"
 
 [[event]]
@@ -1973,7 +1973,7 @@ tool = "write"
 ok = true
 duration_ms = 0.537
 output_chars = 107
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/.codescribe/loop/review_output.toml (2604 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/.codescribe/loop/review_output.toml (2604 bytes)"
 ts = "2026-08-27T20:03:55.057394+00:00"
 
 [[event]]
@@ -2057,7 +2057,7 @@ ok = true
 duration_ms = 0.359
 output_chars = 5434
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/agent_log.md
+# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/agent_log.md
 # lines: 1-77
 0001: # mcfm-translate agent log
 0002: 
@@ -2086,7 +2086,7 @@ tool = "read"
 ok = true
 duration_ms = 0.275
 output_chars = 863
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/loop.toml\n# lines: 1-18\n0001: # CodeScribe loop for Fortran -> C++.\n0002: #\n0003: # Run from the project root:\n0004: #   code-scribe loop -p dev/transformations/mcfm-translate/loop.toml -m <model>\n0005: \n0006: [tools]\n0007: bash = [\"jobrunner\", \"python3\"]\n0008: \n0009: [[chat.user]]\n0010: content = '''\n0011: Each round, follow the round algorithm in dev/transformations/mcfm-translate/current_plan.md an"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/loop.toml\n# lines: 1-18\n0001: # CodeScribe loop for Fortran -> C++.\n0002: #\n0003: # Run from the project root:\n0004: #   code-scribe loop -p dev/transformations/mcfm-translate/loop.toml -m <model>\n0005: \n0006: [tools]\n0007: bash = [\"jobrunner\", \"python3\"]\n0008: \n0009: [[chat.user]]\n0010: content = '''\n0011: Each round, follow the round algorithm in dev/transformations/mcfm-translate/current_plan.md an"
 ts = "2026-08-27T20:09:17.543572+00:00"
 
 [[event]]
@@ -2133,7 +2133,7 @@ ok = true
 duration_ms = 0.395
 output_chars = 10524
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/current_plan.md
+# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/current_plan.md
 # lines: 1-210
 0001: # Fortran → C++ plan
 0002: 
@@ -2188,7 +2188,7 @@ tool = "write"
 ok = true
 duration_ms = 0.464
 output_chars = 107
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/.codescribe/loop/review_output.toml (2402 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/.codescribe/loop/review_output.toml (2402 bytes)"
 ts = "2026-08-27T20:09:56.237646+00:00"
 
 [[event]]

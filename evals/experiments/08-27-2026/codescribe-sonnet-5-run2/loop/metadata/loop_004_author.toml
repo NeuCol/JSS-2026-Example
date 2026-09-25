@@ -2,8 +2,8 @@ run_id = "20260827-143518-94e682"
 loop_index = 4
 phase = "author"
 model = "anthropic-claude-sonnet-5"
-task_file = "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/loop.toml"
-workdir = "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example"
+task_file = "/home/user/JSS-2026-Example/dev/transformations/mcfm-translate/loop.toml"
+workdir = "/home/user/JSS-2026-Example"
 stop_reason = "final_text"
 final_text_present = true
 iterations = 30
@@ -13,21 +13,21 @@ created_at = "2026-08-27T20:03:36.218952+00:00"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/current_plan.md\n# lines: 1-210\n0001: # Fortran → C++ plan\n0002: \n0003: This file says how to run step 1. The rewrite rules and correctness bar are in\n0004: `desired_spec.md`.\n0005: \n0006: > This Plan is the policy: it selects and orders the work over the ready set (see *When to\n0007: > stop*). The correctness contract — objective `f`, invariants `I`, oracle `V`, and status set\n0008: > `Σ` — lives in `"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/current_plan.md\n# lines: 1-210\n0001: # Fortran → C++ plan\n0002: \n0003: This file says how to run step 1. The rewrite rules and correctness bar are in\n0004: `desired_spec.md`.\n0005: \n0006: > This Plan is the policy: it selects and orders the work over the ready set (see *When to\n0007: > stop*). The correctness contract — objective `f`, invariants `I`, oracle `V`, and status set\n0008: > `Σ` — lives in `"
 
 [tools.args]
 path = "dev/transformations/mcfm-translate/current_plan.md"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/desired_spec.md\n# lines: 1-144\n0001: # Fortran → C++: target output for one MCFM file\n0002: \n0003: This file defines the rewrite target and correctness bar for step 1. The workflow lives in\n0004: `current_plan.md`.\n0005: \n0006: Paths are written as `software/mcfm/src/...`.\n0007: \n0008: ---\n0009: \n0010: ## Contract\n0011: \n0012: This step advances by *settling* source files one at a time: each file is r"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/desired_spec.md\n# lines: 1-144\n0001: # Fortran → C++: target output for one MCFM file\n0002: \n0003: This file defines the rewrite target and correctness bar for step 1. The workflow lives in\n0004: `current_plan.md`.\n0005: \n0006: Paths are written as `software/mcfm/src/...`.\n0007: \n0008: ---\n0009: \n0010: ## Contract\n0011: \n0012: This step advances by *settling* source files one at a time: each file is r"
 
 [tools.args]
 path = "dev/transformations/mcfm-translate/desired_spec.md"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/current_plan.md\n# lines: 152-210\n0152: 6. Rewrite the group, wire it into the folder's `CMakeLists.txt`, build, and verify each file.\n0153:    - After converting a Fortran source, move the original `.f`/`.F` into `deprecated/` under the\n0154:      same directory.\n0155:    - Follow the Spec's Output shape and Header/source structure for the translated files.\n0156: 7. After a group is completed, check t"
+output_preview = "# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/current_plan.md\n# lines: 152-210\n0152: 6. Rewrite the group, wire it into the folder's `CMakeLists.txt`, build, and verify each file.\n0153:    - After converting a Fortran source, move the original `.f`/`.F` into `deprecated/` under the\n0154:      same directory.\n0155:    - Follow the Spec's Output shape and Header/source structure for the translated files.\n0156: 7. After a group is completed, check t"
 
 [tools.args]
 path = "dev/transformations/mcfm-translate/current_plan.md"
@@ -38,7 +38,7 @@ ok = false
 output_preview = "Error: blocked shell syntax detected"
 
 [tools.args]
-command = "cd /home/akash/Desktop/Akash/Projects/JSS-Paper-Example && ls dev/transformations/mcfm-translate/ && echo --- && python3 dev/workflow.py status"
+command = "cd /home/user/JSS-2026-Example && ls dev/transformations/mcfm-translate/ && echo --- && python3 dev/workflow.py status"
 [[tools]]
 name = "bash"
 ok = true
@@ -49,7 +49,7 @@ command = "ls dev/transformations/mcfm-translate/"
 [[tools]]
 name = "bash"
 ok = true
-output_preview = "exit_code: 0\nSTDOUT:\n# workflow status\nassets: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tmp/assets\nroadmap metrics: 440 untranslated file rows, 225 ready leaves\ncleanup index: 569 families, move 76, shim-delete 10, merge 33\n\n- mcfm-translate: no agent_log.md yet\n- mcfm-cleanup: groups: 7 total, 0 open, 7 completed, 7 pending approval\n- pepper-kokkos-port: no agent_log.md yet\n\nSTDERR:\n"
+output_preview = "exit_code: 0\nSTDOUT:\n# workflow status\nassets: /home/user/JSS-2026-Example/dev/tmp/assets\nroadmap metrics: 440 untranslated file rows, 225 ready leaves\ncleanup index: 569 families, move 76, shim-delete 10, merge 33\n\n- mcfm-translate: no agent_log.md yet\n- mcfm-cleanup: groups: 7 total, 0 open, 7 completed, 7 pending approval\n- pepper-kokkos-port: no agent_log.md yet\n\nSTDERR:\n"
 
 [tools.args]
 command = "python3 dev/workflow.py status"
@@ -63,7 +63,7 @@ command = "python3 dev/workflow.py next mcfm-translate"
 [[tools]]
 name = "bash"
 ok = true
-output_preview = "exit_code: 0\nSTDOUT:\nGenerating Doxygen XML for /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src -> /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/doxygen_dep/xml\nwrote 1130 XML file(s) to /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/doxygen_dep/xml\nsource 531  translated 91  untranslated 440\nready leaves (deps=0, non-blind): 225\nsymbol index: 920 symbol(s)\ncleanup candidates: move 76  shim-delete 10  merge 33\nwrote roadmap_metrics."
+output_preview = "exit_code: 0\nSTDOUT:\nGenerating Doxygen XML for /home/user/JSS-2026-Example/software/mcfm/src -> /home/user/JSS-2026-Example/software/mcfm/doxygen_dep/xml\nwrote 1130 XML file(s) to /home/user/JSS-2026-Example/software/mcfm/doxygen_dep/xml\nsource 531  translated 91  untranslated 440\nready leaves (deps=0, non-blind): 225\nsymbol index: 920 symbol(s)\ncleanup candidates: move 76  shim-delete 10  merge 33\nwrote roadmap_metrics."
 
 [tools.args]
 command = "python3 dev/workflow.py refresh"
@@ -103,21 +103,21 @@ output_preview = "Error: unknown tool 'grep_dump'"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Mods/pp_mod.f90\n# lines: 1-34\n0001: module pp_mod\n0002: \n0003:   use, intrinsic :: iso_c_binding\n0004:   implicit none\n0005: \n0006:   private\n0007:     interface\n0008:       function get_pp() bind(C, name=\"pp_mod_pp\")\n0009:         import :: c_ptr\n0010:         type(c_ptr) :: get_pp\n0011:       end function get_pp\n0012:     end interface\n0013: \n0014:   public :: ppmax, pp, pp_mod_init, pp_mod_finalize\n0015: \n0016:   i"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/pp_mod.f90\n# lines: 1-34\n0001: module pp_mod\n0002: \n0003:   use, intrinsic :: iso_c_binding\n0004:   implicit none\n0005: \n0006:   private\n0007:     interface\n0008:       function get_pp() bind(C, name=\"pp_mod_pp\")\n0009:         import :: c_ptr\n0010:         type(c_ptr) :: get_pp\n0011:       end function get_pp\n0012:     end interface\n0013: \n0014:   public :: ppmax, pp, pp_mod_init, pp_mod_finalize\n0015: \n0016:   i"
 
 [tools.args]
 path = "software/mcfm/src/Mods/pp_mod.f90"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Mods/pp_mod.cpp\n# lines: 1-360\n0001: /*\n0002:  * Translated from pp_mod.f90\n0003:  */\n0004: #include \"pp_mod.hpp\"\n0005: \n0006: namespace pp_mod {\n0007: \n0008:   namespace {\n0009:     const int pp_init_data[6561] = {\n0010:     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n0011:     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n0012:     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/pp_mod.cpp\n# lines: 1-360\n0001: /*\n0002:  * Translated from pp_mod.f90\n0003:  */\n0004: #include \"pp_mod.hpp\"\n0005: \n0006: namespace pp_mod {\n0007: \n0008:   namespace {\n0009:     const int pp_init_data[6561] = {\n0010:     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n0011:     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n0012:     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0"
 
 [tools.args]
 path = "software/mcfm/src/Mods/pp_mod.cpp"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Mods/pp_mod.hpp\n# lines: 1-14\n0001: #ifndef PP_MOD\n0002: #define PP_MOD\n0003: \n0004: #include<FArray.hpp>\n0005: \n0006: namespace pp_mod {\n0007:   const int ppmax = 80;\n0008: \n0009:   // Fortran: pp(-4:4,-4:4,-4:4,-4:4), a read-only lookup table mapping\n0010:   // parton flavour combinations to a compressed process index.\n0011:   extern FArray4D<int> pp;\n0012: }\n0013: \n0014: #endif\n"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/pp_mod.hpp\n# lines: 1-14\n0001: #ifndef PP_MOD\n0002: #define PP_MOD\n0003: \n0004: #include<FArray.hpp>\n0005: \n0006: namespace pp_mod {\n0007:   const int ppmax = 80;\n0008: \n0009:   // Fortran: pp(-4:4,-4:4,-4:4,-4:4), a read-only lookup table mapping\n0010:   // parton flavour combinations to a compressed process index.\n0011:   extern FArray4D<int> pp;\n0012: }\n0013: \n0014: #endif\n"
 
 [tools.args]
 path = "software/mcfm/src/Mods/pp_mod.hpp"
@@ -131,7 +131,7 @@ command = "ls software/mcfm/src/Mods/deprecated/"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Mods/CMakeLists.txt\n# lines: 1-30\n0001: target_sources(objlib PRIVATE\n0002: mod_qcdloop_c.f\n0003: types_mod.f\n0004: b0_mod.f90\n0005: b0_mod.cpp\n0006: blabels_mod.f90\n0007: blha_mod.f90\n0008: blha_mod.cpp\n0009: breit_mod.f90\n0010: breit_mod.cpp\n0011: Cabibbo_mod.f90\n0012: Cabibbo_mod.cpp\n0013: ckm1_mod.f90\n0014: ckm1_mod.cpp\n0015: ckm_mod.f90\n0016: ckm_mod.cpp\n0017: constants_mod.f90\n0018: couple_mod.f90\n0019: couple_m"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/CMakeLists.txt\n# lines: 1-30\n0001: target_sources(objlib PRIVATE\n0002: mod_qcdloop_c.f\n0003: types_mod.f\n0004: b0_mod.f90\n0005: b0_mod.cpp\n0006: blabels_mod.f90\n0007: blha_mod.f90\n0008: blha_mod.cpp\n0009: breit_mod.f90\n0010: breit_mod.cpp\n0011: Cabibbo_mod.f90\n0012: Cabibbo_mod.cpp\n0013: ckm1_mod.f90\n0014: ckm1_mod.cpp\n0015: ckm_mod.f90\n0016: ckm_mod.cpp\n0017: constants_mod.f90\n0018: couple_mod.f90\n0019: couple_m"
 
 [tools.args]
 path = "software/mcfm/src/Mods/CMakeLists.txt"
@@ -140,7 +140,7 @@ limit = 30
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Mods/pp_mod.cpp\n# lines: 330-359\n0330:     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n0331:     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n0332:     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n0333:     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n0334:     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n0335:     0, 0, 0, 0, 0, 0, 0, 0, 0, 0"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/pp_mod.cpp\n# lines: 330-359\n0330:     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n0331:     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n0332:     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n0333:     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n0334:     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,\n0335:     0, 0, 0, 0, 0, 0, 0, 0, 0, 0"
 
 [tools.args]
 path = "software/mcfm/src/Mods/pp_mod.cpp"
@@ -177,14 +177,14 @@ command = "grep -rn \"ppwp2j\\|pp_mod\" software/mcfm/src/BLHA/CXX_Interface.cxx
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Mods/ppwp2j_mod.f90\n# lines: 1-34\n0001: module ppwp2j_mod\n0002: \n0003:   use, intrinsic :: iso_c_binding\n0004:   implicit none\n0005: \n0006:   private\n0007:     interface\n0008:       function get_pp() bind(C, name=\"ppwp2j_mod_pp\")\n0009:         import :: c_ptr\n0010:         type(c_ptr) :: get_pp\n0011:       end function get_pp\n0012:     end interface\n0013: \n0014:   public :: ppmax, pp, ppwp2j_mod_init, ppwp2j_mod_final"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/ppwp2j_mod.f90\n# lines: 1-34\n0001: module ppwp2j_mod\n0002: \n0003:   use, intrinsic :: iso_c_binding\n0004:   implicit none\n0005: \n0006:   private\n0007:     interface\n0008:       function get_pp() bind(C, name=\"ppwp2j_mod_pp\")\n0009:         import :: c_ptr\n0010:         type(c_ptr) :: get_pp\n0011:       end function get_pp\n0012:     end interface\n0013: \n0014:   public :: ppmax, pp, ppwp2j_mod_init, ppwp2j_mod_final"
 
 [tools.args]
 path = "software/mcfm/src/Mods/ppwp2j_mod.f90"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Mods/ppwp2j_mod.hpp\n# lines: 1-14\n0001: #ifndef PPWP2J_MOD\n0002: #define PPWP2J_MOD\n0003: \n0004: #include<FArray.hpp>\n0005: \n0006: namespace ppwp2j_mod {\n0007:   const int ppmax = 80;\n0008: \n0009:   // Fortran: pp(-4:4,-4:4,-4:4,-4:4), a read-only lookup table mapping\n0010:   // parton flavour combinations to a compressed process index.\n0011:   extern FArray4D<int> pp;\n0012: }\n0013: \n0014: #endif\n"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/ppwp2j_mod.hpp\n# lines: 1-14\n0001: #ifndef PPWP2J_MOD\n0002: #define PPWP2J_MOD\n0003: \n0004: #include<FArray.hpp>\n0005: \n0006: namespace ppwp2j_mod {\n0007:   const int ppmax = 80;\n0008: \n0009:   // Fortran: pp(-4:4,-4:4,-4:4,-4:4), a read-only lookup table mapping\n0010:   // parton flavour combinations to a compressed process index.\n0011:   extern FArray4D<int> pp;\n0012: }\n0013: \n0014: #endif\n"
 
 [tools.args]
 path = "software/mcfm/src/Mods/ppwp2j_mod.hpp"
@@ -226,7 +226,7 @@ command = "grep -n \"ppwp2j_mod_init\" software/mcfm/src/Mods/Modules_Interface.
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Mods/Modules_Interface.f90\n# lines: 1-249\n0001: ! TODO: Remove this FORTRAN interface subroutines once the trasition to\n0002: ! C++ is complete\n0003: subroutine modules_fi_init() bind(C, name=\"modules_fi_init_\")\n0004:         use ewcharge_mod, only: ewcharge_mod_init\n0005:         use zcouple_mod, only: zcouple_mod_init\n0006:         use b0_mod, only: b0_mod_init\n0007:         use blha_mod, only: blha_mod_init\n0008:  "
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/Modules_Interface.f90\n# lines: 1-249\n0001: ! TODO: Remove this FORTRAN interface subroutines once the trasition to\n0002: ! C++ is complete\n0003: subroutine modules_fi_init() bind(C, name=\"modules_fi_init_\")\n0004:         use ewcharge_mod, only: ewcharge_mod_init\n0005:         use zcouple_mod, only: zcouple_mod_init\n0006:         use b0_mod, only: b0_mod_init\n0007:         use blha_mod, only: blha_mod_init\n0008:  "
 
 [tools.args]
 path = "software/mcfm/src/Mods/Modules_Interface.f90"
@@ -261,7 +261,7 @@ command = "grep -n \"ppwp2j_mod_finalize\" software/mcfm/src/Mods/Modules_Interf
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BLHA/CXX_Interface.cxx\n# lines: 1-40\n0001: // Copyright (C) 2021 John Campbell, Stefan Hoeche, Christian T Preuss.\n0002: //\n0003: //  This program is free software: you can redistribute it and/or modify it under\n0004: //  the terms of the GNU General Public License as published by the Free Software\n0005: //  Foundation, either version 3 of the License, or (at your option) any later\n0006: //  version.\n0007: //\n0008: //"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/BLHA/CXX_Interface.cxx\n# lines: 1-40\n0001: // Copyright (C) 2021 John Campbell, Stefan Hoeche, Christian T Preuss.\n0002: //\n0003: //  This program is free software: you can redistribute it and/or modify it under\n0004: //  the terms of the GNU General Public License as published by the Free Software\n0005: //  Foundation, either version 3 of the License, or (at your option) any later\n0006: //  version.\n0007: //\n0008: //"
 
 [tools.args]
 path = "software/mcfm/src/BLHA/CXX_Interface.cxx"
@@ -311,14 +311,14 @@ command = "ls software/mcfm/Bin/"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Mods/Modules_Interface.hpp\n# lines: 1-16\n0001: #ifndef MODULES_INTERFACE_MOD\n0002: #define MODULES_INTERFACE_MOD\n0003: \n0004: // (post-llm) Modules_Interface.f90 stays Fortran: it only wires together the\n0005: // still-Fortran-side init/finalize routines of the individual Mods modules\n0006: // (many of which manipulate Fortran POINTER state via c_f_pointer and have\n0007: // no meaningful pure-C++ equivalent yet). This"
+output_preview = "# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/Modules_Interface.hpp\n# lines: 1-16\n0001: #ifndef MODULES_INTERFACE_MOD\n0002: #define MODULES_INTERFACE_MOD\n0003: \n0004: // (post-llm) Modules_Interface.f90 stays Fortran: it only wires together the\n0005: // still-Fortran-side init/finalize routines of the individual Mods modules\n0006: // (many of which manipulate Fortran POINTER state via c_f_pointer and have\n0007: // no meaningful pure-C++ equivalent yet). This"
 
 [tools.args]
 path = "software/mcfm/src/Mods/Modules_Interface.hpp"
 [[tools]]
 name = "bash"
 ok = true
-output_preview = "exit_code: 0\nSTDOUT:\nx1b[95mROOT:x1b[0m /home/akash/Desktop/Akash/Projects/JSS-Paper-Example\nx1b[95mNODE:x1b[0m <ROOT>/tests/mcfm\n\nx1b[95mSCRIPTS: x1b[0m\n    - <ROOT>/config.sh\n    - <ROOT>/environment.sh\n    - <ROOT>/tests/mcfm/test.sh\n\nx1b[95mEXECUTE:x1b[0m <ROOT>/tests/mcfm/job.submit\nin 1:29.3 \nx1b[92mSUCCESS x1b[0m\n\nx1b[95mOUTPUT:x1b[0m <ROOT>/tests/mcfm/job.output\n\nSTDERR:\n"
+output_preview = "exit_code: 0\nSTDOUT:\nx1b[95mROOT:x1b[0m /home/user/JSS-2026-Example\nx1b[95mNODE:x1b[0m <ROOT>/tests/mcfm\n\nx1b[95mSCRIPTS: x1b[0m\n    - <ROOT>/config.sh\n    - <ROOT>/environment.sh\n    - <ROOT>/tests/mcfm/test.sh\n\nx1b[95mEXECUTE:x1b[0m <ROOT>/tests/mcfm/job.submit\nin 1:29.3 \nx1b[92mSUCCESS x1b[0m\n\nx1b[95mOUTPUT:x1b[0m <ROOT>/tests/mcfm/job.output\n\nSTDERR:\n"
 
 [tools.args]
 command = "jobrunner submit tests/mcfm"
@@ -353,7 +353,7 @@ command = "cat environment.sh"
 [[tools]]
 name = "read"
 ok = true
-output_preview = "# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/environment.sh\n# lines: 1-41\n0001: # Shell configuration shared across the lab notebook.\n0002: #\n0003: # Sourcing this file exports the project paths every orchestrator, skill, and\n0004: # tool depends on. It resolves the project root from THIS script's own location\n0005: # (via BASH_SOURCE), not the current working directory, so\n0006: #   source /abs/path/to/environment.sh\n0007: # is correct from any cwd — including inside a subagent "
+output_preview = "# path: /home/user/JSS-2026-Example/environment.sh\n# lines: 1-41\n0001: # Shell configuration shared across the lab notebook.\n0002: #\n0003: # Sourcing this file exports the project paths every orchestrator, skill, and\n0004: # tool depends on. It resolves the project root from THIS script's own location\n0005: # (via BASH_SOURCE), not the current working directory, so\n0006: #   source /abs/path/to/environment.sh\n0007: # is correct from any cwd — including inside a subagent "
 
 [tools.args]
 path = "environment.sh"
@@ -367,21 +367,21 @@ command = "grep -n \"MCFM_HOME\" dev/workflow.py"
 [[tools]]
 name = "bash"
 ok = false
-output_preview = "Error: command not allowed: 'MCFM_HOME=/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm'"
+output_preview = "Error: command not allowed: 'MCFM_HOME=/home/user/JSS-2026-Example/software/mcfm'"
 
 [tools.args]
-command = "MCFM_HOME=/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm python3 dev/workflow.py verify software/mcfm/src/Mods/pp_mod.cpp -- \"u d~ ve e+ g g\""
+command = "MCFM_HOME=/home/user/JSS-2026-Example/software/mcfm python3 dev/workflow.py verify software/mcfm/src/Mods/pp_mod.cpp -- \"u d~ ve e+ g g\""
 [[tools]]
 name = "bash"
 ok = false
 output_preview = "Error: command not allowed: 'env'"
 
 [tools.args]
-command = "env MCFM_HOME=/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm python3 dev/workflow.py verify software/mcfm/src/Mods/pp_mod.cpp -- \"u d~ ve e+ g g\""
+command = "env MCFM_HOME=/home/user/JSS-2026-Example/software/mcfm python3 dev/workflow.py verify software/mcfm/src/Mods/pp_mod.cpp -- \"u d~ ve e+ g g\""
 [[tools]]
 name = "write"
 ok = true
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/agent_log.md (4849 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/agent_log.md (4849 bytes)"
 
 [tools.args]
 path = "dev/transformations/mcfm-translate/agent_log.md"
@@ -396,7 +396,7 @@ command = "python3 dev/workflow.py gate mcfm-translate"
 [[tools]]
 name = "bash"
 ok = true
-output_preview = "exit_code: 0\nSTDOUT:\n# workflow status\nassets: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tmp/assets\nroadmap metrics: 440 untranslated file rows, 225 ready leaves\ncleanup index: 569 families, move 76, shim-delete 10, merge 33\n\n- mcfm-translate: groups: 1 total, 0 open, 1 completed, 1 pending approval\n- mcfm-cleanup: groups: 7 total, 0 open, 7 completed, 7 pending approval\n- pepper-kokkos-port: no agent_log.md yet\n\nSTDERR:\n"
+output_preview = "exit_code: 0\nSTDOUT:\n# workflow status\nassets: /home/user/JSS-2026-Example/dev/tmp/assets\nroadmap metrics: 440 untranslated file rows, 225 ready leaves\ncleanup index: 569 families, move 76, shim-delete 10, merge 33\n\n- mcfm-translate: groups: 1 total, 0 open, 1 completed, 1 pending approval\n- mcfm-cleanup: groups: 7 total, 0 open, 7 completed, 7 pending approval\n- pepper-kokkos-port: no agent_log.md yet\n\nSTDERR:\n"
 
 [tools.args]
 command = "python3 dev/workflow.py status"

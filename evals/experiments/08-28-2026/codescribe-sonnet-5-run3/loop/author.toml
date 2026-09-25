@@ -40,7 +40,7 @@ ok = true
 duration_ms = 0.551
 output_chars = 10524
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/current_plan.md
+# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/current_plan.md
 # lines: 1-210
 0001: # Fortran → C++ plan
 0002: 
@@ -69,7 +69,7 @@ ok = true
 duration_ms = 0.427
 output_chars = 7692
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/desired_spec.md
+# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/desired_spec.md
 # lines: 1-144
 0001: # Fortran → C++: target output for one MCFM file
 0002: 
@@ -126,7 +126,7 @@ ok = true
 duration_ms = 0.545
 output_chars = 2712
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/current_plan.md
+# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/current_plan.md
 # lines: 156-210
 0156: 7. After a group is completed, check the gate before opening the next one.
 0157: 8. After any required approval, refresh the roadmap again before picking more work.
@@ -210,7 +210,7 @@ output_preview = '''
 exit_code: 0
 STDOUT:
 # workflow status
-assets: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tmp/assets
+assets: /home/user/JSS-2026-Example/dev/tmp/assets
 roadmap metrics: 441 untranslated file rows, 226 ready leaves
 cleanup index: 569 families, move 76, shim-delete 10, merge 33
 
@@ -448,7 +448,7 @@ ok = true
 duration_ms = 0.49
 output_chars = 1000
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Mods/pp_mod.f90
+# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/pp_mod.f90
 # lines: 1-30
 0001: module pp_mod
 0002:   use, intrinsic :: iso_c_binding
@@ -484,7 +484,7 @@ ok = true
 duration_ms = 0.607
 output_chars = 22964
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Mods/deprecated/pp_mod.f90
+# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/deprecated/pp_mod.f90
 # lines: 1-255
 0001: 
 0002: module pp_mod
@@ -542,7 +542,7 @@ ok = true
 duration_ms = 0.974
 output_chars = 27742
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Mods/pp_mod.cpp
+# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/pp_mod.cpp
 # lines: 1-757
 0001: #include <pp_mod.hpp>
 0002: 
@@ -577,7 +577,7 @@ ok = true
 duration_ms = 0.447
 output_chars = 533
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Mods/pp_mod.hpp
+# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/pp_mod.hpp
 # lines: 1-17
 0001: #ifndef PP_MOD
 0002: #define PP_MOD
@@ -613,7 +613,7 @@ ok = true
 duration_ms = 0.446
 output_chars = 1040
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Mods/ppwp2j_mod.f90
+# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/ppwp2j_mod.f90
 # lines: 1-30
 0001: module ppwp2j_mod
 0002:   use, intrinsic :: iso_c_binding
@@ -650,7 +650,7 @@ ok = true
 duration_ms = 0.431
 output_chars = 561
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Mods/ppwp2j_mod.hpp
+# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/ppwp2j_mod.hpp
 # lines: 1-17
 0001: #ifndef PPWP2J_MOD
 0002: #define PPWP2J_MOD
@@ -708,7 +708,7 @@ ok = true
 duration_ms = 0.449
 output_chars = 1158
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Mods/pp_mod.cpp
+# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/pp_mod.cpp
 # lines: 720-757
 0720:     0, 0, 0, 0, 0, 0, 0, 0, 0,
 0721:     0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -939,7 +939,7 @@ output_chars = 868
 output_preview = '''
 exit_code: 0
 STDOUT:
-[95mROOT:[0m /home/akash/Desktop/Akash/Projects/JSS-Paper-Example
+[95mROOT:[0m /home/user/JSS-2026-Example
 [95mNODE:[0m <ROOT>/tests/mcfm
 
 [95mSCRIPTS: [0m
@@ -949,7 +949,7 @@ STDOUT:
 
 [95mEXECUTE:[0m <ROOT>/tests/mcfm/job.submit
 in 59.3s 
-/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/W2jet/qqb_wp2jetx_new.f:73:33:
+/home/user/JSS-2026-Example/software/mcfm/src/W2jet/qqb_wp2jetx_new.f:73:33:
 
    73 |       real(dp):: ppmsqx(0:2,ppmax),tmpmsqx(0:2,0:ppmax)
       |                                 1
@@ -997,7 +997,7 @@ ok = true
 duration_ms = 0.487
 output_chars = 284
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Mods/ppmax_mod.f90
+# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/ppmax_mod.f90
 # lines: 1-11
 0001: 
 0002: module ppmax_mod
@@ -1101,7 +1101,7 @@ ok = true
 duration_ms = 0.602
 output_chars = 3867
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/W2jet/qqb_wp2jetx_new.f
+# path: /home/user/JSS-2026-Example/software/mcfm/src/W2jet/qqb_wp2jetx_new.f
 # lines: 1-80
 0001: !
 0002: !  SPDX-License-Identifier: GPL-3.0-or-later
@@ -1157,7 +1157,7 @@ ok = true
 duration_ms = 0.536
 output_chars = 963
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Mods/deprecated/ppwp2j_mod.f90
+# path: /home/user/JSS-2026-Example/software/mcfm/src/Mods/deprecated/ppwp2j_mod.f90
 # lines: 1-15
 0001: 
 0002: module ppwp2j_mod
@@ -1463,7 +1463,7 @@ ok = true
 duration_ms = 0.571
 output_chars = 1755
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Z2jet/qqb_z2jetx_new.f
+# path: /home/user/JSS-2026-Example/software/mcfm/src/Z2jet/qqb_z2jetx_new.f
 # lines: 1-45
 0001: !
 0002: !  SPDX-License-Identifier: GPL-3.0-or-later
@@ -1569,7 +1569,7 @@ output_chars = 838
 output_preview = '''
 {
   "ok": true,
-  "path": "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/W2jet/qqb_wp2jetx_new.f",
+  "path": "/home/user/JSS-2026-Example/software/mcfm/src/W2jet/qqb_wp2jetx_new.f",
   "applied": 1,
   "replacements": [
     {
@@ -1599,7 +1599,7 @@ output_chars = 787
 output_preview = '''
 {
   "ok": true,
-  "path": "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/Z2jet/qqb_z2jetx_new.f",
+  "path": "/home/user/JSS-2026-Example/software/mcfm/src/Z2jet/qqb_z2jetx_new.f",
   "applied": 1,
   "replacements": [
     {
@@ -1654,7 +1654,7 @@ output_chars = 358
 output_preview = '''
 exit_code: 0
 STDOUT:
-[95mROOT:[0m /home/akash/Desktop/Akash/Projects/JSS-Paper-Example
+[95mROOT:[0m /home/user/JSS-2026-Example
 [95mNODE:[0m <ROOT>/tests/mcfm
 
 [95mSCRIPTS: [0m
@@ -1935,7 +1935,7 @@ ok = true
 duration_ms = 0.479
 output_chars = 1682
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/tests/mcfm/test.sh
+# path: /home/user/JSS-2026-Example/tests/mcfm/test.sh
 # lines: 1-44
 0001: #!/usr/bin/env bash
 0002: # Build MCFM and run the benchmark suite (the stage-1 verification harness).
@@ -2143,7 +2143,7 @@ ok = true
 duration_ms = 0.428
 output_chars = 2423
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/environment.sh
+# path: /home/user/JSS-2026-Example/environment.sh
 # lines: 1-41
 0001: # Shell configuration shared across the lab notebook.
 0002: #

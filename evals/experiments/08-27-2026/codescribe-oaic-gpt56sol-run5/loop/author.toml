@@ -53,7 +53,7 @@ ok = true
 duration_ms = 0.659
 output_chars = 10524
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/current_plan.md
+# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/current_plan.md
 # lines: 1-210
 0001: # Fortran → C++ plan
 0002: 
@@ -89,7 +89,7 @@ ok = true
 duration_ms = 0.47
 output_chars = 3183
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/agent_log.md
+# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/agent_log.md
 # lines: 1-48
 0001: # MCFM translation worklist
 0002: 
@@ -157,7 +157,7 @@ ok = true
 duration_ms = 0.469
 output_chars = 4532
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/current_plan.md
+# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/current_plan.md
 # lines: 121-210
 0121: 
 0122: The low-level scripts under `dev/tools/` remain available, but `dev/workflow.py` is the preferred interface.
@@ -227,7 +227,7 @@ ok = true
 duration_ms = 0.46
 output_chars = 7692
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/desired_spec.md
+# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/desired_spec.md
 # lines: 1-144
 0001: # Fortran → C++: target output for one MCFM file
 0002: 
@@ -269,8 +269,8 @@ output_chars = 44339
 output_preview = '''
 exit_code: 0
 STDOUT:
-Generating Doxygen XML for /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src -> /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/doxygen_dep/xml
-wrote 1141 XML file(s) to /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/doxygen_dep/xml
+Generating Doxygen XML for /home/user/JSS-2026-Example/software/mcfm/src -> /home/user/JSS-2026-Example/software/mcfm/doxygen_dep/xml
+wrote 1141 XML file(s) to /home/user/JSS-2026-Example/software/mcfm/doxygen_dep/xml
 source 521  translated 86  untranslated 435
 ready leaves (deps=0, non-blind): 231
 symbol index: 923 symbol(s)
@@ -400,7 +400,7 @@ ok = true
 duration_ms = 0.48
 output_chars = 2423
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/environment.sh
+# path: /home/user/JSS-2026-Example/environment.sh
 # lines: 1-41
 0001: # Shell configuration shared across the lab notebook.
 0002: #
@@ -437,7 +437,7 @@ ok = true
 duration_ms = 0.607
 output_chars = 9776
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/workflow.py
+# path: /home/user/JSS-2026-Example/dev/workflow.py
 # lines: 1-240
 0001: #!/usr/bin/env python3
 0002: """Unified workflow CLI for dev tooling.
@@ -536,7 +536,7 @@ tool = "write"
 ok = true
 duration_ms = 0.607
 output_chars = 97
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tmp/run_mcfm_verify.py (476 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/dev/tmp/run_mcfm_verify.py (476 bytes)"
 ts = "2026-08-27T20:47:00.580293+00:00"
 
 [[event]]
@@ -655,7 +655,7 @@ output_chars = 1741
 output_preview = '''
 {
   "ok": true,
-  "path": "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/agent_log.md",
+  "path": "/home/user/JSS-2026-Example/dev/transformations/mcfm-translate/agent_log.md",
   "applied": 2,
   "replacements": [
     {
@@ -708,7 +708,7 @@ output_chars = 358
 output_preview = '''
 exit_code: 0
 STDOUT:
-[95mROOT:[0m /home/akash/Desktop/Akash/Projects/JSS-Paper-Example
+[95mROOT:[0m /home/user/JSS-2026-Example
 [95mNODE:[0m <ROOT>/tests/mcfm
 
 [95mSCRIPTS: [0m
@@ -921,7 +921,7 @@ output_preview = '''
 exit_code: 0
 STDOUT:
 # workflow status
-assets: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tmp/assets
+assets: /home/user/JSS-2026-Example/dev/tmp/assets
 roadmap metrics: 435 untranslated file rows, 231 ready leaves
 cleanup index: 569 families, move 74, shim-delete 20, merge 38
 
@@ -1085,7 +1085,7 @@ ok = true
 duration_ms = 0.641
 output_chars = 7624
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/fvs.f
+# path: /home/user/JSS-2026-Example/software/mcfm/src/BDK/fvs.f
 # lines: 1-178
 0001: !
 0002: !  SPDX-License-Identifier: GPL-3.0-or-later
@@ -1127,7 +1127,7 @@ ok = true
 duration_ms = 0.58
 output_chars = 7916
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/FFMPcc.f
+# path: /home/user/JSS-2026-Example/software/mcfm/src/BDK/FFMPcc.f
 # lines: 1-185
 0001: !
 0002: !  SPDX-License-Identifier: GPL-3.0-or-later
@@ -1168,7 +1168,7 @@ ok = true
 duration_ms = 0.48
 output_chars = 3157
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/FFPMccT.f
+# path: /home/user/JSS-2026-Example/software/mcfm/src/BDK/FFPMccT.f
 # lines: 1-73
 0001: !
 0002: !  SPDX-License-Identifier: GPL-3.0-or-later
@@ -1210,7 +1210,7 @@ ok = true
 duration_ms = 0.442
 output_chars = 1311
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/FFPMccTtilde.f
+# path: /home/user/JSS-2026-Example/software/mcfm/src/BDK/FFPMccTtilde.f
 # lines: 1-31
 0001: !
 0002: !  SPDX-License-Identifier: GPL-3.0-or-later
@@ -1251,7 +1251,7 @@ ok = true
 duration_ms = 0.469
 output_chars = 3156
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/FFPMscT.f
+# path: /home/user/JSS-2026-Example/software/mcfm/src/BDK/FFPMscT.f
 # lines: 1-71
 0001: !
 0002: !  SPDX-License-Identifier: GPL-3.0-or-later
@@ -1293,7 +1293,7 @@ ok = true
 duration_ms = 0.449
 output_chars = 826
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/CMakeLists.txt
+# path: /home/user/JSS-2026-Example/software/mcfm/src/BDK/CMakeLists.txt
 # lines: 1-44
 0001: target_sources(objlib PRIVATE
 0002: FFPPsc.f
@@ -1416,7 +1416,7 @@ output_chars = 1306
 output_preview = '''
 {
   "ok": true,
-  "path": "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/agent_log.md",
+  "path": "/home/user/JSS-2026-Example/dev/transformations/mcfm-translate/agent_log.md",
   "applied": 1,
   "replacements": [
     {
@@ -1484,7 +1484,7 @@ output_chars = 119
 output_preview = '''
 exit_code: 0
 STDOUT:
-wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tmp/drafts/BDK/fvs.scribe
+wrote /home/user/JSS-2026-Example/dev/tmp/drafts/BDK/fvs.scribe
 
 STDERR:
 '''
@@ -1516,7 +1516,7 @@ output_chars = 122
 output_preview = '''
 exit_code: 0
 STDOUT:
-wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tmp/drafts/BDK/FFMPcc.scribe
+wrote /home/user/JSS-2026-Example/dev/tmp/drafts/BDK/FFMPcc.scribe
 
 STDERR:
 '''
@@ -1548,7 +1548,7 @@ output_chars = 123
 output_preview = '''
 exit_code: 0
 STDOUT:
-wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tmp/drafts/BDK/FFPMccT.scribe
+wrote /home/user/JSS-2026-Example/dev/tmp/drafts/BDK/FFPMccT.scribe
 
 STDERR:
 '''
@@ -1580,7 +1580,7 @@ output_chars = 128
 output_preview = '''
 exit_code: 0
 STDOUT:
-wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tmp/drafts/BDK/FFPMccTtilde.scribe
+wrote /home/user/JSS-2026-Example/dev/tmp/drafts/BDK/FFPMccTtilde.scribe
 
 STDERR:
 '''
@@ -1612,7 +1612,7 @@ output_chars = 123
 output_preview = '''
 exit_code: 0
 STDOUT:
-wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tmp/drafts/BDK/FFPMscT.scribe
+wrote /home/user/JSS-2026-Example/dev/tmp/drafts/BDK/FFPMscT.scribe
 
 STDERR:
 '''
@@ -1658,7 +1658,7 @@ ok = true
 duration_ms = 0.589
 output_chars = 8487
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tmp/drafts/BDK/fvs.scribe
+# path: /home/user/JSS-2026-Example/dev/tmp/drafts/BDK/fvs.scribe
 # lines: 1-191
 0001: scribe-prompt: Add an extern "C" <name>_wrapper; see the seed examples for FArray/scalar handling.
 0002: scribe-prompt: A variable used as a function is an external or statement function.
@@ -1684,7 +1684,7 @@ ok = true
 duration_ms = 0.546
 output_chars = 7927
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tmp/drafts/BDK/FFMPcc.scribe
+# path: /home/user/JSS-2026-Example/dev/tmp/drafts/BDK/FFMPcc.scribe
 # lines: 1-180
 0001: scribe-prompt: Add an extern "C" <name>_wrapper; see the seed examples for FArray/scalar handling.
 0002: scribe-prompt: A variable used as a function is an external or statement function.
@@ -1710,7 +1710,7 @@ ok = true
 duration_ms = 0.481
 output_chars = 3314
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tmp/drafts/BDK/FFPMccT.scribe
+# path: /home/user/JSS-2026-Example/dev/tmp/drafts/BDK/FFPMccT.scribe
 # lines: 1-75
 0001: scribe-prompt: Add an extern "C" <name>_wrapper; see the seed examples for FArray/scalar handling.
 0002: scribe-prompt: A variable used as a function is an external or statement function.
@@ -1739,7 +1739,7 @@ ok = true
 duration_ms = 0.438
 output_chars = 1425
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tmp/drafts/BDK/FFPMccTtilde.scribe
+# path: /home/user/JSS-2026-Example/dev/tmp/drafts/BDK/FFPMccTtilde.scribe
 # lines: 1-32
 0001: scribe-prompt: Add an extern "C" <name>_wrapper; see the seed examples for FArray/scalar handling.
 0002: scribe-prompt: A variable used as a function is an external or statement function.
@@ -1768,7 +1768,7 @@ ok = true
 duration_ms = 0.458
 output_chars = 3322
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tmp/drafts/BDK/FFPMscT.scribe
+# path: /home/user/JSS-2026-Example/dev/tmp/drafts/BDK/FFPMscT.scribe
 # lines: 1-73
 0001: scribe-prompt: Add an extern "C" <name>_wrapper; see the seed examples for FArray/scalar handling.
 0002: scribe-prompt: A variable used as a function is an external or statement function.
@@ -1797,7 +1797,7 @@ ok = true
 duration_ms = 0.451
 output_chars = 2920
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/W2jet/a6treeg.cpp
+# path: /home/user/JSS-2026-Example/software/mcfm/src/W2jet/a6treeg.cpp
 # lines: 1-26
 0001: #include "a6treeg.hpp"
 0002: #include <W1jet.hpp>
@@ -1827,7 +1827,7 @@ ok = true
 duration_ms = 0.421
 output_chars = 855
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/W2jet/a6treeg_fi.F90
+# path: /home/user/JSS-2026-Example/software/mcfm/src/W2jet/a6treeg_fi.F90
 # lines: 1-18
 0001: function a6treeg(st,j1,j2,j3,j4,j5,j6,za,zb) result(res)
 0002:  use iso_c_binding
@@ -1903,7 +1903,7 @@ output_chars = 2331
 output_preview = '''
 {
   "ok": true,
-  "path": "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/agent_log.md",
+  "path": "/home/user/JSS-2026-Example/dev/transformations/mcfm-translate/agent_log.md",
   "applied": 2,
   "replacements": [
     {
@@ -2076,7 +2076,7 @@ tool = "write"
 ok = true
 duration_ms = 0.468
 output_chars = 95
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tmp/run_mcfm_verify.py (0 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/dev/tmp/run_mcfm_verify.py (0 bytes)"
 ts = "2026-08-27T20:49:44.349326+00:00"
 
 [[event]]

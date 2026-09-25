@@ -41,7 +41,7 @@ ok = true
 duration_ms = 0.646
 output_chars = 10524
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/current_plan.md
+# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/current_plan.md
 # lines: 1-210
 0001: # Fortran → C++ plan
 0002: 
@@ -71,7 +71,7 @@ ok = true
 duration_ms = 0.548
 output_chars = 7692
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/desired_spec.md
+# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/desired_spec.md
 # lines: 1-144
 0001: # Fortran → C++: target output for one MCFM file
 0002: 
@@ -128,7 +128,7 @@ ok = true
 duration_ms = 0.434
 output_chars = 2808
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/current_plan.md
+# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/current_plan.md
 # lines: 155-210
 0155:    - Follow the Spec's Output shape and Header/source structure for the translated files.
 0156: 7. After a group is completed, check the gate before opening the next one.
@@ -155,7 +155,7 @@ ok = true
 duration_ms = 0.433
 output_chars = 9577
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/agent_log.md
+# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/agent_log.md
 # lines: 1-150
 0001: # mcfm-translate worklist
 0002: 
@@ -210,7 +210,7 @@ ok = true
 duration_ms = 0.511
 output_chars = 1924
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/agent_log.md
+# path: /home/user/JSS-2026-Example/dev/transformations/mcfm-translate/agent_log.md
 # lines: 130-150
 0130:   Remaining in Mods: only `Modules_Interface.f90`, which must stay Fortran while module shims
 0131:   exist. Next group should start from the current top of
@@ -440,7 +440,7 @@ ok = true
 duration_ms = 0.584
 output_chars = 1331
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tmp/run_verify_bdk_group.py
+# path: /home/user/JSS-2026-Example/dev/tmp/run_verify_bdk_group.py
 # lines: 1-31
 0001: """Run the coverage probe for the remaining BDK-01 group files (MCFM_HOME injected).
 0002: 
@@ -480,7 +480,7 @@ ok = true
 duration_ms = 0.417
 output_chars = 913
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tmp/run_verify.py
+# path: /home/user/JSS-2026-Example/dev/tmp/run_verify.py
 # lines: 1-18
 0001: """Run `dev/workflow.py verify` with MCFM_HOME set (the agent shell cannot `source`).
 0002: 
@@ -520,7 +520,7 @@ ok = true
 duration_ms = 0.475
 output_chars = 941
 output_preview = '''
-# path: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src/BDK/CMakeLists.txt
+# path: /home/user/JSS-2026-Example/software/mcfm/src/BDK/CMakeLists.txt
 # lines: 1-49
 0001: target_sources(objlib PRIVATE
 0002: FFPPsc.f
@@ -656,7 +656,7 @@ output_preview = '''
 exit_code: 0
 STDOUT:
 # workflow status
-assets: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tmp/assets
+assets: /home/user/JSS-2026-Example/dev/tmp/assets
 roadmap metrics: 436 untranslated file rows, 234 ready leaves
 cleanup index: 569 families, move 76, shim-delete 15, merge 37
 
@@ -755,7 +755,7 @@ output_chars = 2206
 output_preview = '''
 exit_code: 0
 STDOUT:
-+ /usr/bin/python3 /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/workflow.py verify software/mcfm/src/BDK/FFMPcc.cpp -- u d~ ve e+ g g
++ /usr/bin/python3 /home/user/JSS-2026-Example/dev/workflow.py verify software/mcfm/src/BDK/FFMPcc.cpp -- u d~ ve e+ g g
 == coverage check: software/mcfm/src/BDK/FFMPcc.cpp ==
 process : u d~ ve e+ g g
 factor  : 1.5
@@ -807,7 +807,7 @@ tool = "write"
 ok = true
 duration_ms = 0.476
 output_chars = 101
-output_preview = "Wrote /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tmp/move_bdk_deprecated.py (784 bytes)"
+output_preview = "Wrote /home/user/JSS-2026-Example/dev/tmp/move_bdk_deprecated.py (784 bytes)"
 ts = "2026-08-27T22:18:05.187738+00:00"
 
 [[event]]
@@ -907,7 +907,7 @@ output_chars = 358
 output_preview = '''
 exit_code: 0
 STDOUT:
-[95mROOT:[0m /home/akash/Desktop/Akash/Projects/JSS-Paper-Example
+[95mROOT:[0m /home/user/JSS-2026-Example
 [95mNODE:[0m <ROOT>/tests/mcfm
 
 [95mSCRIPTS: [0m
@@ -1067,8 +1067,8 @@ output_chars = 44339
 output_preview = '''
 exit_code: 0
 STDOUT:
-Generating Doxygen XML for /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/src -> /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/doxygen_dep/xml
-wrote 1142 XML file(s) to /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/software/mcfm/doxygen_dep/xml
+Generating Doxygen XML for /home/user/JSS-2026-Example/software/mcfm/src -> /home/user/JSS-2026-Example/software/mcfm/doxygen_dep/xml
+wrote 1142 XML file(s) to /home/user/JSS-2026-Example/software/mcfm/doxygen_dep/xml
 source 521  translated 90  untranslated 431
 ready leaves (deps=0, non-blind): 230
 symbol index: 920 symbol(s)
@@ -1119,7 +1119,7 @@ output_chars = 6445
 output_preview = '''
 {
   "ok": true,
-  "path": "/home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate/agent_log.md",
+  "path": "/home/user/JSS-2026-Example/dev/transformations/mcfm-translate/agent_log.md",
   "applied": 2,
   "replacements": [
     {
@@ -1180,7 +1180,7 @@ Blocking group: Group Mods-01 (types, qcdloop interface, pp tables)
 Reason: 3 completed group(s) are waiting; limit is 3
 
 Approve with:
-  python3 dev/tools/approve/approve_group.py /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/transformations/mcfm-translate --latest-blocking
+  python3 dev/tools/approve/approve_group.py /home/user/JSS-2026-Example/dev/transformations/mcfm-translate --latest-blocking
 
 Or approve this exact group explicitly:
   python3 dev/tools/approve/approve_group.py /'''
@@ -1230,7 +1230,7 @@ output_preview = '''
 exit_code: 0
 STDOUT:
 # workflow status
-assets: /home/akash/Desktop/Akash/Projects/JSS-Paper-Example/dev/tmp/assets
+assets: /home/user/JSS-2026-Example/dev/tmp/assets
 roadmap metrics: 431 untranslated file rows, 230 ready leaves
 cleanup index: 569 families, move 76, shim-delete 20, merge 42
 
