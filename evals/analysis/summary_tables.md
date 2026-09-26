@@ -33,7 +33,7 @@ Runs grouped sequentially by harness and decision model — all ccworkflow runs,
 | R9 | csloop gpt-5.6 | gpt-5.6 | reasoning_effort=high | `evals/experiments/08-27-2026/codescribe-oaic-gpt56sol-run4` |
 | R10 | csloop gpt-5.6 | gpt-5.6 | reasoning_effort=high | `evals/experiments/08-27-2026/codescribe-oaic-gpt56sol-run5` |
 | R11 | csloop gpt-5.6 | gpt-5.6 | reasoning_effort=high | `evals/experiments/08-28-2026/codescribe-oaic-gpt56sol-run6` |
-| R12 | ccloop | opus-5 | effort=high | `evals/experiments/09-12-2026/ccworkflow-loop-sonnet-5-run2` |
+| R12 | ccloop | opus-5 | effort=high | `evals/experiments/09-12-2026/ccworkflow-loop-opus-5-run2` |
 
 ## Run comparison: cost, cache, wall time, tool calls & files settled
 

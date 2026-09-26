@@ -191,7 +191,6 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
-from matplotlib.lines import Line2D
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
@@ -324,18 +323,20 @@ plt.rcParams.update(
 # set, not deleted. R13 no longer exists as a code. Anything citing R12 or R13
 # from before 2026-09-13 is citing different runs.
 #
-# THE 09-12 RUN'S DIRECTORY NAME IS WRONG AND THE LABEL HERE DELIBERATELY
-# DISAGREES WITH IT. The archive is named `ccworkflow-loop-sonnet-5-run2` and
-# its archive_summary.json repeats that as `experiment_name`, but every Author
-# and Review agent in its transcripts reports `"model":"claude-opus-5"` (the
-# only sonnet-5 agent is the archival Metadata agent, which translates nothing
-# and decides nothing). The run is an opus-5 run mis-titled at archival time,
-# the way 08-11-2026/csloop-opus-5's archive_summary names a branch that does
-# not exist (see git_file_counts). The directory keeps its name, because that
-# name is also its archival git branch in software/mcfm; every label, config
-# and model attribution in this analysis follows the transcripts instead —
-# `decision_model_per_run` reads the model off the archive, so nothing but this
-# hand-written label ever depended on the folder.
+# THE 09-12 RUN WAS ARCHIVED UNDER THE WRONG NAME AND HAS SINCE BEEN RENAMED.
+# It was originally archived as `ccworkflow-loop-sonnet-5-run2`, but every
+# Author and Review agent in its transcripts reports `"model":"claude-opus-5"`
+# (the only sonnet-5 agent was the archival Metadata agent, which translates
+# nothing and decides nothing) -- the same kind of archival mistake as
+# 08-11-2026/csloop-opus-5's archive_summary naming a branch that does not
+# exist (see git_file_counts). On 2026-09-26 the directory, its
+# archive_summary.json, and its archival git branch in software/mcfm were all
+# renamed to `ccworkflow-loop-opus-5-run2` to match the transcripts, once it
+# was confirmed the run postdates the only Zenodo snapshot minted so far
+# (2026.09.04) and so cannot already be cited under the old name anywhere.
+# `decision_model_per_run` still reads the model off the archive rather than
+# trusting any folder name, so this rename is a correction to the record, not
+# something any label here depended on.
 #
 # The ccworkflow labels name the TRIAGE model, because triage is what picks the
 # files (see DECIDING_PHASE below). R1 and R3 also run opus-5 as their
@@ -359,7 +360,7 @@ RUNS = [
     ("08-27-2026", "codescribe-oaic-gpt56sol-run4", "R9", "csloop gpt-5.6 (run4)"),
     ("08-27-2026", "codescribe-oaic-gpt56sol-run5", "R10", "csloop gpt-5.6 (run5)"),
     ("08-28-2026", "codescribe-oaic-gpt56sol-run6", "R11", "csloop gpt-5.6 (run6)"),
-    ("09-12-2026", "ccworkflow-loop-sonnet-5-run2", "R12", "ccloop opus-5"),
+    ("09-12-2026", "ccworkflow-loop-opus-5-run2", "R12", "ccloop opus-5"),
 ]
 
 # Group boundaries, in the same order as RUNS above — used to build the
@@ -1784,11 +1785,12 @@ def load_module_timelines(translated_units, attrs):
 
 
 TIMELINE_MARKER_SIZE = 60
-"""Scatter `s` (points^2), constant across markers. Fan-in used to set marker
-area (sqrt-scaled) as a third encoded dimension alongside color (module) and
-fill/hollow (ready-leaf); dropped because three simultaneous encodings on one
-small scatter read as clutter rather than signal, and the fan-in values
-themselves are already discussed in the surrounding text."""
+"""Scatter `s` (points^2), constant across every marker. Fan-in (as marker
+area, sqrt-scaled) and ready-leaf status at fork (as fill/hollow) were both
+tried as further encodings alongside color (module) and dropped: stacking
+encodings on one small scatter read as clutter rather than signal, and both
+quantities are already discussed in the surrounding text (and, per-entry, in
+summary_tables.md)."""
 
 
 def draw_module_timeline_panel(ax, timelines, letter=None):
@@ -1811,13 +1813,8 @@ def draw_module_timeline_panel(ax, timelines, letter=None):
         ax.plot(xs, [y] * len(xs), color=AXIS, lw=0.8, zorder=1)
         for e in entries:
             color = MODULE_COLOR.get(e["module"], MUTED)
-            all_ready = e["n_settled"] > 0 and e["n_ready_leaf"] == e["n_settled"]
-            if all_ready:
-                ax.scatter([e["elapsed_min"]], [y], s=TIMELINE_MARKER_SIZE, color=color, zorder=3,
-                           edgecolor=SURFACE, linewidth=0.8)
-            else:
-                ax.scatter([e["elapsed_min"]], [y], s=TIMELINE_MARKER_SIZE, facecolor=SURFACE, zorder=3,
-                           edgecolor=color, linewidth=1.6)
+            ax.scatter([e["elapsed_min"]], [y], s=TIMELINE_MARKER_SIZE, color=color, zorder=3,
+                       edgecolor=SURFACE, linewidth=0.8)
 
     ax.set_yticks(range(len(KEYS)))
     ax.set_yticklabels([RUN_CODES[k] for k in reversed(KEYS)])
@@ -1829,25 +1826,13 @@ def draw_module_timeline_panel(ax, timelines, letter=None):
     # Every row has a marker within the first few minutes (Mods/W2jet both tend
     # to be entered early — see the figure), so the top-left corner a legend
     # would normally take is the densest part of the plot, not the emptiest.
-    # Both legends go outside the axes instead: the module key above (in the
-    # margin `tight_layout` already reserves for the axis title), the style
-    # key below the x-axis label, mirroring how the harness legend sits under
-    # the axis in the pgfplots panels elsewhere in this file.
+    # The legend goes outside the axes instead, in the margin `tight_layout`
+    # already reserves for the axis title -- module color is the only encoding
+    # left on this plot, so a single centered legend is enough.
     module_handles = [mpatches.Patch(color=MODULE_COLOR.get(m, MUTED), label=m) for m in modules_seen]
-    style_handles = [
-        Line2D([0], [0], marker="o", linestyle="none", markerfacecolor=INK_SECONDARY,
-               markeredgecolor=SURFACE, markersize=7,
-               label="all settled units there were ready leaves at fork"),
-        Line2D([0], [0], marker="o", linestyle="none", markerfacecolor=SURFACE,
-               markeredgecolor=INK_SECONDARY, markersize=7,
-               label="≥ 1 settled unit was still blocked at fork"),
-    ]
-    leg1 = ax.legend(handles=module_handles, title="Module", loc="lower center",
-                      bbox_to_anchor=(0.24, 1.0), ncol=len(module_handles),
-                      frameon=False, fontsize=LEGEND_SIZE)
-    ax.add_artist(leg1)
-    ax.legend(handles=style_handles, loc="lower center", bbox_to_anchor=(0.78, 1.0),
-              ncol=1, frameon=False, fontsize=LEGEND_SIZE * 0.92)
+    ax.legend(handles=module_handles, title="Module", loc="lower center",
+              bbox_to_anchor=(0.5, 1.0), ncol=len(module_handles),
+              frameon=False, fontsize=LEGEND_SIZE)
 
 
 def make_decision_figure(translated_units, decision_models, module_timelines):
@@ -1876,11 +1861,8 @@ def make_decision_figure(translated_units, decision_models, module_timelines):
         + _wrap_to_figure(
             "Marker = first tool call in the run's own transcript that names a file inside that module "
             "(Bash command text for ccworkflow and ccloop, or a read/write/edit path argument "
-            "for csloop). Filled vs. "
-            "hollow marks whether every settled unit there was a ready leaf (deps=0, blind=0) at the "
-            "shared fork point, or the run entered while at least one of them still had an untranslated "
-            "callee. n/a: the run settled no files in any module, or its transcript could not be parsed "
-            "for a start time.", 9.6)
+            "for csloop), colored by module. n/a: the run settled no files in any module, or its "
+            "transcript could not be parsed for a start time.", 9.6)
         + wrap_notes(9.6, [
             "Bottom: how many distinct models independently settled the same file. Counts are over "
             "distinct files, so a model with four runs cannot out-vote one with a single run by "
@@ -1889,11 +1871,11 @@ def make_decision_figure(translated_units, decision_models, module_timelines):
         ])
     )
 
-    # Manual axis placement rather than tight_layout: the timeline panel's two
-    # legends are separate artists placed via bbox_to_anchor above its own
-    # axes box (see draw_module_timeline_panel), which tight_layout cannot
-    # account for across a multi-axes figure -- it warns "not compatible" and
-    # produces a huge blank gap between the two panels instead.
+    # Manual axis placement rather than tight_layout: the timeline panel's
+    # legend is a separate artist placed via bbox_to_anchor above its own axes
+    # box (see draw_module_timeline_panel), which tight_layout cannot account
+    # for across a multi-axes figure -- it warns "not compatible" and produces
+    # a huge blank gap between the two panels instead.
     top_margin, gap = 0.12, 0.11
     bottom_margin = _caption_rect(len(caption))[1] + 0.03
     plot_h = (1 - top_margin) - bottom_margin
@@ -3653,9 +3635,7 @@ def _tikz_panel_timeline(module_timelines):
             body_lines.append(f"\\draw[evalAxis, line width=0.5pt] {coord_str};\n")
         for e in entries:
             color = TEX_MODULE_COLOR.get(e["module"], "evalInkStrong")
-            all_ready = e["n_settled"] > 0 and e["n_ready_leaf"] == e["n_settled"]
-            style = (f"fill={color}, draw=evalSurface, line width=0.6pt" if all_ready
-                     else f"fill=evalSurface, draw={color}, line width=1.1pt")
+            style = f"fill={color}, draw=evalSurface, line width=0.6pt"
             body_lines.append(
                 f"\\node[circle, {style}, minimum size={TIKZ_TIMELINE_MARKER_SIZE_PT:.2f}pt, inner sep=0pt] "
                 f"at (axis cs:{e['elapsed_min']:.3g},{y}) {{}};\n"
@@ -3667,8 +3647,11 @@ def _tikz_panel_timeline(module_timelines):
     # axis's own bounding box, which this document's style clips away, so the
     # only reliable way to put a legend "above" the data is to reserve real
     # data-coordinate space for it and never let a marker be plotted there.
+    # Module color is the only encoding left on this plot, so the legend is a
+    # single centered row rather than the two-column layout an earlier
+    # revision needed to also explain a filled/hollow marker style.
     legend_y0 = n + 0.3
-    legend_x = xmax * 0.72
+    legend_x = xmax * 0.42
     legend_lines = "".join(
         f"\\node[circle, fill={TEX_MODULE_COLOR.get(m, 'evalInkStrong')}, minimum size=7pt, inner sep=0pt] "
         f"at (axis cs:{legend_x:.3g},{legend_y0 + 0.7 * i:.3f}) {{}};\n"
@@ -3676,25 +3659,6 @@ def _tikz_panel_timeline(module_timelines):
         f"at (axis cs:{legend_x:.3g},{legend_y0 + 0.7 * i:.3f}) {{{_tex_escape(m)}}};\n"
         for i, m in enumerate(modules_seen)
     )
-
-    # Marker-style legend (filled vs. hollow), mirroring the PNG's top-right
-    # key -- drawn in evalInkStrong rather than a module color, since the
-    # filled/hollow distinction is orthogonal to which module a marker is.
-    # Placed in its own column, well clear of the module-color column above,
-    # so its longer strings never need to wrap.
-    style_x = xmax * 0.02
-    style_rows = [
-        ("fill=evalInkStrong, draw=evalSurface, line width=0.6pt", "ready leaf at fork"),
-        ("fill=evalSurface, draw=evalInkStrong, line width=1.1pt", "blocked unit at fork"),
-    ]
-    style_legend_lines = "".join(
-        f"\\node[circle, {style}, minimum size={TIKZ_TIMELINE_MARKER_SIZE_PT:.2f}pt, inner sep=0pt] "
-        f"at (axis cs:{style_x:.3g},{legend_y0 + 0.7 * i:.3f}) {{}};\n"
-        f"\\node[font=\\scriptsize, color=evalInk, anchor=west, xshift=8pt] "
-        f"at (axis cs:{style_x:.3g},{legend_y0 + 0.7 * i:.3f}) {{{_tex_escape(label)}}};\n"
-        for i, (style, label) in enumerate(style_rows)
-    )
-    legend_lines += style_legend_lines
 
     yticklabels = ",".join(_tex_escape(RUN_CODES[k]) for k in keys_order)
     ymax = n + 0.3 + 0.7 * len(modules_seen)
@@ -3724,11 +3688,11 @@ def write_tikz_decision_figure(module_timelines):
         TEX_DATA_BANNER,
         "%% Decision-making figure. Requires pgfplots + the groupplots library\n"
         "%% and the evalXxx colours, both set up in jss-submission.sty.\n"
-        "%% Module-entry timeline -- marker color is the module; filled = every\n"
-        "%% settled unit there was a ready leaf (deps=0, blind=0) at the shared\n"
-        "%% fork point, hollow = at least one was entered while something else\n"
-        "%% there still had an untranslated callee (see parse_decision_timeline.py\n"
-        "%% for what counts as \"settled\" here) -- see the in-plot legend.\n"
+        "%% Module-entry timeline -- one row per run, a marker for each module it\n"
+        "%% went on to settle in, placed at the elapsed time of that run's first\n"
+        "%% tool call naming a file in that module. Marker color is the module\n"
+        "%% (see the in-plot legend); ready-leaf/blocked status at fork is not\n"
+        "%% encoded here (see summary_tables.md for that breakdown per entry).\n"
         "%% Cross-model agreement on the same files (PNG's second panel) is\n"
         "%% reported in prose in sec:evaldecision instead of as a panel here.\n",
         "\\begin{tikzpicture}\n",

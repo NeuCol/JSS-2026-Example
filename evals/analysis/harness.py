@@ -64,10 +64,12 @@ HARNESSES = (CCWORKFLOW, CCLOOP, CSLOOP)
 # this is checked FIRST, before any other rule. `ccloop-*` is accepted too, for
 # runs archived under the shorter name.
 #
-# Directory names carry no reliable MODEL either: 09-12-2026's run is named
-# `ccworkflow-loop-sonnet-5-run2` but every author and review agent in it ran
-# opus-5. That is why nothing here parses a model out of a name, and why
-# generate_graphs labels that run from its transcripts instead.
+# Directory names carry no reliable MODEL either: 09-12-2026's run was
+# archived as `ccworkflow-loop-sonnet-5-run2` even though every author and
+# review agent in it ran opus-5 (fixed 2026-09-26 -- see generate_graphs.py's
+# RUNS comment). That is why nothing here parses a model out of a name, and
+# why generate_graphs labels every run from its transcripts instead, even now
+# that this particular directory name agrees with them.
 _CCLOOP_PREFIXES = ("ccworkflow-loop-", "ccloop-")
 
 
